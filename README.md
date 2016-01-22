@@ -1,5 +1,13 @@
 # Spork
 
+Spork is a dependency injection framework.
+
+Features:
+- easy to use
+- lightweight
+- auto-registration of components
+- no code generation (no special build step required)
+
 ## Usage
 
 ### Regular
