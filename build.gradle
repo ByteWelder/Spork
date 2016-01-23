@@ -18,7 +18,7 @@ apply plugin: 'bintray-release'
 
 ext {
     // Publishing
-    sporkVersion = '1.1.1'
+    sporkVersion = '1.1.2'
     sporkUserOrg = 'sporklibrary'
     sporkWebsite = 'https://sporklibrary.github.io'
     sporkGroupId = 'io.github.sporklibrary'
@@ -33,16 +33,11 @@ archivesBaseName = sporkArtifactId
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
-group = 'io.github.sporklibrary'
-version = '1.0.0'
+version = sporkVersion
 
 dependencies {
 	compile (
-		// Language
-		[group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'],
 		[group: 'org.reflections', name: 'reflections', version: '0.9.10'],
-
-		// Logging
 		[group: 'org.slf4j', name: 'slf4j-api', version: '1.7.13']
 	)
 
