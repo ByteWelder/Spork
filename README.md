@@ -23,7 +23,7 @@ compile 'io.github.sporklibrary:spork:1.3.0'
 
 ## Usage
 
-### Regular
+### Components
 
 ```java
 public class Parent
@@ -43,25 +43,7 @@ public class Child
 }
 ```
 
-### Scoped
-
-```java
-public class Parent
-{
-    @Inject
-    private Child child;
- 
-    public Parent()
-    {
-        Spork.inject(this);
-    }
-}
- 
-@Component(scope = Component.Scope.SINGLETON)
-public class Child
-{
-}
-```
+The component can also be defined as a Singleton: `@Component(scope = Component.Scope.SINGLETON)`
 
 ## License
 
