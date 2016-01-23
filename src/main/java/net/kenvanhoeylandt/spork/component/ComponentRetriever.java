@@ -1,7 +1,6 @@
-package net.kenvanhoeylandt.spork.annotations.retrieval;
+package net.kenvanhoeylandt.spork.component;
 
 import net.kenvanhoeylandt.spork.annotations.Component;
-import net.kenvanhoeylandt.spork.annotations.ComponentClass;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +29,7 @@ public class ComponentRetriever
 			mMap.put(component_type, new ComponentClass(component, component_type));
 		}
 
-		sLogger.debug("found {} type components for {}", mMap.size(), namespace);
+		sLogger.debug("found {} type component for {}", mMap.size(), namespace);
 		// TODO: implement method annotations for Component
 //		Reflections reflections = new Reflections(new ConfigurationBuilder()
 //			.setUrls(ClasspathHelper.forPackage(namespace))

@@ -1,4 +1,6 @@
-package net.kenvanhoeylandt.spork.annotations;
+package net.kenvanhoeylandt.spork.component;
+
+import net.kenvanhoeylandt.spork.annotations.Component;
 
 public class ComponentClass
 {

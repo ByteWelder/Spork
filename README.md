@@ -6,6 +6,7 @@ Aims:
 - easy to use
 - lightweight
 - fast
+- extensible
 
 Features:
 - regular and singleton scope

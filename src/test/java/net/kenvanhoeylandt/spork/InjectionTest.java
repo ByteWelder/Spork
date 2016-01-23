@@ -1,8 +1,8 @@
 package net.kenvanhoeylandt.spork;
 
-import net.kenvanhoeylandt.spork.components.DefaultScopedComponent;
-import net.kenvanhoeylandt.spork.components.FaultyComponent;
-import net.kenvanhoeylandt.spork.components.SingletonScopedComponent;
+import net.kenvanhoeylandt.spork.component.DefaultScopedComponent;
+import net.kenvanhoeylandt.spork.component.FaultyComponent;
+import net.kenvanhoeylandt.spork.component.SingletonScopedComponent;
 import org.junit.Assert;
 import net.kenvanhoeylandt.spork.annotations.Inject;
 import org.junit.Test;

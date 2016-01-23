@@ -1,4 +1,4 @@
-package net.kenvanhoeylandt.spork.components;
+package net.kenvanhoeylandt.spork.component;
 
 import net.kenvanhoeylandt.spork.annotations.Component;
 

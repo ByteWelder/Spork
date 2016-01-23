@@ -1,27 +1,28 @@
-package net.kenvanhoeylandt.spork;
-
-import net.kenvanhoeylandt.spork.annotations.ComponentClass;
-import net.kenvanhoeylandt.spork.annotations.retrieval.ComponentRetriever;
+package net.kenvanhoeylandt.spork.component;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InstanceManager
+/**
+ * Manages Component instances for types that are annotated with the Component annotation.
+ */
+public class ComponentInstanceManager
 {
 	private final Map<String, ComponentRetriever> mPackageComponentRetrieverMap = new HashMap<>(1);
 
 	private final Map<Class<?>, WeakReference<Object>> mSingletonInstances = new HashMap<>();
 
-	public Object getInstance(InjectField injectField, Object parent)
+	public Object getInstance(Field field, Object parent)
 	{
 		Package pkg = parent.getClass().getPackage();
 
 		ComponentRetriever component_retriever = getComponentRetriever(pkg);
 
-		Class<?> field_target_type = injectField.getField().getType();
+		Class<?> field_target_type = field.getType();
 
 		ComponentClass component_class = component_retriever.get(field_target_type);
 

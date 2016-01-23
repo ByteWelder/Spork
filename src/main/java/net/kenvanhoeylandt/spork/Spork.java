@@ -1,20 +1,23 @@
 package net.kenvanhoeylandt.spork;
 
-import net.kenvanhoeylandt.spork.injectors.CombinedInjector;
-
 import javax.annotation.Nullable;
 
 public class Spork
 {
-	private static @Nullable CombinedInjector mCombinedInjector;
+	private static @Nullable Injector mInjector;
 
+	/**
+	 * Inject a single object with all relevant instances.
+	 * @param object the object to inject into
+	 */
 	public static void inject(Object object)
 	{
-		if (mCombinedInjector == null)
+		// Only create an injector if the code is actually used
+		if (mInjector == null)
 		{
-			mCombinedInjector = new CombinedInjector();
+			mInjector = new Injector();
 		}
 
-		mCombinedInjector.inject(object);
+		mInjector.inject(object);
 	}
 }
