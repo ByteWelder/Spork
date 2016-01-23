@@ -26,6 +26,10 @@ compile 'io.github.sporklibrary:spork-android:1.0.0'
 
 ### Components
 
+Any Java object can become a component. Components can be easily injected anywhere.
+
+For example:
+
 ```java
 public class Parent
 {
@@ -44,8 +48,9 @@ public class Child
 }
 ```
 
-The component can also be defined as a Singleton: `@Component(scope = Component.Scope.SINGLETON)`
+The component scope can be customized: `@Component(scope = Component.Scope.SINGLETON)`
 
+The default scope creates a new instance for each injection.
 
 ### Views
 
@@ -54,11 +59,11 @@ View injection works with classes derived from `Activity`, `Fragment` and `View`
 ```java
 public class MyActivity extends Activity
 {
-    // Inject by ID
+	// Inject by ID
 	@InjectView(R.id.button)
 	private Button mButton;
 
-    // Inject by field name
+	// Inject by field name
 	@InjectView
 	private Button button;
 
