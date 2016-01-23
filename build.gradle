@@ -18,7 +18,7 @@ apply plugin: 'bintray-release'
 
 ext {
     // Publishing
-    sporkVersion = '1.1.0'
+    sporkVersion = '1.1.1'
     sporkUserOrg = 'sporklibrary'
     sporkWebsite = 'https://sporklibrary.github.io'
     sporkGroupId = 'io.github.sporklibrary'
@@ -39,7 +39,6 @@ version = '1.0.0'
 dependencies {
 	compile (
 		// Language
-		[group: 'net.sourceforge.streamsupport', name: 'streamsupport', version: '1.4.1'],
 		[group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'],
 		[group: 'org.reflections', name: 'reflections', version: '0.9.10'],
 
