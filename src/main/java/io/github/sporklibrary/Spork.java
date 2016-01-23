@@ -12,12 +12,17 @@ public class Spork
 	 */
 	public static void inject(Object object)
 	{
+		getInjector().inject(object);
+	}
+
+	public static Injector getInjector()
+	{
 		// Only create an injector if the code is actually used
 		if (mInjector == null)
 		{
 			mInjector = new Injector();
 		}
 
-		mInjector.inject(object);
+		return mInjector;
 	}
 }
