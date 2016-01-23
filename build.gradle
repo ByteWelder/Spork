@@ -1,7 +1,12 @@
 buildscript {
-	repositories {
-		jcenter()
-	}
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.novoda:bintray-release:0.3.4'
+        // bintray usage: ./gradlew clean build bintrayUpload -PbintrayUser=??? -PbintrayKey=??? -PdryRun=false
+    }
 }
 
 repositories {
@@ -9,11 +14,26 @@ repositories {
 }
 
 apply plugin: 'java'
+apply plugin: 'bintray-release'
+
+ext {
+    // Publishing
+    sporkVersion = '1.0.0'
+    sporkUserOrg = 'sporklibrary'
+    sporkWebsite = 'https://sporklibrary.github.io'
+    sporkGroupId = 'io.github.sporklibrary'
+    sporkRepoName = 'spork'
+    sporkName = 'Spork'
+    sporkArtifactId = 'spork'
+}
+
+// Fixes jar name
+archivesBaseName = sporkArtifactId
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
-group = 'net.kenvanhoeylandt.spork'
+group = 'io.github.sporklibrary'
 version = '1.0.0'
 
 dependencies {
@@ -38,4 +58,21 @@ dependencies {
 
 task wrapper(type: Wrapper) {
 	gradleVersion = '2.9'
+}
+
+publish {
+    userOrg = sporkUserOrg
+    repoName = sporkRepoName
+    groupId = sporkGroupId
+    artifactId = sporkArtifactId
+    version = sporkVersion
+    description = sporkName
+    website = sporkWebsite
+}
+
+task javadocJar(type: Jar) {
+	archiveName = sporkArtifactId + "-" + sporkVersion + "-" + "javadoc.jar"
+ 	from('build/docs/javadoc') {
+		include '**'
+	}
 }
