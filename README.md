@@ -1,22 +1,25 @@
 # Spork
 
-Spork is a dependency injection framework.
+Spork is an extensible Java library for dependency injection.
 
-Aims:
-- easy to use
-- lightweight
-- fast
-- extensible
+## Installation
 
-Features:
-- regular and singleton scope
-- component auto-registration (as opposed to building a graph with Modules in Dagger)
-- no code generation (no special build step required)
+Edit your `build.gradle` file and add the repository:
 
-## Known limitations
+```groovy
+repositories {
+    mavenCentral()
+    maven {
+        url "https://dl.bintray.com/sporklibrary/spork"
+    }
+}
+```
 
-The very first injection on a specific classpath might take some time because that's when the classpath is scanned for components.
-A solution to implement in the future is to create a pre-caching method.
+The next step is to add dependencies:
+
+```groovy
+compile 'io.github.sporklibrary:spork:1.1.0'
+```
 
 ## Usage
 
@@ -59,3 +62,7 @@ public class Child
 {
 }
 ```
+
+## License
+
+Spork is available through the [Apache License Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
