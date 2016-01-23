@@ -25,6 +25,10 @@ compile 'io.github.sporklibrary:spork:1.3.0'
 
 ### Components
 
+Any Java object can become a component. Components can be easily injected anywhere.
+
+For example:
+
 ```java
 public class Parent
 {
@@ -43,7 +47,9 @@ public class Child
 }
 ```
 
-The component can also be defined as a Singleton: `@Component(scope = Component.Scope.SINGLETON)`
+The component scope can be customized: `@Component(scope = Component.Scope.SINGLETON)`
+
+The default scope creates a new instance for each injection.
 
 ## License
 
