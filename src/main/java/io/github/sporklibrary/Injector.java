@@ -1,4 +1,4 @@
-package net.kenvanhoeylandt.spork;
+package io.github.sporklibrary;
 
 import java.util.ArrayList;
 import java.util.List;

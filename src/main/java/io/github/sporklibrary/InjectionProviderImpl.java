@@ -1,7 +1,7 @@
-package net.kenvanhoeylandt.spork;
+package io.github.sporklibrary;
 
-import net.kenvanhoeylandt.spork.annotations.Inject;
-import net.kenvanhoeylandt.spork.component.ComponentInstanceManager;
+import io.github.sporklibrary.annotations.Inject;
+import io.github.sporklibrary.component.ComponentInstanceManager;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

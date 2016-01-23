@@ -1,4 +1,6 @@
-package net.kenvanhoeylandt.spork.component;
+package io.github.sporklibrary.component;
+
+import io.github.sporklibrary.annotations.Component;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Constructor;

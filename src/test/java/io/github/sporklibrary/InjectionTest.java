@@ -1,10 +1,10 @@
-package net.kenvanhoeylandt.spork;
+package io.github.sporklibrary;
 
-import net.kenvanhoeylandt.spork.component.DefaultScopedComponent;
-import net.kenvanhoeylandt.spork.component.FaultyComponent;
-import net.kenvanhoeylandt.spork.component.SingletonScopedComponent;
+import io.github.sporklibrary.component.DefaultScopedComponent;
+import io.github.sporklibrary.component.FaultyComponent;
+import io.github.sporklibrary.component.SingletonScopedComponent;
 import org.junit.Assert;
-import net.kenvanhoeylandt.spork.annotations.Inject;
+import io.github.sporklibrary.annotations.Inject;
 import org.junit.Test;
 
 public class InjectionTest

@@ -1,6 +1,6 @@
-package net.kenvanhoeylandt.spork.component;
+package io.github.sporklibrary.component;
 
-import net.kenvanhoeylandt.spork.annotations.Component;
+import io.github.sporklibrary.annotations.Component;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
