@@ -1,6 +1,6 @@
 # Spork
 
-Spork is an extensible Java library for dependency injection.
+Spork is an extensible Java library for field binding.
 
 ## Installation
 
@@ -18,26 +18,26 @@ repositories {
 The next step is to add dependencies:
 
 ```groovy
-compile 'io.github.sporklibrary:spork:1.4.0'
+compile 'io.github.sporklibrary:spork:1.5.0'
 ```
 
 ## Usage
 
 ### Components
 
-Any Java object can become a component. Components can be easily injected anywhere.
+Any Java object can become a component. Components can be easily binded anywhere.
 
 For example:
 
 ```java
 public class Parent
 {
-    @Inject
+    @BindComponent
     private Child child;
  
     public Parent()
     {
-        Spork.inject(this);
+        Spork.bind(this);
     }
 }
  
@@ -49,7 +49,7 @@ public class Child
 
 The component scope can be customized: `@Component(scope = Component.Scope.SINGLETON)`
 
-The default scope creates a new instance for each injection.
+The default scope creates a new instance for each binding.
 
 ## License
 

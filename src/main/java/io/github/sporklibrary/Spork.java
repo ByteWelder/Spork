@@ -1,31 +1,31 @@
 package io.github.sporklibrary;
 
-import io.github.sporklibrary.component.ComponentFieldInjector;
+import io.github.sporklibrary.component.ComponentFieldBinder;
 
 import javax.annotation.Nullable;
 
 public class Spork
 {
-	private static @Nullable InjectionManager sInjectionManager;
+	private static @Nullable BinderManager sBinderManager;
 
 	/**
-	 * Inject a single object with all relevant instances.
-	 * @param object the object to inject into
+	 * Bind a single object with all relevant instances.
+	 * @param object the object to bind into
 	 */
-	public static void inject(Object object)
+	public static void bind(Object object)
 	{
-		getInjectionManager().inject(object);
+		getBinderManager().bind(object);
 	}
 
-	public static InjectionManager getInjectionManager()
+	public static BinderManager getBinderManager()
 	{
-		// Only create an injector if the code is actually used
-		if (sInjectionManager == null)
+		// Only create an binder if the code is actually used
+		if (sBinderManager == null)
 		{
-			sInjectionManager = new InjectionManager();
-			sInjectionManager.register(new ComponentFieldInjector());
+			sBinderManager = new BinderManager();
+			sBinderManager.register(new ComponentFieldBinder());
 		}
 
-		return sInjectionManager;
+		return sBinderManager;
 	}
 }

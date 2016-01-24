@@ -1,5 +1,9 @@
 package io.github.sporklibrary.component;
 
+import io.github.sporklibrary.annotations.Component;
+import io.github.sporklibrary.annotations.BindComponent;
+import io.github.sporklibrary.exceptions.BindException;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -35,13 +39,10 @@ class ComponentInstanceManager
 				case SINGLETON:
 					Object instance = mSingletonInstances.get(field_target_type);
 					return (instance != null) ? instance : createSingletonInstance(field_target_type);
-
-				default:
-					throw new RuntimeException("unsupported scope for " + component_class.getDeclaredClass().getName());
 			}
 		}
 
-		throw new RuntimeException("no Component annotation found for " + field_target_type.getName() + " in " + pkg);
+		throw new BindException(BindComponent.class, parent.getClass(), "no Component annotation found for " + field_target_type.getName() + " in " + pkg);
 	}
 
 	private ComponentRetriever getComponentRetriever(Package pkg)
@@ -67,7 +68,7 @@ class ComponentInstanceManager
 
 	private Object create(Class<?> classObject)
 	{
-		// TODO: inject for new instance
+		// TODO: bind for new instance
 		try
 		{
 			Constructor<?> constructor = classObject.getConstructor();
@@ -81,19 +82,19 @@ class ComponentInstanceManager
 		}
 		catch (NoSuchMethodException e)
 		{
-			throw new RuntimeException("no default constructor found for " + classObject.getName(), e);
+			throw new BindException(Component.class, classObject, "no default constructor found");
 		}
 		catch (InstantiationException e)
 		{
-			throw new RuntimeException("failed to create instance of " + classObject.getName(), e);
+			throw new BindException(Component.class, classObject, "failed to create instance", e);
 		}
 		catch (IllegalAccessException e)
 		{
-			throw new RuntimeException("failed to create instance of " + classObject.getName(), e);
+			throw new BindException(Component.class, classObject, "failed to create instance due to access restrictions", e);
 		}
 		catch (InvocationTargetException e)
 		{
-			throw new RuntimeException("constructor invocation failed for " + classObject.getName(), e);
+			throw new BindException(Component.class, classObject, "constructor threw exception", e);
 		}
 	}
 

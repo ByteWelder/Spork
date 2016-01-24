@@ -1,26 +1,26 @@
 package io.github.sporklibrary.component;
 
 import io.github.sporklibrary.AnnotatedField;
-import io.github.sporklibrary.FieldInjector;
-import io.github.sporklibrary.annotations.InjectComponent;
+import io.github.sporklibrary.FieldBinder;
+import io.github.sporklibrary.annotations.BindComponent;
 
 import java.lang.reflect.Field;
 
 /**
- * The default FieldInjector that injects field annotated with the Inject annotation.
+ * The default FieldBinder that binds field annotated with the Bind annotation.
  */
-public class ComponentFieldInjector implements FieldInjector<InjectComponent>
+public class ComponentFieldBinder implements FieldBinder<BindComponent>
 {
 	private final ComponentInstanceManager mComponentInstanceManager = new ComponentInstanceManager();
 
 	@Override
-	public Class<InjectComponent> getAnnotationClass()
+	public Class<BindComponent> getAnnotationClass()
 	{
-		return InjectComponent.class;
+		return BindComponent.class;
 	}
 
 	@Override
-	public void inject(Object object, AnnotatedField<InjectComponent> annotatedField)
+	public void bind(Object object, AnnotatedField<BindComponent> annotatedField)
 	{
 		Object instance = mComponentInstanceManager.getInstance(annotatedField.getField(), object);
 
