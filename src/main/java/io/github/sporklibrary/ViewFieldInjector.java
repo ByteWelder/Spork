@@ -7,7 +7,7 @@ import io.github.sporklibrary.annotations.InjectView;
 
 import java.lang.reflect.Field;
 
-public class ViewInjectionProvider implements InjectionProvider<InjectView>
+public class ViewFieldInjector implements FieldInjector<InjectView>
 {
 	@Override
 	public Class<InjectView> getAnnotationClass()
