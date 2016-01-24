@@ -4,17 +4,17 @@ import io.github.sporklibrary.component.DefaultScopedComponent;
 import io.github.sporklibrary.component.FaultyComponent;
 import io.github.sporklibrary.component.SingletonScopedComponent;
 import org.junit.Assert;
-import io.github.sporklibrary.annotations.Inject;
+import io.github.sporklibrary.annotations.InjectComponent;
 import org.junit.Test;
 
 public class InjectionTest
 {
 	public static class Parent
 	{
-		@Inject
+		@InjectComponent
 		private DefaultScopedComponent mDefaultScopedComponent;
 
-		@Inject
+		@InjectComponent
 		private SingletonScopedComponent mSingletonScopedComponent;
 
 		public Parent()
@@ -35,7 +35,7 @@ public class InjectionTest
 
 	public static class FaultyParent
 	{
-		@Inject
+		@InjectComponent
 		private FaultyComponent mFaultyComponent;
 
 		public FaultyParent()

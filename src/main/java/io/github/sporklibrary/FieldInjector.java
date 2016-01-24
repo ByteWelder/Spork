@@ -3,9 +3,9 @@ package io.github.sporklibrary;
 import java.lang.annotation.Annotation;
 
 /**
- * An InjectionProvider provides injection for a specific annotation.
+ * An FieldInjector provides injection for a specific Field annotation on an object instance.
  */
-public interface InjectionProvider<AnnotationType extends Annotation>
+public interface FieldInjector<AnnotationType extends Annotation>
 {
 	/**
 	 * @return the annotation to provide injection for

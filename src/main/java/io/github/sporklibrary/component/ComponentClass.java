@@ -2,7 +2,7 @@ package io.github.sporklibrary.component;
 
 import io.github.sporklibrary.annotations.Component;
 
-public class ComponentClass
+class ComponentClass
 {
 	private final Component mComponent;
 

@@ -1,8 +1,5 @@
 package io.github.sporklibrary.component;
 
-import io.github.sporklibrary.annotations.Component;
-
-import java.lang.ref.WeakReference;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -12,11 +9,11 @@ import java.util.Map;
 /**
  * Manages Component instances for types that are annotated with the Component annotation.
  */
-public class ComponentInstanceManager
+class ComponentInstanceManager
 {
 	private final Map<String, ComponentRetriever> mPackageComponentRetrieverMap = new HashMap<>(1);
 
-	private final Map<Class<?>, WeakReference<Object>> mSingletonInstances = new HashMap<>();
+	private final Map<Class<?>, Object> mSingletonInstances = new HashMap<>();
 
 	public Object getInstance(Field field, Object parent)
 	{
@@ -36,7 +33,7 @@ public class ComponentInstanceManager
 					return create(field_target_type);
 
 				case SINGLETON:
-					Object instance = getSingletonInstance(field_target_type);
+					Object instance = mSingletonInstances.get(field_target_type);
 					return (instance != null) ? instance : createSingletonInstance(field_target_type);
 
 				default:
@@ -104,15 +101,8 @@ public class ComponentInstanceManager
 	{
 		Object instance = create(classObject);
 
-		mSingletonInstances.put(classObject, new WeakReference<>(instance));
+		mSingletonInstances.put(classObject, instance);
 
 		return instance;
-	}
-
-	private synchronized Object getSingletonInstance(Class<?> classObject)
-	{
-		WeakReference<Object> weak_ref = mSingletonInstances.get(classObject);
-
-		return (weak_ref != null) ? weak_ref.get() : null;
 	}
 }

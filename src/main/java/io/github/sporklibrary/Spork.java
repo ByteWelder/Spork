@@ -1,10 +1,12 @@
 package io.github.sporklibrary;
 
+import io.github.sporklibrary.component.ComponentFieldInjector;
+
 import javax.annotation.Nullable;
 
 public class Spork
 {
-	private static @Nullable Injector mInjector;
+	private static @Nullable InjectionManager sInjectionManager;
 
 	/**
 	 * Inject a single object with all relevant instances.
@@ -12,17 +14,18 @@ public class Spork
 	 */
 	public static void inject(Object object)
 	{
-		getInjector().inject(object);
+		getInjectionManager().inject(object);
 	}
 
-	public static Injector getInjector()
+	public static InjectionManager getInjectionManager()
 	{
 		// Only create an injector if the code is actually used
-		if (mInjector == null)
+		if (sInjectionManager == null)
 		{
-			mInjector = new Injector();
+			sInjectionManager = new InjectionManager();
+			sInjectionManager.register(new ComponentFieldInjector());
 		}
 
-		return mInjector;
+		return sInjectionManager;
 	}
 }

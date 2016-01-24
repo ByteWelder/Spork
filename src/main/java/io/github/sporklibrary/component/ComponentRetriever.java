@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class ComponentRetriever
+class ComponentRetriever
 {
 	private static final Logger sLogger = LoggerFactory.getLogger(ComponentRetriever.class);
 
@@ -29,7 +29,8 @@ public class ComponentRetriever
 			mMap.put(component_type, new ComponentClass(component, component_type));
 		}
 
-		sLogger.debug("found {} type component for {}", mMap.size(), namespace);
+		sLogger.debug("found {} components in {}", mMap.size(), namespace);
+
 		// TODO: implement method annotations for Component
 //		Reflections reflections = new Reflections(new ConfigurationBuilder()
 //			.setUrls(ClasspathHelper.forPackage(namespace))

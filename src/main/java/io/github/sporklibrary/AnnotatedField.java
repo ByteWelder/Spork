@@ -9,19 +9,19 @@ import java.lang.reflect.Field;
  */
 public class AnnotatedField<AnnotationType extends Annotation>
 {
-	private final AnnotationType mInject;
+	private final AnnotationType mAnnotation;
 
 	private final Field mField;
 
-	public AnnotatedField(AnnotationType inject, Field field)
+	public AnnotatedField(AnnotationType annotation, Field field)
 	{
-		mInject = inject;
+		mAnnotation = annotation;
 		mField = field;
 	}
 
 	public AnnotationType getAnnotation()
 	{
-		return mInject;
+		return mAnnotation;
 	}
 
 	public Field getField()

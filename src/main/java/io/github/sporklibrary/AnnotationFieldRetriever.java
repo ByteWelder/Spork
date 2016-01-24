@@ -8,10 +8,12 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Retrieves AnnotatedField objects for given classes.
+ * Scans classes to retrieve annotated fields in them.
+ * It also caches them so repeated calls will be much faster.
+ *
  * @param <AnnotationType> the AnnotatedField's annotation type
  */
-public class AnnotationFieldRetriever<AnnotationType extends Annotation>
+class AnnotationFieldRetriever<AnnotationType extends Annotation>
 {
 	private final Class<AnnotationType> mAnnotationClass;
 
@@ -20,31 +22,31 @@ public class AnnotationFieldRetriever<AnnotationType extends Annotation>
 		mAnnotationClass = annotationClass;
 	}
 
-	private Map<Class<?>, Set<AnnotatedField>> mClassFieldSetMap = new HashMap<>();
+	private final Map<Class<?>, Set<AnnotatedField<AnnotationType>>> mClassFieldSetMap = new HashMap<>();
 
-	public Set<AnnotatedField> getAnnotatedFields(Class<?> classObject)
+	public Set<AnnotatedField<AnnotationType>> getAnnotatedFields(Class<?> classObject)
 	{
-		Set<AnnotatedField> field_set = mClassFieldSetMap.get(classObject);
+		Set<AnnotatedField<AnnotationType>> annotated_field_set = mClassFieldSetMap.get(classObject);
 
-		if (field_set != null)
+		if (annotated_field_set != null)
 		{
-			return field_set;
+			return annotated_field_set;
 		}
 
-		field_set = new HashSet<>();
+		annotated_field_set = new HashSet<>();
 
 		for (Field field : classObject.getDeclaredFields())
 		{
-			AnnotationType inject = field.getAnnotation(mAnnotationClass);
+			AnnotationType annotation = field.getAnnotation(mAnnotationClass);
 
-			if (inject != null)
+			if (annotation != null)
 			{
-				field_set.add(new AnnotatedField<>(inject, field));
+				annotated_field_set.add(new AnnotatedField<>(annotation, field));
 			}
 		}
 
-		mClassFieldSetMap.put(classObject, field_set);
+		mClassFieldSetMap.put(classObject, annotated_field_set);
 
-		return field_set;
+		return annotated_field_set;
 	}
 }
