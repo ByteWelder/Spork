@@ -18,7 +18,7 @@ repositories {
 The next step is to add dependencies:
 
 ```groovy
-compile 'io.github.sporklibrary:spork:1.3.0'
+compile 'io.github.sporklibrary:spork:1.4.0'
 ```
 
 ## Usage
