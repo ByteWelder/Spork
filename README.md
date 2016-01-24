@@ -7,10 +7,10 @@ Edit your `build.gradle` file and add the repository:
 
 ```groovy
 repositories {
-    mavenCentral()
-    maven {
-        url "https://dl.bintray.com/sporklibrary/spork"
-    }
+	mavenCentral()
+	maven {
+		url "https://dl.bintray.com/sporklibrary/spork"
+	}
 }
 ```
 
@@ -18,6 +18,16 @@ The next step is to add dependencies:
 
 ```groovy
 compile 'io.github.sporklibrary:spork-android:1.1.0'
+```
+
+Now surpress the following lint warning. This is necessary because of a missing dependency that we do not need.
+
+```groovy
+android {
+	lintOptions {
+		disable 'InvalidPackage'
+	}
+}
 ```
 
 ## Usage
