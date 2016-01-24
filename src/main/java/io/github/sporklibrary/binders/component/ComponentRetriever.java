@@ -1,4 +1,4 @@
-package io.github.sporklibrary.component;
+package io.github.sporklibrary.binders.component;
 
 import io.github.sporklibrary.annotations.Component;
 import org.reflections.Reflections;

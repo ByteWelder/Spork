@@ -1,14 +1,14 @@
 package io.github.sporklibrary;
 
-import io.github.sporklibrary.component.DefaultScopedComponent;
-import io.github.sporklibrary.component.FaultyComponent;
-import io.github.sporklibrary.component.SingletonScopedComponent;
+import io.github.sporklibrary.components.DefaultScopedComponent;
+import io.github.sporklibrary.components.FaultyComponent;
+import io.github.sporklibrary.components.SingletonScopedComponent;
 import io.github.sporklibrary.exceptions.BindException;
 import org.junit.Assert;
 import io.github.sporklibrary.annotations.BindComponent;
 import org.junit.Test;
 
-public class BinderTest
+public class FieldBindingTests
 {
 	public static class Parent
 	{
@@ -64,7 +64,7 @@ public class BinderTest
 	}
 
 	@Test(expected = BindException.class)
-	public void faultyBinding()
+	public void bindingFailure()
 	{
 		new FaultyParent();
 	}

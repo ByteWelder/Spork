@@ -1,6 +1,6 @@
 # Spork
 
-Spork is an extensible Java library for field binding.
+Spork is an extensible Java library for field and method binding.
 
 ## Installation
 
@@ -18,7 +18,7 @@ repositories {
 The next step is to add dependencies:
 
 ```groovy
-compile 'io.github.sporklibrary:spork:1.5.0'
+compile 'io.github.sporklibrary:spork:1.6.0'
 ```
 
 ## Usage

@@ -1,6 +1,6 @@
 package io.github.sporklibrary;
 
-import io.github.sporklibrary.component.ComponentFieldBinder;
+import io.github.sporklibrary.binders.component.ComponentFieldBinder;
 
 import javax.annotation.Nullable;
 

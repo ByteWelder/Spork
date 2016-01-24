@@ -1,4 +1,4 @@
-package io.github.sporklibrary;
+package io.github.sporklibrary.binders;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -13,20 +13,20 @@ import java.util.Set;
  *
  * @param <AnnotationType> the AnnotatedField's annotation type
  */
-class AnnotationFieldRetriever<AnnotationType extends Annotation>
+class AnnotatedFieldRetriever<AnnotationType extends Annotation>
 {
 	private final Class<AnnotationType> mAnnotationClass;
 
-	public AnnotationFieldRetriever(Class<AnnotationType> annotationClass)
+	public AnnotatedFieldRetriever(Class<AnnotationType> annotationClass)
 	{
 		mAnnotationClass = annotationClass;
 	}
 
-	private final Map<Class<?>, Set<AnnotatedField<AnnotationType>>> mClassFieldSetMap = new HashMap<>();
+	private final Map<Class<?>, Set<AnnotatedField<AnnotationType>>> mCache = new HashMap<>();
 
 	public Set<AnnotatedField<AnnotationType>> getAnnotatedFields(Class<?> classObject)
 	{
-		Set<AnnotatedField<AnnotationType>> annotated_field_set = mClassFieldSetMap.get(classObject);
+		Set<AnnotatedField<AnnotationType>> annotated_field_set = mCache.get(classObject);
 
 		if (annotated_field_set != null)
 		{
@@ -45,7 +45,7 @@ class AnnotationFieldRetriever<AnnotationType extends Annotation>
 			}
 		}
 
-		mClassFieldSetMap.put(classObject, annotated_field_set);
+		mCache.put(classObject, annotated_field_set);
 
 		return annotated_field_set;
 	}

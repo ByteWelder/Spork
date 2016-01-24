@@ -1,5 +1,9 @@
 package io.github.sporklibrary;
 
+import io.github.sporklibrary.binders.CompoundBinder;
+import io.github.sporklibrary.binders.FieldBinder;
+import io.github.sporklibrary.binders.MethodBinder;
+
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +15,19 @@ public class BinderManager
 {
 	private final List<CompoundBinder> mBinders = new ArrayList<>();
 
-	/**
-	 * Register a new FieldBinder
-	 * @param fieldBinder the FieldBinder to register
-	 */
-	public <AnnotationType extends Annotation> void register(FieldBinder<AnnotationType> fieldBinder)
+	public <AnnotationType extends Annotation> void register(FieldBinder<AnnotationType> binder)
 	{
-		mBinders.add(new CompoundBinder<>(fieldBinder));
+		mBinders.add(new CompoundBinder<>(binder));
+	}
+
+	public <AnnotationType extends Annotation> void register(MethodBinder<AnnotationType> binder)
+	{
+		mBinders.add(new CompoundBinder<>(binder));
+	}
+
+	public <AnnotationType extends Annotation> void register(FieldBinder<AnnotationType> fieldBinder, MethodBinder<AnnotationType> methodBinder)
+	{
+		mBinders.add(new CompoundBinder<>(fieldBinder, methodBinder));
 	}
 
 	/**

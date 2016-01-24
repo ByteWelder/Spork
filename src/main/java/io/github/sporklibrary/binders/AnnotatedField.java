@@ -1,4 +1,4 @@
-package io.github.sporklibrary;
+package io.github.sporklibrary.binders;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

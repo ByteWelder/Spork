@@ -1,7 +1,7 @@
-package io.github.sporklibrary.component;
+package io.github.sporklibrary.binders.component;
 
-import io.github.sporklibrary.AnnotatedField;
-import io.github.sporklibrary.FieldBinder;
+import io.github.sporklibrary.binders.AnnotatedField;
+import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.annotations.BindComponent;
 
 import java.lang.reflect.Field;
