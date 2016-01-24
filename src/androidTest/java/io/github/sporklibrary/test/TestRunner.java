@@ -1,16 +1,14 @@
 package io.github.sporklibrary.test;
 
 import android.app.Application;
-import io.github.sporklibrary.Spork;
-import io.github.sporklibrary.ViewFieldInjector;
+import io.github.sporklibrary.SporkAndroid;
 
 public class TestRunner extends android.support.test.runner.AndroidJUnitRunner
 {
 	@Override
 	public void callApplicationOnCreate(Application app)
 	{
-		// Register ViewInjectionProvider
-		Spork.getInjectionManager().register(new ViewFieldInjector());
+		SporkAndroid.initialize();
 
 		super.callApplicationOnCreate(app);
 	}

@@ -6,12 +6,22 @@
 	android:orientation="vertical">
 
 	<Button
-		android:id="@+id/button"
+		android:id="@+id/button_one"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content" />
 
-	<fragment android:name="io.github.sporklibrary.test.fragments.TestFragment"
-		android:id="@+id/testfragment"
+	<Button
+		android:id="@+id/button_two"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+
+	<fragment android:name="io.github.sporklibrary.test.fragments.ViewBindingFragment"
+		android:id="@+id/viewbindingfragment"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+
+	<fragment android:name="io.github.sporklibrary.test.fragments.FragmentBindingFragment"
+		android:id="@+id/fragmentbindingfragment"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content" />
 

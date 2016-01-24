@@ -5,15 +5,15 @@ import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import io.github.sporklibrary.Spork;
-import io.github.sporklibrary.annotations.InjectView;
+import io.github.sporklibrary.annotations.BindView;
 import io.github.sporklibrary.test.R;
 
 public class TestView extends FrameLayout
 {
-	@InjectView(R.id.button)
+	@BindView(R.id.button)
 	private Button mButton;
 
-	@InjectView
+	@BindView
 	private Button button;
 
 	public TestView(Context context)
@@ -22,15 +22,15 @@ public class TestView extends FrameLayout
 
 		LayoutInflater.from(context).inflate(R.layout.view_test, this);
 
-		Spork.inject(this);
+		Spork.bind(this);
 	}
 
-	public Button getButtonById()
+	public Button getButtonByIdSpecified()
 	{
 		return mButton;
 	}
 
-	public Button getButtonByName()
+	public Button getButtonByIdImplied()
 	{
 		return button;
 	}

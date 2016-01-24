@@ -24,7 +24,7 @@ apply plugin: 'bintray-release'
 
 ext {
     // Publishing
-    sporkVersion = '1.1.0'
+    sporkVersion = '1.2.0'
     sporkUserOrg = 'sporklibrary'
     sporkWebsite = 'https://sporklibrary.github.io'
     sporkGroupId = 'io.github.sporklibrary'
@@ -35,7 +35,7 @@ ext {
 
 dependencies {
     compile (
-        [group: 'io.github.sporklibrary', name: 'spork', version: '1.4.0'],
+        [group: 'io.github.sporklibrary', name: 'spork', version: '1.6.0'],
     )
 
     androidTestCompile (

@@ -6,38 +6,37 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import io.github.sporklibrary.Spork;
-import io.github.sporklibrary.annotations.InjectView;
+import io.github.sporklibrary.annotations.BindFragment;
 import io.github.sporklibrary.test.R;
 
-public class TestFragment extends Fragment
+public class FragmentBindingFragment extends Fragment
 {
-	@InjectView(R.id.button)
-	private Button mButton;
+	@BindFragment(R.id.fragment)
+	private Fragment mFragment;
 
-	@InjectView
-	private Button button;
+	@BindFragment
+	private Fragment fragment;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
 	{
-		return inflater.inflate(R.layout.fragment_test, container);
+		return inflater.inflate(R.layout.fragment_fragment_binding, container);
 	}
 
 	@Override
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
 	{
-		Spork.inject(this);
+		Spork.bind(this);
 	}
 
-	public Button getButtonById()
+	public Fragment getFragmentByIdSpecified()
 	{
-		return mButton;
+		return mFragment;
 	}
 
-	public Button getButtonByName()
+	public Fragment getFragmentByIdImplied()
 	{
-		return button;
+		return fragment;
 	}
 }

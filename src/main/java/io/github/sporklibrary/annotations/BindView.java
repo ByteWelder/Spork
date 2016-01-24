@@ -7,10 +7,10 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface InjectView
+public @interface BindView
 {
 	/**
-	 * @return view resource id
+	 * @return View resource id as defined in R.id.*
 	 */
 	int value() default 0;
 }
