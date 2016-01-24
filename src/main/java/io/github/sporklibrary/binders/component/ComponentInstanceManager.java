@@ -1,5 +1,6 @@
 package io.github.sporklibrary.binders.component;
 
+import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.Component;
 import io.github.sporklibrary.annotations.BindComponent;
 import io.github.sporklibrary.exceptions.BindException;
@@ -68,7 +69,6 @@ class ComponentInstanceManager
 
 	private Object create(Class<?> classObject)
 	{
-		// TODO: bind for new instance
 		try
 		{
 			Constructor<?> constructor = classObject.getConstructor();
@@ -77,6 +77,9 @@ class ComponentInstanceManager
 			constructor.setAccessible(true);
 			Object instance = constructor.newInstance();
 			constructor.setAccessible(ctor_accessible);
+
+			// Apply binding recursively
+			Spork.bind(instance);
 
 			return instance;
 		}

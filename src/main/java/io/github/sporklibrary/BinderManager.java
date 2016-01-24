@@ -15,6 +15,8 @@ public class BinderManager
 {
 	private final List<CompoundBinder> mBinders = new ArrayList<>();
 
+	// TODO: prevent binder to be registered multiple times
+
 	public <AnnotationType extends Annotation> void register(FieldBinder<AnnotationType> binder)
 	{
 		mBinders.add(new CompoundBinder<>(binder));
