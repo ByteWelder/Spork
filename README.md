@@ -18,17 +18,7 @@ The next step is to add dependencies:
 
 ```groovy
 dependencies {
-    compile 'io.github.sporklibrary:spork-android:1.2.0'
-}
-```
-
-Now surpress the following lint warning. This is necessary because of a missing dependency that we do not need.
-
-```groovy
-android {
-	lintOptions {
-		disable 'InvalidPackage'
-	}
+    compile 'io.github.sporklibrary:spork-android:1.3.0'
 }
 ```
 
@@ -67,6 +57,8 @@ public class Child
 The component scope can be customized: `@Component(scope = Component.Scope.SINGLETON)`
 
 The default scope creates a new instance for each binding.
+
+`BindComponent` can also be used inject for a base class or interface as long as you specify `@BindComponent(implementation = ...)`
 
 ### Views
 

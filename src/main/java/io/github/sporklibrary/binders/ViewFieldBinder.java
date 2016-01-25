@@ -58,7 +58,7 @@ public class ViewFieldBinder implements FieldBinder<BindView>
 
 		if (!View.class.isAssignableFrom(field.getType()))
 		{
-			throw new BindException(BindView.class, object.getClass(), "not compatibile with " + field.getType().getName());
+			throw new BindException(BindView.class, object.getClass(), field, "field is not a View");
 		}
 
 		BindView annotation = annotatedField.getAnnotation();
@@ -80,28 +80,14 @@ public class ViewFieldBinder implements FieldBinder<BindView>
 				break;
 
 			default:
-				throw new BindException(BindView.class, object.getClass(), "not compatible with " + object.getClass().getName());
+				throw new BindException(BindView.class, object.getClass(), "class must be View, Fragment or Activity");
 		}
 
 		if (view == null)
 		{
-			throw new BindException(BindView.class, object.getClass(), "View not found for " + field.getName());
+			throw new BindException(BindView.class, object.getClass(), field, "View not found");
 		}
 
-		boolean is_accessible = field.isAccessible();
-
-		try
-		{
-			field.setAccessible(true);
-			field.set(object, view);
-		}
-		catch (IllegalAccessException e)
-		{
-			throw new BindException(BindView.class, object.getClass(), "field not accessible", e);
-		}
-		finally
-		{
-			field.setAccessible(is_accessible);
-		}
+		AnnotatedFields.set(annotatedField, object, view);
 	}
 }

@@ -16,7 +16,7 @@ public class FragmentFieldBinder implements FieldBinder<BindFragment>
 	{
 		ACTIVITY,
 		FRAGMENT,
-		INVALID, Target;
+		INVALID;
 
 		/**
 		 * @param object the object to validate
@@ -54,7 +54,7 @@ public class FragmentFieldBinder implements FieldBinder<BindFragment>
 
 		if (!Fragment.class.isAssignableFrom(field.getType()))
 		{
-			throw new BindException(BindFragment.class, object.getClass(), "not compatibile with " + field.getType().getName());
+			throw new BindException(BindFragment.class, object.getClass(), field, "field is not a Fragment");
 		}
 
 		BindFragment annotation = annotatedField.getAnnotation();
@@ -76,28 +76,14 @@ public class FragmentFieldBinder implements FieldBinder<BindFragment>
 				break;
 
 			default:
-				throw new BindException(BindFragment.class, object.getClass(), "not compatible with " + object.getClass().getName());
+				throw new BindException(BindFragment.class, object.getClass(), "class must be Fragment or Activity");
 		}
-
-		boolean is_accessible = field.isAccessible();
 
 		if (fragment == null)
 		{
-			throw new BindException(BindFragment.class, object.getClass(), "Fragment not found for " + field.getName());
+			throw new BindException(BindFragment.class, object.getClass(), field, "Fragment not found");
 		}
 
-		try
-		{
-			field.setAccessible(true);
-			field.set(object, fragment);
-		}
-		catch (IllegalAccessException e)
-		{
-			throw new BindException(BindFragment.class, object.getClass(), "field not accessible", e);
-		}
-		finally
-		{
-			field.setAccessible(is_accessible);
-		}
+		AnnotatedFields.set(annotatedField, object, fragment);
 	}
 }

@@ -35,17 +35,14 @@ ext {
 
 dependencies {
     compile (
-        [group: 'io.github.sporklibrary', name: 'spork', version: '1.6.0'],
+        [group: 'io.github.sporklibrary', name: 'spork', version: '1.7.1'],
     )
 
     androidTestCompile (
         [group: 'com.android.support', name: 'support-annotations', version: '22.2.0'],
-        [group: 'com.android.support.test', name: 'runner', version: '0.4.1']
+        [group: 'com.android.support.test', name: 'runner', version: '0.4.1'],
+        [group: 'com.android.support.test.espresso', name: 'espresso-core', version: '2.2.1']
     )
-
-    androidTestCompile ([group: 'com.android.support.test.espresso', name: 'espresso-core', version: '2.2.1']) {
-        exclude group: 'com.google.code.findbugs', module: 'jsr305'
-    }
 }
 
 android {
@@ -71,14 +68,6 @@ android {
         exclude 'META-INF/ASL2.0.txt'
         exclude 'LICENSE.txt'
         exclude 'LICENSE'
-        exclude 'META-INF/maven/com.google.guava/guava/pom.properties'
-        exclude 'META-INF/maven/com.google.guava/guava/pom.xml'
-    }
-
-    lintOptions {
-        // To address an issue where lint fails due to a javassist dependency,
-        // the 'InvalidPackage' check is disabled. (reflections depends on javassist)
-        disable 'InvalidPackage'
     }
 }
 

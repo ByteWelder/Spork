@@ -8,7 +8,6 @@ import io.github.sporklibrary.annotations.BindView;
 import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.utils.ViewResolver;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class ClickMethodBinder implements MethodBinder<BindClick>
@@ -47,68 +46,32 @@ public class ClickMethodBinder implements MethodBinder<BindClick>
 
 	private class OnClickListener implements View.OnClickListener
 	{
-		private final Method mMethod;
+		private final AnnotatedMethod mAnnotatedMethod;
 
 		private final Object mObject;
 
-		public OnClickListener(Object object, Method method)
+		public OnClickListener(AnnotatedMethod annotatedMethod, Object object)
 		{
-			mMethod = method;
+			mAnnotatedMethod = annotatedMethod;
 			mObject = object;
 		}
 
 		@Override
 		public void onClick(View v)
 		{
-			Class<?>[] parameter_types = mMethod.getParameterTypes();
+			Class<?>[] parameter_types = mAnnotatedMethod.getMethod().getParameterTypes();
 
 			if (parameter_types.length == 0)
 			{
-				boolean accessible = mMethod.isAccessible();
-
-				try
-				{
-					mMethod.setAccessible(true);
-					mMethod.invoke(mObject);
-				}
-				catch (IllegalAccessException e)
-				{
-					throw new BindException(BindClick.class, v.getClass(), "onClick failed because of an access issue", e);
-				}
-				catch (InvocationTargetException e)
-				{
-					throw new BindException(BindClick.class, v.getClass(), "onClick failed because of an invocation issue", e);
-				}
-				finally
-				{
-					mMethod.setAccessible(accessible);
-				}
+				AnnotatedMethods.invoke(mAnnotatedMethod, mObject);
 			}
 			else if (parameter_types.length == 1 && View.class.isAssignableFrom(parameter_types[0]))
 			{
-				boolean accessible = mMethod.isAccessible();
-
-				try
-				{
-					mMethod.setAccessible(true);
-					mMethod.invoke(mObject, v);
-				}
-				catch (IllegalAccessException e)
-				{
-					throw new BindException(BindClick.class, v.getClass(), "onClick failed because of an access issue", e);
-				}
-				catch (InvocationTargetException e)
-				{
-					throw new BindException(BindClick.class, v.getClass(), "onClick failed because of an invocation issue", e);
-				}
-				finally
-				{
-					mMethod.setAccessible(accessible);
-				}
+				AnnotatedMethods.invoke(mAnnotatedMethod, mObject, v);
 			}
 			else
 			{
-				throw new BindException(BindClick.class, v.getClass(), "onClick failed because the method arguments must be either empty or accept a a single View type");
+				throw new BindException(BindClick.class, v.getClass(), mAnnotatedMethod.getMethod(), "onClick failed because the method arguments must be either empty or accept a a single View type");
 			}
 		}
 	}
@@ -145,14 +108,14 @@ public class ClickMethodBinder implements MethodBinder<BindClick>
 				break;
 
 			default:
-				throw new BindException(BindClick.class, object.getClass(), "not compatible with " + object.getClass().getName());
+				throw new BindException(BindClick.class, object.getClass(), annotatedMethod.getMethod(), "class is not a View, Fragment or Activity");
 		}
 
 		if (view == null)
 		{
-			throw new BindException(BindView.class, object.getClass(), "View not found for " + method.getName());
+			throw new BindException(BindView.class, object.getClass(),annotatedMethod.getMethod(),  "View not found");
 		}
 
-		view.setOnClickListener(new OnClickListener(object, method));
+		view.setOnClickListener(new OnClickListener(annotatedMethod, object));
 	}
 }
