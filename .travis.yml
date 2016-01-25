@@ -1,0 +1,14 @@
+branches:
+  only:
+    - master
+
+language: java
+sudo: false
+
+script:
+  - ./gradlew check --continue --info
+
+cache:
+  directories:
+    - $HOME/.gradle
+    - $HOME/.m2/repository
