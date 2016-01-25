@@ -27,7 +27,7 @@ class ComponentInstanceManager
 			throw new BindException(BindComponent.class, parent.getClass(), annotatedField.getField(), "incompatible type");
 		}
 
-		Component component_annotation = field_target_class.getDeclaredAnnotation(Component.class);
+		Component component_annotation = field_target_class.getAnnotation(Component.class);
 
 		if (component_annotation == null)
 		{
