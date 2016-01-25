@@ -2,7 +2,7 @@ package io.github.sporklibrary;
 
 import io.github.sporklibrary.binders.component.ComponentFieldBinder;
 
-import javax.annotation.Nullable;
+import io.github.sporklibrary.annotations.Nullable;
 
 public class Spork
 {

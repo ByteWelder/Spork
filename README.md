@@ -18,14 +18,14 @@ repositories {
 The next step is to add dependencies:
 
 ```groovy
-compile 'io.github.sporklibrary:spork:1.6.0'
+compile 'io.github.sporklibrary:spork:1.7.0'
 ```
 
 ## Usage
 
 ### Components
 
-Any Java object can become a component. Components can be easily binded anywhere.
+Any Java object can become a component. Components can be easily bound anywhere.
 
 For example:
 
@@ -50,6 +50,8 @@ public class Child
 The component scope can be customized: `@Component(scope = Component.Scope.SINGLETON)`
 
 The default scope creates a new instance for each binding.
+
+`BindComponent` can also be used inject for a base class or interface as long as you specify `@BindComponent(implementation = ...)`
 
 ## License
 

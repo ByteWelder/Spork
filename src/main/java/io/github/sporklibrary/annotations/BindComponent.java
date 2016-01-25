@@ -9,4 +9,11 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 public @interface BindComponent
 {
+	final class Default {}
+
+	/**
+	 * Specifies an override for the implementation to bind
+	 * @return the implementation class
+	 */
+	Class<?> implementation() default Default.class;
 }

@@ -1,8 +1,8 @@
 package io.github.sporklibrary.binders.component;
 
+import io.github.sporklibrary.annotations.BindComponent;
 import io.github.sporklibrary.binders.AnnotatedField;
 import io.github.sporklibrary.binders.FieldBinder;
-import io.github.sporklibrary.annotations.BindComponent;
 
 import java.lang.reflect.Field;
 
@@ -22,16 +22,22 @@ public class ComponentFieldBinder implements FieldBinder<BindComponent>
 	@Override
 	public void bind(Object object, AnnotatedField<BindComponent> annotatedField)
 	{
-		Object instance = mComponentInstanceManager.getInstance(annotatedField.getField(), object);
+		Object instance = mComponentInstanceManager.getInstance(annotatedField, object);
 
 		try
 		{
 			Field field = annotatedField.getField();
 
-			boolean field_accessible = field.isAccessible();
-			field.setAccessible(true);
-			field.set(object, instance);
-			field.setAccessible(field_accessible);
+			if (field.isAccessible())
+			{
+				field.set(object, instance);
+			}
+			else
+			{
+				field.setAccessible(true);
+				field.set(object, instance);
+				field.setAccessible(false);
+			}
 		}
 		catch (IllegalAccessException e)
 		{

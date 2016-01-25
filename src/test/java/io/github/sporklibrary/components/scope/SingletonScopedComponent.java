@@ -1,4 +1,4 @@
-package io.github.sporklibrary.components;
+package io.github.sporklibrary.components.scope;
 
 import io.github.sporklibrary.annotations.Component;
 

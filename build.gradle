@@ -18,7 +18,7 @@ apply plugin: 'bintray-release'
 
 ext {
     // Publishing
-    sporkVersion = '1.6.0'
+    sporkVersion = '1.7.0'
     sporkUserOrg = 'sporklibrary'
     sporkWebsite = 'https://sporklibrary.github.io'
     sporkGroupId = 'io.github.sporklibrary'
@@ -37,7 +37,6 @@ version = sporkVersion
 
 dependencies {
 	compile (
-		[group: 'org.reflections', name: 'reflections', version: '0.9.10'],
 		[group: 'org.slf4j', name: 'slf4j-api', version: '1.7.13']
 	)
 

@@ -1,6 +1,6 @@
 package io.github.sporklibrary.binders;
 
-import javax.annotation.Nullable;
+import io.github.sporklibrary.annotations.Nullable;
 import java.lang.annotation.Annotation;
 import java.util.Set;
 

@@ -1,12 +1,12 @@
 package io.github.sporklibrary.binders.component;
 
 import io.github.sporklibrary.Spork;
-import io.github.sporklibrary.annotations.Component;
 import io.github.sporklibrary.annotations.BindComponent;
+import io.github.sporklibrary.annotations.Component;
+import io.github.sporklibrary.binders.AnnotatedField;
 import io.github.sporklibrary.exceptions.BindException;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,55 +16,53 @@ import java.util.Map;
  */
 class ComponentInstanceManager
 {
-	private final Map<String, ComponentRetriever> mPackageComponentRetrieverMap = new HashMap<>(1);
-
 	private final Map<Class<?>, Object> mSingletonInstances = new HashMap<>();
 
-	public Object getInstance(Field field, Object parent)
+	public Object getInstance(AnnotatedField<BindComponent> annotatedField, Object parent)
 	{
-		Package pkg = parent.getClass().getPackage();
+		Class<?> field_target_class = getTargetClass(annotatedField);
 
-		ComponentRetriever component_retriever = getComponentRetriever(pkg);
-
-		Class<?> field_target_type = field.getType();
-
-		ComponentClass component_class = component_retriever.get(field_target_type);
-
-		if (component_class != null)
+		if (!annotatedField.getField().getType().isAssignableFrom(field_target_class))
 		{
-			switch (component_class.getComponent().scope())
-			{
-				case DEFAULT:
-					return create(field_target_type);
-
-				case SINGLETON:
-					Object instance = mSingletonInstances.get(field_target_type);
-					return (instance != null) ? instance : createSingletonInstance(field_target_type);
-			}
+			throw new BindException(BindComponent.class, parent.getClass(), annotatedField.getField(), "incompatible type");
 		}
 
-		throw new BindException(BindComponent.class, parent.getClass(), "no Component annotation found for " + field_target_type.getName() + " in " + pkg);
+		Component component_annotation = field_target_class.getDeclaredAnnotation(Component.class);
+
+		if (component_annotation == null)
+		{
+			throw new BindException(BindComponent.class, parent.getClass(), annotatedField.getField(), "no Component annotation found at target class");
+		}
+
+		switch (component_annotation.scope())
+		{
+			case DEFAULT:
+				return create(field_target_class);
+
+			case SINGLETON:
+				Object instance = mSingletonInstances.get(field_target_class);
+				return (instance != null) ? instance : createSingletonInstance(field_target_class);
+		}
+
+		throw new BindException(BindComponent.class, parent.getClass(), annotatedField.getField(), component_annotation.scope().toString() + "scope not supported");
 	}
 
-	private ComponentRetriever getComponentRetriever(Package pkg)
+	private Class<?> getTargetClass(AnnotatedField<BindComponent> annotatedField)
 	{
-		String package_name = pkg.getName();
+		Class<?> override_class = annotatedField.getAnnotation().implementation();
 
-		ComponentRetriever component_retriever;
-
-		synchronized (mPackageComponentRetrieverMap)
+		if (override_class == BindComponent.Default.class)
 		{
-			component_retriever = mPackageComponentRetrieverMap.get(package_name);
-
-			// insert new one into map
-			if (component_retriever == null)
-			{
-				component_retriever = new ComponentRetriever(pkg);
-				mPackageComponentRetrieverMap.put(package_name, component_retriever);
-			}
+			return annotatedField.getField().getType();
 		}
-
-		return component_retriever;
+		else if (override_class != null)
+		{
+			return override_class;
+		}
+		else
+		{
+			throw new BindException(BindComponent.class, annotatedField.getField().getDeclaringClass(), annotatedField.getField(), "implementation class is null");
+		}
 	}
 
 	private Object create(Class<?> classObject)
@@ -73,31 +71,38 @@ class ComponentInstanceManager
 		{
 			Constructor<?> constructor = classObject.getConstructor();
 
-			boolean ctor_accessible = constructor.isAccessible();
-			constructor.setAccessible(true);
-			Object instance = constructor.newInstance();
-			constructor.setAccessible(ctor_accessible);
+			if (constructor.isAccessible())
+			{
+				Object instance = constructor.newInstance();
+				Spork.bind(instance);
 
-			// Apply binding recursively
-			Spork.bind(instance);
+				return instance;
+			}
+			else
+			{
+				constructor.setAccessible(true);
+				Object instance = constructor.newInstance();
+				Spork.bind(instance);
+				constructor.setAccessible(false);
 
-			return instance;
+				return instance;
+			}
 		}
 		catch (NoSuchMethodException e)
 		{
-			throw new BindException(Component.class, classObject, "no default constructor found");
+			throw new BindException(Component.class, classObject, "no default constructor found for " + classObject.getName());
 		}
 		catch (InstantiationException e)
 		{
-			throw new BindException(Component.class, classObject, "failed to create instance", e);
+			throw new BindException(Component.class, classObject, "failed to create instance of " + classObject.getName(), e);
 		}
 		catch (IllegalAccessException e)
 		{
-			throw new BindException(Component.class, classObject, "failed to create instance due to access restrictions", e);
+			throw new BindException(Component.class, classObject, "failed to create instance due to access restrictions for " + classObject.getName(), e);
 		}
 		catch (InvocationTargetException e)
 		{
-			throw new BindException(Component.class, classObject, "constructor threw exception", e);
+			throw new BindException(Component.class, classObject, "constructor threw exception for " + classObject.getName(), e);
 		}
 	}
 
