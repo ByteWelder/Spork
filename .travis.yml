@@ -39,7 +39,7 @@ after_script:
   - travis_fold:end:logcat
 
 after_success:
-  - ./gradlew createDebugCoverageReport --stacktrace --debug
+  - ./gradlew createDebugCoverageReport
 
 cache:
   directories:
