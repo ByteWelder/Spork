@@ -1,5 +1,6 @@
 # Spork
 [![Build Status][build-status-svg]][build-status-link]
+[![Coverage Status](https://coveralls.io/repos/github/SporkLibrary/Spork/badge.svg?branch=master)](https://coveralls.io/github/SporkLibrary/Spork?branch=master)
 [![Download][download-svg]][download-link]
 [![License][license-svg]][license-link]
 
