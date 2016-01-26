@@ -21,7 +21,7 @@ apply plugin: 'bintray-release'
 
 ext {
     // Publishing
-    sporkVersion = '1.7.2'
+    sporkVersion = '1.7.3'
     sporkUserOrg = 'sporklibrary'
     sporkWebsite = 'https://sporklibrary.github.io'
     sporkGroupId = 'io.github.sporklibrary'

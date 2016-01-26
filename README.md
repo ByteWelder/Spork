@@ -22,7 +22,7 @@ repositories {
 The next step is to add dependencies:
 
 ```groovy
-compile 'io.github.sporklibrary:spork:1.7.2'
+compile 'io.github.sporklibrary:spork:1.7.3'
 ```
 
 ## Usage
