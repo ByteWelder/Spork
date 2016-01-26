@@ -6,6 +6,8 @@ language: android
 
 sudo: false
 
+cache: false
+
 env:
   matrix:
     - ANDROID_TARGET=android-22  ANDROID_ABI=default/armeabi-v7a
@@ -40,8 +42,3 @@ after_script:
 
 after_success:
   - ./gradlew createDebugCoverageReport
-
-cache:
-  directories:
-    - $HOME/.gradle
-    - $HOME/.m2/repository
