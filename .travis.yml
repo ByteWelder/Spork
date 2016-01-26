@@ -8,13 +8,13 @@ sudo: false
 
 env:
   matrix:
-    - ANDROID_TARGET=android-23  ANDROID_ABI=default/armeabi-v7a
+    - ANDROID_TARGET=android-23  ANDROID_ABI=default/x86
 
 android:
   components:
-    - build-tools-23.0.2
+    - build-tools-23.0.1
     - android-23
-    - sys-img-armeabi-v7a-$ANDROID_TARGET
+    - sys-img-x86-$ANDROID_TARGET
     - extra-android-support
     - extra-android-m2repository
 
