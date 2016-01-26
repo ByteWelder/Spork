@@ -1,6 +1,6 @@
 # Spork
 [![Build Status][build-status-svg]][build-status-link]
-[![Coverage Status](https://coveralls.io/repos/github/SporkLibrary/Spork/badge.svg?branch=master)](https://coveralls.io/github/SporkLibrary/Spork?branch=master)
+[![Coverage Status][coverage-svg]][coverage-link]
 [![Download][download-svg]][download-link]
 [![License][license-svg]][license-link]
 
@@ -67,3 +67,5 @@ Spork is available through the [Apache License Version 2.0](http://www.apache.or
 [download-link]: https://bintray.com/sporklibrary/spork/spork/_latestVersion
 [license-svg]: https://img.shields.io/badge/license-Apache%202.0-lightgrey.svg?style=flat
 [license-link]: https://github.com/SporkLibrary/Spork/blob/master/LICENSE
+[coverage-svg]: https://coveralls.io/repos/github/SporkLibrary/Spork/badge.svg?branch=master
+[coverage-link]: https://coveralls.io/github/SporkLibrary/Spork?branch=master
