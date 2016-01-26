@@ -1,0 +1,42 @@
+branches:
+  only:
+    - master
+
+language: android
+
+sudo: false
+
+env:
+  matrix:
+    - ANDROID_TARGET=android-23  ANDROID_ABI=default/armeabi-v7a
+
+android:
+  components:
+    - build-tools-23.0.2
+    - android-23
+    - sys-img-armeabi-v7a-$ANDROID_TARGET
+    - extra-android-support
+    - extra-android-m2repository
+
+before_script:
+  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+  - adb logcat -v time > logcat.txt &
+
+script:
+  - ./gradlew build testDebug connectedCheck --continue --info
+
+after_script:
+  - travis_fold:start:logcat
+  - cat logcat.txt
+  - travis_fold:end:logcat
+
+after_success:
+  - ./gradlew createDebugCoverageReport
+
+cache:
+  directories:
+    - $HOME/.gradle
+    - $HOME/.m2/repository
