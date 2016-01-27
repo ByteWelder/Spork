@@ -18,6 +18,14 @@ class ComponentInstanceManager
 {
 	private final Map<Class<?>, Object> mSingletonInstances = new HashMap<>();
 
+	/**
+	 * Gets an instance of a component within its scope.
+	 * The scope is either singleton or default.
+	 * If the scope is unsupported, default is assumed.
+	 * @param annotatedField the annotated field to get an instance for
+	 * @param parent the parent object that holds the field
+	 * @return the component instance
+	 */
 	public Object getInstance(AnnotatedField<BindComponent> annotatedField, Object parent)
 	{
 		Class<?> field_target_class = getTargetClass(annotatedField);
@@ -36,15 +44,14 @@ class ComponentInstanceManager
 
 		switch (component_annotation.scope())
 		{
-			case DEFAULT:
-				return create(field_target_class);
-
 			case SINGLETON:
 				Object instance = mSingletonInstances.get(field_target_class);
 				return (instance != null) ? instance : createSingletonInstance(field_target_class);
-		}
 
-		throw new BindException(BindComponent.class, parent.getClass(), annotatedField.getField(), component_annotation.scope().toString() + "scope not supported");
+			case DEFAULT:
+			default:
+				return create(field_target_class);
+		}
 	}
 
 	private Class<?> getTargetClass(AnnotatedField<BindComponent> annotatedField)
