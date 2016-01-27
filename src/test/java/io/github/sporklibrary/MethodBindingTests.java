@@ -1,6 +1,6 @@
 package io.github.sporklibrary;
 
-import io.github.sporklibrary.annotations.BindMethodTest;
+import io.github.sporklibrary.annotations.BindMethod;
 import io.github.sporklibrary.binders.TestMethodBinder;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,12 +12,12 @@ public class MethodBindingTests
 
 	public static class MethodBinderParent
 	{
-		@BindMethodTest
+		@BindMethod
 		public void test()
 		{
 		}
 
-		@BindMethodTest
+		@BindMethod
 		public static void testStatic(int a)
 		{
 		}

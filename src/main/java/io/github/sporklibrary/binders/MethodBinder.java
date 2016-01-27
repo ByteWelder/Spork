@@ -15,7 +15,7 @@ public interface MethodBinder<AnnotationType extends Annotation>
 	/**
 	 * Bind an annotation for a specific Method of a given object.
 	 * @param object the parent object that owns the field
-	 * @param annotatedField the annotated field to bind
+	 * @param annotatedMethod the annotated method to bind
 	 */
-	void bind(Object object, AnnotatedMethod<AnnotationType> annotatedField);
+	void bind(Object object, AnnotatedMethod<AnnotationType> annotatedMethod);
 }
