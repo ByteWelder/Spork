@@ -62,13 +62,9 @@ class ComponentInstanceManager
 		{
 			return annotatedField.getField().getType();
 		}
-		else if (override_class != null)
+		else // override class is never null per annotation design
 		{
 			return override_class;
-		}
-		else
-		{
-			throw new BindException(BindComponent.class, annotatedField.getField().getDeclaringClass(), annotatedField.getField(), "implementation class is null");
 		}
 	}
 
