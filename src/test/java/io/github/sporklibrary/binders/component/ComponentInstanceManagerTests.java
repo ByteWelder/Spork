@@ -2,9 +2,11 @@ package io.github.sporklibrary.binders.component;
 
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindComponent;
+import io.github.sporklibrary.annotations.Component;
 import io.github.sporklibrary.binders.AnnotatedField;
 import io.github.sporklibrary.components.scope.DefaultScopedComponent;
 import io.github.sporklibrary.components.scope.SingletonScopedComponent;
+import io.github.sporklibrary.exceptions.BindException;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
@@ -26,6 +28,49 @@ public class ComponentInstanceManagerTests
 		public Parent()
 		{
 			Spork.bind(this);
+		}
+	}
+
+	public static class FaultyConstructorParent
+	{
+		@BindComponent
+		FaultyConstructorComponent mChild;
+
+		public FaultyConstructorParent()
+		{
+			Spork.bind(this);
+		}
+	}
+
+	@Component
+	public static class FaultyConstructorComponent
+	{
+		private final Object mObject;
+
+		public FaultyConstructorComponent(Object object)
+		{
+			mObject = object;
+		}
+	}
+
+
+	public static class FaultyInstantiationParent
+	{
+		@BindComponent
+		FaultyInstantiationComponent mChild;
+
+		public FaultyInstantiationParent()
+		{
+			Spork.bind(this);
+		}
+	}
+
+	@Component
+	public static class FaultyInstantiationComponent
+	{
+		public FaultyInstantiationComponent()
+		{
+			throw new RuntimeException("faulty instantiation");
 		}
 	}
 
@@ -61,5 +106,17 @@ public class ComponentInstanceManagerTests
 		assertTrue(SingletonScopedComponent.class.isAssignableFrom(singleton_instance_copy.getClass()));
 
 		assertTrue(singleton_instance == singleton_instance_copy);
+	}
+
+	@Test(expected = BindException.class)
+	public void faultyComponentConstructor()
+	{
+		new FaultyConstructorParent();
+	}
+
+	@Test(expected = BindException.class)
+	public void faultyInstantiationConstructor()
+	{
+		new FaultyInstantiationParent();
 	}
 }

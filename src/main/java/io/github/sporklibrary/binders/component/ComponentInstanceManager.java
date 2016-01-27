@@ -90,7 +90,7 @@ class ComponentInstanceManager
 		}
 		catch (NoSuchMethodException e)
 		{
-			throw new BindException(Component.class, classObject, "no default constructor found for " + classObject.getName());
+			throw new BindException(Component.class, classObject, "no default constructor found for " + classObject.getName() + " (must have a constructor with zero arguments)");
 		}
 		catch (InstantiationException e)
 		{
