@@ -68,6 +68,10 @@ public class MethodBindingTests
 		BindMethod annotation = method.getAnnotation(BindMethod.class);
 		AnnotatedMethod<BindMethod> annotated_method = new AnnotatedMethod<>(annotation, method);
 
+		// Testing AnnotatedMethod
+		assertEquals(annotation, annotated_method.getAnnotation());
+		assertEquals(method, annotated_method.getMethod());
+
 		assertEquals(0, object.getTestCallCount());
 
 		Object regular_result = AnnotatedMethods.invoke(annotated_method, object);
