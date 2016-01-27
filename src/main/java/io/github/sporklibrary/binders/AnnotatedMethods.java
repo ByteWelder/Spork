@@ -1,5 +1,6 @@
 package io.github.sporklibrary.binders;
 
+import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.exceptions.BindException;
 
 import java.lang.reflect.InvocationTargetException;
@@ -12,8 +13,9 @@ public class AnnotatedMethods
 	 * @param annotatedMethod the AnnotatedMethod
 	 * @param object the parent object
 	 * @param args the field value to bind
+	 * @return the result of the invoked method
 	 */
-	public static void invoke(AnnotatedMethod<?> annotatedMethod, Object object, Object... args)
+	public static @Nullable Object invoke(AnnotatedMethod<?> annotatedMethod, Object object, Object... args)
 	{
 		Method method = annotatedMethod.getMethod();
 
@@ -23,13 +25,14 @@ public class AnnotatedMethods
 		{
 			if (accessible)
 			{
-				method.invoke(object, args);
+				return method.invoke(object, args);
 			}
 			else
 			{
 				method.setAccessible(true);
-				method.invoke(object, args);
+				Object result = method.invoke(object, args);
 				method.setAccessible(false);
+				return result;
 			}
 		}
 		catch (IllegalAccessException e)
