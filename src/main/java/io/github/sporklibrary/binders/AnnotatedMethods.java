@@ -6,7 +6,7 @@ import io.github.sporklibrary.exceptions.BindException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class AnnotatedMethods
+public final class AnnotatedMethods
 {
 	/**
 	 * Invoke an AnnotatedMethod

@@ -4,7 +4,7 @@ import io.github.sporklibrary.exceptions.BindException;
 
 import java.lang.reflect.Field;
 
-public class AnnotatedFields
+public final class AnnotatedFields
 {
 	/**
 	 * Set a value for an AnnotatedField
