@@ -4,7 +4,6 @@ import io.github.sporklibrary.components.scope.DefaultScopedComponent;
 import io.github.sporklibrary.components.scope.FaultyComponent;
 import io.github.sporklibrary.components.scope.SingletonScopedComponent;
 import io.github.sporklibrary.exceptions.BindException;
-import org.junit.Assert;
 import io.github.sporklibrary.annotations.BindComponent;
 import org.junit.Test;
 

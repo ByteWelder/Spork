@@ -95,17 +95,15 @@ class ComponentInstanceManager
 		{
 			throw new BindException(Component.class, classObject, "no default constructor found for " + classObject.getName() + " (must have a constructor with zero arguments)");
 		}
-		catch (InstantiationException e)
-		{
-			throw new BindException(Component.class, classObject, "failed to create instance of " + classObject.getName(), e);
-		}
-		catch (IllegalAccessException e)
-		{
-			throw new BindException(Component.class, classObject, "failed to create instance due to access restrictions for " + classObject.getName(), e);
-		}
 		catch (InvocationTargetException e)
 		{
 			throw new BindException(Component.class, classObject, "constructor threw exception for " + classObject.getName(), e);
+		}
+		catch (InstantiationException | IllegalAccessException e)
+		{
+			// This branch should never be called due to previous checks
+			// We only catch it because we have to
+			throw new BindException(Component.class, classObject, "failed to create instance of " + classObject.getName(), e);
 		}
 	}
 

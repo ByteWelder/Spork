@@ -21,7 +21,7 @@ public class FieldAndMethodBindingTests
 		}
 
 		@BindFieldOrMethod
-		public static void testStatic(int a)
+		public static void testStatic()
 		{
 		}
 	}

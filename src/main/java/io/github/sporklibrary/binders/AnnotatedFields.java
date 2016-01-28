@@ -1,11 +1,17 @@
 package io.github.sporklibrary.binders;
 
 import io.github.sporklibrary.exceptions.BindException;
+import io.github.sporklibrary.exceptions.NotInstantiatableException;
 
 import java.lang.reflect.Field;
 
 public final class AnnotatedFields
 {
+	private AnnotatedFields()
+	{
+		throw new NotInstantiatableException(getClass());
+	}
+
 	/**
 	 * Set a value for an AnnotatedField
 	 * @param annotatedField the AnnotatedField

@@ -12,7 +12,7 @@ public class BindExceptionTest
 	public class TestClass
 	{
 		// Must be public to be easily accessible by test
-		public Object mObject;
+		public final Object mObject;
 
 		public TestClass(Object object)
 		{
