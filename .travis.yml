@@ -33,7 +33,7 @@ before_script:
   - adb logcat -v time > logcat.txt &
 
 script:
-  - ./gradlew createDebugCoverageReport coveralls --continue --info
+  - ./gradlew createDebugCoverageReport coveralls --info
 
 after_script:
   - travis_fold:start:logcat

@@ -48,6 +48,10 @@ dependencies {
     )
 }
 
+coveralls {
+    jacocoReportPath 'build/reports/coverage/debug/report.xml'
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion '23.0.1'
