@@ -9,7 +9,7 @@ import io.github.sporklibrary.test.R;
 
 public class BadBindingView extends View
 {
-	@BindView(R.id.button)
+	@BindView(R.id.testview_button)
 	private Button mButton;
 
 	public BadBindingView(Context context)

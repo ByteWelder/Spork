@@ -15,6 +15,11 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content" />
 
+	<io.github.sporklibrary.test.views.TestView
+		android:id="@+id/activity_testview"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+
 	<fragment android:name="io.github.sporklibrary.test.fragments.ViewBindingFragment"
 		android:id="@+id/viewbindingfragment"
 		android:layout_width="wrap_content"

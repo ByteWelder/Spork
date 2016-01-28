@@ -7,8 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import io.github.sporklibrary.Spork;
+import io.github.sporklibrary.annotations.BindClick;
 import io.github.sporklibrary.annotations.BindFragment;
+import io.github.sporklibrary.annotations.BindView;
 import io.github.sporklibrary.test.R;
+import io.github.sporklibrary.test.views.TestView;
 
 public class FragmentBindingFragment extends Fragment
 {
@@ -17,6 +20,11 @@ public class FragmentBindingFragment extends Fragment
 
 	@BindFragment
 	private Fragment fragment;
+
+	@BindView(R.id.fbf_testview)
+	private TestView fbf_testview;
+
+	private boolean mClickedTestView = false;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
@@ -30,6 +38,12 @@ public class FragmentBindingFragment extends Fragment
 		Spork.bind(this);
 	}
 
+	@BindClick(R.id.fbf_testview)
+	private void onClickTestView()
+	{
+		mClickedTestView = true;
+	}
+
 	public Fragment getFragmentByIdSpecified()
 	{
 		return mFragment;
@@ -38,5 +52,15 @@ public class FragmentBindingFragment extends Fragment
 	public Fragment getFragmentByIdImplied()
 	{
 		return fragment;
+	}
+
+	public boolean hasClickedTestView()
+	{
+		return mClickedTestView;
+	}
+
+	public TestView getTestView()
+	{
+		return fbf_testview;
 	}
 }

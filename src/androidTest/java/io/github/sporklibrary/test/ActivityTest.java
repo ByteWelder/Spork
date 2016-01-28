@@ -8,7 +8,8 @@ import io.github.sporklibrary.test.activities.TestActivity;
 import io.github.sporklibrary.test.fragments.FragmentBindingFragment;
 import io.github.sporklibrary.test.fragments.ViewBindingFragment;
 import io.github.sporklibrary.test.views.BadBindingView;
-import io.github.sporklibrary.test.views.PojoView;
+import io.github.sporklibrary.test.views.BindClickPojo;
+import io.github.sporklibrary.test.views.BindViewPojo;
 import io.github.sporklibrary.test.views.TestView;
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,6 +21,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -47,34 +49,51 @@ public class ActivityTest
 
 		ViewBindingFragment view_binding_fragment = mActivityRule.getActivity().getViewBindingFragment();
 
+		assertEquals(0, view_binding_fragment.getButtonClickCount());
+		onView(withId(R.id.vbf_button)).perform(click());
+		assertEquals(1, view_binding_fragment.getButtonClickCount());
+
 		assertNotNull("find fragment by specified id", view_binding_fragment);
 
 		// Test Fragment's Views
 		assertNotNull("view binding by id", view_binding_fragment.getButtonByIdSpecified());
 		assertNotNull("view binding by name", view_binding_fragment.getButtonByIdImplied());
+
+		// TestView
+		TestView test_view = fragment_binding_fragment.getTestView();
+		assertNotNull("find embedded view by id", test_view);
 	}
 
 	@Test
 	public void viewBinding()
 	{
-		// TODO: test custom view in Activity
+		TestView view = mActivityRule.getActivity().getTestView();
 
-		TestView view = new TestView(mActivityRule.getActivity());
+		assertNotNull(view);
+		assertNotNull("view binding by id", view.getButtonByIdImplied());
+		assertNotNull("view binding by name", view.getButtonByIdSpecified());
 
-		assertNotNull("view binding by id", view.getButtonByIdSpecified());
-		assertNotNull("view binding by name", view.getButtonByIdImplied());
+		assertEquals(0, view.getButtonClickCount());
+		onView(withId(R.id.activity_testview)).perform(click());
+		assertEquals(1, view.getButtonClickCount());
 	}
 
 	@Test(expected = BindException.class)
-	public void pojoView()
+	public void bindViewPojo()
 	{
-		new PojoView();
+		new BindViewPojo();
 	}
 
 	@Test(expected = BindException.class)
 	public void badBindingView()
 	{
 		new BadBindingView(mActivityRule.getActivity());
+	}
+
+	@Test(expected = BindException.class)
+	public void bindClickPojo()
+	{
+		new BindClickPojo();
 	}
 
 	@Test

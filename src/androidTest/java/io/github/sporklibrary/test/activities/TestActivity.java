@@ -10,6 +10,7 @@ import io.github.sporklibrary.annotations.BindView;
 import io.github.sporklibrary.test.R;
 import io.github.sporklibrary.test.fragments.FragmentBindingFragment;
 import io.github.sporklibrary.test.fragments.ViewBindingFragment;
+import io.github.sporklibrary.test.views.TestView;
 
 public class TestActivity extends Activity
 {
@@ -22,12 +23,17 @@ public class TestActivity extends Activity
 	@BindFragment(R.id.viewbindingfragment)
 	private ViewBindingFragment mViewBindingFragment;
 
+	@BindView
+	private TestView activity_testview;
+
 	@BindFragment
 	private FragmentBindingFragment fragmentbindingfragment;
 
 	private boolean mClickedButtonOne = false;
 
 	private boolean mClickedButtonTwo = false;
+
+	private boolean mClickedTestView = false;
 
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -48,6 +54,12 @@ public class TestActivity extends Activity
 	public void onClickButtonTwo(Button button)
 	{
 		mClickedButtonTwo = (button != null);
+	}
+
+	@BindClick(R.id.activity_testview)
+	private void onClickTestView()
+	{
+		mClickedTestView = true;
 	}
 
 	public Button getButtonByIdSpecified()
@@ -78,5 +90,15 @@ public class TestActivity extends Activity
 	public boolean hasClickedButtonTwo()
 	{
 		return mClickedButtonTwo;
+	}
+
+	public boolean hasClickedTestView()
+	{
+		return mClickedTestView;
+	}
+
+	public TestView getTestView()
+	{
+		return activity_testview;
 	}
 }

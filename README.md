@@ -23,7 +23,7 @@ The next step is to add dependencies:
 
 ```groovy
 dependencies {
-    compile 'io.github.sporklibrary:spork-android:1.3.0'
+    compile 'io.github.sporklibrary:spork-android:1.3.2'
 }
 ```
 

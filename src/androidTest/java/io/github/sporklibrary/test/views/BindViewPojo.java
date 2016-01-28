@@ -8,12 +8,12 @@ import io.github.sporklibrary.test.R;
 /**
  * An Object that is not derived from View
  */
-public class PojoView
+public class BindViewPojo
 {
-	@BindView(R.id.button)
+	@BindView(R.id.testview_button)
 	private Button mButton;
 
-	public PojoView()
+	public BindViewPojo()
 	{
 		Spork.bind(this);
 	}

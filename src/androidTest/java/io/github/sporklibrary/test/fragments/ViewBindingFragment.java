@@ -8,16 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import io.github.sporklibrary.Spork;
+import io.github.sporklibrary.annotations.BindClick;
 import io.github.sporklibrary.annotations.BindView;
 import io.github.sporklibrary.test.R;
 
 public class ViewBindingFragment extends Fragment
 {
-	@BindView(R.id.button)
+	@BindView(R.id.vbf_button)
 	private Button mButton;
 
 	@BindView
-	private Button button;
+	private Button vbf_button;
+
+	private int mButtonClickCount = 0;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
@@ -38,6 +41,18 @@ public class ViewBindingFragment extends Fragment
 
 	public Button getButtonByIdImplied()
 	{
-		return button;
+		return vbf_button;
 	}
+
+	@BindClick(R.id.vbf_button)
+	private void onClickButton()
+	{
+		mButtonClickCount++;
+	}
+
+	public int getButtonClickCount()
+	{
+		return mButtonClickCount;
+	}
+
 }
