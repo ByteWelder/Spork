@@ -26,9 +26,6 @@ public class TestActivity extends Activity
 	@BindView
 	private TestView activity_testview;
 
-	@BindFragment
-	private FragmentBindingFragment fragmentbindingfragment;
-
 	private boolean mClickedButtonOne = false;
 
 	private boolean mClickedButtonTwo = false;
@@ -75,11 +72,6 @@ public class TestActivity extends Activity
 	public ViewBindingFragment getViewBindingFragment()
 	{
 		return mViewBindingFragment;
-	}
-
-	public FragmentBindingFragment getFragmentBindingFragment()
-	{
-		return fragmentbindingfragment;
 	}
 
 	public boolean hasClickedButtonOne()

@@ -7,6 +7,15 @@
 
 	<application android:allowBackup="true"
 		android:label="Spork Tests">
+
+		<activity android:name=".activities.TestActivity">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW"/>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+
 		<activity android:name=".activities.TestActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>

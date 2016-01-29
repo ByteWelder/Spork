@@ -25,9 +25,4 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content" />
 
-	<fragment android:name="io.github.sporklibrary.test.fragments.FragmentBindingFragment"
-		android:id="@+id/fragmentbindingfragment"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content" />
-
 </LinearLayout>
