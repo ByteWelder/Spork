@@ -5,13 +5,14 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Build;
 import io.github.sporklibrary.annotations.BindFragment;
+import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.exceptions.BindException;
 
 import java.lang.reflect.Field;
 
 public class FragmentResolver
 {
-	public static Fragment getFragment(Field field, BindFragment annotation, Activity activity)
+	public static @Nullable Fragment getFragment(Field field, BindFragment annotation, Activity activity)
 	{
 		int fragment_id = annotation.value();
 
@@ -30,7 +31,7 @@ public class FragmentResolver
 	}
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-	public static Fragment getFragment(Field field, BindFragment annotation, Fragment fragment)
+	public static @Nullable Fragment getFragment(Field field, BindFragment annotation, Fragment fragment)
 	{
 		int fragment_id = annotation.value();
 

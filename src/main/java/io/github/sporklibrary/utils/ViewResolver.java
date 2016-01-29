@@ -4,11 +4,12 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.view.View;
 import io.github.sporklibrary.annotations.BindView;
+import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.exceptions.BindException;
 
 public class ViewResolver
 {
-	public static View getView(int viewId, String nameFallback, Activity activity)
+	public static @Nullable View getView(int viewId, String nameFallback, Activity activity)
 	{
 		if (viewId == 0)
 		{
@@ -24,7 +25,7 @@ public class ViewResolver
 		return activity.findViewById(viewId);
 	}
 
-	public static View getView(int viewId, String nameFallback, Fragment fragment)
+	public static @Nullable View getView(int viewId, String nameFallback, Fragment fragment)
 	{
 		View fragment_view = fragment.getView();
 
@@ -47,7 +48,7 @@ public class ViewResolver
 		return fragment_view.findViewById(viewId);
 	}
 
-	public static View getView(int viewId, String nameFallback, View view)
+	public static @Nullable View getView(int viewId, String nameFallback, View view)
 	{
 		if (viewId == 0)
 		{
