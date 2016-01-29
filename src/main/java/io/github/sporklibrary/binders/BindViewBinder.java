@@ -10,7 +10,7 @@ import io.github.sporklibrary.utils.ViewResolver;
 
 import java.lang.reflect.Field;
 
-public class ViewFieldBinder implements FieldBinder<BindView>
+public class BindViewBinder implements FieldBinder<BindView>
 {
 	@Override
 	public Class<BindView> getAnnotationClass()

@@ -11,7 +11,7 @@ import io.github.sporklibrary.utils.FragmentResolver;
 
 import java.lang.reflect.Field;
 
-public class FragmentFieldBinder implements FieldBinder<BindFragment>
+public class BindFragmentBinder implements FieldBinder<BindFragment>
 {
 	@Override
 	public Class<BindFragment> getAnnotationClass()

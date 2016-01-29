@@ -10,7 +10,7 @@ import io.github.sporklibrary.utils.ViewResolver;
 
 import java.lang.reflect.Method;
 
-public class ClickMethodBinder implements MethodBinder<BindClick>
+public class BindClickBinder implements MethodBinder<BindClick>
 {
 	private enum Target
 	{

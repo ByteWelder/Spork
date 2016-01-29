@@ -1,8 +1,8 @@
 package io.github.sporklibrary;
 
-import io.github.sporklibrary.binders.ClickMethodBinder;
-import io.github.sporklibrary.binders.FragmentFieldBinder;
-import io.github.sporklibrary.binders.ViewFieldBinder;
+import io.github.sporklibrary.binders.BindClickBinder;
+import io.github.sporklibrary.binders.BindFragmentBinder;
+import io.github.sporklibrary.binders.BindViewBinder;
 
 public class SporkAndroid
 {
@@ -20,9 +20,9 @@ public class SporkAndroid
 		}
 
 		// Register binders
-		Spork.getBinderManager().register(new ViewFieldBinder());
-		Spork.getBinderManager().register(new FragmentFieldBinder());
-		Spork.getBinderManager().register(new ClickMethodBinder());
+		Spork.getBinderManager().register(new BindViewBinder());
+		Spork.getBinderManager().register(new BindFragmentBinder());
+		Spork.getBinderManager().register(new BindClickBinder());
 
 		sInitialized = true;
 	}
