@@ -6,9 +6,15 @@ import android.view.View;
 import io.github.sporklibrary.annotations.BindView;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.exceptions.BindException;
+import io.github.sporklibrary.exceptions.NotInstantiatableException;
 
-public class ViewResolver
+public final class ViewResolver
 {
+	private ViewResolver()
+	{
+		throw new NotInstantiatableException(getClass());
+	}
+
 	public static @Nullable View getView(int viewId, String nameFallback, Activity activity)
 	{
 		if (viewId == 0)

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="spork_test_dimension">12345px</dimen>
+</resources>

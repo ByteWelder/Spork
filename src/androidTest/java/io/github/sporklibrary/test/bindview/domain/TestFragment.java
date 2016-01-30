@@ -1,6 +1,5 @@
-package io.github.sporklibrary.test.fragments;
+package io.github.sporklibrary.test.bindview.domain;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -8,19 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import io.github.sporklibrary.Spork;
-import io.github.sporklibrary.annotations.BindClick;
 import io.github.sporklibrary.annotations.BindView;
 import io.github.sporklibrary.test.R;
+import io.github.sporklibrary.test.bindview.ViewProvider;
 
-public class ViewBindingFragment extends Fragment
+public class TestFragment extends android.app.Fragment implements ViewProvider
 {
-	@BindView(R.id.vbf_button)
+	@BindView(R.id.viewbindingfragment_button)
 	private Button mButton;
 
 	@BindView
-	private Button vbf_button;
-
-	private int mButtonClickCount = 0;
+	private Button viewbindingfragment_button;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
@@ -34,25 +31,15 @@ public class ViewBindingFragment extends Fragment
 		Spork.bind(this);
 	}
 
-	public Button getButtonByIdSpecified()
+	@Override
+	public View getViewByIdSpecified()
 	{
 		return mButton;
 	}
 
-	public Button getButtonByIdImplied()
+	@Override
+	public View getViewByImplied()
 	{
-		return vbf_button;
+		return viewbindingfragment_button;
 	}
-
-	@BindClick(R.id.vbf_button)
-	private void onClickButton()
-	{
-		mButtonClickCount++;
-	}
-
-	public int getButtonClickCount()
-	{
-		return mButtonClickCount;
-	}
-
 }

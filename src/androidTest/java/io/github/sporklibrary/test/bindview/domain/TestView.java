@@ -1,4 +1,4 @@
-package io.github.sporklibrary.test.views;
+package io.github.sporklibrary.test.bindview.domain;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -7,73 +7,60 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import io.github.sporklibrary.Spork;
-import io.github.sporklibrary.annotations.BindClick;
-import io.github.sporklibrary.annotations.BindView;
 import io.github.sporklibrary.test.R;
+import io.github.sporklibrary.Spork;
+import io.github.sporklibrary.annotations.BindView;
+import io.github.sporklibrary.test.bindview.ViewProvider;
 
-public class TestView extends FrameLayout
+public class TestView extends FrameLayout implements ViewProvider
 {
-	@BindView(R.id.testview_button)
+	@BindView(R.id.viewbindingview_button)
 	private Button mButton;
 
 	@BindView
-	private Button testview_button;
-
-	private int mButtonClickCount = 0;
+	private Button viewbindingview_button;
 
 	public TestView(Context context)
 	{
 		super(context);
-
 		init(context);
 	}
 
 	public TestView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
-
 		init(context);
 	}
 
 	public TestView(Context context, AttributeSet attrs, int defStyleAttr)
 	{
 		super(context, attrs, defStyleAttr);
-
 		init(context);
-	}
-
-	private void init(Context context)
-	{
-		LayoutInflater.from(context).inflate(R.layout.view_test, this);
-
-		Spork.bind(this);
 	}
 
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	public TestView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
 	{
 		super(context, attrs, defStyleAttr, defStyleRes);
+		init(context);
 	}
 
-	public Button getButtonByIdSpecified()
+	private void init(Context context)
+	{
+		LayoutInflater.from(context).inflate(R.layout.view_view_binding, this);
+
+		Spork.bind(this);
+	}
+
+	@Override
+	public android.view.View getViewByIdSpecified()
 	{
 		return mButton;
 	}
 
-	public Button getButtonByIdImplied()
+	@Override
+	public android.view.View getViewByImplied()
 	{
-		return testview_button;
-	}
-
-	@BindClick(R.id.testview_button)
-	private void onClickButton()
-	{
-		mButtonClickCount++;
-	}
-
-	public int getButtonClickCount()
-	{
-		return mButtonClickCount;
+		return viewbindingview_button;
 	}
 }

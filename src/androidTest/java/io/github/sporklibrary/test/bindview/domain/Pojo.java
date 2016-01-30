@@ -1,21 +1,20 @@
-package io.github.sporklibrary.test.views;
+package io.github.sporklibrary.test.bindview.domain;
 
-import android.content.Context;
-import android.view.View;
 import android.widget.Button;
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindView;
 import io.github.sporklibrary.test.R;
 
-public class BadBindingView extends View
+/**
+ * An Object that is not derived from View
+ */
+public class Pojo
 {
 	@BindView(R.id.testview_button)
 	private Button mButton;
 
-	public BadBindingView(Context context)
+	public Pojo()
 	{
-		super(context);
-
 		Spork.bind(this);
 	}
 }

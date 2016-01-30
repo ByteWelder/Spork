@@ -1,4 +1,4 @@
-package io.github.sporklibrary.test.fragments;
+package io.github.sporklibrary.test.bindfragment.domain;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -7,24 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import io.github.sporklibrary.Spork;
-import io.github.sporklibrary.annotations.BindClick;
 import io.github.sporklibrary.annotations.BindFragment;
-import io.github.sporklibrary.annotations.BindView;
 import io.github.sporklibrary.test.R;
-import io.github.sporklibrary.test.views.TestView;
+import io.github.sporklibrary.test.bindfragment.FragmentProvider;
 
-public class FragmentBindingFragment extends Fragment
+public class TestFragmentApi17 extends Fragment implements FragmentProvider
 {
-	@BindFragment(R.id.fragment)
+	@BindFragment(R.id.testfragmentapi17)
 	private Fragment mFragment;
 
 	@BindFragment
-	private Fragment fragment;
-
-	@BindView(R.id.fbf_testview)
-	private TestView fbf_testview;
-
-	private boolean mClickedTestView = false;
+	private Fragment testfragmentapi17;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
@@ -38,29 +31,15 @@ public class FragmentBindingFragment extends Fragment
 		Spork.bind(this);
 	}
 
-	@BindClick(R.id.fbf_testview)
-	private void onClickTestView()
-	{
-		mClickedTestView = true;
-	}
-
+	@Override
 	public Fragment getFragmentByIdSpecified()
 	{
 		return mFragment;
 	}
 
+	@Override
 	public Fragment getFragmentByIdImplied()
 	{
-		return fragment;
-	}
-
-	public boolean hasClickedTestView()
-	{
-		return mClickedTestView;
-	}
-
-	public TestView getTestView()
-	{
-		return fbf_testview;
+		return testfragmentapi17;
 	}
 }

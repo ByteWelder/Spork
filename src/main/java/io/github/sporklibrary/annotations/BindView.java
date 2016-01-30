@@ -10,7 +10,6 @@ import java.lang.annotation.Target;
  * Can be used on a View field in a Fragment/Activity/View.
  * The bound View field can be a View or any class derived from it.
  */
-
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface BindView
