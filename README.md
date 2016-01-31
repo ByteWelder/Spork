@@ -33,6 +33,8 @@ The last step is to initialize at least once. You can do this anywhere before ca
 SporkAndroid.initialize();
 ```
 
+This registers all Android annotations with Spork. The best place to call this is in an `Application` class, but you can also call it in your `Activity` in an  `onCreate()` method before `Spork.bind()`.
+
 ## Usage
 
 Use `Spork.bind()` as follows:
