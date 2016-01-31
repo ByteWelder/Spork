@@ -35,7 +35,16 @@ SporkAndroid.initialize();
 
 ## Usage
 
-### Components
+Use `Spork.bind()` as follows:
+
+- `Activity`: bind in `void onCreate(Bundle)`
+- `Fragment`: bind in `void onViewCreated(View, Bundle)`
+- `View`: bind in all constructors
+- `Application`: bind in `void onCreate()`
+
+## Annotations
+
+### @BindComponent
 
 Any Java object can become a component. Components can be easily bound anywhere.
 
@@ -65,7 +74,7 @@ The default scope creates a new instance for each binding.
 
 `BindComponent` can also be used inject for a base class or interface as long as you specify `@BindComponent(implementation = ...)`
 
-### Views
+### @BindView
 
 View binding works with classes derived from `Activity`, `Fragment` and `View`.
 
@@ -92,7 +101,7 @@ public class MyActivity extends Activity
 }
 ```
 
-### Fragments
+### @BindFragment
 
 Fragment binding works with classes derived from `Fragment`. The v4 support library Fragments are not yet supported.
 
@@ -114,7 +123,7 @@ public class MyActivity extends Activity
 }
 ```
 
-### Clicks
+### @BindClick
 
 Click binding works within `Activity`, `Fragment` and `View`. It works with `View` as a target.
 
@@ -147,7 +156,7 @@ public class MyActivity extends Activity
 }
 ```
 
-### Resources
+### @BindResource
 
 Resource binding works within `Application`, `Activity`, `Fragment` and `View`.
 
