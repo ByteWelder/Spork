@@ -28,7 +28,7 @@ public class NotInstantiatableTests
 		createInstance(AnnotatedFields.class);
 	}
 
-	public <T> void createInstance(Class<T> type)
+	private static <T> void createInstance(Class<T> type)
 	{
 		try
 		{

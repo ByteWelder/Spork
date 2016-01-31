@@ -1,5 +1,7 @@
 package io.github.sporklibrary;
 
+import io.github.sporklibrary.annotations.Nullable;
+import io.github.sporklibrary.binders.ClassBinder;
 import io.github.sporklibrary.binders.CompoundBinder;
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.binders.MethodBinder;
@@ -27,9 +29,16 @@ public class BinderManager
 		mBinders.add(new CompoundBinder<>(binder));
 	}
 
-	public <AnnotationType extends Annotation> void register(FieldBinder<AnnotationType> fieldBinder, MethodBinder<AnnotationType> methodBinder)
+	public <AnnotationType extends Annotation> void register(ClassBinder<AnnotationType> binder)
 	{
-		mBinders.add(new CompoundBinder<>(fieldBinder, methodBinder));
+		mBinders.add(new CompoundBinder<>(binder));
+	}
+
+	public <AnnotationType extends Annotation> void register(@Nullable FieldBinder<AnnotationType> fieldBinder,
+	                                                         @Nullable MethodBinder<AnnotationType> methodBinder,
+	                                                         @Nullable ClassBinder<AnnotationType> classBinder)
+	{
+		mBinders.add(new CompoundBinder<>(fieldBinder, methodBinder, classBinder));
 	}
 
 	/**

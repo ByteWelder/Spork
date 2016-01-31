@@ -30,7 +30,7 @@ public class FieldAndMethodBindingTests
 	public void registerTestBinders()
 	{
 		mTestBinder = new TestFieldAndMethodBinder();
-		Spork.getBinderManager().register(mTestBinder, mTestBinder);
+		Spork.getBinderManager().register(mTestBinder, mTestBinder, null);
 	}
 
 	@Test

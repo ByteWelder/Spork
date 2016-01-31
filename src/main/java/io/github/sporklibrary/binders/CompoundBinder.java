@@ -14,32 +14,65 @@ public class CompoundBinder<AnnotationType extends Annotation>
 
 	private final @Nullable MethodBinder<AnnotationType> mMethodBinder;
 
+	private final @Nullable ClassBinder<AnnotationType> mClassBinder;
+
 	private final @Nullable AnnotatedFieldRetriever<AnnotationType> mAnnotatedFieldRetriever;
 
 	private final @Nullable AnnotatedMethodRetriever<AnnotationType> mAnnotatedMethodRetriever;
 
+	private final @Nullable AnnotatedClassRetriever<AnnotationType> mAnnotatedClassRetriever;
+
 	public CompoundBinder(FieldBinder<AnnotationType> fieldBinder)
 	{
-		mFieldBinder = fieldBinder;
-		mAnnotatedFieldRetriever = new AnnotatedFieldRetriever<>(fieldBinder.getAnnotationClass());
-		mMethodBinder = null;
-		mAnnotatedMethodRetriever = null;
+		this(fieldBinder, null, null);
 	}
 
 	public CompoundBinder(MethodBinder<AnnotationType> methodBinder)
 	{
-		mFieldBinder = null;
-		mAnnotatedFieldRetriever = null;
-		mMethodBinder = methodBinder;
-		mAnnotatedMethodRetriever = new AnnotatedMethodRetriever<>(methodBinder.getAnnotationClass());
+		this(null, methodBinder, null);
 	}
 
-	public CompoundBinder(FieldBinder<AnnotationType> fieldBinder, MethodBinder<AnnotationType> methodBinder)
+	public CompoundBinder(ClassBinder<AnnotationType> classBinder)
 	{
-		mFieldBinder = fieldBinder;
-		mAnnotatedFieldRetriever = new AnnotatedFieldRetriever<>(fieldBinder.getAnnotationClass());
-		mMethodBinder = methodBinder;
-		mAnnotatedMethodRetriever = new AnnotatedMethodRetriever<>(methodBinder.getAnnotationClass());
+		this(null, null, classBinder);
+	}
+
+	public CompoundBinder(@Nullable FieldBinder<AnnotationType> fieldBinder,
+	                      @Nullable MethodBinder<AnnotationType> methodBinder,
+	                      @Nullable ClassBinder<AnnotationType> classBinder)
+	{
+		if (fieldBinder != null)
+		{
+			mFieldBinder = fieldBinder;
+			mAnnotatedFieldRetriever = new AnnotatedFieldRetriever<>(fieldBinder.getAnnotationClass());
+		}
+		else
+		{
+			mFieldBinder = null;
+			mAnnotatedFieldRetriever = null;
+		}
+
+		if (methodBinder != null)
+		{
+			mMethodBinder = methodBinder;
+			mAnnotatedMethodRetriever = new AnnotatedMethodRetriever<>(methodBinder.getAnnotationClass());
+		}
+		else
+		{
+			mMethodBinder = null;
+			mAnnotatedMethodRetriever = null;
+		}
+
+		if (classBinder != null)
+		{
+			mClassBinder = classBinder;
+			mAnnotatedClassRetriever = new AnnotatedClassRetriever<>(classBinder.getAnnotationClass());
+		}
+		else
+		{
+			mClassBinder = null;
+			mAnnotatedClassRetriever = null;
+		}
 	}
 
 	/**
@@ -67,6 +100,16 @@ public class CompoundBinder<AnnotationType extends Annotation>
 			for (AnnotatedMethod<AnnotationType> annotated_method : annotated_method_set)
 			{
 				mMethodBinder.bind(object, annotated_method);
+			}
+		}
+
+		if (mClassBinder != null && mAnnotatedClassRetriever != null)
+		{
+			AnnotatedClass<AnnotationType> annotated_class = mAnnotatedClassRetriever.getAnnotatedClass(object.getClass());
+
+			if (annotated_class != null)
+			{
+				mClassBinder.bind(object, annotated_class);
 			}
 		}
 	}
