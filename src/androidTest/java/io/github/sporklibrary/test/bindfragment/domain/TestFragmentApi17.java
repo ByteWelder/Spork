@@ -13,16 +13,16 @@ import io.github.sporklibrary.test.bindfragment.FragmentProvider;
 
 public class TestFragmentApi17 extends Fragment implements FragmentProvider
 {
-	@BindFragment(R.id.testfragmentapi17)
+	@BindFragment(R.id.testfragment)
 	private Fragment mFragment;
 
 	@BindFragment
-	private Fragment testfragmentapi17;
+	private Fragment testfragment;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
 	{
-		return inflater.inflate(R.layout.fragment_fragment_binding, container);
+		return inflater.inflate(R.layout.fragment_fragment_binding_api17, container);
 	}
 
 	@Override
@@ -40,6 +40,6 @@ public class TestFragmentApi17 extends Fragment implements FragmentProvider
 	@Override
 	public Fragment getFragmentByIdImplied()
 	{
-		return testfragmentapi17;
+		return testfragment;
 	}
 }

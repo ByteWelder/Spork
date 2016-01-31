@@ -11,6 +11,8 @@
 		<activity android:name=".bindfragment.domain.TestActivityApi17"/>
 		<activity android:name=".bindfragment.domain.TestActivity"/>
 
+		<activity android:name=".bindclick.domain.TestActivity"/>
+
 		<activity android:name=".bindresource.domain.TestActivity"/>
 
 		<activity android:name=".bindview.domain.TestActivity"/>

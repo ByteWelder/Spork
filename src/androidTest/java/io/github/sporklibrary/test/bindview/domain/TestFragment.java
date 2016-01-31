@@ -13,8 +13,9 @@ import io.github.sporklibrary.test.bindview.ViewProvider;
 
 public class TestFragment extends android.app.Fragment implements ViewProvider
 {
+	// Keep this one public to have a different accessibily state on the Field
 	@BindView(R.id.viewbindingfragment_button)
-	private Button mButton;
+	public Button mButton;
 
 	@BindView
 	private Button viewbindingfragment_button;

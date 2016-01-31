@@ -8,6 +8,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.junit.Assert.assertNotNull;
+
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class FragmentBindingTest
@@ -18,5 +20,9 @@ public class FragmentBindingTest
 	@Test
 	public void test()
 	{
+		TestActivity activity = mActivityRule.getActivity();
+
+		assertNotNull("fragment by specified id", activity.getFragmentByIdSpecified());
+		assertNotNull("fragment by implied id", activity.getFragmentByIdImplied());
 	}
 }

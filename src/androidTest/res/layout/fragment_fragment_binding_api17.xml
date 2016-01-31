@@ -5,8 +5,8 @@
     android:layout_height="wrap_content">
 
     <fragment
-        android:id="@+id/testfragmentapi17"
-        android:name="io.github.sporklibrary.test.bindfragment.domain.TestFragmentApi17"
+        android:id="@+id/testfragment"
+        android:name="io.github.sporklibrary.test.bindfragment.domain.TestFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

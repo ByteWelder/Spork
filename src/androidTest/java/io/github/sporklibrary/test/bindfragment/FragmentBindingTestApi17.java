@@ -10,6 +10,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.junit.Assert.assertNotNull;
+
 @SdkSuppress(minSdkVersion = Build.VERSION_CODES.JELLY_BEAN_MR1)
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -21,5 +23,13 @@ public class FragmentBindingTestApi17
 	@Test
 	public void test()
 	{
+		TestActivityApi17 activity = mActivityRule.getActivity();
+
+		assertNotNull("fragment by specified id", activity.getFragmentByIdSpecified());
+		assertNotNull("fragment by implied id", activity.getFragmentByIdImplied());
+
+		assertNotNull("TestFragmentApi17", activity.getTestFragment());
+		assertNotNull("TestFragmentApi17 child by implied id", activity.getTestFragment().getFragmentByIdImplied());
+		assertNotNull("TestFragmentApi17 child by specified id", activity.getTestFragment().getFragmentByIdSpecified());
 	}
 }
