@@ -149,7 +149,7 @@ public class MyActivity extends Activity
 
 ### Resources
 
-Click binding works within `Application`, `Activity`, `Fragment` and `View`.
+Resource binding works within `Application`, `Activity`, `Fragment` and `View`.
 
 It can bind:
 - `R.dimen.*` to `Float` or `float` fields
