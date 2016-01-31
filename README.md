@@ -23,7 +23,7 @@ The next step is to add dependencies:
 
 ```groovy
 dependencies {
-    compile 'io.github.sporklibrary:spork-android:1.3.2'
+    compile 'io.github.sporklibrary:spork-android:1.4.0'
 }
 ```
 
@@ -134,6 +134,54 @@ public class MyActivity extends Activity
 	private void second_button(Button button)
 	{
 	}
+
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+
+		setContentView(R.layout.my_activity);
+		
+		// Spork does its magic
+		Spork.bind(this);
+	}
+}
+```
+
+### Resources
+
+Click binding works within `Application`, `Activity`, `Fragment` and `View`.
+
+It can bind:
+- `R.dimen.*` to `Float` or `float` fields
+- `R.string.*` to `String` fields
+- `R.drawable.*` to `Drawable` fields
+
+```java
+public class MyActivity extends Activity 
+{
+	@BindResource(R.string.app_name)
+	private String mAppName;
+	
+	@BindResource(R.string.app_name)
+	private String app_name;
+	
+	@BindResource(R.dimen.spork_test_dimension)
+	private float mSporkTestDimension;
+	
+	@BindResource
+	private Float spork_test_dimension;
+	
+	@BindResource(R.drawable.spork_test_drawable)
+	private Drawable mSporkTestDrawable;
+	
+	@BindResource
+	private Drawable spork_test_drawable;
+	
+	@BindFragment(R.id.resourcebindingfragment)
+	private TestFragment mResourceBindingFragment;
+	
+	@BindView(R.id.resourcebindingview)
+	private TestView mResourceBindingView;
 
 	public void onCreate(Bundle savedInstanceState)
 	{
