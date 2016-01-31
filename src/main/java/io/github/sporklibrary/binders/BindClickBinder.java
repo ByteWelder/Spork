@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.view.View;
 import io.github.sporklibrary.annotations.BindClick;
 import io.github.sporklibrary.annotations.BindView;
+import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.utils.ViewResolver;
 
@@ -12,38 +13,6 @@ import java.lang.reflect.Method;
 
 public class BindClickBinder implements MethodBinder<BindClick>
 {
-	private enum Target
-	{
-		ACTIVITY,
-		FRAGMENT,
-		VIEW,
-		INVALID;
-
-		/**
-		 * @param object the object to validate
-		 * @return the binding target for the provided object
-		 */
-		public static Target get(Object object)
-		{
-			if (Activity.class.isAssignableFrom(object.getClass()))
-			{
-				return ACTIVITY;
-			}
-			else if (Fragment.class.isAssignableFrom(object.getClass()))
-			{
-				return FRAGMENT;
-			}
-			else if (View.class.isAssignableFrom(object.getClass()))
-			{
-				return VIEW;
-			}
-			else
-			{
-				return INVALID;
-			}
-		}
-	}
-
 	private class OnClickListener implements View.OnClickListener
 	{
 		private final AnnotatedMethod mAnnotatedMethod;
@@ -85,31 +54,7 @@ public class BindClickBinder implements MethodBinder<BindClick>
 	@Override
 	public void bind(final Object object, AnnotatedMethod<BindClick> annotatedMethod)
 	{
-		Target target = Target.get(object);
-
-		BindClick annotation = annotatedMethod.getAnnotation();
-
-		final Method method = annotatedMethod.getMethod();
-
-		View view;
-
-		switch (target)
-		{
-			case ACTIVITY:
-				view = ViewResolver.getView(annotation.value(), method.getName(), (Activity) object);
-				break;
-
-			case FRAGMENT:
-				view = ViewResolver.getView(annotation.value(), method.getName(), (Fragment) object);
-				break;
-
-			case VIEW:
-				view = ViewResolver.getView(annotation.value(), method.getName(), (View) object);
-				break;
-
-			default:
-				throw new BindException(BindClick.class, object.getClass(), annotatedMethod.getMethod(), "class is not a View, Fragment or Activity");
-		}
+		final @Nullable View view = getView(object, annotatedMethod);
 
 		if (view == null)
 		{
@@ -117,5 +62,27 @@ public class BindClickBinder implements MethodBinder<BindClick>
 		}
 
 		view.setOnClickListener(new OnClickListener(annotatedMethod, object));
+	}
+
+	private View getView(Object object, AnnotatedMethod<BindClick> annotatedField)
+	{
+		Method method = annotatedField.getMethod();
+
+		if (Activity.class.isAssignableFrom(object.getClass()))
+		{
+			return ViewResolver.getView(annotatedField.getAnnotation().value(), method.getName(), (Activity)object);
+		}
+		else if (Fragment.class.isAssignableFrom(object.getClass()))
+		{
+			return ViewResolver.getView(annotatedField.getAnnotation().value(), method.getName(), (Fragment)object);
+		}
+		else if (View.class.isAssignableFrom(object.getClass()))
+		{
+			return ViewResolver.getView(annotatedField.getAnnotation().value(), method.getName(), (View)object);
+		}
+		else
+		{
+			throw new BindException(BindView.class, object.getClass(), method, "class must be View, Fragment or Activity");
+		}
 	}
 }
