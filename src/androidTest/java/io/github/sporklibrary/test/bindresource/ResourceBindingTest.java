@@ -5,8 +5,12 @@ import android.graphics.drawable.Drawable;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
+import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.test.R;
 import io.github.sporklibrary.test.bindresource.domain.TestActivity;
+import io.github.sporklibrary.test.bindresource.domain.TestDimensionPojo;
+import io.github.sporklibrary.test.bindresource.domain.TestDrawablePojo;
+import io.github.sporklibrary.test.bindresource.domain.TestStringPojo;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,5 +63,23 @@ public class ResourceBindingTest
 		// Can't compare instances
 		assertNotNull(message, drawable_by_id);
 		assertNotNull(message, drawable_by_name);
+	}
+
+	@Test(expected = BindException.class)
+	public void testDimensionPojo()
+	{
+		new TestDimensionPojo();
+	}
+
+	@Test(expected = BindException.class)
+	public void testDrawablePojo()
+	{
+		new TestDrawablePojo();
+	}
+
+	@Test(expected = BindException.class)
+	public void testStringPojo()
+	{
+		new TestStringPojo();
 	}
 }

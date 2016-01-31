@@ -17,6 +17,9 @@ public class TestActivity extends Activity implements ClickTestProvider
 	@BindView(R.id.testview)
 	private TestView mTestView;
 
+	@BindView(R.id.testfaultyclickargumentsview)
+	private TestFaultyClickArgumentsView mTestFaultyClickArgumentsView;
+
 	private int mClickCount = 0;
 
 	public void onCreate(Bundle savedInstanceState)
@@ -54,5 +57,10 @@ public class TestActivity extends Activity implements ClickTestProvider
 	public TestView getTestView()
 	{
 		return mTestView;
+	}
+
+	public TestFaultyClickArgumentsView getTestFaultyClickArgumentsView()
+	{
+		return mTestFaultyClickArgumentsView;
 	}
 }

@@ -1,5 +1,6 @@
 package io.github.sporklibrary.test.bindclick;
 
+import android.support.test.espresso.PerformException;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
@@ -23,7 +24,7 @@ public class ClickBindingTest
 	public ActivityTestRule<TestActivity> mActivityRule = new ActivityTestRule<>(TestActivity.class);
 
 	@Test
-	public void run()
+	public void testMain()
 	{
 		TestActivity activity = mActivityRule.getActivity();
 		TestFragment test_fragment = activity.getTestFragment();
@@ -38,15 +39,24 @@ public class ClickBindingTest
 	}
 
 	@Test(expected = BindException.class)
-	public void bindPojo()
+	public void testPojo()
 	{
 		new TestPojo();
 	}
 
 	@Test(expected = BindException.class)
-	public void bindFaultyView()
+	public void testFaultyView()
 	{
 		new TestFaultyView(mActivityRule.getActivity());
+	}
+
+	@Test(expected = PerformException.class)
+	public void testFaultyClickArgumentsView()
+	{
+		TestFaultyClickArgumentsView view = mActivityRule.getActivity().getTestFaultyClickArgumentsView();
+		assertNotNull(view);
+
+		onView(withId(view.getId())).perform(click());
 	}
 
 	private void testClick(ClickTestProvider provider)

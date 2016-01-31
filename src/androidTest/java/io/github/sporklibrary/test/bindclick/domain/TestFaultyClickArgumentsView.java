@@ -10,32 +10,29 @@ import android.widget.FrameLayout;
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindClick;
 import io.github.sporklibrary.test.R;
-import io.github.sporklibrary.test.bindclick.ClickTestProvider;
 
-public class TestView extends FrameLayout implements ClickTestProvider
+public class TestFaultyClickArgumentsView extends FrameLayout
 {
-	private int mClickCount = 0;
-
-	public TestView(Context context)
+	public TestFaultyClickArgumentsView(Context context)
 	{
 		super(context);
 		init(context);
 	}
 
-	public TestView(Context context, AttributeSet attrs)
+	public TestFaultyClickArgumentsView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
 		init(context);
 	}
 
-	public TestView(Context context, AttributeSet attrs, int defStyleAttr)
+	public TestFaultyClickArgumentsView(Context context, AttributeSet attrs, int defStyleAttr)
 	{
 		super(context, attrs, defStyleAttr);
 		init(context);
 	}
 
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
-	public TestView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
+	public TestFaultyClickArgumentsView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
 	{
 		super(context, attrs, defStyleAttr, defStyleRes);
 		init(context);
@@ -43,26 +40,13 @@ public class TestView extends FrameLayout implements ClickTestProvider
 
 	private void init(Context context)
 	{
-		LayoutInflater.from(context).inflate(R.layout.view_click_binding, this);
+		LayoutInflater.from(context).inflate(R.layout.view_click_binding_faulty_arguments, this);
 
 		Spork.bind(this);
 	}
 
-	@BindClick(R.id.click_binding_view_button)
-	private void onClick(Button button)
+	@BindClick(R.id.click_binding_view_faulty_arguments_button)
+	private void onClick(Button button, int testFailureParameter)
 	{
-		mClickCount++;
-	}
-
-	@Override
-	public int getClickCount()
-	{
-		return mClickCount;
-	}
-
-	@Override
-	public int getClickViewResourceId()
-	{
-		return R.id.click_binding_view_button;
 	}
 }
