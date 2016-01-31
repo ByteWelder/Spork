@@ -1,19 +1,14 @@
 package io.github.sporklibrary.test.bindview;
 
 import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
 import io.github.sporklibrary.exceptions.BindException;
-import io.github.sporklibrary.test.bindview.domain.TestActivity;
-import io.github.sporklibrary.test.bindview.domain.CorruptTestView;
-import io.github.sporklibrary.test.bindview.domain.Pojo;
+import io.github.sporklibrary.test.bindview.domain.*;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertNotNull;
 
-@RunWith(AndroidJUnit4.class)
 @SmallTest
 public class ViewBindingTest
 {
@@ -37,9 +32,15 @@ public class ViewBindingTest
 	}
 
 	@Test(expected = BindException.class)
-	public void badBindingView()
+	public void bindFaultyImpliedId()
 	{
-		new CorruptTestView(mActivityRule.getActivity());
+		new FaultyImpliedIdView(mActivityRule.getActivity());
+	}
+
+	@Test(expected = BindException.class)
+	public void bindFaultySpecifiedId()
+	{
+		new FaultySpecifiedIdView(mActivityRule.getActivity());
 	}
 
 	private void testBinding(ViewProvider provider)

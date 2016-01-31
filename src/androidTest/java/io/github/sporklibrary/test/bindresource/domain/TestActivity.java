@@ -16,7 +16,7 @@ public class TestActivity extends android.app.Activity implements ResourceProvid
 	@BindResource(R.string.app_name)
 	private String mAppName;
 
-	@BindResource(R.string.app_name)
+	@BindResource
 	private String app_name;
 
 	@BindResource(R.dimen.spork_test_dimension)

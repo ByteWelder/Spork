@@ -1,6 +1,5 @@
 package io.github.sporklibrary.test.bindresource.domain;
 
-import android.app.Fragment;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,7 +15,7 @@ public class TestFragment extends android.app.Fragment implements ResourceProvid
 	@BindResource(io.github.sporklibrary.test.R.string.app_name)
 	private String mAppName;
 
-	@BindResource(io.github.sporklibrary.test.R.string.app_name)
+	@BindResource
 	private String app_name;
 
 	@BindResource(io.github.sporklibrary.test.R.dimen.spork_test_dimension)
