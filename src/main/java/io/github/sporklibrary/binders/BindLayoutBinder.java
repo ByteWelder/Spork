@@ -25,24 +25,6 @@ public class BindLayoutBinder implements TypeBinder<BindLayout>
 			ViewGroup view_group = (ViewGroup)object;
 			LayoutInflater.from(view_group.getContext()).inflate(layout_resource_id, view_group);
 		}
-		else if (Fragment.class.isAssignableFrom(object.getClass()))
-		{
-			Fragment fragment = (Fragment)object;
-			View fragment_view = fragment.getView();
-
-			if (fragment_view == null)
-			{
-				throw new BindException(BindLayout.class, object.getClass(), "Spork.bind() must be called in Fragment's onViewCreated()");
-			}
-
-			if (!ViewGroup.class.isAssignableFrom(object.getClass()))
-			{
-				throw new BindException(BindLayout.class, object.getClass(), "Fragment must have a ViewGroup for a View to be able to inject a layout into it");
-			}
-
-			ViewGroup fragment_view_group = (ViewGroup)fragment_view;
-			LayoutInflater.from(fragment_view.getContext()).inflate(layout_resource_id, fragment_view_group);
-		}
 		else
 		{
 			throw new BindException(BindLayout.class, object.getClass(), "annotation can only be used with Activity or ViewGroup");
