@@ -9,20 +9,20 @@ import java.util.Map;
  *
  * @param <AnnotationType> the AnnotatedField's annotation type
  */
-public class AnnotatedClassRetriever<AnnotationType extends Annotation>
+public class AnnotatedTypeRetriever<AnnotationType extends Annotation>
 {
 	private final Class<AnnotationType> mAnnotationClass;
 
-	private final Map<Class<?>, AnnotatedClass<AnnotationType>> mCache = new HashMap<>();
+	private final Map<Class<?>, AnnotatedType<AnnotationType>> mCache = new HashMap<>();
 
-	public AnnotatedClassRetriever(Class<AnnotationType> annotationClass)
+	public AnnotatedTypeRetriever(Class<AnnotationType> annotationClass)
 	{
 		mAnnotationClass = annotationClass;
 	}
 
-	public AnnotatedClass<AnnotationType> getAnnotatedClass(Class<?> classObject)
+	public AnnotatedType<AnnotationType> getAnnotatedClass(Class<?> classObject)
 	{
-		AnnotatedClass<AnnotationType> annotated_class = mCache.get(classObject);
+		AnnotatedType<AnnotationType> annotated_class = mCache.get(classObject);
 
 		if (annotated_class != null)
 		{
@@ -33,7 +33,7 @@ public class AnnotatedClassRetriever<AnnotationType extends Annotation>
 
 		if (annotation != null)
 		{
-			annotated_class = new AnnotatedClass<>(annotation, mAnnotationClass);
+			annotated_class = new AnnotatedType<>(annotation, mAnnotationClass);
 		}
 
 		mCache.put(classObject, annotated_class);

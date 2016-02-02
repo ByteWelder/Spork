@@ -15,13 +15,15 @@ public class CompoundBinder<AnnotationType extends Annotation>
 
 	private final @Nullable MethodBinder<AnnotationType> mMethodBinder;
 
-	private final @Nullable ClassBinder<AnnotationType> mClassBinder;
+	private final @Nullable
+	TypeBinder<AnnotationType> mTypeBinder;
 
 	private final @Nullable AnnotatedFieldRetriever<AnnotationType> mAnnotatedFieldRetriever;
 
 	private final @Nullable AnnotatedMethodRetriever<AnnotationType> mAnnotatedMethodRetriever;
 
-	private final @Nullable	AnnotatedClassRetriever<AnnotationType> mAnnotatedClassRetriever;
+	private final @Nullable
+	AnnotatedTypeRetriever<AnnotationType> mAnnotatedTypeRetriever;
 
 	public CompoundBinder(FieldBinder<AnnotationType> fieldBinder)
 	{
@@ -33,14 +35,14 @@ public class CompoundBinder<AnnotationType extends Annotation>
 		this(null, methodBinder, null);
 	}
 
-	public CompoundBinder(ClassBinder<AnnotationType> classBinder)
+	public CompoundBinder(TypeBinder<AnnotationType> typeBinder)
 	{
-		this(null, null, classBinder);
+		this(null, null, typeBinder);
 	}
 
 	public CompoundBinder(@Nullable FieldBinder<AnnotationType> fieldBinder,
 	                      @Nullable MethodBinder<AnnotationType> methodBinder,
-	                      @Nullable ClassBinder<AnnotationType> classBinder)
+	                      @Nullable TypeBinder<AnnotationType> typeBinder)
 	{
 		if (fieldBinder != null)
 		{
@@ -64,15 +66,15 @@ public class CompoundBinder<AnnotationType extends Annotation>
 			mAnnotatedMethodRetriever = null;
 		}
 
-		if (classBinder != null)
+		if (typeBinder != null)
 		{
-			mClassBinder = classBinder;
-			mAnnotatedClassRetriever = new AnnotatedClassRetriever<>(classBinder.getAnnotationClass());
+			mTypeBinder = typeBinder;
+			mAnnotatedTypeRetriever = new AnnotatedTypeRetriever<>(typeBinder.getAnnotationClass());
 		}
 		else
 		{
-			mClassBinder = null;
-			mAnnotatedClassRetriever = null;
+			mTypeBinder = null;
+			mAnnotatedTypeRetriever = null;
 		}
 	}
 
@@ -104,13 +106,13 @@ public class CompoundBinder<AnnotationType extends Annotation>
 			}
 		}
 
-		if (mClassBinder != null && mAnnotatedClassRetriever != null)
+		if (mTypeBinder != null && mAnnotatedTypeRetriever != null)
 		{
-			AnnotatedClass<AnnotationType> annotated_class = mAnnotatedClassRetriever.getAnnotatedClass(object.getClass());
+			AnnotatedType<AnnotationType> annotated_class = mAnnotatedTypeRetriever.getAnnotatedClass(object.getClass());
 
 			if (annotated_class != null)
 			{
-				mClassBinder.bind(object, annotated_class);
+				mTypeBinder.bind(object, annotated_class);
 			}
 		}
 	}

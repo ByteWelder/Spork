@@ -3,7 +3,7 @@ package io.github.sporklibrary.test.methodbinding;
 import io.github.sporklibrary.reflection.AnnotatedMethod;
 import io.github.sporklibrary.binders.MethodBinder;
 
-public class TestMethodBinder implements MethodBinder<BindMethod>
+public class BindMethodBinder implements MethodBinder<BindMethod>
 {
 	private int mMethodCount = 0;
 

@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 
 public class MethodBindingTests
 {
-	private TestMethodBinder mTestMethodBinder;
+	private BindMethodBinder mBindMethodBinder;
 
 	public static class MethodBinderParent
 	{
@@ -44,18 +44,18 @@ public class MethodBindingTests
 	@Before
 	public void registerTestBinders()
 	{
-		mTestMethodBinder = new TestMethodBinder();
-		Spork.getBinderManager().register(mTestMethodBinder);
+		mBindMethodBinder = new BindMethodBinder();
+		Spork.getBinderManager().register(mBindMethodBinder);
 	}
 
 	@Test
 	public void methodBinding()
 	{
-		assertEquals(mTestMethodBinder.getMethodCount(), 0);
+		assertEquals(mBindMethodBinder.getMethodCount(), 0);
 
 		new MethodBinderParent();
 
-		assertEquals(mTestMethodBinder.getMethodCount(), 2);
+		assertEquals(mBindMethodBinder.getMethodCount(), 2);
 	}
 
 	@Test

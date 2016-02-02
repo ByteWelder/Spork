@@ -5,7 +5,7 @@ import io.github.sporklibrary.reflection.AnnotatedMethod;
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.binders.MethodBinder;
 
-public class TestFieldAndMethodBinder implements FieldBinder<BindFieldOrMethod>, MethodBinder<BindFieldOrMethod>
+public class BindFieldOrMethodBinder implements FieldBinder<BindFieldOrMethod>, MethodBinder<BindFieldOrMethod>
 {
 	private int mMethodBindCount = 0;
 

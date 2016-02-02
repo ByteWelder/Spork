@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class FieldAndMethodBindingTests
 {
-	private TestFieldAndMethodBinder mTestBinder;
+	private BindFieldOrMethodBinder mTestBinder;
 
 	public static class BinderParent
 	{
@@ -28,7 +28,7 @@ public class FieldAndMethodBindingTests
 	@Before
 	public void registerTestBinders()
 	{
-		mTestBinder = new TestFieldAndMethodBinder();
+		mTestBinder = new BindFieldOrMethodBinder();
 		Spork.getBinderManager().register(mTestBinder, mTestBinder, null);
 	}
 

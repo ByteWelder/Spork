@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-public class BindExceptionTest
+public class BindExceptionTests
 {
 	public class TestClass
 	{
