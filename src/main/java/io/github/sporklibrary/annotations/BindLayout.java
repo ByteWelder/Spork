@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
 public @interface BindLayout
 {
 	/**
-	 * Specifies the layout resource id from R.layout.*
+	 * @return the layout resource id from R.layout.*
 	 */
 	int value();
 }
