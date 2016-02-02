@@ -12,7 +12,8 @@ public @interface BindComponent
 	final class Default {}
 
 	/**
-	 * Specifies an override for the implementation to bind
+	 * Specifies an override for the implementation to bind.
+	 * When Default.class is used, the Field's class will be used.
 	 * @return the implementation class
 	 */
 	Class<?> implementation() default Default.class;

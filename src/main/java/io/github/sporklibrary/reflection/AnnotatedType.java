@@ -3,7 +3,7 @@ package io.github.sporklibrary.reflection;
 import java.lang.annotation.Annotation;
 
 /**
- * A model that contains an Annotation and a Class type
+ * A model that contains an {@link Annotation} and a {@link Class} type
  * @param <AnnotationType> the annotation type to store
  */
 public class AnnotatedType<AnnotationType extends Annotation>

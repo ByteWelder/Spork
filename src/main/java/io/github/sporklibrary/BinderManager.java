@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The BinderManager manages CompoundBinder objects.
+ * The BinderManager manages {@link CompoundBinder} objects.
  */
 public class BinderManager
 {

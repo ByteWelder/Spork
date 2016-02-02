@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Can be used with a Component class to set its scope.
+ * Can be used with a {@link BindComponent} target class to set its scope.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
