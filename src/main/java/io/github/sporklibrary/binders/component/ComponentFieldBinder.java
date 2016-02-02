@@ -1,8 +1,8 @@
 package io.github.sporklibrary.binders.component;
 
 import io.github.sporklibrary.annotations.BindComponent;
-import io.github.sporklibrary.binders.AnnotatedField;
-import io.github.sporklibrary.binders.AnnotatedFields;
+import io.github.sporklibrary.reflection.AnnotatedField;
+import io.github.sporklibrary.reflection.AnnotatedFields;
 import io.github.sporklibrary.binders.FieldBinder;
 
 /**

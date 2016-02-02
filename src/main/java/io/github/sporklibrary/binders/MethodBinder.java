@@ -1,5 +1,7 @@
 package io.github.sporklibrary.binders;
 
+import io.github.sporklibrary.reflection.AnnotatedMethod;
+
 import java.lang.annotation.Annotation;
 
 /**

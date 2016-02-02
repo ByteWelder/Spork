@@ -1,5 +1,6 @@
 package io.github.sporklibrary.binders;
 
+import io.github.sporklibrary.reflection.*;
 import io.github.sporklibrary.annotations.Nullable;
 import java.lang.annotation.Annotation;
 import java.util.Set;
@@ -20,7 +21,7 @@ public class CompoundBinder<AnnotationType extends Annotation>
 
 	private final @Nullable AnnotatedMethodRetriever<AnnotationType> mAnnotatedMethodRetriever;
 
-	private final @Nullable AnnotatedClassRetriever<AnnotationType> mAnnotatedClassRetriever;
+	private final @Nullable	AnnotatedClassRetriever<AnnotationType> mAnnotatedClassRetriever;
 
 	public CompoundBinder(FieldBinder<AnnotationType> fieldBinder)
 	{

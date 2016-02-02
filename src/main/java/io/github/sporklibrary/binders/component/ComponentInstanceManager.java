@@ -2,8 +2,8 @@ package io.github.sporklibrary.binders.component;
 
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindComponent;
-import io.github.sporklibrary.annotations.Component;
-import io.github.sporklibrary.binders.AnnotatedField;
+import io.github.sporklibrary.annotations.ComponentScope;
+import io.github.sporklibrary.reflection.AnnotatedField;
 import io.github.sporklibrary.exceptions.BindException;
 
 import java.lang.reflect.Constructor;
@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Manages Component instances for types that are annotated with the Component annotation.
  */
-class ComponentInstanceManager
+public class ComponentInstanceManager
 {
 	private final Map<Class<?>, Object> mSingletonInstances = new HashMap<>();
 
@@ -35,14 +35,9 @@ class ComponentInstanceManager
 			throw new BindException(BindComponent.class, parent.getClass(), annotatedField.getField(), "incompatible type");
 		}
 
-		Component component_annotation = field_target_class.getAnnotation(Component.class);
+		ComponentScope.Scope scope = getScope(field_target_class);
 
-		if (component_annotation == null)
-		{
-			throw new BindException(BindComponent.class, parent.getClass(), annotatedField.getField(), "no Component annotation found at target class");
-		}
-
-		switch (component_annotation.scope())
+		switch (scope)
 		{
 			case SINGLETON:
 				Object instance = mSingletonInstances.get(field_target_class);
@@ -52,6 +47,13 @@ class ComponentInstanceManager
 			default:
 				return create(field_target_class);
 		}
+	}
+
+	public ComponentScope.Scope getScope(Class<?> componentClass)
+	{
+		ComponentScope annotation = componentClass.getAnnotation(ComponentScope.class);
+
+		return annotation != null ? annotation.value() : ComponentScope.Scope.DEFAULT;
 	}
 
 	private Class<?> getTargetClass(AnnotatedField<BindComponent> annotatedField)
@@ -93,17 +95,17 @@ class ComponentInstanceManager
 		}
 		catch (NoSuchMethodException e)
 		{
-			throw new BindException(Component.class, classObject, "no default constructor found for " + classObject.getName() + " (must have a constructor with zero arguments)");
+			throw new BindException(BindComponent.class, classObject, "no default constructor found for " + classObject.getName() + " (must have a constructor with zero arguments)");
 		}
 		catch (InvocationTargetException e)
 		{
-			throw new BindException(Component.class, classObject, "constructor threw exception for " + classObject.getName(), e);
+			throw new BindException(BindComponent.class, classObject, "constructor threw exception for " + classObject.getName(), e);
 		}
 		catch (InstantiationException | IllegalAccessException e)
 		{
 			// This branch should never be called due to previous checks
 			// We only catch it because we have to
-			throw new BindException(Component.class, classObject, "failed to create instance of " + classObject.getName(), e);
+			throw new BindException(BindComponent.class, classObject, "failed to create instance of " + classObject.getName(), e);
 		}
 	}
 
