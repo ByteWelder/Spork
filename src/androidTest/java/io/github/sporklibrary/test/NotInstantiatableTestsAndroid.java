@@ -1,5 +1,6 @@
 package io.github.sporklibrary.test;
 
+import android.test.suitebuilder.annotation.SmallTest;
 import io.github.sporklibrary.exceptions.NotInstantiatableException;
 import io.github.sporklibrary.utils.ContextResolver;
 import io.github.sporklibrary.utils.FragmentResolver;
@@ -9,6 +10,7 @@ import org.junit.Test;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+@SmallTest
 public class NotInstantiatableTestsAndroid
 {
 	@Test(expected = NotInstantiatableException.class)

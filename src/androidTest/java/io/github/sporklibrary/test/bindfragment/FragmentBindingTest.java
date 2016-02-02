@@ -1,16 +1,13 @@
 package io.github.sporklibrary.test.bindfragment;
 
 import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
 import io.github.sporklibrary.test.bindfragment.domain.TestActivity;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertNotNull;
 
-@RunWith(AndroidJUnit4.class)
 @SmallTest
 public class FragmentBindingTest
 {

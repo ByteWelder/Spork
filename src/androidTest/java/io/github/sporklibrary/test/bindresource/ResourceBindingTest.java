@@ -3,7 +3,6 @@ package io.github.sporklibrary.test.bindresource;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
 import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.test.R;
@@ -13,12 +12,10 @@ import io.github.sporklibrary.test.bindresource.domain.TestDrawablePojo;
 import io.github.sporklibrary.test.bindresource.domain.TestStringPojo;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-@RunWith(AndroidJUnit4.class)
 @SmallTest
 public class ResourceBindingTest
 {

@@ -16,7 +16,7 @@ public class TestView extends android.view.View implements ResourceProvider
 	@BindResource(io.github.sporklibrary.test.R.string.app_name)
 	private String mAppName;
 
-	@BindResource(io.github.sporklibrary.test.R.string.app_name)
+	@BindResource
 	private String app_name;
 
 	@BindResource(io.github.sporklibrary.test.R.dimen.spork_test_dimension)

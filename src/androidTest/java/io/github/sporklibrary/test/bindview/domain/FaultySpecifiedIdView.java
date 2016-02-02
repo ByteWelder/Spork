@@ -2,17 +2,17 @@ package io.github.sporklibrary.test.bindview.domain;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.Button;
+import android.widget.FrameLayout;
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindView;
 import io.github.sporklibrary.test.R;
 
-public class CorruptTestView extends View
+public class FaultySpecifiedIdView extends FrameLayout
 {
-	@BindView(R.id.testview_button)
-	private Button mButton;
+	@BindView(R.id.testview)
+	protected View mFaultyView;
 
-	public CorruptTestView(Context context)
+	public FaultySpecifiedIdView(Context context)
 	{
 		super(context);
 
