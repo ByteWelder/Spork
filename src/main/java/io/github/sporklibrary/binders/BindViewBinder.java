@@ -6,6 +6,8 @@ import android.view.View;
 import io.github.sporklibrary.annotations.BindView;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.exceptions.BindException;
+import io.github.sporklibrary.reflection.AnnotatedField;
+import io.github.sporklibrary.reflection.AnnotatedFields;
 import io.github.sporklibrary.utils.ViewResolver;
 
 import java.lang.reflect.Field;

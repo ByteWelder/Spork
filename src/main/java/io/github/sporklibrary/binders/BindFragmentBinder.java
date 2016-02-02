@@ -7,6 +7,8 @@ import io.github.sporklibrary.annotations.BindFragment;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.exceptions.NotSupportedException;
+import io.github.sporklibrary.reflection.AnnotatedField;
+import io.github.sporklibrary.reflection.AnnotatedFields;
 import io.github.sporklibrary.utils.FragmentResolver;
 
 import java.lang.reflect.Field;

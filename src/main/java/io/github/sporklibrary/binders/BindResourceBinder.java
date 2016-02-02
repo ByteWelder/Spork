@@ -5,6 +5,8 @@ import android.graphics.drawable.Drawable;
 import io.github.sporklibrary.annotations.BindResource;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.exceptions.BindException;
+import io.github.sporklibrary.reflection.AnnotatedField;
+import io.github.sporklibrary.reflection.AnnotatedFields;
 import io.github.sporklibrary.utils.ContextResolver;
 
 public class BindResourceBinder implements FieldBinder<BindResource>

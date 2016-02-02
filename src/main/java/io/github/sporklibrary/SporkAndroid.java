@@ -1,9 +1,6 @@
 package io.github.sporklibrary;
 
-import io.github.sporklibrary.binders.BindClickBinder;
-import io.github.sporklibrary.binders.BindFragmentBinder;
-import io.github.sporklibrary.binders.BindResourceBinder;
-import io.github.sporklibrary.binders.BindViewBinder;
+import io.github.sporklibrary.binders.*;
 
 public class SporkAndroid
 {
@@ -25,6 +22,7 @@ public class SporkAndroid
 		Spork.getBinderManager().register(new BindFragmentBinder());
 		Spork.getBinderManager().register(new BindClickBinder());
 		Spork.getBinderManager().register(new BindResourceBinder());
+		Spork.getBinderManager().register(new BindLayoutBinder());
 
 		sInitialized = true;
 	}

@@ -6,6 +6,8 @@ import android.view.View;
 import io.github.sporklibrary.annotations.BindClick;
 import io.github.sporklibrary.annotations.BindView;
 import io.github.sporklibrary.exceptions.BindException;
+import io.github.sporklibrary.reflection.AnnotatedMethod;
+import io.github.sporklibrary.reflection.AnnotatedMethods;
 import io.github.sporklibrary.utils.ViewResolver;
 
 import java.lang.reflect.Method;
