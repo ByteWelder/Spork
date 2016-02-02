@@ -13,16 +13,16 @@ public class AnnotatedTypeRetriever<AnnotationType extends Annotation>
 {
 	private final Class<AnnotationType> mAnnotationClass;
 
-	private final Map<Class<?>, AnnotatedTypeTemp<AnnotationType>> mCache = new HashMap<>();
+	private final Map<Class<?>, AnnotatedType<AnnotationType>> mCache = new HashMap<>();
 
 	public AnnotatedTypeRetriever(Class<AnnotationType> annotationClass)
 	{
 		mAnnotationClass = annotationClass;
 	}
 
-	public AnnotatedTypeTemp<AnnotationType> getAnnotatedClass(Class<?> classObject)
+	public AnnotatedType<AnnotationType> getAnnotatedClass(Class<?> classObject)
 	{
-		AnnotatedTypeTemp<AnnotationType> annotated_class = mCache.get(classObject);
+		AnnotatedType<AnnotationType> annotated_class = mCache.get(classObject);
 
 		if (annotated_class != null)
 		{
@@ -33,7 +33,7 @@ public class AnnotatedTypeRetriever<AnnotationType extends Annotation>
 
 		if (annotation != null)
 		{
-			annotated_class = new AnnotatedTypeTemp<>(annotation, mAnnotationClass);
+			annotated_class = new AnnotatedType<>(annotation, mAnnotationClass);
 		}
 
 		mCache.put(classObject, annotated_class);

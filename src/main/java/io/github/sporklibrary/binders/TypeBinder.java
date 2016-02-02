@@ -1,6 +1,6 @@
 package io.github.sporklibrary.binders;
 
-import io.github.sporklibrary.reflection.AnnotatedTypeTemp;
+import io.github.sporklibrary.reflection.AnnotatedType;
 
 import java.lang.annotation.Annotation;
 
@@ -14,5 +14,5 @@ public interface TypeBinder<AnnotationType extends Annotation> extends Binder<An
 	 * @param object the class instance
 	 * @param annotatedClass the annotated class to bind
 	 */
-	void bind(Object object, AnnotatedTypeTemp<AnnotationType> annotatedClass);
+	void bind(Object object, AnnotatedType<AnnotationType> annotatedClass);
 }

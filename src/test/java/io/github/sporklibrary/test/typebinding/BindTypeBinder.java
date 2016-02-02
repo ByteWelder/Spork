@@ -2,7 +2,7 @@ package io.github.sporklibrary.test.typebinding;
 
 import io.github.sporklibrary.binders.TypeBinder;
 import io.github.sporklibrary.exceptions.BindException;
-import io.github.sporklibrary.reflection.AnnotatedTypeTemp;
+import io.github.sporklibrary.reflection.AnnotatedType;
 
 public class BindTypeBinder implements TypeBinder<BindValue>
 {
@@ -13,7 +13,7 @@ public class BindTypeBinder implements TypeBinder<BindValue>
 	}
 
 	@Override
-	public void bind(Object object, AnnotatedTypeTemp<BindValue> annotatedClass)
+	public void bind(Object object, AnnotatedType<BindValue> annotatedClass)
 	{
 		if (!IntSettable.class.isAssignableFrom(object.getClass()))
 		{

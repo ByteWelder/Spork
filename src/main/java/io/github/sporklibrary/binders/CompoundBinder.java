@@ -108,7 +108,7 @@ public class CompoundBinder<AnnotationType extends Annotation>
 
 		if (mTypeBinder != null && mAnnotatedTypeRetriever != null)
 		{
-			AnnotatedTypeTemp<AnnotationType> annotated_class = mAnnotatedTypeRetriever.getAnnotatedClass(object.getClass());
+			AnnotatedType<AnnotationType> annotated_class = mAnnotatedTypeRetriever.getAnnotatedClass(object.getClass());
 
 			if (annotated_class != null)
 			{
