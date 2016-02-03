@@ -27,7 +27,7 @@ apply from: './jacoco.gradle'
 
 ext {
     // Publishing
-    sporkVersion = '1.4.1'
+    sporkVersion = '1.5.0'
     sporkUserOrg = 'sporklibrary'
     sporkWebsite = 'https://sporklibrary.github.io'
     sporkGroupId = 'io.github.sporklibrary'
@@ -38,7 +38,7 @@ ext {
 
 dependencies {
     compile (
-        [group: 'io.github.sporklibrary', name: 'spork', version: '2.0.0'],
+        [group: 'io.github.sporklibrary', name: 'spork', version: '2.1.0'],
     )
 
     androidTestCompile (
