@@ -6,6 +6,11 @@ import java.lang.reflect.Method;
 
 public class BindException extends RuntimeException
 {
+	public BindException(Class<? extends Annotation> annotation, String message)
+	{
+		super(annotation.getSimpleName() + " failed: " + message);
+	}
+
 	public BindException(Class<? extends Annotation> annotation, Class<?> parent, String reason, Exception cause)
 	{
 		super(annotation.getSimpleName() + " failed for " + parent.getSimpleName()  + ": " + reason, cause);

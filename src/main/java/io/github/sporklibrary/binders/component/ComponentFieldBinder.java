@@ -21,7 +21,7 @@ public class ComponentFieldBinder implements FieldBinder<BindComponent>
 	@Override
 	public void bind(Object object, AnnotatedField<BindComponent> annotatedField)
 	{
-		Object instance = mComponentInstanceManager.getInstance(annotatedField, object);
+		Object instance = mComponentInstanceManager.getInstance(object, annotatedField);
 
 		AnnotatedFields.set(annotatedField, object, instance);
 	}

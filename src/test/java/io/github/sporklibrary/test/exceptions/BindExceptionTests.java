@@ -60,4 +60,10 @@ public class BindExceptionTests
 		Method method = TestClass.class.getMethods()[0];
 		throw new BindException(BindComponent.class, DefaultImpliedScopeComponent.class, method, "reason", new Exception());
 	}
+
+	@Test(expected = BindException.class)
+	public void testThrow7()
+	{
+		throw new BindException(BindComponent.class, "reason");
+	}
 }

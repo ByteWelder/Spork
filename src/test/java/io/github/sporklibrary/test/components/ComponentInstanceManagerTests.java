@@ -78,10 +78,10 @@ public class ComponentInstanceManagerTests
 		AnnotatedField<BindComponent> default_specified_annotated_field = new AnnotatedField<>(default_specified_annotation, default_specified_field);
 		AnnotatedField<BindComponent> singleton_annotated_field = new AnnotatedField<>(singelton_annotation, singleton_field);
 
-		Object default_implied_instance = manager.getInstance(default_implied_annotated_field, parent);
-		Object default_specified_instance = manager.getInstance(default_specified_annotated_field, parent);
-		Object singleton_instance = manager.getInstance(singleton_annotated_field, parent);
-		Object singleton_instance_copy = manager.getInstance(singleton_annotated_field, parent);
+		Object default_implied_instance = manager.getInstance(parent, default_implied_annotated_field);
+		Object default_specified_instance = manager.getInstance(parent, default_specified_annotated_field);
+		Object singleton_instance = manager.getInstance(parent, singleton_annotated_field);
+		Object singleton_instance_copy = manager.getInstance(parent, singleton_annotated_field);
 
 		assertNotNull(default_implied_instance);
 		assertNotNull(default_specified_instance);

@@ -1,10 +1,7 @@
 package io.github.sporklibrary;
 
 import io.github.sporklibrary.annotations.Nullable;
-import io.github.sporklibrary.binders.TypeBinder;
-import io.github.sporklibrary.binders.CompoundBinder;
-import io.github.sporklibrary.binders.FieldBinder;
-import io.github.sporklibrary.binders.MethodBinder;
+import io.github.sporklibrary.binders.*;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;

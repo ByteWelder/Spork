@@ -2,12 +2,16 @@ package io.github.sporklibrary.binders.component;
 
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindComponent;
+import io.github.sporklibrary.annotations.ComponentParent;
 import io.github.sporklibrary.annotations.ComponentScope;
+import io.github.sporklibrary.annotations.Nullable;
+import io.github.sporklibrary.exceptions.NotSupportedException;
 import io.github.sporklibrary.reflection.AnnotatedField;
 import io.github.sporklibrary.exceptions.BindException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Parameter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +30,7 @@ public class ComponentInstanceManager
 	 * @param parent the parent object that holds the field
 	 * @return the component instance
 	 */
-	public Object getInstance(AnnotatedField<BindComponent> annotatedField, Object parent)
+	public Object getInstance(Object parent, AnnotatedField<BindComponent> annotatedField)
 	{
 		Class<?> field_target_class = getTargetClass(annotatedField);
 
@@ -45,7 +49,7 @@ public class ComponentInstanceManager
 
 			case DEFAULT:
 			default:
-				return create(field_target_class);
+				return create(field_target_class, parent);
 		}
 	}
 
@@ -70,48 +74,90 @@ public class ComponentInstanceManager
 		}
 	}
 
-	private Object create(Class<?> classObject)
+	private Object create(Class<?> classObject, @Nullable Object parent)
 	{
 		try
 		{
-			Constructor<?> constructor = classObject.getConstructor();
-
-			if (constructor.isAccessible())
+			if (classObject.getConstructors().length != 1)
 			{
-				Object instance = constructor.newInstance();
-				Spork.bind(instance);
-
-				return instance;
+				throw new BindException(BindComponent.class, classObject, "components must have exactly 1 public constructor (explicit or implied)");
 			}
-			else
+
+			Constructor<?> constructor = classObject.getConstructors()[0];
+
+			boolean is_accessible = constructor.isAccessible();
+
+			// ensure constructor can be invoked
+			if (!is_accessible)
 			{
 				constructor.setAccessible(true);
-				Object instance = constructor.newInstance();
-				Spork.bind(instance);
-				constructor.setAccessible(false);
-
-				return instance;
 			}
-		}
-		catch (NoSuchMethodException e)
-		{
-			throw new BindException(BindComponent.class, classObject, "no default constructor found for " + classObject.getName() + " (must have a constructor with zero arguments)");
+
+			Object[] constructor_args = getConstructorArguments(constructor, parent);
+
+			Object instance = constructor.newInstance(constructor_args);
+
+			// reset accessibility
+			if (!is_accessible)
+			{
+				constructor.setAccessible(false);
+			}
+
+			// Bind recursively
+			Spork.getBinderManager().bind(instance);
+
+			return instance;
 		}
 		catch (InvocationTargetException e)
 		{
-			throw new BindException(BindComponent.class, classObject, "constructor threw exception for " + classObject.getName(), e);
+			throw new BindException(BindComponent.class, classObject, "constructor threw exception", e);
 		}
-		catch (InstantiationException | IllegalAccessException e)
+		catch (Exception e)
 		{
-			// This branch should never be called due to previous checks
-			// We only catch it because we have to
-			throw new BindException(BindComponent.class, classObject, "failed to create instance of " + classObject.getName(), e);
+			throw new BindException(BindComponent.class, classObject, "failed to create instance", e);
+		}
+	}
+
+	private Object[] getConstructorArguments(Constructor<?> constructor, @Nullable Object parent)
+	{
+		Parameter[] parameters = constructor.getParameters();
+
+		if (parameters.length == 0)
+		{
+			return new Object[0];
+		}
+		else if (parameters.length == 1)
+		{
+			Parameter parameter = constructor.getParameters()[0];
+
+			ComponentParent annotation = parameter.getAnnotation(ComponentParent.class);
+
+			if (annotation == null)
+			{
+				throw new BindException(BindComponent.class, "component constructor has an invalid parameter or the constructor parameter is missing the @ComponentParent annotation");
+			}
+
+			if (parent == null)
+			{
+				throw new BindException(BindComponent.class, "@ComponentParent only works with default-scoped components");
+			}
+
+			if (!parameter.getType().isAssignableFrom(parent.getClass()))
+			{
+				throw new BindException(BindComponent.class, "@ComponentParent target type is not compatible with the actual parent type");
+			}
+
+			return new Object[] { parent };
+		}
+		else
+		{
+			throw new NotSupportedException("component constructor must have 0 or 1 attributes");
 		}
 	}
 
 	private synchronized Object createSingletonInstance(Class<?> classObject)
 	{
-		Object instance = create(classObject);
+		Object instance = create(classObject, null);
 
 		mSingletonInstances.put(classObject, instance);
 
