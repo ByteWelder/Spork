@@ -13,11 +13,11 @@ import io.github.sporklibrary.test.bindfragment.FragmentProvider;
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 public class TestActivityApi17 extends Activity implements FragmentProvider
 {
-	@BindFragment(R.id.testfragment)
+	@BindFragment(R.id.testfragmentapi17)
 	private TestFragmentApi17 mTestFragment;
 
 	@BindFragment
-	private TestFragmentApi17 testfragment;
+	private TestFragmentApi17 testfragmentapi17;
 
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -37,12 +37,12 @@ public class TestActivityApi17 extends Activity implements FragmentProvider
 	@Override
 	public Fragment getFragmentByIdImplied()
 	{
-		return testfragment;
+		return testfragmentapi17;
 	}
 
 
 	public TestFragmentApi17 getTestFragment()
 	{
-		return testfragment;
+		return testfragmentapi17;
 	}
 }

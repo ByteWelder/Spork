@@ -52,6 +52,16 @@ public final class FragmentResolver
 			throw new BindException(BindFragment.class, fragment.getClass(), "Fragment not found");
 		}
 
-		return fragment.getChildFragmentManager().findFragmentById(fragment_id);
+		Fragment child_fragment = fragment.getChildFragmentManager().findFragmentById(fragment_id);
+
+		if (child_fragment == null)
+		{
+			// On a Wiko Sunset handset, the child fragment was registered with the regular FragmentManager:
+			return fragment.getFragmentManager().findFragmentById(fragment_id);
+		}
+		else
+		{
+			return child_fragment;
+		}
 	}
 }

@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <fragment android:name="io.github.sporklibrary.test.bindfragment.domain.TestFragmentApi17"
-        android:id="@+id/testfragment"
+        android:id="@+id/testfragmentapi17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
