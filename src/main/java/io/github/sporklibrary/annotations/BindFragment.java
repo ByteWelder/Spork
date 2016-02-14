@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 
 /**
  * Bind a Fragment instance.
- * Can be used on a Fragment field in a Fragment/Activity.
+ * Can be used on a Fragment field in a Fragment/Activity including the support library ones.
  * The bound Fragment field can be a Fragment or any class derived from it.
  */
 @Retention(RetentionPolicy.RUNTIME)

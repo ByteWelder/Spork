@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 
 /**
  * Bind a View instance.
- * Can be used on a View field in a Activity/Fragment(regular and support)/View.
+ * Can be used on a View field in a Activity/Fragment/View including support library Activities and Fragments.
  * The bound View field can be a View or any class derived from it.
  */
 @Retention(RetentionPolicy.RUNTIME)

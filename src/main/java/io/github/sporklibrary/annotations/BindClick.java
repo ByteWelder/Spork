@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 
 /**
  * Bind a View's OnClickListener result.
- * Can be used with a View/Fragment/Activity method.
+ * Can be used with a View/Fragment/Activity method. Support library Fragments Activities are supported too.
  * The value specified is the View id. When not specified, the name of the method will be used to resolve the id's name.
  * For example: "@BindClick void login() {}" would bind to R.id.login
  */

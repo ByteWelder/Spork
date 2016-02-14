@@ -13,7 +13,8 @@ import java.lang.annotation.Target;
  *  - String (R.string.*)
  *  - Float, float (R.dimen.*)
  *  - Drawable (R.drawable.*)
- * Can be used within a Application/Activity/Fragment(regular and support)/View.
+ * Can be used within a Application/Activity/Fragment(regular and support)/View
+ * including support library Activities and Fragments.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
