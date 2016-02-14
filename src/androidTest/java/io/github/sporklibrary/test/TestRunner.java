@@ -9,7 +9,7 @@ import io.github.sporklibrary.SporkAndroid;
 public class TestRunner extends android.support.test.runner.AndroidJUnitRunner
 {
 	private PowerManager.WakeLock mWakeLock;
-
+	
 	@Override
 	public void callApplicationOnCreate(Application app)
 	{
