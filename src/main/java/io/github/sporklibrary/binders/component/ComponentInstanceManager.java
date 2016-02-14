@@ -104,9 +104,6 @@ public class ComponentInstanceManager
 				constructor.setAccessible(false);
 			}
 
-			// Bind recursively
-			Spork.getBinderManager().bind(instance);
-
 			return instance;
 		}
 		catch (InvocationTargetException e)
