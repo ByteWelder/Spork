@@ -1,6 +1,7 @@
 branches:
   only:
     - master
+    - 2.0.0
 
 language: android
 
