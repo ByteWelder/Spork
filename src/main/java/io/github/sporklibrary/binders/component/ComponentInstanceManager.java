@@ -9,6 +9,7 @@ import io.github.sporklibrary.exceptions.NotSupportedException;
 import io.github.sporklibrary.reflection.AnnotatedField;
 import io.github.sporklibrary.exceptions.BindException;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Parameter;
@@ -118,19 +119,31 @@ public class ComponentInstanceManager
 		}
 	}
 
+	// Warning: This needs to be JDK 1.5 compatible because of Android support
 	private Object[] getConstructorArguments(Constructor<?> constructor, @Nullable Object parent)
 	{
-		Parameter[] parameters = constructor.getParameters();
+		Class<?>[] parameter_types = constructor.getParameterTypes();
 
-		if (parameters.length == 0)
+		if (parameter_types.length == 0)
 		{
 			return new Object[0];
 		}
-		else if (parameters.length == 1)
+		else if (parameter_types.length == 1)
 		{
-			Parameter parameter = constructor.getParameters()[0];
+			Class<?> parameter_type = parameter_types[0];
 
-			ComponentParent annotation = parameter.getAnnotation(ComponentParent.class);
+			Annotation[] annotations = constructor.getParameterAnnotations()[0];
+
+			ComponentParent annotation = null;
+
+			for (Annotation a : annotations)
+			{
+				if (ComponentParent.class.isAssignableFrom(a.getClass()))
+				{
+					annotation = (ComponentParent)a;
+					break;
+				}
+			}
 
 			if (annotation == null)
 			{
@@ -142,7 +155,7 @@ public class ComponentInstanceManager
 				throw new BindException(BindComponent.class, "@ComponentParent only works with default-scoped components");
 			}
 
-			if (!parameter.getType().isAssignableFrom(parent.getClass()))
+			if (!parameter_type.isAssignableFrom(parent.getClass()))
 			{
 				throw new BindException(BindComponent.class, "@ComponentParent target type is not compatible with the actual parent type");
 			}
