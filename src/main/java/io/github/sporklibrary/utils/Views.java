@@ -31,10 +31,6 @@ public final class Views
 		{
 			return ((android.support.v4.app.Fragment)object).getView();
 		}
-		else if (SupportLibraries.hasAppCompatV7() && android.support.v7.app.AppCompatActivity.class.isAssignableFrom(object_class))
-		{
-			return ((android.support.v7.app.AppCompatActivity)object).getWindow().getDecorView();
-		}
 		else
 		{
 			return null;
