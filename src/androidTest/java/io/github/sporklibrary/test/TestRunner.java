@@ -14,6 +14,7 @@ public class TestRunner extends android.support.test.runner.AndroidJUnitRunner
 	public void callApplicationOnCreate(Application app)
 	{
 		SporkAndroid.initialize();
+		SporkAndroid.initialize(); // must be able to initialize multiple times without issues
 
 		// Unlock the screen
 		KeyguardManager keyguard = (KeyguardManager) app.getSystemService(Context.KEYGUARD_SERVICE);

@@ -43,6 +43,12 @@ public class ViewBindingTest
 		new FaultySpecifiedIdView(mActivityRule.getActivity());
 	}
 
+	@Test(expected = BindException.class)
+	public void bindFaultyTargetType()
+	{
+		new FaultyTargetTypeView(mActivityRule.getActivity());
+	}
+
 	private void testBinding(ViewProvider provider)
 	{
 		String message = "binding " + provider.getClass().getSimpleName();

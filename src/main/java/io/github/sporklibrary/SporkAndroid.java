@@ -2,7 +2,7 @@ package io.github.sporklibrary;
 
 import io.github.sporklibrary.binders.*;
 
-public class SporkAndroid
+public final class SporkAndroid
 {
 	private static boolean sInitialized = false;
 

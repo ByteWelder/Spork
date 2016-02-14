@@ -1,6 +1,6 @@
 package io.github.sporklibrary.utils;
 
-public class Classes
+public final class Classes
 {
 	public static Class<?> classForNameOrNull(String name)
 	{
