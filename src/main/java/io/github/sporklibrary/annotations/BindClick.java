@@ -1,5 +1,7 @@
 package io.github.sporklibrary.annotations;
 
+import io.github.sporklibrary.utils.ResourceId;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -18,6 +20,6 @@ public @interface BindClick
 	/**
 	 * @return View resource id as defined in R.id.*
 	 */
-	int value() default 0;
+	int value() default ResourceId.sDefaultValue;
 }
 

@@ -1,10 +1,8 @@
 package io.github.sporklibrary.utils;
 
-import android.app.Activity;
-import android.app.Fragment;
+import android.content.Context;
 import android.view.View;
 import io.github.sporklibrary.annotations.BindView;
-import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.exceptions.NotInstantiatableException;
 
@@ -15,58 +13,41 @@ public final class ViewResolver
 		throw new NotInstantiatableException(getClass());
 	}
 
-	public static @Nullable View getView(int viewId, String nameFallback, Activity activity)
+	/**
+	 * @param viewId R.id.* value or ResourceId.sDefaultValue
+	 * @param nameFallback used when ResourceId.sDefaultValue is set, this name will be used to resolve R.id.namefallback
+	 * @param object any Activity, Fragment or View (including support library types)
+	 * @return the found View
+	 */
+	public static View getView(int viewId, String nameFallback, Object object)
 	{
-		if (viewId == 0)
+		View root_view = Views.getRootView(object);
+
+		if (root_view == null)
+		{
+			throw new BindException(BindView.class, object.getClass(), "incompatible class to find views");
+		}
+
+		if (viewId == ResourceId.sDefaultValue)
 		{
 			// find by name
-			viewId = activity.getResources().getIdentifier(nameFallback, "id", activity.getPackageName());
+			Context context = root_view.getContext();
+
+			viewId = context.getResources().getIdentifier(nameFallback, "id", context.getPackageName());
+
+			if (viewId == 0)
+			{
+				throw new BindException(BindView.class, object.getClass(), "View not found with name '" + nameFallback + "'");
+			}
 		}
 
-		if (viewId == 0)
+		View view = root_view.findViewById(viewId);
+
+		if (view == null)
 		{
-			throw new BindException(BindView.class, activity.getClass(), "View not found");
+			throw new BindException(BindView.class, object.getClass(), "View not found");
 		}
 
-		return activity.findViewById(viewId);
-	}
-
-	public static @Nullable View getView(int viewId, String nameFallback, Fragment fragment)
-	{
-		View fragment_view = fragment.getView();
-
-		if (fragment_view == null)
-		{
-			throw new BindException(BindView.class, fragment.getClass(), "cannot inject when Fragment View is not yet created");
-		}
-
-		if (viewId == 0)
-		{
-			// find by name
-			viewId = fragment.getResources().getIdentifier(nameFallback, "id", fragment.getActivity().getPackageName());
-		}
-
-		if (viewId == 0)
-		{
-			throw new BindException(BindView.class, fragment.getClass(), "View not found");
-		}
-
-		return fragment_view.findViewById(viewId);
-	}
-
-	public static @Nullable View getView(int viewId, String nameFallback, View view)
-	{
-		if (viewId == 0)
-		{
-			// find by name
-			viewId = view.getResources().getIdentifier(nameFallback, "id", view.getContext().getPackageName());
-		}
-
-		if (viewId == 0)
-		{
-			throw new BindException(BindView.class, view.getClass(), "View not found");
-		}
-
-		return view.findViewById(viewId);
+		return view;
 	}
 }

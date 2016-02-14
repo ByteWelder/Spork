@@ -1,17 +1,11 @@
 package io.github.sporklibrary.binders;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.view.View;
 import io.github.sporklibrary.annotations.BindClick;
-import io.github.sporklibrary.annotations.BindView;
-import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.reflection.AnnotatedMethod;
 import io.github.sporklibrary.reflection.AnnotatedMethods;
 import io.github.sporklibrary.utils.ViewResolver;
-
-import java.lang.reflect.Method;
 
 public class BindClickBinder implements MethodBinder<BindClick>
 {
@@ -56,35 +50,8 @@ public class BindClickBinder implements MethodBinder<BindClick>
 	@Override
 	public void bind(final Object object, AnnotatedMethod<BindClick> annotatedMethod)
 	{
-		final @Nullable View view = getView(object, annotatedMethod);
-
-		if (view == null)
-		{
-			throw new BindException(BindView.class, object.getClass(),annotatedMethod.getMethod(),  "View not found");
-		}
+		final View view = ViewResolver.getView(annotatedMethod.getAnnotation().value(), annotatedMethod.getMethod().getName(), object);
 
 		view.setOnClickListener(new OnClickListener(annotatedMethod, object));
-	}
-
-	private View getView(Object object, AnnotatedMethod<BindClick> annotatedField)
-	{
-		Method method = annotatedField.getMethod();
-
-		if (Activity.class.isAssignableFrom(object.getClass()))
-		{
-			return ViewResolver.getView(annotatedField.getAnnotation().value(), method.getName(), (Activity)object);
-		}
-		else if (Fragment.class.isAssignableFrom(object.getClass()))
-		{
-			return ViewResolver.getView(annotatedField.getAnnotation().value(), method.getName(), (Fragment)object);
-		}
-		else if (View.class.isAssignableFrom(object.getClass()))
-		{
-			return ViewResolver.getView(annotatedField.getAnnotation().value(), method.getName(), (View)object);
-		}
-		else
-		{
-			throw new BindException(BindView.class, object.getClass(), method, "class must be View, Fragment or Activity");
-		}
 	}
 }

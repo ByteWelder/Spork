@@ -9,9 +9,8 @@ import android.view.ViewGroup;
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindFragment;
 import io.github.sporklibrary.test.R;
-import io.github.sporklibrary.test.bindfragment.FragmentProvider;
 
-public class TestFragmentApi17 extends Fragment implements FragmentProvider
+public class TestFragmentApi17 extends Fragment
 {
 	@BindFragment(R.id.testfragment)
 	private Fragment mFragment;
@@ -31,13 +30,11 @@ public class TestFragmentApi17 extends Fragment implements FragmentProvider
 		Spork.bind(this);
 	}
 
-	@Override
 	public Fragment getFragmentByIdSpecified()
 	{
 		return mFragment;
 	}
 
-	@Override
 	public Fragment getFragmentByIdImplied()
 	{
 		return testfragment;

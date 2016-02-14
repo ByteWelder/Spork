@@ -1,5 +1,7 @@
 package io.github.sporklibrary.annotations;
 
+import io.github.sporklibrary.utils.ResourceId;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -21,6 +23,6 @@ public @interface BindFragment
 	 * For example: "@BindFragment Fragment my_fragment;" would bind to R.id.my_fragment
 	 * @return Fragment resource id as defined in R.id.*
 	 */
-	int value() default 0;
+	int value() default ResourceId.sDefaultValue;
 }
 

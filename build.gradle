@@ -17,6 +17,9 @@ repositories {
     maven {
         url "https://dl.bintray.com/sporklibrary/spork"
     }
+    flatDir {
+        dirs 'libs'
+    }
 }
 
 apply plugin: 'com.android.library'
@@ -27,7 +30,7 @@ apply from: './jacoco.gradle'
 
 ext {
     // Publishing
-    sporkVersion = '1.5.1'
+    sporkVersion = '2.0.0'
     sporkUserOrg = 'sporklibrary'
     sporkWebsite = 'https://sporklibrary.github.io'
     sporkGroupId = 'io.github.sporklibrary'
@@ -41,8 +44,14 @@ dependencies {
         [group: 'io.github.sporklibrary', name: 'spork', version: '2.1.0'],
     )
 
+    provided (
+        [group: 'com.android.support', name: 'support-v4', version: '23+'],
+        [group: 'com.android.support', name: 'appcompat-v7', version: '23+']
+    )
+
     androidTestCompile (
-        [group: 'com.android.support', name: 'support-annotations', version: '22.2.0'],
+        [name:'support-v4-23.1.1', ext:'aar'],
+        [name:'appcompat-v7-23.1.1', ext:'aar'],
         [group: 'com.android.support.test', name: 'runner', version: '0.4.1'],
         [group: 'com.android.support.test.espresso', name: 'espresso-core', version: '2.2.1']
     )

@@ -8,6 +8,7 @@ import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.reflection.AnnotatedField;
 import io.github.sporklibrary.reflection.AnnotatedFields;
 import io.github.sporklibrary.utils.ContextResolver;
+import io.github.sporklibrary.utils.ResourceId;
 
 public class BindResourceBinder implements FieldBinder<BindResource>
 {
@@ -63,7 +64,7 @@ public class BindResourceBinder implements FieldBinder<BindResource>
 	{
 		int resource_id = annotatedField.getAnnotation().value();
 
-		if (resource_id == 0)
+		if (resource_id == ResourceId.sDefaultValue)
 		{
 			resource_id = context.getResources().getIdentifier(annotatedField.getField().getName(), "string", context.getPackageName());
 		}
@@ -75,7 +76,7 @@ public class BindResourceBinder implements FieldBinder<BindResource>
 	{
 		int resource_id = annotatedField.getAnnotation().value();
 
-		if (resource_id == 0)
+		if (resource_id == ResourceId.sDefaultValue)
 		{
 			resource_id = context.getResources().getIdentifier(annotatedField.getField().getName(), "dimen", context.getPackageName());
 		}
@@ -87,7 +88,7 @@ public class BindResourceBinder implements FieldBinder<BindResource>
 	{
 		int resource_id = annotatedField.getAnnotation().value();
 
-		if (resource_id == 0)
+		if (resource_id == ResourceId.sDefaultValue)
 		{
 			resource_id = context.getResources().getIdentifier(annotatedField.getField().getName(), "drawable", context.getPackageName());
 		}

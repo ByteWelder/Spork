@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.view.View;
 import io.github.sporklibrary.exceptions.NotInstantiatableException;
+import io.github.sporklibrary.utils.support.SupportFragments;
 
 public final class ContextResolver
 {
@@ -33,6 +34,10 @@ public final class ContextResolver
 		else if (Application.class.isAssignableFrom(object_class))
 		{
 			return (Application)object;
+		}
+		else if (SupportFragments.isFragmentClass(object_class))
+		{
+			return ((android.support.v4.app.Fragment)object).getActivity();
 		}
 		else
 		{

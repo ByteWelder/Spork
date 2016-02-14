@@ -3,15 +3,16 @@ package io.github.sporklibrary.test.bindresource.domain;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindResource;
-import io.github.sporklibrary.test.bindresource.ResourceProvider;
 import io.github.sporklibrary.test.R;
+import io.github.sporklibrary.test.bindresource.ResourceProvider;
 
-public class TestFragment extends android.app.Fragment implements ResourceProvider
+public class TestFragmentSupport extends Fragment implements ResourceProvider
 {
 	@BindResource(R.string.app_name)
 	private String mAppName;

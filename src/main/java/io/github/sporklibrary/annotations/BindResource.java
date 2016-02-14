@@ -1,5 +1,7 @@
 package io.github.sporklibrary.annotations;
 
+import io.github.sporklibrary.utils.ResourceId;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -11,7 +13,7 @@ import java.lang.annotation.Target;
  *  - String (R.string.*)
  *  - Float, float (R.dimen.*)
  *  - Drawable (R.drawable.*)
- * Can be used within a Fragment/Activity/View/Application.
+ * Can be used within a Application/Activity/Fragment(regular and support)/View.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
@@ -22,5 +24,5 @@ public @interface BindResource
 	 * For example: "@BindResource String my_string;" would bind to R.string.my_string
 	 * @return resource id as defined in R.java
 	 */
-	int value() default 0;
+	int value() default ResourceId.sDefaultValue;
 }

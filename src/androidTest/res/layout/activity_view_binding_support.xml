@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+	<fragment android:name="io.github.sporklibrary.test.bindview.domain.TestFragmentSupport"
+	          android:id="@+id/viewbindingfragment"
+	          android:layout_width="wrap_content"
+	          android:layout_height="wrap_content" />
+
+	<io.github.sporklibrary.test.bindview.domain.TestView
+		android:id="@+id/viewbindingview"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"/>
+</LinearLayout>
