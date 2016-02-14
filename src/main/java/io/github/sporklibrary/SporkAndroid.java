@@ -18,11 +18,11 @@ public final class SporkAndroid
 		}
 
 		// Register binders
+		Spork.getBinderManager().register(new BindLayoutBinder()); // layouts must be bound before views
 		Spork.getBinderManager().register(new BindViewBinder());
 		Spork.getBinderManager().register(new BindFragmentBinder());
 		Spork.getBinderManager().register(new BindClickBinder());
 		Spork.getBinderManager().register(new BindResourceBinder());
-		Spork.getBinderManager().register(new BindLayoutBinder());
 
 		sInitialized = true;
 	}
