@@ -9,6 +9,9 @@ import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindFragment;
 import io.github.sporklibrary.test.R;
 
+/**
+ * Tests child fragments.
+ */
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 public class TestActivityApi17 extends Activity
 {

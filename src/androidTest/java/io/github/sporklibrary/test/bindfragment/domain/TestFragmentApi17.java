@@ -10,6 +10,9 @@ import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindFragment;
 import io.github.sporklibrary.test.R;
 
+/**
+ * Child fragment testing.
+ */
 public class TestFragmentApi17 extends Fragment
 {
 	@BindFragment(R.id.testfragment)

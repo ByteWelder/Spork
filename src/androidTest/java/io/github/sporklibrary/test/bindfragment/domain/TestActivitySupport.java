@@ -33,4 +33,9 @@ public class TestActivitySupport extends AppCompatActivity
 	{
 		return testfragment;
 	}
+
+	public TestFragmentSupport getTestFragment()
+	{
+		return mFragment;
+	}
 }

@@ -21,5 +21,9 @@ public class FragmentBindingTestSupport
 
 		assertNotNull("fragment by specified id", activity.getFragmentByIdSpecified());
 		assertNotNull("fragment by implied id", activity.getFragmentByIdImplied());
+
+		assertNotNull("TestFragmentSupport", activity.getTestFragment());
+		assertNotNull("TestFragmentSupport child by implied id", activity.getTestFragment().getFragmentByIdImplied());
+		assertNotNull("TestFragmentSupport child by specified id", activity.getTestFragment().getFragmentByIdSpecified());
 	}
 }
