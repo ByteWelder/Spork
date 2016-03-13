@@ -16,6 +16,7 @@ public class MockingComponentFactory extends DefaultComponentFactory
 	 * Register a new mocking type for the provided component type.
 	 * @param componentClass the component class to mock
 	 * @param mockClass the mocking class
+	 * @return this instance so it can be changed with other register() calls
 	 */
 	public MockingComponentFactory register(Class<?> componentClass, Class<?> mockClass)
 	{

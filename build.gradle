@@ -21,7 +21,7 @@ apply plugin: 'bintray-release'
 
 ext {
     // Publishing
-    sporkVersion = '2.4.0'
+    sporkVersion = '2.4.1'
     sporkUserOrg = 'sporklibrary'
     sporkWebsite = 'https://sporklibrary.github.io'
     sporkGroupId = 'io.github.sporklibrary'
@@ -69,9 +69,16 @@ publish {
     website = sporkWebsite
 }
 
-task javadocJar(type: Jar) {
-	archiveName = sporkArtifactId + "-" + sporkVersion + "-" + "javadoc.jar"
- 	from('build/docs/javadoc') {
-		include '**'
-	}
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar, javadocJar
 }
