@@ -21,6 +21,7 @@ public final class SporkMockito
 
 	/**
 	 * Registers the MockitoComponentFactory that will mock all Spork components.
+	 * @param classes the classes to mock
 	 */
 	public static void initialize(Class<?>... classes)
 	{
@@ -30,6 +31,10 @@ public final class SporkMockito
 		initialize(filter);
 	}
 
+	/**
+	 * Register the MockitoComponentFactory with a specified class filter.
+	 * @param filter the class filter
+	 */
 	public static void initialize(MockitoFilter filter)
 	{
 		MockitoComponentFactory mocking_factory = new MockitoComponentFactory(filter);
