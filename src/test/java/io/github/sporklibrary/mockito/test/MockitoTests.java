@@ -11,15 +11,9 @@ import static org.mockito.Mockito.when;
 
 public class MockitoTests
 {
-	public interface IntGetter
+	public static class Component
 	{
-		int get();
-	}
-
-	public static class IntGetterImplementation implements IntGetter
-	{
-		@Override
-		public int get()
+		public int getValue()
 		{
 			return 1;
 		}
@@ -27,17 +21,17 @@ public class MockitoTests
 
 	public static class Parent
 	{
-		@BindComponent(IntGetterImplementation.class)
-		private IntGetter mIntGetter;
+		@BindComponent
+		private Component mComponent;
 
 		public Parent()
 		{
 			Spork.bind(this);
 		}
 
-		public IntGetter getIntGetter()
+		public Component getComponent()
 		{
-			return mIntGetter;
+			return mComponent;
 		}
 	}
 
@@ -54,7 +48,7 @@ public class MockitoTests
 	public void testSpecificMockingBehavior()
 	{
 		// Enable Mockito for 1 class
-		SporkMockito.initialize(IntGetterImplementation.class);
+		SporkMockito.initialize(Component.class);
 
 		runMockingTests();
 	}
@@ -75,17 +69,17 @@ public class MockitoTests
 
 		// The created instance should not be mocked, since the filter disallows it
 		Parent mocked_parent = new Parent();
-		IntGetter mocked_int_getter = mocked_parent.getIntGetter();
-		assertEquals("IntGetter default value", 1, mocked_int_getter.get());
+		Component mocked_component = mocked_parent.getComponent();
+		assertEquals("Component default value", 1, mocked_component.getValue());
 	}
 
 	private void runMockingTests()
 	{
 		Parent mocked_parent = new Parent();
-		IntGetter mocked_int_getter = mocked_parent.getIntGetter();
+		Component mocked_component = mocked_parent.getComponent();
 
-		assertEquals("mocked IntGetter default value", 0, mocked_int_getter.get());
-		when(mocked_int_getter.get()).thenReturn(2);
-		assertEquals("mocked IntGetter overridden value", 2, mocked_int_getter.get());
+		assertEquals("mocked Component default value", 0, mocked_component.getValue());
+		when(mocked_component.getValue()).thenReturn(2);
+		assertEquals("mocked Component overridden value", 2, mocked_component.getValue());
 	}
 }
