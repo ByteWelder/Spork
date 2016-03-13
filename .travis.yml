@@ -1,0 +1,20 @@
+branches:
+  only:
+    - master
+
+language: java
+sudo: false
+
+jdk:
+  - oraclejdk8
+ 
+script:
+  - ./gradlew check --continue --info
+
+cache:
+  directories:
+    - $HOME/.gradle
+    - $HOME/.m2/repository
+
+after_success:
+- ./gradlew jacocoTestReport coveralls
