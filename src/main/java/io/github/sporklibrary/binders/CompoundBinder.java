@@ -15,15 +15,13 @@ public class CompoundBinder<AnnotationType extends Annotation>
 
 	private final @Nullable MethodBinder<AnnotationType> mMethodBinder;
 
-	private final @Nullable
-	TypeBinder<AnnotationType> mTypeBinder;
+	private final @Nullable TypeBinder<AnnotationType> mTypeBinder;
 
 	private final @Nullable AnnotatedFieldRetriever<AnnotationType> mAnnotatedFieldRetriever;
 
 	private final @Nullable AnnotatedMethodRetriever<AnnotationType> mAnnotatedMethodRetriever;
 
-	private final @Nullable
-	AnnotatedTypeRetriever<AnnotationType> mAnnotatedTypeRetriever;
+	private final @Nullable	AnnotatedTypeRetriever<AnnotationType> mAnnotatedTypeRetriever;
 
 	public CompoundBinder(FieldBinder<AnnotationType> fieldBinder)
 	{

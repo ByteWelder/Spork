@@ -5,7 +5,7 @@ import io.github.sporklibrary.annotations.BindComponent;
 
 public class ShoppingCart
 {
-	@BindComponent(implementation = IceCream.class)
+	@BindComponent(IceCream.class)
 	private Dairy mDairy;
 
 	public ShoppingCart()

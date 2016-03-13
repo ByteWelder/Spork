@@ -16,5 +16,5 @@ public @interface BindComponent
 	 * When Default.class is used, the Field's class will be used.
 	 * @return the implementation class
 	 */
-	Class<?> implementation() default Default.class;
+	Class<?> value() default Default.class;
 }

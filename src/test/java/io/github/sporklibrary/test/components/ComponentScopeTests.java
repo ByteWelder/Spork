@@ -76,7 +76,7 @@ public class ComponentScopeTests
 
 		assertNotNull(bind_component_annotation);
 
-		assertTrue(BindComponent.Default.class.equals(bind_component_annotation.implementation()));
+		assertTrue(BindComponent.Default.class.equals(bind_component_annotation.value()));
 	}
 
 	@Test
@@ -90,7 +90,7 @@ public class ComponentScopeTests
 
 		assertNotNull(bind_component_annotation);
 
-		assertTrue(BindComponent.Default.class.equals(bind_component_annotation.implementation()));
+		assertTrue(BindComponent.Default.class.equals(bind_component_annotation.value()));
 	}
 
 	@Test
