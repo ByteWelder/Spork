@@ -4,7 +4,9 @@
 [![Download][download-svg]][download-link]
 [![License][license-svg]][license-link]
 
-A set of helpers to use Mockito with Spork.
+Mockito support for Spork.
+
+Documentation is available on the [website](https://sporklibrary.github.io/documentation/testing)
 
 ## License
 
