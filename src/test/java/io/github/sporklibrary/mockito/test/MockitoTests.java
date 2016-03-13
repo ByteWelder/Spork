@@ -2,6 +2,7 @@ package io.github.sporklibrary.mockito.test;
 
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindComponent;
+import io.github.sporklibrary.mockito.MockitoFilter;
 import io.github.sporklibrary.mockito.SporkMockito;
 import org.junit.Test;
 
@@ -41,16 +42,45 @@ public class MockitoTests
 	}
 
 	@Test
-	public void test()
+	public void testDefaultMockingBehavior()
 	{
-		// Check that normal behavior is working
-		Parent parent = new Parent();
-		IntGetter regular_int_getter = parent.getIntGetter();
-		assertEquals("regular IntGetter value", 1, regular_int_getter.get());
+		// Enable Mockito for all classes
+		SporkMockito.initialize();
 
-		// Enable Mockito
-		SporkMockito.register();
+		runMockingTests();
+	}
 
+	@Test
+	public void testSpecificMockingBehavior()
+	{
+		// Enable Mockito for 1 class
+		SporkMockito.initialize(IntGetterImplementation.class);
+
+		runMockingTests();
+	}
+
+	@Test
+	public void testDefaultBehavior()
+	{
+		// Check that non-mocking behavior is working
+
+		// Enable Mockito but don't allow any types
+		SporkMockito.initialize(new MockitoFilter() {
+			@Override
+			public boolean shouldMockWithMockito(Class<?> classObject)
+			{
+				return false;
+			}
+		});
+
+		// The created instance should not be mocked, since the filter disallows it
+		Parent mocked_parent = new Parent();
+		IntGetter mocked_int_getter = mocked_parent.getIntGetter();
+		assertEquals("IntGetter default value", 1, mocked_int_getter.get());
+	}
+
+	private void runMockingTests()
+	{
 		Parent mocked_parent = new Parent();
 		IntGetter mocked_int_getter = mocked_parent.getIntGetter();
 
