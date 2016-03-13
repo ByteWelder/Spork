@@ -75,8 +75,8 @@ public class MockitoTests
 
 	private void runMockingTests()
 	{
-		Parent mocked_parent = new Parent();
-		Component mocked_component = mocked_parent.getComponent();
+		Parent parent = new Parent();
+		Component mocked_component = parent.getComponent();
 
 		assertEquals("mocked Component default value", 0, mocked_component.getValue());
 		when(mocked_component.getValue()).thenReturn(2);

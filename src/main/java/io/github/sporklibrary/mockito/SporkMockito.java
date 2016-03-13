@@ -7,6 +7,9 @@ import io.github.sporklibrary.mockito.filters.AllowSet;
 import java.util.Arrays;
 import java.util.HashSet;
 
+/**
+ * The main entry point for Spork Mockito functionality.
+ */
 public final class SporkMockito
 {
 	/**

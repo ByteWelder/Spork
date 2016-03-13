@@ -4,6 +4,9 @@ import io.github.sporklibrary.mockito.MockitoFilter;
 
 import java.util.Set;
 
+/**
+ * A filter used to mock specified (component) classes.
+ */
 public class AllowSet implements MockitoFilter
 {
 	private final Set<Class<?>> mClassSet;
