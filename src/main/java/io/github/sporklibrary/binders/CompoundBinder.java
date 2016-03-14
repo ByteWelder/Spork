@@ -1,7 +1,8 @@
 package io.github.sporklibrary.binders;
 
-import io.github.sporklibrary.reflection.*;
 import io.github.sporklibrary.annotations.Nullable;
+import io.github.sporklibrary.reflection.*;
+
 import java.lang.annotation.Annotation;
 import java.util.Set;
 
@@ -84,34 +85,97 @@ public class CompoundBinder<AnnotationType extends Annotation>
 	{
 		if (mFieldBinder != null && mAnnotatedFieldRetriever != null)
 		{
-			Set<AnnotatedField<AnnotationType>> annotated_field_set = mAnnotatedFieldRetriever.getAnnotatedFields(object.getClass());
-
-			// Bind all fields for this object
-			for (AnnotatedField<AnnotationType> annotated_field : annotated_field_set)
-			{
-				mFieldBinder.bind(object, annotated_field);
-			}
+			bindFields(object);
 		}
 
 		if (mMethodBinder != null && mAnnotatedMethodRetriever != null)
 		{
-			Set<AnnotatedMethod<AnnotationType>> annotated_method_set = mAnnotatedMethodRetriever.getAnnotatedMethods(object.getClass());
-
-			// Bind all fields for this object
-			for (AnnotatedMethod<AnnotationType> annotated_method : annotated_method_set)
-			{
-				mMethodBinder.bind(object, annotated_method);
-			}
+			bindMethods(object);
 		}
 
 		if (mTypeBinder != null && mAnnotatedTypeRetriever != null)
 		{
-			AnnotatedType<AnnotationType> annotated_class = mAnnotatedTypeRetriever.getAnnotatedClass(object.getClass());
-
-			if (annotated_class != null)
-			{
-				mTypeBinder.bind(object, annotated_class);
-			}
+			bindType(object);
 		}
 	}
+
+	// region field binding
+
+	private void bindFields(Object object)
+	{
+		Class<?> object_class = object.getClass();
+
+		while (object_class != null && object_class != Object.class)
+		{
+			bindFields(object, object_class);
+
+			object_class = object_class.getSuperclass();
+		}
+	}
+
+	private void bindFields(Object object, Class<?> objectClass)
+	{
+		Set<AnnotatedField<AnnotationType>> annotated_field_set = mAnnotatedFieldRetriever.getAnnotatedFields(objectClass);
+
+		// Bind all fields for this object
+		for (AnnotatedField<AnnotationType> annotated_field : annotated_field_set)
+		{
+			mFieldBinder.bind(object, annotated_field);
+		}
+	}
+
+	// endregion
+
+	// region method binding
+
+	private void bindMethods(Object object)
+	{
+		Class<?> object_class = object.getClass();
+
+		while (object_class != null && object_class != Object.class)
+		{
+			bindMethods(object, object_class);
+
+			object_class = object_class.getSuperclass();
+		}
+	}
+
+	private void bindMethods(Object object, Class<?> objectClass)
+	{
+		Set<AnnotatedMethod<AnnotationType>> annotated_method_set = mAnnotatedMethodRetriever.getAnnotatedMethods(objectClass);
+
+		// Bind all fields for this object
+		for (AnnotatedMethod<AnnotationType> annotated_method : annotated_method_set)
+		{
+			mMethodBinder.bind(object, annotated_method);
+		}
+	}
+
+	// endregion
+
+	// region type binding
+
+	private void bindType(Object object)
+	{
+		Class<?> object_class = object.getClass();
+
+		while (object_class != null && object_class != Object.class)
+		{
+			bindType(object, object_class);
+
+			object_class = object_class.getSuperclass();
+		}
+	}
+
+	private void bindType(Object object, Class<?> objectClass)
+	{
+		AnnotatedType<AnnotationType> annotated_class = mAnnotatedTypeRetriever.getAnnotatedClass(objectClass);
+
+		if (annotated_class != null)
+		{
+			mTypeBinder.bind(object, annotated_class);
+		}
+	}
+
+	// endregion
 }

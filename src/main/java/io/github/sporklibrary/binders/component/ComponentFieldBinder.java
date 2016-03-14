@@ -1,9 +1,9 @@
 package io.github.sporklibrary.binders.component;
 
 import io.github.sporklibrary.annotations.BindComponent;
+import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.reflection.AnnotatedField;
 import io.github.sporklibrary.reflection.AnnotatedFields;
-import io.github.sporklibrary.binders.FieldBinder;
 
 /**
  * The default FieldBinder that binds field annotated with the Bind annotation.
