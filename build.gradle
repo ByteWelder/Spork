@@ -24,7 +24,7 @@ apply plugin: 'bintray-release'
 
 ext {
     // Publishing
-    sporkVersion = '1.0.1'
+    sporkVersion = '1.0.2'
     sporkUserOrg = 'sporklibrary'
     sporkWebsite = 'https://sporklibrary.github.io'
     sporkGroupId = 'io.github.sporklibrary'
@@ -50,7 +50,7 @@ version = sporkVersion
 
 dependencies {
     compile (
-        [group: 'io.github.sporklibrary', name: 'spork', version: '2.4.0'],
+        [group: 'io.github.sporklibrary', name: 'spork', version: '2.5.0'],
         [group: 'org.mockito', name: 'mockito-core', version: '1.+']
     )
 
