@@ -30,7 +30,7 @@ apply from: './jacoco.gradle'
 
 ext {
     // Publishing
-    sporkVersion = '2.2.1'
+    sporkVersion = '2.2.2'
     sporkUserOrg = 'sporklibrary'
     sporkWebsite = 'https://sporklibrary.github.io'
     sporkGroupId = 'io.github.sporklibrary'
