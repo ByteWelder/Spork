@@ -9,6 +9,9 @@ import org.junit.Test;
 import static io.github.sporklibrary.test.ClassAsserts.assertAnnotationDefaultClassWellDefined;
 import static io.github.sporklibrary.test.ClassAsserts.assertUtilityClassWellDefined;
 
+/**
+ * Test functionality on specific classes such as utility classes.
+ */
 public class ClassTests
 {
 	@Test

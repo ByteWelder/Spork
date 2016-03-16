@@ -48,6 +48,9 @@ public class ClassAsserts
 	}
 
 	/**
+	 * This assert is to test inner classes of Annotations that act as a default value for
+	 * a field such as: <code>Class<?> value() default Default.class</code> as can be
+	 * found in {@link io.github.sporklibrary.annotations.BindComponent}
 	 * @param classObject the class
 	 */
 	public static void assertAnnotationDefaultClassWellDefined(final Class<?> classObject)
