@@ -68,15 +68,15 @@ public class ComponentInstanceManagerTests
 
 		BindComponent default_implied_annotation = default_implied_field.getAnnotation(BindComponent.class);
 		BindComponent default_specified_annotation = default_specified_field.getAnnotation(BindComponent.class);
-		BindComponent singelton_annotation = singleton_field.getAnnotation(BindComponent.class);
+		BindComponent singleton_annotation = singleton_field.getAnnotation(BindComponent.class);
 
 		assertNotNull(default_implied_annotation);
 		assertNotNull(default_specified_annotation);
-		assertNotNull(singelton_annotation);
+		assertNotNull(singleton_annotation);
 
 		AnnotatedField<BindComponent> default_implied_annotated_field = new AnnotatedField<>(default_implied_annotation, default_implied_field);
 		AnnotatedField<BindComponent> default_specified_annotated_field = new AnnotatedField<>(default_specified_annotation, default_specified_field);
-		AnnotatedField<BindComponent> singleton_annotated_field = new AnnotatedField<>(singelton_annotation, singleton_field);
+		AnnotatedField<BindComponent> singleton_annotated_field = new AnnotatedField<>(singleton_annotation, singleton_field);
 
 		Object default_implied_instance = manager.getInstance(parent, default_implied_annotated_field);
 		Object default_specified_instance = manager.getInstance(parent, default_specified_annotated_field);

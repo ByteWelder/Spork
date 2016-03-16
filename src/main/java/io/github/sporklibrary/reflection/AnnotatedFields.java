@@ -1,7 +1,6 @@
 package io.github.sporklibrary.reflection;
 
 import io.github.sporklibrary.exceptions.BindException;
-import io.github.sporklibrary.exceptions.NotInstantiatableException;
 
 import java.lang.reflect.Field;
 
@@ -9,7 +8,6 @@ public final class AnnotatedFields
 {
 	private AnnotatedFields()
 	{
-		throw new NotInstantiatableException(getClass());
 	}
 
 	/**

@@ -10,7 +10,7 @@ import java.util.HashMap;
  */
 public class MockingComponentFactory extends DefaultComponentFactory
 {
-	private HashMap<Class<?>, Class<?>> mClassMap = new HashMap<>();
+	private final HashMap<Class<?>, Class<?>> mClassMap = new HashMap<>();
 
 	/**
 	 * Register a new mocking type for the provided component type.

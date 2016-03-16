@@ -2,7 +2,6 @@ package io.github.sporklibrary;
 
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.component.ComponentFieldBinder;
-import io.github.sporklibrary.exceptions.NotInstantiatableException;
 
 /**
  * Main class to access Spork functionality.
@@ -11,7 +10,6 @@ public final class Spork
 {
 	private Spork()
 	{
-		throw new NotInstantiatableException(getClass());
 	}
 
 	private static @Nullable BinderManager sBinderManager;

@@ -2,7 +2,6 @@ package io.github.sporklibrary.reflection;
 
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.exceptions.BindException;
-import io.github.sporklibrary.exceptions.NotInstantiatableException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -11,7 +10,6 @@ public final class AnnotatedMethods
 {
 	private AnnotatedMethods()
 	{
-		throw new NotInstantiatableException(getClass());
 	}
 
 	/**

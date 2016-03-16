@@ -58,7 +58,7 @@ public class ComponentInstanceManager
 		}
 	}
 
-	public ComponentScope.Scope getScope(Class<?> componentClass)
+	private ComponentScope.Scope getScope(Class<?> componentClass)
 	{
 		ComponentScope annotation = componentClass.getAnnotation(ComponentScope.class);
 

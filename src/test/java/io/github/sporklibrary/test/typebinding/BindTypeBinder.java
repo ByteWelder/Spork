@@ -13,7 +13,7 @@ public class BindTypeBinder implements TypeBinder<BindValue>
 	}
 
 	@Override
-	public void bind(Object object, AnnotatedType<BindValue> annotatedClass)
+	public void bind(Object object, AnnotatedType<BindValue> annotatedType)
 	{
 		if (!IntSettable.class.isAssignableFrom(object.getClass()))
 		{
@@ -22,7 +22,14 @@ public class BindTypeBinder implements TypeBinder<BindValue>
 
 		IntSettable value_holder = (IntSettable)object;
 
-		int value = annotatedClass.getAnnotation().value();
+		int value = annotatedType.getAnnotation().value();
+
+		// Internal test for improved code coverage
+		if (annotatedType.getAnnotatedClass() == null)
+		{
+			throw new RuntimeException("annotated class in AnnotatedType is null");
+		}
+
 		value_holder.setValue(value);
 	}
 }
