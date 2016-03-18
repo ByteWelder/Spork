@@ -7,6 +7,7 @@ import android.content.Context;
 import android.view.View;
 import io.github.sporklibrary.exceptions.NotInstantiatableException;
 import io.github.sporklibrary.utils.support.SupportFragments;
+import io.github.sporklibrary.utils.support.SupportLibraries;
 
 public final class ContextResolver
 {
@@ -38,6 +39,10 @@ public final class ContextResolver
 		else if (SupportFragments.isFragmentClass(object_class))
 		{
 			return ((android.support.v4.app.Fragment)object).getActivity();
+		}
+		else if (SupportLibraries.hasRecyclerViewV7() && android.support.v7.widget.RecyclerView.ViewHolder.class.isAssignableFrom(object_class))
+		{
+			return ((android.support.v7.widget.RecyclerView.ViewHolder)object).itemView.getContext();
 		}
 		else
 		{
