@@ -32,6 +32,10 @@ public final class Views
 		{
 			return ((android.support.v4.app.Fragment)object).getView();
 		}
+		else if (SupportLibraries.hasRecyclerViewV7() && android.support.v7.widget.RecyclerView.ViewHolder.class.isAssignableFrom(object_class))
+		{
+			return ((android.support.v7.widget.RecyclerView.ViewHolder)object).itemView;
+		}
 		else
 		{
 			return null;

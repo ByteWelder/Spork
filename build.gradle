@@ -30,7 +30,7 @@ apply from: './jacoco.gradle'
 
 ext {
     // Publishing
-    sporkVersion = '2.2.2'
+    sporkVersion = '2.3.0'
     sporkUserOrg = 'sporklibrary'
     sporkWebsite = 'https://sporklibrary.github.io'
     sporkGroupId = 'io.github.sporklibrary'
@@ -46,14 +46,17 @@ dependencies {
 
     provided (
         [group: 'com.android.support', name: 'support-v4', version: '23+'],
-        [group: 'com.android.support', name: 'appcompat-v7', version: '23+']
+        [group: 'com.android.support', name: 'appcompat-v7', version: '23+'],
+        [group: 'com.android.support', name: 'recyclerview-v7', version: '23+']
     )
 
     androidTestCompile (
-        [name:'support-v4-23.1.1', ext:'aar'],
-        [name:'appcompat-v7-23.1.1', ext:'aar'],
-        [group: 'com.android.support.test', name: 'runner', version: '0.4.1'],
-        [group: 'com.android.support.test.espresso', name: 'espresso-core', version: '2.2.1']
+        [name:'support-v4-23.2.1', ext:'aar'],
+        [name:'appcompat-v7-23.2.1', ext:'aar'],
+        [name:'recyclerview-v7-23.2.1', ext:'aar'],
+        [group: 'com.android.support.test', name: 'runner', version: '0.5'],
+        [group: 'com.android.support.test.espresso', name: 'espresso-core', version: '2.2.2'],
+        [group: 'com.android.support.test.espresso', name: 'espresso-contrib', version: '2.2.2']
     )
 }
 

@@ -25,7 +25,7 @@
 		<activity android:name=".bindlayout.domain.TestActivity"/>
 		<activity android:name=".bindlayout.domain.TestActivitySupport" android:theme="@style/Theme.AppCompat"/>
 
-		<service android:name=".bindcomponent.service.LocalService" />
+		<service android:name=".bindcomponent.service.TestService" />
 
 		<provider
 			android:authorities="sporktest"

@@ -8,16 +8,16 @@ import android.support.annotation.Nullable;
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindComponent;
 
-public class LocalService extends Service
+public class TestService extends Service
 {
 	@BindComponent
 	private TestComponent mTestComponent;
 
 	public class LocalBinder extends Binder
 	{
-		public LocalService getLocalService()
+		public TestService getLocalService()
 		{
-			return LocalService.this;
+			return TestService.this;
 		}
 	}
 

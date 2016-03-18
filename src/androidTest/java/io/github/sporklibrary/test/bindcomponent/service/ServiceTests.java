@@ -19,7 +19,7 @@ public class ServiceTests
 	@Test
 	public void test() throws TimeoutException
 	{
-		Intent service_intent = new Intent(InstrumentationRegistry.getTargetContext(), LocalService.class);
+		Intent service_intent = new Intent(InstrumentationRegistry.getTargetContext(), TestService.class);
 
 		// Bind the service and grab a reference to the binder.
 		IBinder binder = mServiceRule.bindService(service_intent);
@@ -28,7 +28,7 @@ public class ServiceTests
 
 		// Get the reference to the service, or you can call
 		// public methods on the binder directly.
-		LocalService service = ((LocalService.LocalBinder)binder).getLocalService();
+		TestService service = ((TestService.LocalBinder)binder).getLocalService();
 
 		assertNotNull(service);
 		assertNotNull(service.getTestComponent());
