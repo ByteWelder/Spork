@@ -38,7 +38,6 @@ public class TestActivitySupport extends AppCompatActivity implements ViewProvid
 		items.add("Alpha");
 		items.add("Beta");
 		items.add("Gamma");
-		items.add("Delta");
 
 		RecyclerViewAdapter adapter = new RecyclerViewAdapter(items);
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
