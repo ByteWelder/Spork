@@ -24,20 +24,23 @@ public class ViewBindingTestSupport
 	public ActivityTestRule<TestActivitySupport> mActivityRule = new ActivityTestRule<>(TestActivitySupport.class);
 
 	@Test
-	public void run()
+	public void testMain()
 	{
 		TestActivitySupport activity = mActivityRule.getActivity();
 
 		testBinding(activity);
 		testBinding(activity.getViewBindingFragment());
 		testBinding(activity.getViewBindingView());
+	}
+
+	@Test
+	public void testRecyclerView()
+	{
+		TestActivitySupport activity = mActivityRule.getActivity();
 
 		RecyclerView recycler_view = activity.getRecyclerView();
 
 		assertNotNull(recycler_view);
-
-		onView(withId(R.id.test_recyclerview))
-			.perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
 		onView(withId(R.id.test_recyclerview))
 			.check(matches(hasDescendant(withText("Alpha"))))

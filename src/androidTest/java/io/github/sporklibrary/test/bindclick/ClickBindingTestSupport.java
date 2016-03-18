@@ -1,11 +1,11 @@
 package io.github.sporklibrary.test.bindclick;
 
 import android.support.test.espresso.PerformException;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
-import io.github.sporklibrary.test.bindclick.domain.TestActivitySupport;
-import io.github.sporklibrary.test.bindclick.domain.TestFaultyClickArgumentsView;
-import io.github.sporklibrary.test.bindclick.domain.TestFragmentSupport;
-import io.github.sporklibrary.test.bindclick.domain.TestView;
+import android.support.v7.widget.RecyclerView;
+import io.github.sporklibrary.test.bindclick.domain.*;
+import io.github.sporklibrary.test.R;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -33,6 +33,29 @@ public class ClickBindingTestSupport
 		testClick(activity);
 		testClick(activity.getTestFragment());
 		testClick(activity.getTestView());
+	}
+
+	@Test
+	public void testRecyclerView()
+	{
+		RecyclerView recycler_view = mActivityRule.getActivity().getRecyclerView();
+
+		assertNotNull(recycler_view);
+		assertNotNull(recycler_view.getAdapter());
+
+		RecyclerViewAdapter test_adapter = (RecyclerViewAdapter)recycler_view.getAdapter();
+
+		assertEquals(0, test_adapter.getClickCount());
+
+		onView(withId(R.id.test_recyclerview))
+			.perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+
+		assertEquals(1, test_adapter.getClickCount());
+
+		onView(withId(R.id.test_recyclerview))
+			.perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
+
+		assertEquals(2, test_adapter.getClickCount());
 	}
 
 	@Test(expected = PerformException.class)
