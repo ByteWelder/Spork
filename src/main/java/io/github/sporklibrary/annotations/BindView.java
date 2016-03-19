@@ -9,8 +9,17 @@ import java.lang.annotation.Target;
 
 /**
  * Bind a View instance.
- * Can be used on a View field in a Activity/Fragment/View/RecyclerView.ViewHolder including support library Activities and Fragments.
- * The bound View field can be a View or any class derived from it.
+ *
+ * Can be used with classes derived from:
+ * <ul>
+ *     <li>{@link android.view.View}</li>
+ *     <li>{@link android.app.Activity}</li>
+ *     <li>{@link android.app.Fragment}</li>
+ *     <li>{@link android.support.v4.app.Fragment}</li>
+ *     <li>{@link android.support.v7.widget.RecyclerView.ViewHolder}</li>
+ * </ul>
+ *
+ * The value specified is the View id. When not specified, the name of the field will be used to resolve the id's name.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

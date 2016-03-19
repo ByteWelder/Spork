@@ -7,9 +7,12 @@ import java.lang.annotation.Target;
 
 /**
  * Bind a layout.
- * Can be used on a Activity and ViewGroup classes including support library ones.
- * When used on Activity, setContentView() is called.
- * When used on a ViewGroup, the layout is inflated into the ViewGroup. A FrameLayout is preferred for this.
+ *
+ * Can be used with classes derived from:
+ * <ul>
+ *     <li>{@link android.view.ViewGroup}</li>
+ *     <li>{@link android.app.Activity}</li>
+ * </ul>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

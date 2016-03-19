@@ -41,7 +41,7 @@ ext {
 
 dependencies {
     compile (
-        [group: 'io.github.sporklibrary', name: 'spork', version: '2.5.0'],
+        [group: 'io.github.sporklibrary', name: 'spork', version: '2.6.0'],
     )
 
     provided (

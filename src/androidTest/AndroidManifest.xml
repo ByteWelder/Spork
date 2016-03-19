@@ -25,6 +25,10 @@
 		<activity android:name=".bindlayout.domain.TestActivity"/>
 		<activity android:name=".bindlayout.domain.TestActivitySupport" android:theme="@style/Theme.AppCompat"/>
 
+		<activity android:name=".viewprovider.domain.TestActivity"/>
+
+		<activity android:name=".contextprovider.domain.TestActivity"/>
+
 		<service android:name=".bindcomponent.service.TestService" />
 
 		<provider

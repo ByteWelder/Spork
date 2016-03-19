@@ -9,12 +9,19 @@ import java.lang.annotation.Target;
 
 /**
  * Bind a resource object.
- * Can be used on a:
- *  - String (R.string.*)
- *  - Float, float (R.dimen.*)
- *  - Drawable (R.drawable.*)
- * Can be used within a Application/Activity/Fragment(regular and support)/View/RecyclerView.ViewHolder
- * including support library Activities and Fragments.
+ *
+ * Can be used with classes derived from:
+ * <ul>
+ *     <li>{@link android.view.View}</li>
+ *     <li>{@link android.app.Activity}</li>
+ *     <li>{@link android.app.Fragment}</li>
+ *     <li>{@link android.support.v4.app.Fragment}</li>
+ *     <li>{@link android.support.v7.widget.RecyclerView.ViewHolder}</li>
+ *     <li>{@link io.github.sporklibrary.interfaces.ContextProvider}</li>
+ * </ul>
+ *
+ * The value specified is the resource id.
+ * When not specified, the name of the field will be used to resolve the id's name.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

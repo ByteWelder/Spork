@@ -7,6 +7,7 @@ import android.content.ContentProvider;
 import android.content.Context;
 import android.view.View;
 import io.github.sporklibrary.exceptions.NotInstantiatableException;
+import io.github.sporklibrary.interfaces.ContextProvider;
 import io.github.sporklibrary.utils.support.SupportFragments;
 import io.github.sporklibrary.utils.support.SupportLibraries;
 
@@ -40,6 +41,10 @@ public final class ContextResolver
 		else if (ContentProvider.class.isAssignableFrom(object_class))
 		{
 			return ((ContentProvider)object).getContext();
+		}
+		else if (ContextProvider.class.isAssignableFrom(object_class))
+		{
+			return ((ContextProvider)object).getContext();
 		}
 		else if (SupportFragments.isFragmentClass(object_class))
 		{
