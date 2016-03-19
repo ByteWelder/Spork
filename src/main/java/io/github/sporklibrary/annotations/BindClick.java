@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
  * </ul>
  *
  * The value specified is the View id. When not specified, the name of the method will be used to resolve the id's name.
- * For example:<br/>
+ * For example:
  * <code>@BindClick void login() {}" would bind to R.id.login</code>
  */
 @Retention(RetentionPolicy.RUNTIME)
