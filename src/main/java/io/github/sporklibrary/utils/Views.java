@@ -8,6 +8,10 @@ import io.github.sporklibrary.utils.support.SupportLibraries;
 
 public final class Views
 {
+	private Views()
+	{
+	}
+
 	/**
 	 * @param object a View, Fragment Activity or Support Fragment
 	 * @return the root view from any regular/support Activity/Fragment/View

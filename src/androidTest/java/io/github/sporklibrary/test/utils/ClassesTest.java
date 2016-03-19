@@ -1,4 +1,4 @@
-package io.github.sporklibrary.test;
+package io.github.sporklibrary.test.utils;
 
 import android.test.suitebuilder.annotation.SmallTest;
 import io.github.sporklibrary.utils.Classes;

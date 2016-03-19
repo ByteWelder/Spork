@@ -4,13 +4,11 @@ import android.content.Context;
 import android.view.View;
 import io.github.sporklibrary.annotations.BindView;
 import io.github.sporklibrary.exceptions.BindException;
-import io.github.sporklibrary.exceptions.NotInstantiatableException;
 
 public final class ViewResolver
 {
 	private ViewResolver()
 	{
-		throw new NotInstantiatableException(getClass());
 	}
 
 	/**

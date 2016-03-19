@@ -10,6 +10,9 @@ public final class SupportFragments
 {
 	private static final @Nullable Class<?> sSupportFragmentClass = Classes.classForNameOrNull("android.support.v4.app.Fragment");
 
+	private SupportFragments()
+	{
+	}
 	public static boolean isFragmentClass(Class<?> classObject)
 	{
 		return sSupportFragmentClass != null && sSupportFragmentClass.isAssignableFrom(classObject);

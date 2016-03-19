@@ -6,7 +6,6 @@ import android.app.Fragment;
 import android.content.ContentProvider;
 import android.content.Context;
 import android.view.View;
-import io.github.sporklibrary.exceptions.NotInstantiatableException;
 import io.github.sporklibrary.interfaces.ContextProvider;
 import io.github.sporklibrary.utils.support.SupportFragments;
 import io.github.sporklibrary.utils.support.SupportLibraries;
@@ -15,7 +14,6 @@ public final class ContextResolver
 {
 	private ContextResolver()
 	{
-		throw new NotInstantiatableException(getClass());
 	}
 
 	public static Context getContext(Object object)

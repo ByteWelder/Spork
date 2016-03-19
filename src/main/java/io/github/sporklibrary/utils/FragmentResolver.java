@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import io.github.sporklibrary.annotations.BindFragment;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.exceptions.BindException;
-import io.github.sporklibrary.exceptions.NotInstantiatableException;
 
 import java.lang.reflect.Field;
 
@@ -16,7 +15,6 @@ public final class FragmentResolver
 {
 	private FragmentResolver()
 	{
-		throw new NotInstantiatableException(getClass());
 	}
 
 	public static @Nullable Fragment getFragment(Field field, BindFragment annotation, Activity activity)

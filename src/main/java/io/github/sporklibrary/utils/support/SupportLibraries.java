@@ -18,6 +18,10 @@ public final class SupportLibraries
 		sHasRecyclerViewV7 = Classes.classForNameOrNull("android.support.v7.widget.RecyclerView") != null;
 	}
 
+	private SupportLibraries()
+	{
+	}
+
 	public static boolean hasSupportV4()
 	{
 		return sHasSupportV4;
