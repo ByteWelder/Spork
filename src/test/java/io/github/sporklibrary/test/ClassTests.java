@@ -15,26 +15,12 @@ import static io.github.sporklibrary.test.ClassAsserts.assertUtilityClassWellDef
 public class ClassTests
 {
 	@Test
-	public void spork() throws Exception
+	public void test() throws Exception
 	{
 		assertUtilityClassWellDefined(Spork.class);
-	}
-
-	@Test
-	public void annotatedMethods() throws Exception
-	{
 		assertUtilityClassWellDefined(AnnotatedMethods.class);
-	}
-
-	@Test
-	public void annotatedFields() throws Exception
-	{
 		assertUtilityClassWellDefined(AnnotatedFields.class);
-	}
 
-	@Test
-	public void bindComponentDefault() throws Exception
-	{
 		assertAnnotationDefaultClassWellDefined(BindComponent.Default.class);
 	}
 }
