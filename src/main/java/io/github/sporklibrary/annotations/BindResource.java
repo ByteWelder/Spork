@@ -12,11 +12,14 @@ import java.lang.annotation.Target;
  *
  * Can be used with classes derived from:
  * <ul>
- *     <li>{@link android.view.View}</li>
  *     <li>{@link android.app.Activity}</li>
+ *     <li>{@link android.app.Application}</li>
  *     <li>{@link android.app.Fragment}</li>
+ *     <li>{@link android.app.Service}</li>
+ *     <li>{@link android.content.ContentProvider}</li>
  *     <li>{@link android.support.v4.app.Fragment}</li>
  *     <li>{@link android.support.v7.widget.RecyclerView.ViewHolder}</li>
+ *     <li>{@link android.view.View}</li>
  *     <li>{@link io.github.sporklibrary.interfaces.ContextProvider}</li>
  * </ul>
  *
