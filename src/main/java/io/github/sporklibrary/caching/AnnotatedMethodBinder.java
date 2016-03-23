@@ -13,23 +13,23 @@ import java.util.Set;
  */
 public class AnnotatedMethodBinder<AnnotationType extends Annotation> implements ObjectBinder
 {
-	private final Set<AnnotatedMethod<AnnotationType>> mAnnotatedFields;
+	private final Set<AnnotatedMethod<AnnotationType>> mAnnotatedMethods;
 
-	private final MethodBinder<AnnotationType> mFieldBinder;
+	private final MethodBinder<AnnotationType> mMethodBinder;
 
-	public AnnotatedMethodBinder(MethodBinder<AnnotationType> fieldBinder, Set<AnnotatedMethod<AnnotationType>> annotatedFields)
+	public AnnotatedMethodBinder(MethodBinder<AnnotationType> methodBinder, Set<AnnotatedMethod<AnnotationType>> annotatedMethods)
 	{
-		mFieldBinder = fieldBinder;
-		mAnnotatedFields = annotatedFields;
+		mMethodBinder = methodBinder;
+		mAnnotatedMethods = annotatedMethods;
 	}
 
 	@Override
 	public void bind(Object object)
 	{
 		// Bind all methods for this object
-		for (AnnotatedMethod<AnnotationType> annotated_method : mAnnotatedFields)
+		for (AnnotatedMethod<AnnotationType> annotated_method : mAnnotatedMethods)
 		{
-			mFieldBinder.bind(object, annotated_method);
+			mMethodBinder.bind(object, annotated_method);
 		}
 	}
 }

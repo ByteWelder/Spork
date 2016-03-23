@@ -1,5 +1,6 @@
 package io.github.sporklibrary.caching;
 
+import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.binders.MethodBinder;
 import io.github.sporklibrary.binders.TypeBinder;
@@ -62,9 +63,12 @@ public final class BinderCache
 	 */
 	public <AnnotationType extends Annotation> void register(TypeBinder<AnnotationType> typeBinder)
 	{
-		AnnotationType annotated_type = AnnotatedTypes.get(typeBinder.getAnnotationClass(), mAnnotatedType);
+		@Nullable AnnotationType annotation = AnnotatedTypes.get(typeBinder.getAnnotationClass(), mAnnotatedType);
 
-		mObjectBinders.add(new AnnotatedTypeBinder<>(typeBinder, new AnnotatedType<>(annotated_type, mAnnotatedType)));
+		if (annotation != null)
+		{
+			mObjectBinders.add(new AnnotatedTypeBinder<>(typeBinder, new AnnotatedType<>(annotation, mAnnotatedType)));
+		}
 	}
 
 	public List<ObjectBinder> getBinders()
