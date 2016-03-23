@@ -3,13 +3,34 @@ package io.github.sporklibrary.reflection;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.exceptions.BindException;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 public final class AnnotatedMethods
 {
 	private AnnotatedMethods()
 	{
+	}
+
+	public static <AnnotationType extends Annotation> Set<AnnotatedMethod<AnnotationType>> get(Class<AnnotationType> annotationClass, Class<?> annotatedClass)
+	{
+		HashSet<AnnotatedMethod<AnnotationType>> annotated_method_set = new HashSet<>();
+
+		for (Method method : annotatedClass.getDeclaredMethods())
+		{
+			AnnotationType annotation = method.getAnnotation(annotationClass);
+
+			if (annotation != null)
+			{
+				annotated_method_set.add(new AnnotatedMethod<>(annotation, method));
+			}
+		}
+
+		return !annotated_method_set.isEmpty() ? annotated_method_set : Collections.<AnnotatedMethod<AnnotationType>>emptySet();
 	}
 
 	/**

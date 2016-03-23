@@ -1,6 +1,8 @@
 package io.github.sporklibrary.test.fieldbinding;
 
 import io.github.sporklibrary.Spork;
+import io.github.sporklibrary.binders.FieldBinder;
+import io.github.sporklibrary.binders.MethodBinder;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +31,9 @@ public class FieldAndMethodBindingTests
 	public void registerTestBinders()
 	{
 		mTestBinder = new BindFieldOrMethodBinder();
-		Spork.getBinderManager().register(mTestBinder, mTestBinder, null);
+
+		Spork.getBinderManager().register((FieldBinder)mTestBinder);
+		Spork.getBinderManager().register((MethodBinder)mTestBinder);
 	}
 
 	@Test

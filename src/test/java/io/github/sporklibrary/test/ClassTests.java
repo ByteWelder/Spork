@@ -4,6 +4,7 @@ import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindComponent;
 import io.github.sporklibrary.reflection.AnnotatedFields;
 import io.github.sporklibrary.reflection.AnnotatedMethods;
+import io.github.sporklibrary.reflection.AnnotatedTypes;
 import org.junit.Test;
 
 import static io.github.sporklibrary.test.ClassAsserts.assertAnnotationDefaultClassWellDefined;
@@ -20,6 +21,7 @@ public class ClassTests
 		assertUtilityClassWellDefined(Spork.class);
 		assertUtilityClassWellDefined(AnnotatedMethods.class);
 		assertUtilityClassWellDefined(AnnotatedFields.class);
+		assertUtilityClassWellDefined(AnnotatedTypes.class);
 
 		assertAnnotationDefaultClassWellDefined(BindComponent.Default.class);
 	}

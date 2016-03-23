@@ -23,6 +23,6 @@ public class ComponentFieldBinder implements FieldBinder<BindComponent>
 	{
 		Object instance = mComponentInstanceManager.getInstance(object, annotatedField);
 
-		AnnotatedFields.set(annotatedField, object, instance);
+		AnnotatedFields.setValue(annotatedField, object, instance);
 	}
 }
