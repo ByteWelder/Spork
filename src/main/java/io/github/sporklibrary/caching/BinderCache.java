@@ -1,4 +1,4 @@
-package io.github.sporklibrary;
+package io.github.sporklibrary.caching;
 
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.binders.MethodBinder;
@@ -14,18 +14,23 @@ import java.util.Set;
  * Holds the annotation type cache for a class.
  * This only holds the data for the specified class and excludes the cache of its superclasses.
  */
-final class BinderCache
+public final class BinderCache
 {
 	private final List<ObjectBinder> mObjectBinders = new ArrayList<>();
 
 	private final Class<?> mAnnotatedType;
 
-	BinderCache(Class<?> annotatedType)
+	public BinderCache(Class<?> annotatedType)
 	{
 		mAnnotatedType = annotatedType;
 	}
 
-	<AnnotationType extends Annotation> void register(FieldBinder<AnnotationType> fieldBinder)
+	/**
+	 * Update the cache with this binder
+	 * @param fieldBinder the field binder to cache annotated fields for
+	 * @param <AnnotationType> the annotation to search for in the annotated type
+	 */
+	public <AnnotationType extends Annotation> void register(FieldBinder<AnnotationType> fieldBinder)
 	{
 		Set<AnnotatedField<AnnotationType>> annotated_fields = AnnotatedFields.get(fieldBinder.getAnnotationClass(), mAnnotatedType);
 
@@ -35,7 +40,12 @@ final class BinderCache
 		}
 	}
 
-	<AnnotationType extends Annotation> void register(MethodBinder<AnnotationType> methodBinder)
+	/**
+	 * Update the cache with this binder
+	 * @param methodBinder the method binder to cache annotated methods for
+	 * @param <AnnotationType> the annotation to search for in the annotated type
+	 */
+	public <AnnotationType extends Annotation> void register(MethodBinder<AnnotationType> methodBinder)
 	{
 		Set<AnnotatedMethod<AnnotationType>> annotated_methods = AnnotatedMethods.get(methodBinder.getAnnotationClass(), mAnnotatedType);
 
@@ -45,7 +55,12 @@ final class BinderCache
 		}
 	}
 
-	<AnnotationType extends Annotation> void register(TypeBinder<AnnotationType> typeBinder)
+	/**
+	 * Update the cache with this binder
+	 * @param typeBinder the type binder to cache annotated types for
+	 * @param <AnnotationType> the annotation to search for in the annotated type
+	 */
+	public <AnnotationType extends Annotation> void register(TypeBinder<AnnotationType> typeBinder)
 	{
 		AnnotationType annotated_type = AnnotatedTypes.get(typeBinder.getAnnotationClass(), mAnnotatedType);
 

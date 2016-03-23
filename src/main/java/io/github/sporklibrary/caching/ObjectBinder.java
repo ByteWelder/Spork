@@ -1,4 +1,4 @@
-package io.github.sporklibrary.reflection;
+package io.github.sporklibrary.caching;
 
 public interface ObjectBinder
 {
