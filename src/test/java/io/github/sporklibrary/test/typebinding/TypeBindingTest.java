@@ -49,14 +49,7 @@ public class TypeBindingTest
 	@Test
 	public void test()
 	{
-		// We're testing cold and hot cache, because this is the only test for AnnotatedTypeRetriever
-
-		// Cold cache
 		IntegerHolder holder = new IntegerHolder();
-		assertEquals(123, holder.getValue());
-
-		// Hot cache
-		holder = new IntegerHolder();
 		assertEquals(123, holder.getValue());
 	}
 
