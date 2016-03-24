@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class BinderManager
 {
-	static final Logger sLogger = LoggerFactory.getLogger(BinderManager.class);
+	private static final Logger sLogger = LoggerFactory.getLogger(BinderManager.class);
 
 	private final List<FieldBinder<?>> mFieldBinders = new ArrayList<>();
 

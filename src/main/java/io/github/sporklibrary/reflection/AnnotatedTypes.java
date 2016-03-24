@@ -13,8 +13,10 @@ public final class AnnotatedTypes
 	{
 	}
 
-	public static @Nullable <AnnotationType extends Annotation> AnnotationType get(Class<AnnotationType> annotationClass, Class<?> annotatedClass)
+	public static @Nullable <AnnotationType extends Annotation> AnnotatedType<AnnotationType> get(Class<AnnotationType> annotationClass, Class<?> annotatedClass)
 	{
-		return annotatedClass.getAnnotation(annotationClass);
+		AnnotationType annotation = annotatedClass.getAnnotation(annotationClass);
+
+		return annotation != null ? new AnnotatedType<>(annotation, annotatedClass) : null;
 	}
 }

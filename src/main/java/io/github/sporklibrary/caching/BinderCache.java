@@ -63,11 +63,11 @@ public final class BinderCache
 	 */
 	public <AnnotationType extends Annotation> void register(TypeBinder<AnnotationType> typeBinder)
 	{
-		@Nullable AnnotationType annotation = AnnotatedTypes.get(typeBinder.getAnnotationClass(), mAnnotatedType);
+		@Nullable AnnotatedType<AnnotationType> annotated_type = AnnotatedTypes.get(typeBinder.getAnnotationClass(), mAnnotatedType);
 
-		if (annotation != null)
+		if (annotated_type != null)
 		{
-			mObjectBinders.add(new AnnotatedTypeBinder<>(typeBinder, new AnnotatedType<>(annotation, mAnnotatedType)));
+			mObjectBinders.add(new AnnotatedTypeBinder<>(typeBinder, annotated_type));
 		}
 	}
 
