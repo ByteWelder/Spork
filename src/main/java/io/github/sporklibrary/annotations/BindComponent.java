@@ -12,7 +12,10 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 public @interface BindComponent
 {
-	final class Default {}
+	final class Default
+	{
+		private Default() {}
+	}
 
 	/**
 	 * Specifies an override for the implementation to bind.

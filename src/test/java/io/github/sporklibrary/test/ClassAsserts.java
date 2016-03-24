@@ -54,7 +54,26 @@ public class ClassAsserts
 	 * @param classObject the class
 	 */
 	public static void assertAnnotationDefaultClassWellDefined(final Class<?> classObject)
+		throws  NoSuchMethodException, IllegalAccessException,
+				InvocationTargetException, InstantiationException
 	{
 		assertTrue("class must be final", Modifier.isFinal(classObject.getModifiers()));
+		assertEquals("There must be only one constructor", 1,
+			classObject.getDeclaredConstructors().length);
+
+		final Constructor<?> constructor = classObject.getDeclaredConstructor();
+
+		if (constructor.isAccessible() || !Modifier.isPrivate(constructor.getModifiers()))
+		{
+			fail("constructor is not private");
+		}
+
+		constructor.setAccessible(true);
+		constructor.newInstance();
+		constructor.setAccessible(false);
+
+		assertEquals("class should contain no methods", 0, classObject.getDeclaredMethods().length);
+		assertEquals("class should contain no fields", 0, classObject.getDeclaredFields().length);
+		assertEquals("class should contain no classes", 0, classObject.getDeclaredClasses().length);
 	}
 }
