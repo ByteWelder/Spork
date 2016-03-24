@@ -4,6 +4,9 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+/**
+ * Exception that is thrown when binding fails.
+ */
 public class BindException extends RuntimeException
 {
 	public BindException(Class<? extends Annotation> annotation, String message)

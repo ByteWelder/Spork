@@ -4,6 +4,9 @@ import io.github.sporklibrary.annotations.Nullable;
 
 import java.lang.annotation.Annotation;
 
+/**
+ * A utility class for {@link AnnotatedType}.
+ */
 public final class AnnotatedTypes
 {
 	private AnnotatedTypes()

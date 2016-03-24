@@ -11,8 +11,14 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * The standard component factory: creates scoped component instances.
+ */
 public class DefaultComponentFactory implements ComponentFactory
 {
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Object create(Class<?> classObject, @Nullable Object parent)
 	{

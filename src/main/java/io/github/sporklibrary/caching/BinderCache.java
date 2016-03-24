@@ -71,6 +71,9 @@ public final class BinderCache
 		}
 	}
 
+	/**
+	 * @return the list of all ObjectBinder instances managed for this cache.
+	 */
 	public List<ObjectBinder> getBinders()
 	{
 		return mObjectBinders;

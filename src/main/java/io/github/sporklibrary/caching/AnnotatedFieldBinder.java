@@ -23,6 +23,9 @@ public class AnnotatedFieldBinder<AnnotationType extends Annotation> implements 
 		mAnnotatedFields = annotatedFields;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void bind(Object object)
 	{

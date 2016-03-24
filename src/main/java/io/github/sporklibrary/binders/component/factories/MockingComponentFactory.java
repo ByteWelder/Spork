@@ -25,6 +25,9 @@ public class MockingComponentFactory extends DefaultComponentFactory
 		return this;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Object create(Class<?> classObject, @Nullable Object parent)
 	{

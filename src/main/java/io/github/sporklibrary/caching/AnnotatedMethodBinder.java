@@ -23,6 +23,9 @@ public class AnnotatedMethodBinder<AnnotationType extends Annotation> implements
 		mAnnotatedMethods = annotatedMethods;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void bind(Object object)
 	{

@@ -29,6 +29,11 @@ public class BinderManager
 
 	private final Map<Class<?>, BinderCache> mClassBinderCacheMap = new HashMap<>();
 
+	/**
+	 * Register a FieldBinder
+	 * @param binder the binder instance
+	 * @param <AnnotationType> the annotation type of the binder
+	 */
 	public <AnnotationType extends Annotation> void register(FieldBinder<AnnotationType> binder)
 	{
 		if (sLogger.isDebugEnabled())
@@ -45,6 +50,11 @@ public class BinderManager
 		}
 	}
 
+	/**
+	 * Register a MethodBinder
+	 * @param binder the binder instance
+	 * @param <AnnotationType> the annotation type of the binder
+	 */
 	public <AnnotationType extends Annotation> void register(MethodBinder<AnnotationType> binder)
 	{
 		if (sLogger.isDebugEnabled())
@@ -61,6 +71,11 @@ public class BinderManager
 		}
 	}
 
+	/**
+	 * Register a TypeBinder
+	 * @param binder the binder instance
+	 * @param <AnnotationType> the annotation type of the binder
+	 */
 	public <AnnotationType extends Annotation> void register(TypeBinder<AnnotationType> binder)
 	{
 		if (sLogger.isDebugEnabled())
@@ -77,6 +92,10 @@ public class BinderManager
 		}
 	}
 
+	/**
+	 * Bind all annotations for an object instance on all levels of inheritance.
+	 * @param object the instance to bind annotations for
+	 */
 	public void bind(Object object)
 	{
 		if (sLogger.isDebugEnabled())
@@ -104,6 +123,11 @@ public class BinderManager
 
 	}
 
+	/**
+	 * Bind all annotations for an object instance for one specific class (one level of inheritance).
+	 * @param object the instance to bind annotations for
+	 * @param cache the cache to bind with
+	 */
 	private void bind(Object object, BinderCache cache)
 	{
 		for (ObjectBinder binder : cache.getBinders())
@@ -112,6 +136,11 @@ public class BinderManager
 		}
 	}
 
+	/**
+	 * Allocated the cache for the specified class
+	 * @param classObject the class to create a cache for
+	 * @return the cache
+	 */
 	private BinderCache createCache(Class<?> classObject)
 	{
 		if (sLogger.isDebugEnabled())

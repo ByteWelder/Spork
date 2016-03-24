@@ -8,6 +8,9 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * A utility  class for {@link AnnotatedField}.
+ */
 public final class AnnotatedFields
 {
 	private AnnotatedFields()

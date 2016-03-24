@@ -22,6 +22,9 @@ public class AnnotatedTypeBinder<AnnotationType extends Annotation> implements O
 		mTypeBinder = typeBinder;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void bind(Object object)
 	{
