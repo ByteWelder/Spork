@@ -71,9 +71,5 @@ public class ClassAsserts
 		constructor.setAccessible(true);
 		constructor.newInstance();
 		constructor.setAccessible(false);
-
-		assertEquals("class should contain no methods", 0, classObject.getDeclaredMethods().length);
-		assertEquals("class should contain no fields", 0, classObject.getDeclaredFields().length);
-		assertEquals("class should contain no classes", 0, classObject.getDeclaredClasses().length);
 	}
 }
