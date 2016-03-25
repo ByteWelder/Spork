@@ -58,6 +58,12 @@ public class ComponentInstanceManager
 		}
 	}
 
+	/**
+	 * Looks for the {@link ComponentScope} annotation and returns the {@link ComponentScope.Scope}
+	 * when found or otherwise returns {@link ComponentScope.Scope.DEFAULT}.
+	 * @param componentClass the class to check the scope for
+	 * @return the scope for the specified class or otherwise {@link ComponentScope.Scope.DEFAULT}
+	 */
 	private ComponentScope.Scope getScope(Class<?> componentClass)
 	{
 		ComponentScope annotation = componentClass.getAnnotation(ComponentScope.class);
@@ -65,6 +71,11 @@ public class ComponentInstanceManager
 		return annotation != null ? annotation.value() : ComponentScope.Scope.DEFAULT;
 	}
 
+	/**
+	 * Get the target class (the Field class) from the specified field.
+	 * @param annotatedField the annotated field to process
+	 * @return the Field type or the specified BindComponent override
+	 */
 	private Class<?> getTargetClass(AnnotatedField<BindComponent> annotatedField)
 	{
 		Class<?> override_class = annotatedField.getAnnotation().value();
@@ -79,6 +90,11 @@ public class ComponentInstanceManager
 		}
 	}
 
+	/**
+	 * Create a new instance and register it in the cache.
+	 * @param classObject the class to instantiate
+	 * @return the created component instance
+	 */
 	private synchronized Object createSingletonInstance(Class<?> classObject)
 	{
 		Object instance = sComponentFactory.create(classObject, null);

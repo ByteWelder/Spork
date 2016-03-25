@@ -4,7 +4,7 @@ import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.binders.MethodBinder;
 import io.github.sporklibrary.binders.TypeBinder;
 import io.github.sporklibrary.caching.BinderCache;
-import io.github.sporklibrary.caching.ObjectBinder;
+import io.github.sporklibrary.interfaces.ObjectBinder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

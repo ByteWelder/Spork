@@ -4,6 +4,7 @@ import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.binders.MethodBinder;
 import io.github.sporklibrary.binders.TypeBinder;
+import io.github.sporklibrary.interfaces.ObjectBinder;
 import io.github.sporklibrary.reflection.*;
 
 import java.lang.annotation.Annotation;
@@ -12,8 +13,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Holds the annotation type cache for a class.
- * This only holds the data for the specified class and excludes the cache of its superclasses.
+ * Holds the annotation type cache for one class.
+ * This only holds the data for the specified class which excludes the cache of its superclasses.
  */
 public final class BinderCache
 {

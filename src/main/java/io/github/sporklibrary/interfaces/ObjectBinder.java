@@ -1,4 +1,4 @@
-package io.github.sporklibrary.caching;
+package io.github.sporklibrary.interfaces;
 
 /**
  * Used by the caching mechanism to bind one or more annotations for a specified object.

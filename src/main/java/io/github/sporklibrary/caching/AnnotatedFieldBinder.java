@@ -1,6 +1,7 @@
 package io.github.sporklibrary.caching;
 
 import io.github.sporklibrary.binders.FieldBinder;
+import io.github.sporklibrary.interfaces.ObjectBinder;
 import io.github.sporklibrary.reflection.AnnotatedField;
 
 import java.lang.annotation.Annotation;
@@ -11,13 +12,13 @@ import java.util.Set;
  *
  * @param <AnnotationType> the annotation type that is being bound
  */
-public class AnnotatedFieldBinder<AnnotationType extends Annotation> implements ObjectBinder
+class AnnotatedFieldBinder<AnnotationType extends Annotation> implements ObjectBinder
 {
 	private final Set<AnnotatedField<AnnotationType>> mAnnotatedFields;
 
 	private final FieldBinder<AnnotationType> mFieldBinder;
 
-	public AnnotatedFieldBinder(FieldBinder<AnnotationType> fieldBinder, Set<AnnotatedField<AnnotationType>> annotatedFields)
+	AnnotatedFieldBinder(FieldBinder<AnnotationType> fieldBinder, Set<AnnotatedField<AnnotationType>> annotatedFields)
 	{
 		mFieldBinder = fieldBinder;
 		mAnnotatedFields = annotatedFields;
