@@ -22,7 +22,7 @@ public class BindViewBinder implements FieldBinder<BindView>
 	{
 		final View view = resolveView(object, annotatedField);
 
-		AnnotatedFields.set(annotatedField, object, view);
+		AnnotatedFields.setValue(annotatedField, object, view);
 	}
 
 	private View resolveView(Object object, AnnotatedField<BindView> annotatedField)

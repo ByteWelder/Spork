@@ -32,7 +32,7 @@ public class BindFragmentBinder implements FieldBinder<BindFragment>
 			throw new BindException(BindFragment.class, object.getClass(), annotatedField.getField(), "Fragment not found");
 		}
 
-		AnnotatedFields.set(annotatedField, object, fragment_object);
+		AnnotatedFields.setValue(annotatedField, object, fragment_object);
 	}
 
 	private @Nullable Object resolveFragment(Object object, AnnotatedField<BindFragment> annotatedField)

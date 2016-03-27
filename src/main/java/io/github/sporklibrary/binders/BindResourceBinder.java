@@ -35,7 +35,7 @@ public class BindResourceBinder implements FieldBinder<BindResource>
 			throw new BindException(BindResource.class, object.getClass(), annotatedField.getField(), "resource not found");
 		}
 
-		AnnotatedFields.set(annotatedField, object, field_object);
+		AnnotatedFields.setValue(annotatedField, object, field_object);
 	}
 
 	private @Nullable Object getFieldObject(Context context, AnnotatedField<BindResource> annotatedField)
