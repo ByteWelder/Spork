@@ -19,6 +19,13 @@ public final class AnnotatedMethods
 	{
 	}
 
+	/**
+	 * Get an immutable set of annotated methods from the provided class
+	 * @param annotationClass the annotation class
+	 * @param annotatedClass the class to search for annotations
+	 * @param <AnnotationType> the annotationClass type
+	 * @return a set of AnnotatedMethod objects for the specified annotation type
+	 */
 	public static <AnnotationType extends Annotation> Set<AnnotatedMethod<AnnotationType>> get(Class<AnnotationType> annotationClass, Class<?> annotatedClass)
 	{
 		HashSet<AnnotatedMethod<AnnotationType>> annotated_method_set = new HashSet<>();

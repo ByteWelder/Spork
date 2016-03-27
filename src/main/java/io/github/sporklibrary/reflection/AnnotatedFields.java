@@ -17,6 +17,13 @@ public final class AnnotatedFields
 	{
 	}
 
+	/**
+	 * Get an immutable set of annotated fields from the provided class
+	 * @param annotationClass the annotation class
+	 * @param annotatedClass the class to search for annotations
+	 * @param <AnnotationType> the annotationClass type
+	 * @return a set of AnnotatedField objects for the specified annotation type
+	 */
 	public static <AnnotationType extends Annotation> Set<AnnotatedField<AnnotationType>> get(Class<AnnotationType> annotationClass, Class<?> annotatedClass)
 	{
 		HashSet<AnnotatedField<AnnotationType>> annotated_field_set = new HashSet<>();
@@ -35,12 +42,12 @@ public final class AnnotatedFields
 	}
 
 	/**
-	 * Set a value for an AnnotatedField
+	 * Set a value for an AnnotatedField on an object
 	 * @param annotatedField the AnnotatedField
-	 * @param object the parent object
-	 * @param value the field value to bind
+	 * @param parentObject the parent object
+	 * @param valueObject the field value to bind
 	 */
-	public static void setValue(AnnotatedField<?> annotatedField, Object object, Object value)
+	public static void setValue(AnnotatedField<?> annotatedField, Object parentObject, Object valueObject)
 	{
 		Field field = annotatedField.getField();
 
@@ -50,18 +57,18 @@ public final class AnnotatedFields
 		{
 			if (accessible)
 			{
-				field.set(object, value);
+				field.set(parentObject, valueObject);
 			}
 			else
 			{
 				field.setAccessible(true);
-				field.set(object, value);
+				field.set(parentObject, valueObject);
 				field.setAccessible(false);
 			}
 		}
 		catch (IllegalAccessException e)
 		{
-			throw new BindException(annotatedField.getAnnotation().getClass(), object.getClass(), field, "field not accessible", e);
+			throw new BindException(annotatedField.getAnnotation().getClass(), parentObject.getClass(), field, "field not accessible", e);
 		}
 		finally
 		{
