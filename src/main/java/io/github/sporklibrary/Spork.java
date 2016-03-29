@@ -13,13 +13,13 @@ import java.lang.reflect.Method;
  */
 public final class Spork
 {
-	private static final Logger sLogger = LoggerFactory.getLogger(Spork.class);
+	private static final Logger logger = LoggerFactory.getLogger(Spork.class);
 
 	private Spork()
 	{
 	}
 
-	private static @Nullable BinderManager sBinderManager;
+	private static @Nullable BinderManager binderManager;
 
 	/**
 	 * Bind a single object with all relevant instances.
@@ -33,15 +33,15 @@ public final class Spork
 	public static BinderManager getBinderManager()
 	{
 		// Only create an binder if the code is actually used
-		if (sBinderManager == null)
+		if (binderManager == null)
 		{
-			sBinderManager = new BinderManager();
-			sBinderManager.register(new ComponentFieldBinder());
+			binderManager = new BinderManager();
+			binderManager.register(new ComponentFieldBinder());
 
-			tryInitializeSporkAndroidBindings(sBinderManager);
+			tryInitializeSporkAndroidBindings(binderManager);
 		}
 
-		return sBinderManager;
+		return binderManager;
 	}
 
 	/**
@@ -58,23 +58,23 @@ public final class Spork
 
 			initialize_method.invoke(null, binderManager);
 
-			sLogger.debug("BinderManager created with Spork for Android");
+			logger.debug("BinderManager created with Spork for Android");
 		}
 		catch (ClassNotFoundException e)
 		{
-			sLogger.debug("BinderManager created without Spork for Android");
+			logger.debug("BinderManager created without Spork for Android");
 		}
 		catch (NoSuchMethodException e)
 		{
-			sLogger.warn("Spork for Android found, but initialize method is not present");
+			logger.warn("Spork for Android found, but initialize method is not present");
 		}
 		catch (InvocationTargetException e)
 		{
-			sLogger.warn("Spork for Android found, but initialization failed because of InvocationTargetException: " + e.getMessage());
+			logger.warn("Spork for Android found, but initialization failed because of InvocationTargetException: " + e.getMessage());
 		}
 		catch (IllegalAccessException e)
 		{
-			sLogger.warn("Spork for Android found, but initialization failed because of IllegalAccessException: " + e.getMessage());
+			logger.warn("Spork for Android found, but initialization failed because of IllegalAccessException: " + e.getMessage());
 		}
 	}
 }

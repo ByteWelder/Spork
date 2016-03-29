@@ -9,23 +9,23 @@ import java.lang.reflect.Field;
  */
 public class AnnotatedField<AnnotationType extends Annotation>
 {
-	private final AnnotationType mAnnotation;
+	private final AnnotationType annotation;
 
-	private final Field mField;
+	private final Field field;
 
 	public AnnotatedField(AnnotationType annotation, Field field)
 	{
-		mAnnotation = annotation;
-		mField = field;
+		this.annotation = annotation;
+		this.field = field;
 	}
 
 	public AnnotationType getAnnotation()
 	{
-		return mAnnotation;
+		return annotation;
 	}
 
 	public Field getField()
 	{
-		return mField;
+		return field;
 	}
 }

@@ -9,23 +9,23 @@ import java.lang.reflect.Method;
  */
 public class AnnotatedMethod<AnnotationType extends Annotation>
 {
-	private final AnnotationType mAnnotation;
+	private final AnnotationType annotation;
 
-	private final Method mMethod;
+	private final Method method;
 
 	public AnnotatedMethod(AnnotationType annotation, Method method)
 	{
-		mAnnotation = annotation;
-		mMethod = method;
+		this.annotation = annotation;
+		this.method = method;
 	}
 
 	public AnnotationType getAnnotation()
 	{
-		return mAnnotation;
+		return annotation;
 	}
 
 	public Method getMethod()
 	{
-		return mMethod;
+		return method;
 	}
 }

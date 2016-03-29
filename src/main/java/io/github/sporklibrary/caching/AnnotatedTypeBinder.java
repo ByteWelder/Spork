@@ -13,14 +13,14 @@ import java.lang.annotation.Annotation;
  */
 class AnnotatedTypeBinder<AnnotationType extends Annotation> implements ObjectBinder
 {
-	private final AnnotatedType<AnnotationType> mAnnotatedType;
+	private final AnnotatedType<AnnotationType> annotatedType;
 
-	private final TypeBinder<AnnotationType> mTypeBinder;
+	private final TypeBinder<AnnotationType> typeBinder;
 
 	AnnotatedTypeBinder(TypeBinder<AnnotationType> typeBinder, AnnotatedType<AnnotationType> annotatedType)
 	{
-		mAnnotatedType = annotatedType;
-		mTypeBinder = typeBinder;
+		this.annotatedType = annotatedType;
+		this.typeBinder = typeBinder;
 	}
 
 	/**
@@ -29,6 +29,6 @@ class AnnotatedTypeBinder<AnnotationType extends Annotation> implements ObjectBi
 	@Override
 	public void bind(Object object)
 	{
-		mTypeBinder.bind(object, mAnnotatedType);
+		typeBinder.bind(object, annotatedType);
 	}
 }

@@ -18,13 +18,13 @@ import java.util.Set;
  */
 public final class BinderCache
 {
-	private final List<ObjectBinder> mObjectBinders = new ArrayList<>();
+	private final List<ObjectBinder> objectBinders = new ArrayList<>();
 
-	private final Class<?> mAnnotatedType;
+	private final Class<?> annotatedType;
 
 	public BinderCache(Class<?> annotatedType)
 	{
-		mAnnotatedType = annotatedType;
+		this.annotatedType = annotatedType;
 	}
 
 	/**
@@ -34,11 +34,11 @@ public final class BinderCache
 	 */
 	public <AnnotationType extends Annotation> void register(FieldBinder<AnnotationType> fieldBinder)
 	{
-		Set<AnnotatedField<AnnotationType>> annotated_fields = AnnotatedFields.get(fieldBinder.getAnnotationClass(), mAnnotatedType);
+		Set<AnnotatedField<AnnotationType>> annotated_fields = AnnotatedFields.get(fieldBinder.getAnnotationClass(), annotatedType);
 
 		if (!annotated_fields.isEmpty())
 		{
-			mObjectBinders.add(new AnnotatedFieldBinder<>(fieldBinder, annotated_fields));
+			objectBinders.add(new AnnotatedFieldBinder<>(fieldBinder, annotated_fields));
 		}
 	}
 
@@ -49,11 +49,11 @@ public final class BinderCache
 	 */
 	public <AnnotationType extends Annotation> void register(MethodBinder<AnnotationType> methodBinder)
 	{
-		Set<AnnotatedMethod<AnnotationType>> annotated_methods = AnnotatedMethods.get(methodBinder.getAnnotationClass(), mAnnotatedType);
+		Set<AnnotatedMethod<AnnotationType>> annotated_methods = AnnotatedMethods.get(methodBinder.getAnnotationClass(), annotatedType);
 
 		if (!annotated_methods.isEmpty())
 		{
-			mObjectBinders.add(new AnnotatedMethodBinder<>(methodBinder, annotated_methods));
+			objectBinders.add(new AnnotatedMethodBinder<>(methodBinder, annotated_methods));
 		}
 	}
 
@@ -64,11 +64,11 @@ public final class BinderCache
 	 */
 	public <AnnotationType extends Annotation> void register(TypeBinder<AnnotationType> typeBinder)
 	{
-		@Nullable AnnotatedType<AnnotationType> annotated_type = AnnotatedTypes.get(typeBinder.getAnnotationClass(), mAnnotatedType);
+		@Nullable AnnotatedType<AnnotationType> annotated_type = AnnotatedTypes.get(typeBinder.getAnnotationClass(), annotatedType);
 
 		if (annotated_type != null)
 		{
-			mObjectBinders.add(new AnnotatedTypeBinder<>(typeBinder, annotated_type));
+			objectBinders.add(new AnnotatedTypeBinder<>(typeBinder, annotated_type));
 		}
 	}
 
@@ -77,6 +77,6 @@ public final class BinderCache
 	 */
 	public List<ObjectBinder> getBinders()
 	{
-		return mObjectBinders;
+		return objectBinders;
 	}
 }

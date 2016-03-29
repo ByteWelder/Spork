@@ -10,7 +10,7 @@ import java.util.HashMap;
  */
 public class MockingComponentFactory extends DefaultComponentFactory
 {
-	private final HashMap<Class<?>, Class<?>> mClassMap = new HashMap<>();
+	private final HashMap<Class<?>, Class<?>> classMap = new HashMap<>();
 
 	/**
 	 * Register a new mocking type for the provided component type.
@@ -20,7 +20,7 @@ public class MockingComponentFactory extends DefaultComponentFactory
 	 */
 	public MockingComponentFactory register(Class<?> componentClass, Class<?> mockClass)
 	{
-		mClassMap.put(componentClass, mockClass);
+		classMap.put(componentClass, mockClass);
 
 		return this;
 	}
@@ -32,7 +32,7 @@ public class MockingComponentFactory extends DefaultComponentFactory
 	public Object create(Class<?> classObject, @Nullable Object parent)
 	{
 		// First get the mocking class if there is one
-		Class<?> mock_class = mClassMap.get(classObject);
+		Class<?> mock_class = classMap.get(classObject);
 
 		return super.create(mock_class != null ? mock_class : classObject, parent);
 	}

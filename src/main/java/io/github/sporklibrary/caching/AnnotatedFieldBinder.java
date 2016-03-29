@@ -14,14 +14,14 @@ import java.util.Set;
  */
 class AnnotatedFieldBinder<AnnotationType extends Annotation> implements ObjectBinder
 {
-	private final Set<AnnotatedField<AnnotationType>> mAnnotatedFields;
+	private final Set<AnnotatedField<AnnotationType>> annotatedFields;
 
-	private final FieldBinder<AnnotationType> mFieldBinder;
+	private final FieldBinder<AnnotationType> fieldBinder;
 
 	AnnotatedFieldBinder(FieldBinder<AnnotationType> fieldBinder, Set<AnnotatedField<AnnotationType>> annotatedFields)
 	{
-		mFieldBinder = fieldBinder;
-		mAnnotatedFields = annotatedFields;
+		this.fieldBinder = fieldBinder;
+		this.annotatedFields = annotatedFields;
 	}
 
 	/**
@@ -31,9 +31,9 @@ class AnnotatedFieldBinder<AnnotationType extends Annotation> implements ObjectB
 	public void bind(Object object)
 	{
 		// Bind all fields for this object
-		for (AnnotatedField<AnnotationType> annotated_field : mAnnotatedFields)
+		for (AnnotatedField<AnnotationType> annotated_field : annotatedFields)
 		{
-			mFieldBinder.bind(object, annotated_field);
+			fieldBinder.bind(object, annotated_field);
 		}
 	}
 }

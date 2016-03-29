@@ -14,9 +14,9 @@ import java.util.Map;
  */
 public class ComponentInstanceManager
 {
-	private final Map<Class<?>, Object> mSingletonInstances = new HashMap<>();
+	private static ComponentFactory componentFactory = new DefaultComponentFactory();
 
-	private static ComponentFactory sComponentFactory = new DefaultComponentFactory();
+	private final Map<Class<?>, Object> singletonInstances = new HashMap<>();
 
 	/**
 	 * Override the default factory for mocking/stubbing purposes
@@ -24,7 +24,7 @@ public class ComponentInstanceManager
 	 */
 	public static void setComponentFactory(ComponentFactory factory)
 	{
-		sComponentFactory = factory;
+		componentFactory = factory;
 	}
 
 	/**
@@ -49,12 +49,12 @@ public class ComponentInstanceManager
 		switch (scope)
 		{
 			case SINGLETON:
-				Object instance = mSingletonInstances.get(field_target_class);
+				Object instance = singletonInstances.get(field_target_class);
 				return (instance != null) ? instance : createSingletonInstance(field_target_class);
 
 			case DEFAULT:
 			default:
-				return sComponentFactory.create(field_target_class, parent);
+				return componentFactory.create(field_target_class, parent);
 		}
 	}
 
@@ -97,9 +97,9 @@ public class ComponentInstanceManager
 	 */
 	private synchronized Object createSingletonInstance(Class<?> classObject)
 	{
-		Object instance = sComponentFactory.create(classObject, null);
+		Object instance = componentFactory.create(classObject, null);
 
-		mSingletonInstances.put(classObject, instance);
+		singletonInstances.put(classObject, instance);
 
 		return instance;
 	}

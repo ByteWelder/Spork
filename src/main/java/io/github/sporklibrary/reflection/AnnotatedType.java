@@ -8,23 +8,23 @@ import java.lang.annotation.Annotation;
  */
 public class AnnotatedType<AnnotationType extends Annotation>
 {
-	private final AnnotationType mAnnotation;
+	private final AnnotationType annotation;
 
-	private final Class<?> mAnnotatedClass;
+	private final Class<?> annotatedClass;
 
 	public AnnotatedType(AnnotationType annotation, Class<?> annotatedClass)
 	{
-		mAnnotation = annotation;
-		mAnnotatedClass = annotatedClass;
+		this.annotation = annotation;
+		this.annotatedClass = annotatedClass;
 	}
 
 	public AnnotationType getAnnotation()
 	{
-		return mAnnotation;
+		return annotation;
 	}
 
 	public Class<?> getAnnotatedClass()
 	{
-		return mAnnotatedClass;
+		return annotatedClass;
 	}
 }

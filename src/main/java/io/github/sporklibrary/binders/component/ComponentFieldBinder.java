@@ -10,7 +10,7 @@ import io.github.sporklibrary.reflection.AnnotatedFields;
  */
 public class ComponentFieldBinder implements FieldBinder<BindComponent>
 {
-	private final ComponentInstanceManager mComponentInstanceManager = new ComponentInstanceManager();
+	private final ComponentInstanceManager componentInstanceManager = new ComponentInstanceManager();
 
 	@Override
 	public Class<BindComponent> getAnnotationClass()
@@ -21,7 +21,7 @@ public class ComponentFieldBinder implements FieldBinder<BindComponent>
 	@Override
 	public void bind(Object object, AnnotatedField<BindComponent> annotatedField)
 	{
-		Object instance = mComponentInstanceManager.getInstance(object, annotatedField);
+		Object instance = componentInstanceManager.getInstance(object, annotatedField);
 
 		AnnotatedFields.setValue(annotatedField, object, instance);
 	}

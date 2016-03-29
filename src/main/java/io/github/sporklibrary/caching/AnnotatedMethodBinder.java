@@ -14,14 +14,14 @@ import java.util.Set;
  */
 class AnnotatedMethodBinder<AnnotationType extends Annotation> implements ObjectBinder
 {
-	private final Set<AnnotatedMethod<AnnotationType>> mAnnotatedMethods;
+	private final Set<AnnotatedMethod<AnnotationType>> annotatedMethods;
 
-	private final MethodBinder<AnnotationType> mMethodBinder;
+	private final MethodBinder<AnnotationType> methodBinder;
 
 	AnnotatedMethodBinder(MethodBinder<AnnotationType> methodBinder, Set<AnnotatedMethod<AnnotationType>> annotatedMethods)
 	{
-		mMethodBinder = methodBinder;
-		mAnnotatedMethods = annotatedMethods;
+		this.methodBinder = methodBinder;
+		this.annotatedMethods = annotatedMethods;
 	}
 
 	/**
@@ -31,9 +31,9 @@ class AnnotatedMethodBinder<AnnotationType extends Annotation> implements Object
 	public void bind(Object object)
 	{
 		// Bind all methods for this object
-		for (AnnotatedMethod<AnnotationType> annotated_method : mAnnotatedMethods)
+		for (AnnotatedMethod<AnnotationType> annotated_method : annotatedMethods)
 		{
-			mMethodBinder.bind(object, annotated_method);
+			methodBinder.bind(object, annotated_method);
 		}
 	}
 }

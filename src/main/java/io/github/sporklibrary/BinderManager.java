@@ -19,15 +19,15 @@ import java.util.Map;
  */
 public class BinderManager
 {
-	private static final Logger sLogger = LoggerFactory.getLogger(BinderManager.class);
+	private static final Logger logger = LoggerFactory.getLogger(BinderManager.class);
 
-	private final List<FieldBinder<?>> mFieldBinders = new ArrayList<>();
+	private final List<FieldBinder<?>> fieldBinders = new ArrayList<>();
 
-	private final List<MethodBinder<?>> mMethodBinders = new ArrayList<>();
+	private final List<MethodBinder<?>> methodBinders = new ArrayList<>();
 
-	private final List<TypeBinder<?>> mTypeBinders = new ArrayList<>();
+	private final List<TypeBinder<?>> typeBinders = new ArrayList<>();
 
-	private final Map<Class<?>, BinderCache> mClassBinderCacheMap = new HashMap<>();
+	private final Map<Class<?>, BinderCache> classBinderCacheMap = new HashMap<>();
 
 	/**
 	 * Register a FieldBinder
@@ -36,15 +36,15 @@ public class BinderManager
 	 */
 	public <AnnotationType extends Annotation> void register(FieldBinder<AnnotationType> binder)
 	{
-		if (sLogger.isDebugEnabled())
+		if (logger.isDebugEnabled())
 		{
-			sLogger.debug("register {}", binder.getClass());
+			logger.debug("register {}", binder.getClass());
 		}
 
-		mFieldBinders.add(binder);
+		fieldBinders.add(binder);
 
 		// Update cache
-		for (BinderCache cache : mClassBinderCacheMap.values())
+		for (BinderCache cache : classBinderCacheMap.values())
 		{
 			cache.register(binder);
 		}
@@ -57,15 +57,15 @@ public class BinderManager
 	 */
 	public <AnnotationType extends Annotation> void register(MethodBinder<AnnotationType> binder)
 	{
-		if (sLogger.isDebugEnabled())
+		if (logger.isDebugEnabled())
 		{
-			sLogger.debug("register {}", binder.getClass());
+			logger.debug("register {}", binder.getClass());
 		}
 
-		mMethodBinders.add(binder);
+		methodBinders.add(binder);
 
 		// Update cache
-		for (BinderCache cache : mClassBinderCacheMap.values())
+		for (BinderCache cache : classBinderCacheMap.values())
 		{
 			cache.register(binder);
 		}
@@ -78,15 +78,15 @@ public class BinderManager
 	 */
 	public <AnnotationType extends Annotation> void register(TypeBinder<AnnotationType> binder)
 	{
-		if (sLogger.isDebugEnabled())
+		if (logger.isDebugEnabled())
 		{
-			sLogger.debug("register {}", binder.getClass());
+			logger.debug("register {}", binder.getClass());
 		}
 
-		mTypeBinders.add(binder);
+		typeBinders.add(binder);
 
 		// Update cache
-		for (BinderCache cache : mClassBinderCacheMap.values())
+		for (BinderCache cache : classBinderCacheMap.values())
 		{
 			cache.register(binder);
 		}
@@ -98,22 +98,22 @@ public class BinderManager
 	 */
 	public void bind(Object object)
 	{
-		if (sLogger.isDebugEnabled())
+		if (logger.isDebugEnabled())
 		{
-			sLogger.debug("bind {}", object);
+			logger.debug("bind {}", object);
 		}
 
 		Class<?> object_class = object.getClass();
 
 		while (object_class != null && object_class != Object.class)
 		{
-			BinderCache cache = mClassBinderCacheMap.get(object_class);
+			BinderCache cache = classBinderCacheMap.get(object_class);
 
 			if (cache == null)
 			{
 				cache = createCache(object_class);
 
-				mClassBinderCacheMap.put(object_class, cache);
+				classBinderCacheMap.put(object_class, cache);
 			}
 
 			bind(object, cache);
@@ -143,24 +143,24 @@ public class BinderManager
 	 */
 	private BinderCache createCache(Class<?> classObject)
 	{
-		if (sLogger.isDebugEnabled())
+		if (logger.isDebugEnabled())
 		{
-			sLogger.debug("createCache {}", classObject.getName());
+			logger.debug("createCache {}", classObject.getName());
 		}
 
 		BinderCache cache = new BinderCache(classObject);
 
-		for (FieldBinder<?> field_binder : mFieldBinders)
+		for (FieldBinder<?> field_binder : fieldBinders)
 		{
 			cache.register(field_binder);
 		}
 
-		for (MethodBinder<?> field_binder : mMethodBinders)
+		for (MethodBinder<?> field_binder : methodBinders)
 		{
 			cache.register(field_binder);
 		}
 
-		for (TypeBinder<?> field_binder : mTypeBinders)
+		for (TypeBinder<?> field_binder : typeBinders)
 		{
 			cache.register(field_binder);
 		}
