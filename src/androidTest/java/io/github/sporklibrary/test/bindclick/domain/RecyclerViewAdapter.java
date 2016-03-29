@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindClick;
 import io.github.sporklibrary.annotations.BindView;
@@ -12,66 +13,55 @@ import io.github.sporklibrary.test.R;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.TestViewHolder>
-{
-	private final List<String> mItems;
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.TestViewHolder> {
+    private final List<String> items;
+    private int clickCount = 0;
 
-	public RecyclerViewAdapter(List<String> items)
-	{
-		mItems = items;
-	}
+    public class TestViewHolder extends RecyclerView.ViewHolder {
 
-	private int mClickCount = 0;
+        @BindView(io.github.sporklibrary.test.R.id.textview)
+        private TextView textView;
 
-	public class TestViewHolder extends RecyclerView.ViewHolder
-	{
-		@BindView(io.github.sporklibrary.test.R.id.textview)
-		private TextView mTextView;
+        public TestViewHolder(View itemView) {
+            super(itemView);
+            Spork.bind(this);
+        }
 
-		public TestViewHolder(View itemView)
-		{
-			super(itemView);
+        public void update(String text) {
+            textView.setText(text);
+        }
 
-			Spork.bind(this);
-		}
+        @BindClick(R.id.textview)
+        private void onClick() {
+            clickCount++;
+        }
+    }
 
-		public void update(String text)
-		{
-			mTextView.setText(text);
-		}
+    public RecyclerViewAdapter(List<String> items) {
+        this.items = items;
+    }
 
-		@BindClick(R.id.textview)
-		private void onClick()
-		{
-			mClickCount++;
-		}
-	}
+    @Override
+    public TestViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_recyclerview_item, parent, false);
 
-	@Override
-	public TestViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-	{
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_recyclerview_item, parent, false);
+        return new TestViewHolder(view);
+    }
 
-		return new TestViewHolder(view);
-	}
+    @Override
+    public void onBindViewHolder(TestViewHolder holder, int position) {
+        String item = items.get(position);
 
-	@Override
-	public void onBindViewHolder(TestViewHolder holder, int position)
-	{
-		String item = mItems.get(position);
+        holder.update(item);
+    }
 
-		holder.update(item);
-	}
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
 
-	@Override
-	public int getItemCount()
-	{
-		return mItems.size();
-	}
-
-	public int getClickCount()
-	{
-		return mClickCount;
-	}
+    public int getClickCount() {
+        return clickCount;
+    }
 }
 

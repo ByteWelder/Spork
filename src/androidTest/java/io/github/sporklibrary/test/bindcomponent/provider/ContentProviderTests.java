@@ -2,18 +2,15 @@ package io.github.sporklibrary.test.bindcomponent.provider;
 
 import android.test.ProviderTestCase2;
 
-public class ContentProviderTests extends ProviderTestCase2<TestContentProvider>
-{
-	public ContentProviderTests()
-	{
-		super(TestContentProvider.class, "sporktest");
-	}
+public class ContentProviderTests extends ProviderTestCase2<TestContentProvider> {
 
-	public void testComponent()
-	{
-		TestContentProvider provider = getProvider();
+    public ContentProviderTests() {
+        super(TestContentProvider.class, "sporktest");
+    }
 
-		assertNotNull(provider);
-		assertNotNull(provider.getTestComponent());
-	}
+    public void testComponent() {
+        TestContentProvider provider = getProvider();
+        assertNotNull(provider);
+        assertNotNull(provider.getTestComponent());
+    }
 }

@@ -7,80 +7,73 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindResource;
 import io.github.sporklibrary.test.R;
 import io.github.sporklibrary.test.bindresource.ResourceProvider;
 
-public class TestFragmentSupport extends Fragment implements ResourceProvider
-{
-	@BindResource(R.string.app_name)
-	private String mAppName;
+public class TestFragmentSupport extends Fragment implements ResourceProvider {
 
-	@BindResource
-	private String app_name;
+    @BindResource(R.string.app_name)
+    private String appName;
 
-	@BindResource(R.dimen.spork_test_dimension)
-	private float mSporkTestDimension;
+    @BindResource
+    private String app_name;
 
-	@BindResource
-	private Float spork_test_dimension;
+    @BindResource(R.dimen.spork_test_dimension)
+    private float sporkTestDimension;
 
-	@BindResource(R.drawable.spork_test_drawable)
-	private Drawable mSporkTestDrawable;
+    @BindResource
+    private Float spork_test_dimension;
 
-	@BindResource
-	private Drawable spork_test_drawable;
+    @BindResource(R.drawable.spork_test_drawable)
+    private Drawable sporkTestDrawable;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
-	{
-		return new View(getActivity());
-	}
+    @BindResource
+    private Drawable spork_test_drawable;
 
-	@Override
-	public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
-	{
-		Spork.bind(this);
-	}
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        return new View(getActivity());
+    }
 
-	@javax.annotation.Nullable
-	@Override
-	public String getStringByIdSpecified()
-	{
-		return mAppName;
-	}
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        Spork.bind(this);
+    }
 
-	@javax.annotation.Nullable
-	@Override
-	public String getStringByIdImplied()
-	{
-		return app_name;
-	}
+    @javax.annotation.Nullable
+    @Override
+    public String getStringByIdSpecified() {
+        return appName;
+    }
 
-	@javax.annotation.Nullable
-	@Override
-	public Drawable getDrawableByIdSpecified()
-	{
-		return mSporkTestDrawable;
-	}
+    @javax.annotation.Nullable
+    @Override
+    public String getStringByIdImplied() {
+        return app_name;
+    }
 
-	@javax.annotation.Nullable
-	@Override
-	public Drawable getDrawableByIdImplied()
-	{
-		return spork_test_drawable;
-	}
+    @javax.annotation.Nullable
+    @Override
+    public Drawable getDrawableByIdSpecified() {
+        return sporkTestDrawable;
+    }
 
-	@Override
-	public float getDimensionByIdSpecified()
-	{
-		return mSporkTestDimension;
-	}
+    @javax.annotation.Nullable
+    @Override
+    public Drawable getDrawableByIdImplied() {
+        return spork_test_drawable;
+    }
 
-	@Override
-	public float getDimensionByIdImplied()
-	{
-		return spork_test_dimension;
-	}
+    @Override
+    public float getDimensionByIdSpecified() {
+        return sporkTestDimension;
+    }
+
+    @Override
+    public float getDimensionByIdImplied() {
+        return spork_test_dimension;
+    }
 }

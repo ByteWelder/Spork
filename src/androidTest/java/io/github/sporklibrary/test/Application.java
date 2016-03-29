@@ -4,42 +4,36 @@ import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindComponent;
 import io.github.sporklibrary.annotations.BindResource;
 
-public class Application extends android.app.Application
-{
-	private static Application sInstance = null;
+public class Application extends android.app.Application {
+    private static Application sInstance = null;
 
-	public static class Component
-	{
-	}
+    public static class Component {
+    }
 
-	@BindResource
-	private Float spork_test_dimension;
+    @BindResource
+    private Float spork_test_dimension;
 
-	@BindComponent
-	private Component mComponent;
+    @BindComponent
+    private Component component;
 
-	@Override
-	public void onCreate()
-	{
-		super.onCreate();
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
-		sInstance = this;
+        sInstance = this;
 
-		Spork.bind(this);
-	}
+        Spork.bind(this);
+    }
 
-	public Float getTestDimension()
-	{
-		return spork_test_dimension;
-	}
+    public Float getTestDimension() {
+        return spork_test_dimension;
+    }
 
-	public Component getComponent()
-	{
-		return mComponent;
-	}
+    public Component getComponent() {
+        return component;
+    }
 
-	public static Application getInstance()
-	{
-		return sInstance;
-	}
+    public static Application getInstance() {
+        return sInstance;
+    }
 }

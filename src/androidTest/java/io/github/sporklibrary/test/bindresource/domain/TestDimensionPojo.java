@@ -4,13 +4,12 @@ import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindResource;
 import io.github.sporklibrary.test.R;
 
-public class TestDimensionPojo
-{
-	@BindResource(R.dimen.spork_test_dimension)
-	private float mTest;
+public class TestDimensionPojo {
 
-	public TestDimensionPojo()
-	{
-		Spork.bind(this);
-	}
+    @BindResource(R.dimen.spork_test_dimension)
+    private float test;
+
+    public TestDimensionPojo() {
+        Spork.bind(this);
+    }
 }

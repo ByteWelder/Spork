@@ -2,51 +2,47 @@ package io.github.sporklibrary.test.bindview.domain;
 
 import android.os.Bundle;
 import android.view.View;
+
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindFragment;
 import io.github.sporklibrary.annotations.BindView;
 import io.github.sporklibrary.test.R;
 import io.github.sporklibrary.test.bindview.ViewProvider;
 
-public class TestActivity extends android.app.Activity implements ViewProvider
-{
-	@BindView(R.id.viewbindingview)
-	private View mViewBindingView;
+public class TestActivity extends android.app.Activity implements ViewProvider {
 
-	@BindView
-	private TestView viewbindingview;
+    @BindView(R.id.viewbindingview)
+    private View viewBindingView;
 
-	@BindFragment(R.id.viewbindingfragment)
-	private TestFragment mViewBindingFragment;
+    @BindView
+    private TestView viewbindingview;
 
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
+    @BindFragment(R.id.viewbindingfragment)
+    private TestFragment mViewBindingFragment;
 
-		setContentView(R.layout.activity_view_binding);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		Spork.bind(this);
-	}
+        setContentView(R.layout.activity_view_binding);
 
-	@Override
-	public View getViewByIdSpecified()
-	{
-		return mViewBindingView;
-	}
+        Spork.bind(this);
+    }
 
-	@Override
-	public View getViewByImplied()
-	{
-		return viewbindingview;
-	}
+    @Override
+    public View getViewByIdSpecified() {
+        return viewBindingView;
+    }
 
-	public TestView getViewBindingView()
-	{
-		return viewbindingview;
-	}
+    @Override
+    public View getViewByImplied() {
+        return viewbindingview;
+    }
 
-	public TestFragment getViewBindingFragment()
-	{
-		return mViewBindingFragment;
-	}
+    public TestView getViewBindingView() {
+        return viewbindingview;
+    }
+
+    public TestFragment getViewBindingFragment() {
+        return mViewBindingFragment;
+    }
 }

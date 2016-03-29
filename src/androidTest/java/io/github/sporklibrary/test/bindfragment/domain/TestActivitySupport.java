@@ -3,39 +3,34 @@ package io.github.sporklibrary.test.bindfragment.domain;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindFragment;
 import io.github.sporklibrary.test.R;
 
-public class TestActivitySupport extends AppCompatActivity
-{
-	@BindFragment(R.id.testfragment)
-	private TestFragmentSupport mFragment;
+public class TestActivitySupport extends AppCompatActivity {
 
-	@BindFragment
-	private TestFragmentSupport testfragment;
+    @BindFragment(R.id.testfragment)
+    private TestFragmentSupport fragment;
 
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
+    @BindFragment
+    private TestFragmentSupport testfragment;
 
-		setContentView(R.layout.activity_fragment_binding_support);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_fragment_binding_support);
+        Spork.bind(this);
+    }
 
-		Spork.bind(this);
-	}
+    public Fragment getFragmentByIdSpecified() {
+        return fragment;
+    }
 
-	public Fragment getFragmentByIdSpecified()
-	{
-		return mFragment;
-	}
+    public Fragment getFragmentByIdImplied() {
+        return testfragment;
+    }
 
-	public Fragment getFragmentByIdImplied()
-	{
-		return testfragment;
-	}
-
-	public TestFragmentSupport getTestFragment()
-	{
-		return mFragment;
-	}
+    public TestFragmentSupport getTestFragment() {
+        return fragment;
+    }
 }

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
+
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindFragment;
 import io.github.sporklibrary.test.R;
@@ -13,35 +14,29 @@ import io.github.sporklibrary.test.R;
  * Tests child fragments.
  */
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-public class TestActivityApi17 extends Activity
-{
-	@BindFragment(R.id.testfragmentapi17)
-	private TestFragmentApi17 mTestFragment;
+public class TestActivityApi17 extends Activity {
 
-	@BindFragment
-	private TestFragmentApi17 testfragmentapi17;
+    @BindFragment(R.id.testfragmentapi17)
+    private TestFragmentApi17 testFragment;
 
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
+    @BindFragment
+    private TestFragmentApi17 testfragmentapi17;
 
-		setContentView(R.layout.activity_fragment_binding_api17);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_fragment_binding_api17);
+        Spork.bind(this);
+    }
 
-		Spork.bind(this);
-	}
+    public Fragment getFragmentByIdSpecified() {
+        return testFragment;
+    }
 
-	public Fragment getFragmentByIdSpecified()
-	{
-		return mTestFragment;
-	}
+    public Fragment getFragmentByIdImplied() {
+        return testfragmentapi17;
+    }
 
-	public Fragment getFragmentByIdImplied()
-	{
-		return testfragmentapi17;
-	}
-
-	public TestFragmentApi17 getTestFragment()
-	{
-		return testfragmentapi17;
-	}
+    public TestFragmentApi17 getTestFragment() {
+        return testfragmentapi17;
+    }
 }

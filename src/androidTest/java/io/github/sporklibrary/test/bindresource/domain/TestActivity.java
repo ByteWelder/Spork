@@ -2,6 +2,7 @@ package io.github.sporklibrary.test.bindresource.domain;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindFragment;
 import io.github.sporklibrary.annotations.BindResource;
@@ -11,88 +12,79 @@ import io.github.sporklibrary.test.bindresource.ResourceProvider;
 
 import javax.annotation.Nullable;
 
-public class TestActivity extends android.app.Activity implements ResourceProvider
-{
-	@BindResource(R.string.app_name)
-	private String mAppName;
+public class TestActivity extends android.app.Activity implements ResourceProvider {
 
-	@BindResource
-	private String app_name;
+    @BindResource(R.string.app_name)
+    private String appName;
 
-	@BindResource(R.dimen.spork_test_dimension)
-	private float mSporkTestDimension;
+    @BindResource
+    private String app_name;
 
-	@BindResource
-	private Float spork_test_dimension;
+    @BindResource(R.dimen.spork_test_dimension)
+    private float sporkTestDimension;
 
-	@BindResource(R.drawable.spork_test_drawable)
-	private Drawable mSporkTestDrawable;
+    @BindResource
+    private Float spork_test_dimension;
 
-	@BindResource
-	private Drawable spork_test_drawable;
+    @BindResource(R.drawable.spork_test_drawable)
+    private Drawable sporkTestDrawable;
 
-	@BindFragment(R.id.resourcebindingfragment)
-	private TestFragment mResourceBindingFragment;
+    @BindResource
+    private Drawable spork_test_drawable;
 
-	@BindView(R.id.resourcebindingview)
-	private TestView mResourceBindingView;
+    @BindFragment(R.id.resourcebindingfragment)
+    private TestFragment resourceBindingFragment;
 
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
+    @BindView(R.id.resourcebindingview)
+    private TestView resourceBindingView;
 
-		setContentView(R.layout.activity_resource_binding);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		Spork.bind(this);
-	}
+        setContentView(R.layout.activity_resource_binding);
 
-	@Nullable
-	@Override
-	public String getStringByIdSpecified()
-	{
-		return mAppName;
-	}
+        Spork.bind(this);
+    }
 
-	@Nullable
-	@Override
-	public String getStringByIdImplied()
-	{
-		return app_name;
-	}
+    @Nullable
+    @Override
+    public String getStringByIdSpecified() {
+        return appName;
+    }
 
-	@Nullable
-	@Override
-	public Drawable getDrawableByIdSpecified()
-	{
-		return mSporkTestDrawable;
-	}
+    @Nullable
+    @Override
+    public String getStringByIdImplied() {
+        return app_name;
+    }
 
-	@Nullable
-	@Override
-	public Drawable getDrawableByIdImplied()
-	{
-		return spork_test_drawable;
-	}
+    @Nullable
+    @Override
+    public Drawable getDrawableByIdSpecified() {
+        return sporkTestDrawable;
+    }
 
-	@Override
-	public float getDimensionByIdSpecified()
-	{
-		return mSporkTestDimension;
-	}
+    @Nullable
+    @Override
+    public Drawable getDrawableByIdImplied() {
+        return spork_test_drawable;
+    }
 
-	@Override
-	public float getDimensionByIdImplied()
-	{
-		return spork_test_dimension;
-	}
+    @Override
+    public float getDimensionByIdSpecified() {
+        return sporkTestDimension;
+    }
 
-	public TestFragment getResourceBindingFragment()
-	{
-		return mResourceBindingFragment;
-	}
+    @Override
+    public float getDimensionByIdImplied() {
+        return spork_test_dimension;
+    }
 
-	public TestView getResourceBindingView()
-	{
-		return mResourceBindingView;
-	}
+    public TestFragment getResourceBindingFragment() {
+        return resourceBindingFragment;
+    }
+
+    public TestView getResourceBindingView() {
+        return resourceBindingView;
+    }
 }

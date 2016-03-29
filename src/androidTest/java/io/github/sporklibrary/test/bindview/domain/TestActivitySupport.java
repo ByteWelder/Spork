@@ -5,69 +5,65 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindFragment;
 import io.github.sporklibrary.annotations.BindView;
 import io.github.sporklibrary.test.R;
 import io.github.sporklibrary.test.bindview.ViewProvider;
+
 import java.util.ArrayList;
 
-public class TestActivitySupport extends AppCompatActivity implements ViewProvider
-{
-	@BindView(R.id.viewbindingview)
-	private View mViewBindingView;
+public class TestActivitySupport extends AppCompatActivity implements ViewProvider {
 
-	@BindView
-	private TestView viewbindingview;
+    @BindView(R.id.viewbindingview)
+    private View viewBindingView;
 
-	@BindView(R.id.test_recyclerview)
-	private RecyclerView mRecyclerView;
+    @BindView
+    private TestView viewbindingview;
 
-	@BindFragment(R.id.viewbindingfragment)
-	private TestFragmentSupport mViewBindingFragment;
+    @BindView(R.id.test_recyclerview)
+    private RecyclerView recyclerView;
 
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
+    @BindFragment(R.id.viewbindingfragment)
+    private TestFragmentSupport viewBindingFragment;
 
-		setContentView(R.layout.activity_view_binding_support);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		Spork.bind(this);
+        setContentView(R.layout.activity_view_binding_support);
 
-		ArrayList<String> items = new ArrayList<>();
-		items.add("Alpha");
-		items.add("Beta");
-		items.add("Gamma");
+        Spork.bind(this);
 
-		RecyclerViewAdapter adapter = new RecyclerViewAdapter(items);
-		mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-		mRecyclerView.setAdapter(adapter);
-	}
+        ArrayList<String> items = new ArrayList<>();
+        items.add("Alpha");
+        items.add("Beta");
+        items.add("Gamma");
 
-	@Override
-	public View getViewByIdSpecified()
-	{
-		return mViewBindingView;
-	}
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(items);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(adapter);
+    }
 
-	@Override
-	public View getViewByImplied()
-	{
-		return viewbindingview;
-	}
+    @Override
+    public View getViewByIdSpecified() {
+        return viewBindingView;
+    }
 
-	public TestView getViewBindingView()
-	{
-		return viewbindingview;
-	}
+    @Override
+    public View getViewByImplied() {
+        return viewbindingview;
+    }
 
-	public TestFragmentSupport getViewBindingFragment()
-	{
-		return mViewBindingFragment;
-	}
+    public TestView getViewBindingView() {
+        return viewbindingview;
+    }
 
-	public RecyclerView getRecyclerView()
-	{
-		return mRecyclerView;
-	}
+    public TestFragmentSupport getViewBindingFragment() {
+        return viewBindingFragment;
+    }
+
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
 }

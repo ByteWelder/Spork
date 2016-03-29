@@ -4,7 +4,9 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.test.rule.ActivityTestRule;
 import android.test.suitebuilder.annotation.SmallTest;
+
 import io.github.sporklibrary.test.bindresource.domain.TestActivitySupport;
+
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -12,48 +14,46 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @SmallTest
-public class ResourceBindingTestSupport
-{
-	@Rule
-	public ActivityTestRule<TestActivitySupport> mActivityRule = new ActivityTestRule<>(TestActivitySupport.class);
+public class ResourceBindingTestSupport {
 
-	@Test
-	public void run()
-	{
-		TestActivitySupport activity = mActivityRule.getActivity();
-		assertNotNull(activity.getResourceBindingFragment());
-		assertNotNull(activity.getResourceBindingView());
+    @Rule
+    public ActivityTestRule<TestActivitySupport> activityRule = new ActivityTestRule<>(TestActivitySupport.class);
 
-		testBinding(activity);
-		testBinding(activity.getResourceBindingFragment());
-		testBinding(activity.getResourceBindingView());
-	}
+    @Test
+    public void run() {
+        TestActivitySupport activity = activityRule.getActivity();
+        assertNotNull(activity.getResourceBindingFragment());
+        assertNotNull(activity.getResourceBindingView());
 
-	private void testBinding(ResourceProvider provider)
-	{
-		Resources resource = mActivityRule.getActivity().getResources();
-		String message = "binding " + provider.getClass().getSimpleName();
+        testBinding(activity);
+        testBinding(activity.getResourceBindingFragment());
+        testBinding(activity.getResourceBindingView());
+    }
 
-		float dimen_target = resource.getDimension(io.github.sporklibrary.test.R.dimen.spork_test_dimension);
-		float dimen_by_id = provider.getDimensionByIdSpecified();
-		float dimen_by_name = provider.getDimensionByIdImplied();
-		double dimen_tolerance = 0.000001;
+    private void testBinding(ResourceProvider provider) {
+        Resources resource = activityRule.getActivity().getResources();
+        String message = "binding " + provider.getClass().getSimpleName();
 
-		assertEquals(message, dimen_target, dimen_by_id, dimen_tolerance);
-		assertEquals(message, dimen_target, dimen_by_name, dimen_tolerance);
+        float dimenTarget = resource.getDimension(io.github.sporklibrary.test.R.dimen.spork_test_dimension);
+        float dimenById = provider.getDimensionByIdSpecified();
+        float dimenByName = provider.getDimensionByIdImplied();
+        double dimenTolerance = 0.000001;
 
-		String string_target = resource.getString(io.github.sporklibrary.test.R.string.app_name);
-		String string_by_id = provider.getStringByIdSpecified();
-		String string_by_name = provider.getStringByIdImplied();
+        assertEquals(message, dimenTarget, dimenById, dimenTolerance);
+        assertEquals(message, dimenTarget, dimenByName, dimenTolerance);
 
-		assertEquals(message, string_target, string_by_id);
-		assertEquals(message, string_target, string_by_name);
+        String stringTarget = resource.getString(io.github.sporklibrary.test.R.string.app_name);
+        String stringById = provider.getStringByIdSpecified();
+        String stringByName = provider.getStringByIdImplied();
 
-		Drawable drawable_by_id = provider.getDrawableByIdSpecified();
-		Drawable drawable_by_name = provider.getDrawableByIdImplied();
+        assertEquals(message, stringTarget, stringById);
+        assertEquals(message, stringTarget, stringByName);
 
-		// Can't compare instances
-		assertNotNull(message, drawable_by_id);
-		assertNotNull(message, drawable_by_name);
-	}
+        Drawable drawableById = provider.getDrawableByIdSpecified();
+        Drawable drawableByName = provider.getDrawableByIdImplied();
+
+        // Can't compare instances
+        assertNotNull(message, drawableById);
+        assertNotNull(message, drawableByName);
+    }
 }

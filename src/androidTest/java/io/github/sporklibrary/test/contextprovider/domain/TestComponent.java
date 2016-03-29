@@ -11,14 +11,14 @@ import io.github.sporklibrary.test.R;
 
 public class TestComponent implements ContextProvider
 {
-	private final Activity mActivity;
+	private final Activity activity;
 
 	@BindResource(R.drawable.spork_test_drawable)
-	private Drawable mDrawable;
+	private Drawable drawable;
 
 	public TestComponent(@ComponentParent Activity activity)
 	{
-		mActivity = activity;
+		this.activity = activity;
 
 		Spork.bind(this);
 	}
@@ -26,11 +26,11 @@ public class TestComponent implements ContextProvider
 	@Override
 	public Context getContext()
 	{
-		return mActivity;
+		return activity;
 	}
 
 	public Drawable getDrawable()
 	{
-		return mDrawable;
+		return drawable;
 	}
 }

@@ -5,109 +5,95 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
+
 import io.github.sporklibrary.annotations.BindFragment;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.exceptions.BindException;
 
 import java.lang.reflect.Field;
 
-public final class FragmentResolver
-{
-	private FragmentResolver()
-	{
-	}
+public final class FragmentResolver {
 
-	public static @Nullable Fragment getFragment(Field field, BindFragment annotation, Activity activity)
-	{
-		int fragment_id = annotation.value();
+    private FragmentResolver() {
+    }
 
-		if (fragment_id == ResourceId.sDefaultValue)
-		{
-			// find by name
-			fragment_id = activity.getResources().getIdentifier(field.getName(), "id", activity.getPackageName());
+    @Nullable
+    public static Fragment getFragment(Field field, BindFragment annotation, Activity activity) {
+        int fragment_id = annotation.value();
 
-			if (fragment_id == 0)
-			{
-				throw new BindException(BindFragment.class, activity.getClass(), "Fragment not found by name '" + field.getName() + "'");
-			}
-		}
+        if (fragment_id == ResourceId.sDefaultValue) {
+            // find by name
+            fragment_id = activity.getResources().getIdentifier(field.getName(), "id", activity.getPackageName());
 
-		return activity.getFragmentManager().findFragmentById(fragment_id);
-	}
+            if (fragment_id == 0) {
+                throw new BindException(BindFragment.class, activity.getClass(), "Fragment not found by name '" + field.getName() + "'");
+            }
+        }
 
-	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-	public static @Nullable Fragment getFragment(Field field, BindFragment annotation, Fragment fragment)
-	{
-		int fragment_id = annotation.value();
+        return activity.getFragmentManager().findFragmentById(fragment_id);
+    }
 
-		if (fragment_id == ResourceId.sDefaultValue)
-		{
-			// find by name
-			fragment_id = fragment.getResources().getIdentifier(field.getName(), "id", fragment.getActivity().getPackageName());
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @Nullable
+    public static Fragment getFragment(Field field, BindFragment annotation, Fragment fragment) {
+        int fragment_id = annotation.value();
 
-			if (fragment_id == 0)
-			{
-				throw new BindException(BindFragment.class, fragment.getClass(), "Fragment not found by name '" + field.getName() + "'");
-			}
-		}
+        if (fragment_id == ResourceId.sDefaultValue) {
+            // find by name
+            fragment_id = fragment.getResources().getIdentifier(field.getName(), "id", fragment.getActivity().getPackageName());
 
-		Fragment child_fragment = fragment.getChildFragmentManager().findFragmentById(fragment_id);
+            if (fragment_id == 0) {
+                throw new BindException(BindFragment.class, fragment.getClass(), "Fragment not found by name '" + field.getName() + "'");
+            }
+        }
 
-		if (child_fragment == null)
-		{
-			// On a Wiko Sunset handset, the child fragment was registered with the regular FragmentManager:
-			return fragment.getFragmentManager().findFragmentById(fragment_id);
-		}
-		else
-		{
-			return child_fragment;
-		}
-	}
+        Fragment child_fragment = fragment.getChildFragmentManager().findFragmentById(fragment_id);
 
-	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-	public static @Nullable android.support.v4.app.Fragment getSupportFragment(Field field, BindFragment annotation, android.support.v4.app.Fragment fragment)
-	{
-		int fragment_id = annotation.value();
+        if (child_fragment == null) {
+            // On a Wiko Sunset handset, the child fragment was registered with the regular FragmentManager:
+            return fragment.getFragmentManager().findFragmentById(fragment_id);
+        } else {
+            return child_fragment;
+        }
+    }
 
-		if (fragment_id == ResourceId.sDefaultValue)
-		{
-			// find by name
-			fragment_id = fragment.getResources().getIdentifier(field.getName(), "id", fragment.getActivity().getPackageName());
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @Nullable
+    public static android.support.v4.app.Fragment getSupportFragment(Field field, BindFragment annotation, android.support.v4.app.Fragment fragment) {
+        int fragment_id = annotation.value();
 
-			if (fragment_id == 0)
-			{
-				throw new BindException(BindFragment.class, fragment.getClass(), "Fragment not found by name '" + field.getName() + "'");
-			}
-		}
+        if (fragment_id == ResourceId.sDefaultValue) {
+            // find by name
+            fragment_id = fragment.getResources().getIdentifier(field.getName(), "id", fragment.getActivity().getPackageName());
 
-		android.support.v4.app.Fragment child_fragment = fragment.getChildFragmentManager().findFragmentById(fragment_id);
+            if (fragment_id == 0) {
+                throw new BindException(BindFragment.class, fragment.getClass(), "Fragment not found by name '" + field.getName() + "'");
+            }
+        }
 
-		if (child_fragment == null)
-		{
-			// On a Wiko Sunset handset, the child fragment was registered with the regular FragmentManager:
-			return fragment.getFragmentManager().findFragmentById(fragment_id);
-		}
-		else
-		{
-			return child_fragment;
-		}
-	}
+        android.support.v4.app.Fragment child_fragment = fragment.getChildFragmentManager().findFragmentById(fragment_id);
 
-	public static @Nullable android.support.v4.app.Fragment getSupportFragment(Field field, BindFragment annotation, AppCompatActivity activity)
-	{
-		int fragment_id = annotation.value();
+        if (child_fragment == null) {
+            // On a Wiko Sunset handset, the child fragment was registered with the regular FragmentManager:
+            return fragment.getFragmentManager().findFragmentById(fragment_id);
+        } else {
+            return child_fragment;
+        }
+    }
 
-		if (fragment_id == ResourceId.sDefaultValue)
-		{
-			// find by name
-			fragment_id = activity.getResources().getIdentifier(field.getName(), "id", activity.getPackageName());
+    @Nullable
+    public static android.support.v4.app.Fragment getSupportFragment(Field field, BindFragment annotation, AppCompatActivity activity) {
+        int fragment_id = annotation.value();
 
-			if (fragment_id == 0)
-			{
-				throw new BindException(BindFragment.class, activity.getClass(), "Fragment not found by name '" + field.getName() + "'");
-			}
-		}
+        if (fragment_id == ResourceId.sDefaultValue) {
+            // find by name
+            fragment_id = activity.getResources().getIdentifier(field.getName(), "id", activity.getPackageName());
 
-		return activity.getSupportFragmentManager().findFragmentById(fragment_id);
-	}
+            if (fragment_id == 0) {
+                throw new BindException(BindFragment.class, activity.getClass(), "Fragment not found by name '" + field.getName() + "'");
+            }
+        }
+
+        return activity.getSupportFragmentManager().findFragmentById(fragment_id);
+    }
 }

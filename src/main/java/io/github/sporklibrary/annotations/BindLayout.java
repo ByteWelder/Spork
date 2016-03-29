@@ -7,19 +7,18 @@ import java.lang.annotation.Target;
 
 /**
  * Bind a layout.
- *
+ * <p/>
  * Can be used with classes derived from:
  * <ul>
- *     <li>{@link android.view.ViewGroup}</li>
- *     <li>{@link android.app.Activity}</li>
+ * <li>{@link android.view.ViewGroup}</li>
+ * <li>{@link android.app.Activity}</li>
  * </ul>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface BindLayout
-{
-	/**
-	 * @return the layout resource id from R.layout.*
-	 */
-	int value();
+public @interface BindLayout {
+    /**
+     * @return the layout resource id from R.layout.*
+     */
+    int value();
 }

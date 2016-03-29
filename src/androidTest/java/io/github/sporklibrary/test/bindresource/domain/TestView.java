@@ -5,99 +5,89 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindResource;
 import io.github.sporklibrary.test.bindresource.ResourceProvider;
 
 import javax.annotation.Nullable;
 
-public class TestView extends android.view.View implements ResourceProvider
-{
-	@BindResource(io.github.sporklibrary.test.R.string.app_name)
-	private String mAppName;
+public class TestView extends android.view.View implements ResourceProvider {
 
-	@BindResource
-	private String app_name;
+    @BindResource(io.github.sporklibrary.test.R.string.app_name)
+    private String appName;
 
-	@BindResource(io.github.sporklibrary.test.R.dimen.spork_test_dimension)
-	private float mSporkTestDimension;
+    @BindResource
+    private String app_name;
 
-	@BindResource
-	private Float spork_test_dimension;
+    @BindResource(io.github.sporklibrary.test.R.dimen.spork_test_dimension)
+    private float sporkTestDimension;
 
-	@BindResource(io.github.sporklibrary.test.R.drawable.spork_test_drawable)
-	private Drawable mSporkTestDrawable;
+    @BindResource
+    private Float spork_test_dimension;
 
-	@BindResource
-	private Drawable spork_test_drawable;
+    @BindResource(io.github.sporklibrary.test.R.drawable.spork_test_drawable)
+    private Drawable sporkTestDrawable;
 
-	public TestView(Context context)
-	{
-		super(context);
-		init();
-	}
+    @BindResource
+    private Drawable spork_test_drawable;
 
-	public TestView(Context context, AttributeSet attrs)
-	{
-		super(context, attrs);
-		init();
-	}
+    public TestView(Context context) {
+        super(context);
+        init();
+    }
 
-	public TestView(Context context, AttributeSet attrs, int defStyleAttr)
-	{
-		super(context, attrs, defStyleAttr);
-		init();
-	}
+    public TestView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
 
-	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
-	public TestView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
-	{
-		super(context, attrs, defStyleAttr, defStyleRes);
-		init();
-	}
+    public TestView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
 
-	private void init()
-	{
-		Spork.bind(this);
-	}
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public TestView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init();
+    }
 
-	@Nullable
-	@Override
-	public String getStringByIdSpecified()
-	{
-		return mAppName;
-	}
+    private void init() {
+        Spork.bind(this);
+    }
 
-	@Nullable
-	@Override
-	public String getStringByIdImplied()
-	{
-		return app_name;
-	}
+    @Nullable
+    @Override
+    public String getStringByIdSpecified() {
+        return appName;
+    }
 
-	@Nullable
-	@Override
-	public Drawable getDrawableByIdSpecified()
-	{
-		return mSporkTestDrawable;
-	}
+    @Nullable
+    @Override
+    public String getStringByIdImplied() {
+        return app_name;
+    }
 
-	@Nullable
-	@Override
-	public Drawable getDrawableByIdImplied()
-	{
-		return spork_test_drawable;
-	}
+    @Nullable
+    @Override
+    public Drawable getDrawableByIdSpecified() {
+        return sporkTestDrawable;
+    }
 
-	@Override
-	public float getDimensionByIdSpecified()
-	{
-		return mSporkTestDimension;
-	}
+    @Nullable
+    @Override
+    public Drawable getDrawableByIdImplied() {
+        return spork_test_drawable;
+    }
 
-	@Override
-	public float getDimensionByIdImplied()
-	{
-		return spork_test_dimension;
-	}
+    @Override
+    public float getDimensionByIdSpecified() {
+        return sporkTestDimension;
+    }
+
+    @Override
+    public float getDimensionByIdImplied() {
+        return spork_test_dimension;
+    }
 }

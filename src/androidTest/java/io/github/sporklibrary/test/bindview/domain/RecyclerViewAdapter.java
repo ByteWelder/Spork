@@ -5,58 +5,52 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.test.R;
 import io.github.sporklibrary.annotations.BindView;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.TestViewHolder>
-{
-	private final List<String> mItems;
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.TestViewHolder> {
 
-	public RecyclerViewAdapter(List<String> items)
-	{
-		mItems = items;
-	}
+    private final List<String> items;
 
-	public class TestViewHolder extends RecyclerView.ViewHolder
-	{
-		@BindView(R.id.textview)
-		private TextView mTextView;
+    public RecyclerViewAdapter(List<String> items) {
+        this.items = items;
+    }
 
-		public TestViewHolder(View itemView)
-		{
-			super(itemView);
+    public class TestViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.textview)
+        private TextView mTextView;
 
-			Spork.bind(this);
-		}
+        public TestViewHolder(View itemView) {
+            super(itemView);
 
-		public void update(String text)
-		{
-			mTextView.setText(text);
-		}
-	}
+            Spork.bind(this);
+        }
 
-	@Override
-	public TestViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-	{
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_recyclerview_item, parent, false);
+        public void update(String text) {
+            mTextView.setText(text);
+        }
+    }
 
-		return new TestViewHolder(view);
-	}
+    @Override
+    public TestViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_recyclerview_item, parent, false);
 
-	@Override
-	public void onBindViewHolder(TestViewHolder holder, int position)
-	{
-		String item = mItems.get(position);
+        return new TestViewHolder(view);
+    }
 
-		holder.update(item);
-	}
+    @Override
+    public void onBindViewHolder(TestViewHolder holder, int position) {
+        String item = items.get(position);
 
-	@Override
-	public int getItemCount()
-	{
-		return mItems.size();
-	}
+        holder.update(item);
+    }
+
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
 }

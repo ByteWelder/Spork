@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindClick;
 import io.github.sporklibrary.annotations.BindFragment;
@@ -13,75 +14,67 @@ import io.github.sporklibrary.test.bindclick.ClickTestProvider;
 
 import java.util.ArrayList;
 
-public class TestActivitySupport extends AppCompatActivity implements ClickTestProvider
-{
-	@BindFragment(R.id.testfragment)
-	private TestFragmentSupport mTestFragment;
+public class TestActivitySupport extends AppCompatActivity implements ClickTestProvider {
 
-	@BindView(R.id.testview)
-	private TestView mTestView;
+    @BindFragment(R.id.testfragment)
+    private TestFragmentSupport testFragment;
 
-	@BindView(R.id.testfaultyclickargumentsview)
-	private TestFaultyClickArgumentsView mTestFaultyClickArgumentsView;
+    @BindView(R.id.testview)
+    private TestView testView;
 
-	@BindView(io.github.sporklibrary.test.R.id.test_recyclerview)
-	private RecyclerView mRecyclerView;
+    @BindView(R.id.testfaultyclickargumentsview)
+    private TestFaultyClickArgumentsView testFaultyClickArgumentsView;
 
-	private int mClickCount = 0;
+    @BindView(io.github.sporklibrary.test.R.id.test_recyclerview)
+    private RecyclerView recyclerView;
 
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
+    private int clickCount = 0;
 
-		setContentView(R.layout.activity_click_binding_support);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		Spork.bind(this);
+        setContentView(R.layout.activity_click_binding_support);
 
-		ArrayList<String> items = new ArrayList<>();
-		items.add("Alpha");
-		items.add("Beta");
-		items.add("Gamma");
+        Spork.bind(this);
 
-		RecyclerViewAdapter adapter = new RecyclerViewAdapter(items);
-		mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-		mRecyclerView.setAdapter(adapter);
-	}
+        ArrayList<String> items = new ArrayList<>();
+        items.add("Alpha");
+        items.add("Beta");
+        items.add("Gamma");
 
-	@BindClick(R.id.click_binding_activity_button)
-	private void onClick()
-	{
-		mClickCount++;
-	}
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(items);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(adapter);
+    }
 
-	@Override
-	public int getClickCount()
-	{
-		return mClickCount;
-	}
+    @BindClick(R.id.click_binding_activity_button)
+    private void onClick() {
+        clickCount++;
+    }
 
-	@Override
-	public int getClickViewResourceId()
-	{
-		return R.id.click_binding_activity_button;
-	}
+    @Override
+    public int getClickCount() {
+        return clickCount;
+    }
 
-	public TestFragmentSupport getTestFragment()
-	{
-		return mTestFragment;
-	}
+    @Override
+    public int getClickViewResourceId() {
+        return R.id.click_binding_activity_button;
+    }
 
-	public TestView getTestView()
-	{
-		return mTestView;
-	}
+    public TestFragmentSupport getTestFragment() {
+        return testFragment;
+    }
 
-	public TestFaultyClickArgumentsView getTestFaultyClickArgumentsView()
-	{
-		return mTestFaultyClickArgumentsView;
-	}
+    public TestView getTestView() {
+        return testView;
+    }
 
-	public RecyclerView getRecyclerView()
-	{
-		return mRecyclerView;
-	}
+    public TestFaultyClickArgumentsView getTestFaultyClickArgumentsView() {
+        return testFaultyClickArgumentsView;
+    }
+
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
 }

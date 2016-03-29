@@ -7,41 +7,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindView;
 import io.github.sporklibrary.test.R;
 import io.github.sporklibrary.test.bindview.ViewProvider;
 
-public class TestFragmentSupport extends Fragment implements ViewProvider
-{
-	// Keep this one public to have a different accessibily state on the Field
-	@BindView(R.id.viewbindingfragment_button)
-	public Button mButton;
+public class TestFragmentSupport extends Fragment implements ViewProvider {
 
-	@BindView
-	private Button viewbindingfragment_button;
+    // Keep this one public to have a different accessibily state on the Field
+    @BindView(R.id.viewbindingfragment_button)
+    public Button button;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
-	{
-		return inflater.inflate(R.layout.fragment_view_binding, container);
-	}
+    @BindView
+    private Button viewbindingfragment_button;
 
-	@Override
-	public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
-	{
-		Spork.bind(this);
-	}
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_view_binding, container);
+    }
 
-	@Override
-	public View getViewByIdSpecified()
-	{
-		return mButton;
-	}
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        Spork.bind(this);
+    }
 
-	@Override
-	public View getViewByImplied()
-	{
-		return viewbindingfragment_button;
-	}
+    @Override
+    public View getViewByIdSpecified() {
+        return button;
+    }
+
+    @Override
+    public View getViewByImplied() {
+        return viewbindingfragment_button;
+    }
 }
