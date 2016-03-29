@@ -8,21 +8,18 @@ import io.github.sporklibrary.reflection.AnnotatedFields;
 /**
  * The default FieldBinder that binds field annotated with the Bind annotation.
  */
-public class ComponentFieldBinder implements FieldBinder<BindComponent>
-{
-	private final ComponentInstanceManager componentInstanceManager = new ComponentInstanceManager();
+public class ComponentFieldBinder implements FieldBinder<BindComponent> {
+    private final ComponentInstanceManager componentInstanceManager = new ComponentInstanceManager();
 
-	@Override
-	public Class<BindComponent> getAnnotationClass()
-	{
-		return BindComponent.class;
-	}
+    @Override
+    public Class<BindComponent> getAnnotationClass() {
+        return BindComponent.class;
+    }
 
-	@Override
-	public void bind(Object object, AnnotatedField<BindComponent> annotatedField)
-	{
-		Object instance = componentInstanceManager.getInstance(object, annotatedField);
+    @Override
+    public void bind(Object object, AnnotatedField<BindComponent> annotatedField) {
+        Object instance = componentInstanceManager.getInstance(object, annotatedField);
 
-		AnnotatedFields.setValue(annotatedField, object, instance);
-	}
+        AnnotatedFields.setValue(annotatedField, object, instance);
+    }
 }

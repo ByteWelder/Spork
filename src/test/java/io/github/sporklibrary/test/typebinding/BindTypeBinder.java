@@ -4,32 +4,28 @@ import io.github.sporklibrary.binders.TypeBinder;
 import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.reflection.AnnotatedType;
 
-public class BindTypeBinder implements TypeBinder<BindValue>
-{
-	@Override
-	public Class<BindValue> getAnnotationClass()
-	{
-		return BindValue.class;
-	}
+public class BindTypeBinder implements TypeBinder<BindValue> {
 
-	@Override
-	public void bind(Object object, AnnotatedType<BindValue> annotatedType)
-	{
-		if (!IntSettable.class.isAssignableFrom(object.getClass()))
-		{
-			throw new BindException(BindValue.class, object.getClass(), "can only be used with IntSettable target");
-		}
+    @Override
+    public Class<BindValue> getAnnotationClass() {
+        return BindValue.class;
+    }
 
-		IntSettable valueHolder = (IntSettable)object;
+    @Override
+    public void bind(Object object, AnnotatedType<BindValue> annotatedType) {
+        if (!IntSettable.class.isAssignableFrom(object.getClass())) {
+            throw new BindException(BindValue.class, object.getClass(), "can only be used with IntSettable target");
+        }
 
-		int value = annotatedType.getAnnotation().value();
+        IntSettable valueHolder = (IntSettable) object;
 
-		// Internal test for improved code coverage
-		if (annotatedType.getAnnotatedClass() == null)
-		{
-			throw new RuntimeException("annotated class in AnnotatedType is null");
-		}
+        int value = annotatedType.getAnnotation().value();
 
-		valueHolder.setValue(value);
-	}
+        // Internal test for improved code coverage
+        if (annotatedType.getAnnotatedClass() == null) {
+            throw new RuntimeException("annotated class in AnnotatedType is null");
+        }
+
+        valueHolder.setValue(value);
+    }
 }

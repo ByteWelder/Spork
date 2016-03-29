@@ -9,67 +9,59 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-public class ClassAsserts
-{
-	/**
-	 * Based on http://stackoverflow.com/a/10872497/3848666
-	 * @param classObject the class
-	 * @throws NoSuchMethodException
-	 * @throws InvocationTargetException
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
-	 */
-	public static void assertUtilityClassWellDefined(final Class<?> classObject)
-		throws  NoSuchMethodException, InvocationTargetException,
-				InstantiationException, IllegalAccessException
-	{
-		assertTrue("class must be final", Modifier.isFinal(classObject.getModifiers()));
-		assertEquals("There must be only one constructor", 1,
-			classObject.getDeclaredConstructors().length);
+public class ClassAsserts {
 
-		final Constructor<?> constructor = classObject.getDeclaredConstructor();
+    /**
+     * Based on http://stackoverflow.com/a/10872497/3848666
+     *
+     * @param classObject the class
+     */
+    public static void assertUtilityClassWellDefined(final Class<?> classObject)
+            throws NoSuchMethodException, InvocationTargetException,
+            InstantiationException, IllegalAccessException {
+        assertTrue("class must be final", Modifier.isFinal(classObject.getModifiers()));
+        assertEquals("There must be only one constructor", 1,
+                classObject.getDeclaredConstructors().length);
 
-		if (constructor.isAccessible() || !Modifier.isPrivate(constructor.getModifiers()))
-		{
-			fail("constructor is not private");
-		}
+        final Constructor<?> constructor = classObject.getDeclaredConstructor();
 
-		constructor.setAccessible(true);
-		constructor.newInstance();
-		constructor.setAccessible(false);
+        if (constructor.isAccessible() || !Modifier.isPrivate(constructor.getModifiers())) {
+            fail("constructor is not private");
+        }
 
-		for (final Method method : classObject.getMethods())
-		{
-			if (!Modifier.isStatic(method.getModifiers()) && method.getDeclaringClass().equals(classObject))
-			{
-				fail("there exists a non-static method:" + method);
-			}
-		}
-	}
+        constructor.setAccessible(true);
+        constructor.newInstance();
+        constructor.setAccessible(false);
 
-	/**
-	 * This assert is to test inner classes of Annotations that act as a default value for
-	 * a field such as: <code>Class<?> value() default Default.class</code> as can be
-	 * found in {@link io.github.sporklibrary.annotations.BindComponent}
-	 * @param classObject the class
-	 */
-	public static void assertAnnotationDefaultClassWellDefined(final Class<?> classObject)
-		throws  NoSuchMethodException, IllegalAccessException,
-				InvocationTargetException, InstantiationException
-	{
-		assertTrue("class must be final", Modifier.isFinal(classObject.getModifiers()));
-		assertEquals("There must be only one constructor", 1,
-			classObject.getDeclaredConstructors().length);
+        for (final Method method : classObject.getMethods()) {
+            if (!Modifier.isStatic(method.getModifiers()) && method.getDeclaringClass().equals(classObject)) {
+                fail("there exists a non-static method:" + method);
+            }
+        }
+    }
 
-		final Constructor<?> constructor = classObject.getDeclaredConstructor();
+    /**
+     * This assert is to test inner classes of Annotations that act as a default value for a field
+     * such as: <code>Class<?> value() default Default.class</code> as can be found in {@link
+     * io.github.sporklibrary.annotations.BindComponent}
+     *
+     * @param classObject the class
+     */
+    public static void assertAnnotationDefaultClassWellDefined(final Class<?> classObject)
+            throws NoSuchMethodException, IllegalAccessException,
+            InvocationTargetException, InstantiationException {
+        assertTrue("class must be final", Modifier.isFinal(classObject.getModifiers()));
+        assertEquals("There must be only one constructor", 1,
+                classObject.getDeclaredConstructors().length);
 
-		if (constructor.isAccessible() || !Modifier.isPrivate(constructor.getModifiers()))
-		{
-			fail("constructor is not private");
-		}
+        final Constructor<?> constructor = classObject.getDeclaredConstructor();
 
-		constructor.setAccessible(true);
-		constructor.newInstance();
-		constructor.setAccessible(false);
-	}
+        if (constructor.isAccessible() || !Modifier.isPrivate(constructor.getModifiers())) {
+            fail("constructor is not private");
+        }
+
+        constructor.setAccessible(true);
+        constructor.newInstance();
+        constructor.setAccessible(false);
+    }
 }

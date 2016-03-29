@@ -14,99 +14,79 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * The standard component factory: creates scoped component instances.
  */
-public class DefaultComponentFactory implements ComponentFactory
-{
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Object create(Class<?> classObject, @Nullable Object parent)
-	{
-		try
-		{
-			if (classObject.getConstructors().length != 1)
-			{
-				throw new BindException(BindComponent.class, classObject, "components must have exactly 1 public constructor (explicit or implied)");
-			}
+public class DefaultComponentFactory implements ComponentFactory {
 
-			Constructor<?> constructor = classObject.getConstructors()[0];
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object create(Class<?> classObject, @Nullable Object parent) {
+        try {
+            if (classObject.getConstructors().length != 1) {
+                throw new BindException(BindComponent.class, classObject, "components must have exactly 1 public constructor (explicit or implied)");
+            }
 
-			boolean accessible = constructor.isAccessible();
+            Constructor<?> constructor = classObject.getConstructors()[0];
 
-			// ensure constructor can be invoked
-			if (!accessible)
-			{
-				constructor.setAccessible(true);
-			}
+            boolean accessible = constructor.isAccessible();
 
-			Object[] constructorArguments = getConstructorArguments(constructor, parent);
+            // ensure constructor can be invoked
+            if (!accessible) {
+                constructor.setAccessible(true);
+            }
 
-			Object instance = constructor.newInstance(constructorArguments);
+            Object[] constructorArguments = getConstructorArguments(constructor, parent);
 
-			// reset accessibility
-			if (!accessible)
-			{
-				constructor.setAccessible(false);
-			}
+            Object instance = constructor.newInstance(constructorArguments);
 
-			return instance;
-		}
-		catch (InvocationTargetException e)
-		{
-			throw new BindException(BindComponent.class, classObject, "constructor threw exception", e);
-		}
-		catch (Exception e)
-		{
-			throw new BindException(BindComponent.class, classObject, "failed to create instance", e);
-		}
-	}
+            // reset accessibility
+            if (!accessible) {
+                constructor.setAccessible(false);
+            }
 
-	// Warning: This needs to be JDK 1.5 compatible because of Android support
-	private Object[] getConstructorArguments(Constructor<?> constructor, @Nullable Object parent)
-	{
-		Class<?>[] parameterTypes = constructor.getParameterTypes();
+            return instance;
+        } catch (InvocationTargetException e) {
+            throw new BindException(BindComponent.class, classObject, "constructor threw exception", e);
+        } catch (Exception e) {
+            throw new BindException(BindComponent.class, classObject, "failed to create instance", e);
+        }
+    }
 
-		if (parameterTypes.length == 0)
-		{
-			return new Object[0];
-		}
-		else if (parameterTypes.length == 1)
-		{
-			Class<?> parameterType = parameterTypes[0];
+    // Warning: This needs to be JDK 1.5 compatible because of Android support
+    private Object[] getConstructorArguments(Constructor<?> constructor, @Nullable Object parent) {
+        Class<?>[] parameterTypes = constructor.getParameterTypes();
 
-			Annotation[] annotations = constructor.getParameterAnnotations()[0];
+        if (parameterTypes.length == 0) {
+            return new Object[0];
+        } else if (parameterTypes.length == 1) {
+            Class<?> parameterType = parameterTypes[0];
 
-			ComponentParent annotation = null;
+            Annotation[] annotations = constructor.getParameterAnnotations()[0];
 
-			for (Annotation a : annotations)
-			{
-				if (ComponentParent.class.isAssignableFrom(a.getClass()))
-				{
-					annotation = (ComponentParent)a;
-					break;
-				}
-			}
+            ComponentParent annotation = null;
 
-			if (annotation == null)
-			{
-				throw new BindException(BindComponent.class, "component constructor has an invalid parameter or the constructor parameter is missing the @ComponentParent annotation");
-			}
+            for (Annotation a : annotations) {
+                if (ComponentParent.class.isAssignableFrom(a.getClass())) {
+                    annotation = (ComponentParent) a;
+                    break;
+                }
+            }
 
-			if (parent == null)
-			{
-				throw new BindException(BindComponent.class, "@ComponentParent only works with default-scoped components");
-			}
+            if (annotation == null) {
+                throw new BindException(BindComponent.class, "component constructor has an invalid parameter or the constructor parameter is missing the @ComponentParent annotation");
+            }
 
-			if (!parameterType.isAssignableFrom(parent.getClass()))
-			{
-				throw new BindException(BindComponent.class, "@ComponentParent target type is not compatible with the actual parent type");
-			}
+            if (parent == null) {
+                throw new BindException(BindComponent.class, "@ComponentParent only works with default-scoped components");
+            }
 
-			return new Object[] { parent };
-		}
-		else
-		{
-			throw new NotSupportedException("component constructor must have 0 or 1 attributes");
-		}
-	}
+            if (!parameterType.isAssignableFrom(parent.getClass())) {
+                throw new BindException(BindComponent.class, "@ComponentParent target type is not compatible with the actual parent type");
+            }
+
+            return new Object[]{parent};
+        } else {
+            throw new NotSupportedException("component constructor must have 0 or 1 attributes");
+        }
+    }
 }

@@ -10,13 +10,12 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
-public @interface ComponentScope
-{
-	enum Scope
-	{
-		DEFAULT,    // New instance per injection
-		SINGLETON   // Only 1 instance is ever created (and it will never be garbage-collected while the application is running)
-	}
+public @interface ComponentScope {
 
-	Scope value() default Scope.DEFAULT;
+    enum Scope {
+        DEFAULT,    // New instance per injection
+        SINGLETON   // Only 1 instance is ever created (and it will never be garbage-collected while the application is running)
+    }
+
+    Scope value() default Scope.DEFAULT;
 }
