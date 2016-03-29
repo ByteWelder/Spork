@@ -12,7 +12,7 @@ public class ComponentInheritanceTest
 	public static class Parent
 	{
 		@BindComponent
-		private Component mComponent;
+		private Component component;
 
 		public Parent()
 		{
@@ -21,25 +21,25 @@ public class ComponentInheritanceTest
 
 		public Component getComponent()
 		{
-			return mComponent;
+			return component;
 		}
 	}
 
 	public static class Component extends ComponentBase
 	{
 		@BindComponent
-		private SubComponent mSubComponentB;
+		private SubComponent subComponentB;
 
 		public SubComponent getSubComponentB()
 		{
-			return mSubComponentB;
+			return subComponentB;
 		}
 	}
 
 	public static class ComponentBase
 	{
 		@BindComponent
-		private SubComponent mSubComponentA;
+		private SubComponent subComponentA;
 
 		public ComponentBase()
 		{
@@ -48,7 +48,7 @@ public class ComponentInheritanceTest
 
 		public SubComponent getSubComponentA()
 		{
-			return mSubComponentA;
+			return subComponentA;
 		}
 	}
 

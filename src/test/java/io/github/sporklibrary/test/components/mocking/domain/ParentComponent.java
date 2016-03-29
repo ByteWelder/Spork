@@ -6,7 +6,7 @@ import io.github.sporklibrary.annotations.BindComponent;
 public class ParentComponent
 {
 	@BindComponent(RegularImplementation.class)
-	private CommonInterface mCommonInterface;
+	private CommonInterface commonInterface;
 
 	public ParentComponent()
 	{
@@ -15,6 +15,6 @@ public class ParentComponent
 
 	public CommonInterface getCommonInterface()
 	{
-		return mCommonInterface;
+		return commonInterface;
 	}
 }

@@ -31,20 +31,20 @@ public class DefaultComponentFactory implements ComponentFactory
 
 			Constructor<?> constructor = classObject.getConstructors()[0];
 
-			boolean is_accessible = constructor.isAccessible();
+			boolean accessible = constructor.isAccessible();
 
 			// ensure constructor can be invoked
-			if (!is_accessible)
+			if (!accessible)
 			{
 				constructor.setAccessible(true);
 			}
 
-			Object[] constructor_args = getConstructorArguments(constructor, parent);
+			Object[] constructorArguments = getConstructorArguments(constructor, parent);
 
-			Object instance = constructor.newInstance(constructor_args);
+			Object instance = constructor.newInstance(constructorArguments);
 
 			// reset accessibility
-			if (!is_accessible)
+			if (!accessible)
 			{
 				constructor.setAccessible(false);
 			}
@@ -64,15 +64,15 @@ public class DefaultComponentFactory implements ComponentFactory
 	// Warning: This needs to be JDK 1.5 compatible because of Android support
 	private Object[] getConstructorArguments(Constructor<?> constructor, @Nullable Object parent)
 	{
-		Class<?>[] parameter_types = constructor.getParameterTypes();
+		Class<?>[] parameterTypes = constructor.getParameterTypes();
 
-		if (parameter_types.length == 0)
+		if (parameterTypes.length == 0)
 		{
 			return new Object[0];
 		}
-		else if (parameter_types.length == 1)
+		else if (parameterTypes.length == 1)
 		{
-			Class<?> parameter_type = parameter_types[0];
+			Class<?> parameterType = parameterTypes[0];
 
 			Annotation[] annotations = constructor.getParameterAnnotations()[0];
 
@@ -97,7 +97,7 @@ public class DefaultComponentFactory implements ComponentFactory
 				throw new BindException(BindComponent.class, "@ComponentParent only works with default-scoped components");
 			}
 
-			if (!parameter_type.isAssignableFrom(parent.getClass()))
+			if (!parameterType.isAssignableFrom(parent.getClass()))
 			{
 				throw new BindException(BindComponent.class, "@ComponentParent target type is not compatible with the actual parent type");
 			}

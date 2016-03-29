@@ -5,17 +5,17 @@ import io.github.sporklibrary.annotations.ComponentParent;
 
 public class ComponentC
 {
-	private ComponentB mParent;
+	private ComponentB parent;
 
 	public ComponentC(@ComponentParent ComponentB parent)
 	{
-		mParent = parent;
+		this.parent = parent;
 
 		Spork.bind(this);
 	}
 
 	public ComponentB getParent()
 	{
-		return mParent;
+		return parent;
 	}
 }

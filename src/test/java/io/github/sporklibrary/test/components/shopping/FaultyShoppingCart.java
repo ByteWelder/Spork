@@ -6,7 +6,7 @@ import io.github.sporklibrary.annotations.BindComponent;
 public class FaultyShoppingCart
 {
 	@BindComponent(IceCream.class)
-	private String mName;
+	private String name;
 
 	public FaultyShoppingCart()
 	{
@@ -15,6 +15,6 @@ public class FaultyShoppingCart
 
 	public String getName()
 	{
-		return mName;
+		return name;
 	}
 }

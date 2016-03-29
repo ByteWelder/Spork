@@ -34,11 +34,11 @@ public final class BinderCache
 	 */
 	public <AnnotationType extends Annotation> void register(FieldBinder<AnnotationType> fieldBinder)
 	{
-		Set<AnnotatedField<AnnotationType>> annotated_fields = AnnotatedFields.get(fieldBinder.getAnnotationClass(), annotatedType);
+		Set<AnnotatedField<AnnotationType>> annotatedFields = AnnotatedFields.get(fieldBinder.getAnnotationClass(), annotatedType);
 
-		if (!annotated_fields.isEmpty())
+		if (!annotatedFields.isEmpty())
 		{
-			objectBinders.add(new AnnotatedFieldBinder<>(fieldBinder, annotated_fields));
+			objectBinders.add(new AnnotatedFieldBinder<>(fieldBinder, annotatedFields));
 		}
 	}
 
@@ -49,11 +49,11 @@ public final class BinderCache
 	 */
 	public <AnnotationType extends Annotation> void register(MethodBinder<AnnotationType> methodBinder)
 	{
-		Set<AnnotatedMethod<AnnotationType>> annotated_methods = AnnotatedMethods.get(methodBinder.getAnnotationClass(), annotatedType);
+		Set<AnnotatedMethod<AnnotationType>> annotatedMethods = AnnotatedMethods.get(methodBinder.getAnnotationClass(), annotatedType);
 
-		if (!annotated_methods.isEmpty())
+		if (!annotatedMethods.isEmpty())
 		{
-			objectBinders.add(new AnnotatedMethodBinder<>(methodBinder, annotated_methods));
+			objectBinders.add(new AnnotatedMethodBinder<>(methodBinder, annotatedMethods));
 		}
 	}
 
@@ -64,11 +64,11 @@ public final class BinderCache
 	 */
 	public <AnnotationType extends Annotation> void register(TypeBinder<AnnotationType> typeBinder)
 	{
-		@Nullable AnnotatedType<AnnotationType> annotated_type = AnnotatedTypes.get(typeBinder.getAnnotationClass(), annotatedType);
+		@Nullable AnnotatedType<AnnotationType> annotatedType = AnnotatedTypes.get(typeBinder.getAnnotationClass(), this.annotatedType);
 
-		if (annotated_type != null)
+		if (annotatedType != null)
 		{
-			objectBinders.add(new AnnotatedTypeBinder<>(typeBinder, annotated_type));
+			objectBinders.add(new AnnotatedTypeBinder<>(typeBinder, annotatedType));
 		}
 	}
 

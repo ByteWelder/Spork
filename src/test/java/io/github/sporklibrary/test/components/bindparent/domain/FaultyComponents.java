@@ -10,7 +10,7 @@ public class FaultyComponents
 	public static class NotAnnotatedParent
 	{
 		@BindComponent
-		private NotAnnotatedChild mChild;
+		private NotAnnotatedChild child;
 
 		public NotAnnotatedParent()
 		{
@@ -28,7 +28,7 @@ public class FaultyComponents
 	public static class TypeMismatchParent
 	{
 		@BindComponent
-		private TypeMismatchChild mChild;
+		private TypeMismatchChild child;
 
 		public TypeMismatchParent()
 		{
@@ -46,7 +46,7 @@ public class FaultyComponents
 	public static class SingletonParent
 	{
 		@BindComponent
-		private SingletonChild mChild;
+		private SingletonChild child;
 
 		public SingletonParent()
 		{
@@ -65,7 +65,7 @@ public class FaultyComponents
 	public static class MultiArgumentParent
 	{
 		@BindComponent
-		private MultiArgumentChild mChild;
+		private MultiArgumentChild child;
 
 		public MultiArgumentParent()
 		{

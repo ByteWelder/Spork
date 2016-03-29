@@ -20,7 +20,7 @@ public class BindTypeBinder implements TypeBinder<BindValue>
 			throw new BindException(BindValue.class, object.getClass(), "can only be used with IntSettable target");
 		}
 
-		IntSettable value_holder = (IntSettable)object;
+		IntSettable valueHolder = (IntSettable)object;
 
 		int value = annotatedType.getAnnotation().value();
 
@@ -30,6 +30,6 @@ public class BindTypeBinder implements TypeBinder<BindValue>
 			throw new RuntimeException("annotated class in AnnotatedType is null");
 		}
 
-		value_holder.setValue(value);
+		valueHolder.setValue(value);
 	}
 }

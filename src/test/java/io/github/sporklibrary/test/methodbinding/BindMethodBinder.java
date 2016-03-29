@@ -5,7 +5,7 @@ import io.github.sporklibrary.binders.MethodBinder;
 
 public class BindMethodBinder implements MethodBinder<BindMethod>
 {
-	private int mMethodCount = 0;
+	private int methodCount = 0;
 
 	@Override
 	public Class<BindMethod> getAnnotationClass()
@@ -16,11 +16,11 @@ public class BindMethodBinder implements MethodBinder<BindMethod>
 	@Override
 	public void bind(Object object, AnnotatedMethod<BindMethod> annotatedField)
 	{
-		mMethodCount++;
+		methodCount++;
 	}
 
 	public int getMethodCount()
 	{
-		return mMethodCount;
+		return methodCount;
 	}
 }

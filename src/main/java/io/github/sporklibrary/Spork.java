@@ -52,11 +52,11 @@ public final class Spork
 	{
 		try
 		{
-			Class<?> spork_android_class = Class.forName("io.github.sporklibrary.SporkAndroid");
+			Class<?> sporkAndroidClass = Class.forName("io.github.sporklibrary.SporkAndroid");
 
-			Method initialize_method = spork_android_class.getDeclaredMethod("initialize", BinderManager.class);
+			Method initializeMethod = sporkAndroidClass.getDeclaredMethod("initialize", BinderManager.class);
 
-			initialize_method.invoke(null, binderManager);
+			initializeMethod.invoke(null, binderManager);
 
 			logger.debug("BinderManager created with Spork for Android");
 		}

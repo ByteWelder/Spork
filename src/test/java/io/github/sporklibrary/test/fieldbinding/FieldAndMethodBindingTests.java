@@ -9,7 +9,7 @@ import org.junit.Test;
 
 public class FieldAndMethodBindingTests
 {
-	private BindFieldOrMethodBinder mTestBinder;
+	private BindFieldOrMethodBinder testBinder;
 
 	public static class BinderParent
 	{
@@ -30,23 +30,23 @@ public class FieldAndMethodBindingTests
 	@Before
 	public void registerTestBinders()
 	{
-		mTestBinder = new BindFieldOrMethodBinder();
+		testBinder = new BindFieldOrMethodBinder();
 
-		Spork.getBinderManager().register((FieldBinder)mTestBinder);
-		Spork.getBinderManager().register((MethodBinder)mTestBinder);
+		Spork.getBinderManager().register((FieldBinder) testBinder);
+		Spork.getBinderManager().register((MethodBinder) testBinder);
 	}
 
 	@Test
 	public void methodBinding()
 	{
-		Assert.assertEquals(mTestBinder.getFieldBindCount(), 0);
-		Assert.assertEquals(mTestBinder.getMethodBindCount(), 0);
+		Assert.assertEquals(testBinder.getFieldBindCount(), 0);
+		Assert.assertEquals(testBinder.getMethodBindCount(), 0);
 
 		BinderParent object = new BinderParent();
 
 		Spork.bind(object);
 
-		Assert.assertEquals(mTestBinder.getFieldBindCount(), 1);
-		Assert.assertEquals(mTestBinder.getMethodBindCount(), 2);
+		Assert.assertEquals(testBinder.getFieldBindCount(), 1);
+		Assert.assertEquals(testBinder.getMethodBindCount(), 2);
 	}
 }

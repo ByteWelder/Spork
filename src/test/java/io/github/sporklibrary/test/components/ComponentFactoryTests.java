@@ -10,7 +10,7 @@ public class ComponentFactoryTests
 	public class TestParent
 	{
 		@BindComponent
-		private TestComponent mTestComponent;
+		private TestComponent testComponent;
 
 		public TestParent()
 		{

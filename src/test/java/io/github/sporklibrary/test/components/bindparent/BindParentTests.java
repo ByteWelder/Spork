@@ -16,15 +16,15 @@ public class BindParentTests
 	{
 		ComponentA root = new ComponentA();
 
-		ComponentB root_child = root.getChild();
+		ComponentB rootChild = root.getChild();
 
-		assertNotNull(root_child);
-		assertNotNull(root_child.getParent());
+		assertNotNull(rootChild);
+		assertNotNull(rootChild.getParent());
 
-		ComponentC root_child_child = root_child.getChild();
+		ComponentC rootChildChild = rootChild.getChild();
 
-		assertNotNull(root_child_child);
-		assertNotNull(root_child_child.getParent());
+		assertNotNull(rootChildChild);
+		assertNotNull(rootChildChild.getParent());
 	}
 
 	@Test(expected = BindException.class)

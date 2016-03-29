@@ -28,7 +28,7 @@ public final class AnnotatedMethods
 	 */
 	public static <AnnotationType extends Annotation> Set<AnnotatedMethod<AnnotationType>> get(Class<AnnotationType> annotationClass, Class<?> annotatedClass)
 	{
-		HashSet<AnnotatedMethod<AnnotationType>> annotated_method_set = new HashSet<>();
+		HashSet<AnnotatedMethod<AnnotationType>> annotatedMethodSet = new HashSet<>();
 
 		for (Method method : annotatedClass.getDeclaredMethods())
 		{
@@ -36,11 +36,11 @@ public final class AnnotatedMethods
 
 			if (annotation != null)
 			{
-				annotated_method_set.add(new AnnotatedMethod<>(annotation, method));
+				annotatedMethodSet.add(new AnnotatedMethod<>(annotation, method));
 			}
 		}
 
-		return !annotated_method_set.isEmpty() ? annotated_method_set : Collections.<AnnotatedMethod<AnnotationType>>emptySet();
+		return !annotatedMethodSet.isEmpty() ? annotatedMethodSet : Collections.<AnnotatedMethod<AnnotationType>>emptySet();
 	}
 
 	/**

@@ -11,11 +11,11 @@ public class ParentInheritanceTest
 	public static class Parent extends ParentBase
 	{
 		@BindComponent
-		private Component mComponent;
+		private Component component;
 
 		public Component getComponent()
 		{
-			return mComponent;
+			return component;
 		}
 	}
 

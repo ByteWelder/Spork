@@ -19,13 +19,13 @@ public class ComponentInstanceManagerTests
 	public static class Parent
 	{
 		@BindComponent
-		public DefaultSpecifiedScopeComponent mDefaultSpecifiedScopeComponent;
+		public DefaultSpecifiedScopeComponent defaultSpecifiedScopeComponent;
 
 		@BindComponent
-		public DefaultImpliedScopeComponent mDefaultImpliedScopeComponent;
+		public DefaultImpliedScopeComponent defaultImpliedScopeComponent;
 
 		@BindComponent
-		public SingletonScopeComponent mSingletonScopeComponent;
+		public SingletonScopeComponent dingletonScopeComponent;
 
 		public Parent()
 		{
@@ -36,7 +36,7 @@ public class ComponentInstanceManagerTests
 	public static class FaultyConstructorParent
 	{
 		@BindComponent
-		private FaultyConstructorComponent mChild;
+		private FaultyConstructorComponent child;
 
 		public FaultyConstructorParent()
 		{
@@ -47,7 +47,7 @@ public class ComponentInstanceManagerTests
 	public static class FaultyInstantiationParent
 	{
 		@BindComponent
-		public FaultyInstantiationComponent mChild;
+		public FaultyInstantiationComponent child;
 
 		public FaultyInstantiationParent()
 		{
@@ -62,38 +62,38 @@ public class ComponentInstanceManagerTests
 
 		Parent parent = new Parent();
 
-		Field default_implied_field = parent.getClass().getField("mDefaultImpliedScopeComponent");
-		Field default_specified_field = parent.getClass().getField("mDefaultSpecifiedScopeComponent");
-		Field singleton_field = parent.getClass().getField("mSingletonScopeComponent");
+		Field defaultImpliedField = parent.getClass().getField("defaultImpliedScopeComponent");
+		Field defaultSpecifiedField = parent.getClass().getField("defaultSpecifiedScopeComponent");
+		Field singletonField = parent.getClass().getField("dingletonScopeComponent");
 
-		BindComponent default_implied_annotation = default_implied_field.getAnnotation(BindComponent.class);
-		BindComponent default_specified_annotation = default_specified_field.getAnnotation(BindComponent.class);
-		BindComponent singleton_annotation = singleton_field.getAnnotation(BindComponent.class);
+		BindComponent defaultImpliedAnnotation = defaultImpliedField.getAnnotation(BindComponent.class);
+		BindComponent defaultSpecifiedAnnotation = defaultSpecifiedField.getAnnotation(BindComponent.class);
+		BindComponent singletonAnnotation = singletonField.getAnnotation(BindComponent.class);
 
-		assertNotNull(default_implied_annotation);
-		assertNotNull(default_specified_annotation);
-		assertNotNull(singleton_annotation);
+		assertNotNull(defaultImpliedAnnotation);
+		assertNotNull(defaultSpecifiedAnnotation);
+		assertNotNull(singletonAnnotation);
 
-		AnnotatedField<BindComponent> default_implied_annotated_field = new AnnotatedField<>(default_implied_annotation, default_implied_field);
-		AnnotatedField<BindComponent> default_specified_annotated_field = new AnnotatedField<>(default_specified_annotation, default_specified_field);
-		AnnotatedField<BindComponent> singleton_annotated_field = new AnnotatedField<>(singleton_annotation, singleton_field);
+		AnnotatedField<BindComponent> defaultImpliedAnnotatedField = new AnnotatedField<>(defaultImpliedAnnotation, defaultImpliedField);
+		AnnotatedField<BindComponent> defaultSpecifiedAnnotatedField = new AnnotatedField<>(defaultSpecifiedAnnotation, defaultSpecifiedField);
+		AnnotatedField<BindComponent> singletonAnnotatedField = new AnnotatedField<>(singletonAnnotation, singletonField);
 
-		Object default_implied_instance = manager.getInstance(parent, default_implied_annotated_field);
-		Object default_specified_instance = manager.getInstance(parent, default_specified_annotated_field);
-		Object singleton_instance = manager.getInstance(parent, singleton_annotated_field);
-		Object singleton_instance_copy = manager.getInstance(parent, singleton_annotated_field);
+		Object defaultImpliedInstance = manager.getInstance(parent, defaultImpliedAnnotatedField);
+		Object defaultSpecifiedInstance = manager.getInstance(parent, defaultSpecifiedAnnotatedField);
+		Object singletonInstance = manager.getInstance(parent, singletonAnnotatedField);
+		Object singletonInstanceCopy = manager.getInstance(parent, singletonAnnotatedField);
 
-		assertNotNull(default_implied_instance);
-		assertNotNull(default_specified_instance);
-		assertNotNull(singleton_instance);
-		assertNotNull(singleton_instance_copy);
+		assertNotNull(defaultImpliedInstance);
+		assertNotNull(defaultSpecifiedInstance);
+		assertNotNull(singletonInstance);
+		assertNotNull(singletonInstanceCopy);
 
-		assertTrue(DefaultImpliedScopeComponent.class.isAssignableFrom(default_implied_instance.getClass()));
-		assertTrue(DefaultSpecifiedScopeComponent.class.isAssignableFrom(default_specified_instance.getClass()));
-		assertTrue(SingletonScopeComponent.class.isAssignableFrom(singleton_instance.getClass()));
-		assertTrue(SingletonScopeComponent.class.isAssignableFrom(singleton_instance_copy.getClass()));
+		assertTrue(DefaultImpliedScopeComponent.class.isAssignableFrom(defaultImpliedInstance.getClass()));
+		assertTrue(DefaultSpecifiedScopeComponent.class.isAssignableFrom(defaultSpecifiedInstance.getClass()));
+		assertTrue(SingletonScopeComponent.class.isAssignableFrom(singletonInstance.getClass()));
+		assertTrue(SingletonScopeComponent.class.isAssignableFrom(singletonInstanceCopy.getClass()));
 
-		assertTrue(singleton_instance == singleton_instance_copy);
+		assertTrue(singletonInstance == singletonInstanceCopy);
 	}
 
 	@Test(expected = BindException.class)

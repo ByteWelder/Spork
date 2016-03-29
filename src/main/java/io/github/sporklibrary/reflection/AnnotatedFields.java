@@ -26,7 +26,7 @@ public final class AnnotatedFields
 	 */
 	public static <AnnotationType extends Annotation> Set<AnnotatedField<AnnotationType>> get(Class<AnnotationType> annotationClass, Class<?> annotatedClass)
 	{
-		HashSet<AnnotatedField<AnnotationType>> annotated_field_set = new HashSet<>();
+		HashSet<AnnotatedField<AnnotationType>> annotatedFieldSet = new HashSet<>();
 
 		for (Field field : annotatedClass.getDeclaredFields())
 		{
@@ -34,11 +34,11 @@ public final class AnnotatedFields
 
 			if (annotation != null)
 			{
-				annotated_field_set.add(new AnnotatedField<>(annotation, field));
+				annotatedFieldSet.add(new AnnotatedField<>(annotation, field));
 			}
 		}
 
-		return !annotated_field_set.isEmpty() ? annotated_field_set : Collections.<AnnotatedField<AnnotationType>>emptySet();
+		return !annotatedFieldSet.isEmpty() ? annotatedFieldSet : Collections.<AnnotatedField<AnnotationType>>emptySet();
 	}
 
 	/**

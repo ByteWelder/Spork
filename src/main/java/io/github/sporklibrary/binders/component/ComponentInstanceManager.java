@@ -37,24 +37,24 @@ public class ComponentInstanceManager
 	 */
 	public Object getInstance(Object parent, AnnotatedField<BindComponent> annotatedField)
 	{
-		Class<?> field_target_class = getTargetClass(annotatedField);
+		Class<?> fieldTargetClass = getTargetClass(annotatedField);
 
-		if (!annotatedField.getField().getType().isAssignableFrom(field_target_class))
+		if (!annotatedField.getField().getType().isAssignableFrom(fieldTargetClass))
 		{
 			throw new BindException(BindComponent.class, parent.getClass(), annotatedField.getField(), "incompatible type");
 		}
 
-		ComponentScope.Scope scope = getScope(field_target_class);
+		ComponentScope.Scope scope = getScope(fieldTargetClass);
 
 		switch (scope)
 		{
 			case SINGLETON:
-				Object instance = singletonInstances.get(field_target_class);
-				return (instance != null) ? instance : createSingletonInstance(field_target_class);
+				Object instance = singletonInstances.get(fieldTargetClass);
+				return (instance != null) ? instance : createSingletonInstance(fieldTargetClass);
 
 			case DEFAULT:
 			default:
-				return componentFactory.create(field_target_class, parent);
+				return componentFactory.create(fieldTargetClass, parent);
 		}
 	}
 
@@ -78,15 +78,15 @@ public class ComponentInstanceManager
 	 */
 	private Class<?> getTargetClass(AnnotatedField<BindComponent> annotatedField)
 	{
-		Class<?> override_class = annotatedField.getAnnotation().value();
+		Class<?> overrideClass = annotatedField.getAnnotation().value();
 
-		if (override_class == BindComponent.Default.class)
+		if (overrideClass == BindComponent.Default.class)
 		{
 			return annotatedField.getField().getType();
 		}
 		else // override class is never null per annotation design
 		{
-			return override_class;
+			return overrideClass;
 		}
 	}
 

@@ -6,7 +6,7 @@ import io.github.sporklibrary.annotations.BindComponent;
 public class ComponentA
 {
 	@BindComponent
-	private ComponentB mChild;
+	private ComponentB child;
 
 	public ComponentA()
 	{
@@ -15,6 +15,6 @@ public class ComponentA
 
 	public ComponentB getChild()
 	{
-		return mChild;
+		return child;
 	}
 }

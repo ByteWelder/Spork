@@ -6,7 +6,7 @@ import io.github.sporklibrary.annotations.BindComponent;
 public class ShoppingCart
 {
 	@BindComponent(IceCream.class)
-	private Dairy mDairy;
+	private Dairy dairy;
 
 	public ShoppingCart()
 	{
@@ -15,6 +15,6 @@ public class ShoppingCart
 
 	public Dairy getDairy()
 	{
-		return mDairy;
+		return dairy;
 	}
 }

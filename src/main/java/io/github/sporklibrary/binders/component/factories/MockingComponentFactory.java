@@ -32,8 +32,8 @@ public class MockingComponentFactory extends DefaultComponentFactory
 	public Object create(Class<?> classObject, @Nullable Object parent)
 	{
 		// First get the mocking class if there is one
-		Class<?> mock_class = classMap.get(classObject);
+		Class<?> mockClass = classMap.get(classObject);
 
-		return super.create(mock_class != null ? mock_class : classObject, parent);
+		return super.create(mockClass != null ? mockClass : classObject, parent);
 	}
 }

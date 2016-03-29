@@ -14,20 +14,20 @@ public class MockingTests
 	@Test
 	public void test()
 	{
-		ParentComponent regular_instance = new ParentComponent();
-		assertEquals("default binding", 1, regular_instance.getCommonInterface().get());
+		ParentComponent regularInstance = new ParentComponent();
+		assertEquals("default binding", 1, regularInstance.getCommonInterface().get());
 
 		registerMockingClasses();
 
-		ParentComponent mocked_instance = new ParentComponent();
-		assertEquals("mocked binding", 2, mocked_instance.getCommonInterface().get());
+		ParentComponent mockedInstance = new ParentComponent();
+		assertEquals("mocked binding", 2, mockedInstance.getCommonInterface().get());
 	}
 
 	private void registerMockingClasses()
 	{
-		MockingComponentFactory mocking_factory = new MockingComponentFactory()
+		MockingComponentFactory mockingFactory = new MockingComponentFactory()
 			.register(RegularImplementation.class, MockedImplementation.class);
 
-		ComponentInstanceManager.setComponentFactory(mocking_factory);
+		ComponentInstanceManager.setComponentFactory(mockingFactory);
 	}
 }

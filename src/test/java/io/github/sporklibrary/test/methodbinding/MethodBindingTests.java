@@ -12,11 +12,11 @@ import static org.junit.Assert.*;
 
 public class MethodBindingTests
 {
-	private BindMethodBinder mBindMethodBinder;
+	private BindMethodBinder bindMethodBinder;
 
 	public static class MethodBinderParent
 	{
-		private int mTestCallCount = 0;
+		private int testCallCount = 0;
 
 		public MethodBinderParent()
 		{
@@ -26,7 +26,7 @@ public class MethodBindingTests
 		@BindMethod
 		private void privateCallCountMethod()
 		{
-			mTestCallCount++;
+			testCallCount++;
 		}
 
 		@BindMethod
@@ -37,25 +37,25 @@ public class MethodBindingTests
 
 		public int getPrivateCallCount()
 		{
-			return mTestCallCount;
+			return testCallCount;
 		}
 	}
 
 	@Before
 	public void registerTestBinders()
 	{
-		mBindMethodBinder = new BindMethodBinder();
-		Spork.getBinderManager().register(mBindMethodBinder);
+		bindMethodBinder = new BindMethodBinder();
+		Spork.getBinderManager().register(bindMethodBinder);
 	}
 
 	@Test
 	public void methodBinding()
 	{
-		assertEquals(mBindMethodBinder.getMethodCount(), 0);
+		assertEquals(bindMethodBinder.getMethodCount(), 0);
 
 		new MethodBinderParent();
 
-		assertEquals(mBindMethodBinder.getMethodCount(), 2);
+		assertEquals(bindMethodBinder.getMethodCount(), 2);
 	}
 
 	@Test
@@ -65,27 +65,27 @@ public class MethodBindingTests
 
 		Method method = MethodBinderParent.class.getDeclaredMethod("privateCallCountMethod");
 		BindMethod annotation = method.getAnnotation(BindMethod.class);
-		AnnotatedMethod<BindMethod> annotated_method = new AnnotatedMethod<>(annotation, method);
+		AnnotatedMethod<BindMethod> annotatedMethod = new AnnotatedMethod<>(annotation, method);
 
 		// Testing AnnotatedMethod
-		assertEquals(annotation, annotated_method.getAnnotation());
-		assertEquals(method, annotated_method.getMethod());
+		assertEquals(annotation, annotatedMethod.getAnnotation());
+		assertEquals(method, annotatedMethod.getMethod());
 
 		assertEquals(0, object.getPrivateCallCount());
 
-		Object regular_result = AnnotatedMethods.invoke(annotated_method, object);
-		assertNull(regular_result);
+		Object regularResult = AnnotatedMethods.invoke(annotatedMethod, object);
+		assertNull(regularResult);
 
 		assertEquals(1, object.getPrivateCallCount());
 
-		Method static_method = MethodBinderParent.class.getMethod("staticEchoMethod", int.class);
-		BindMethod static_method_annotation = static_method.getAnnotation(BindMethod.class);
-		AnnotatedMethod<BindMethod> static_annotated_method = new AnnotatedMethod<>(static_method_annotation, static_method);
+		Method staticMethod = MethodBinderParent.class.getMethod("staticEchoMethod", int.class);
+		BindMethod staticMethodAnnotation = staticMethod.getAnnotation(BindMethod.class);
+		AnnotatedMethod<BindMethod> staticAnnotatedMethod = new AnnotatedMethod<>(staticMethodAnnotation, staticMethod);
 
 		assertEquals(123, MethodBinderParent.staticEchoMethod(123));
 
-		Object static_result = AnnotatedMethods.invoke(static_annotated_method, null, 123);
-		assertNotNull(static_result);
-		assertTrue(static_result.equals(123));
+		Object staticResult = AnnotatedMethods.invoke(staticAnnotatedMethod, null, 123);
+		assertNotNull(staticResult);
+		assertTrue(staticResult.equals(123));
 	}
 }

@@ -103,22 +103,22 @@ public class BinderManager
 			logger.debug("bind {}", object);
 		}
 
-		Class<?> object_class = object.getClass();
+		Class<?> objectClass = object.getClass();
 
-		while (object_class != null && object_class != Object.class)
+		while (objectClass != null && objectClass != Object.class)
 		{
-			BinderCache cache = classBinderCacheMap.get(object_class);
+			BinderCache cache = classBinderCacheMap.get(objectClass);
 
 			if (cache == null)
 			{
-				cache = createCache(object_class);
+				cache = createCache(objectClass);
 
-				classBinderCacheMap.put(object_class, cache);
+				classBinderCacheMap.put(objectClass, cache);
 			}
 
 			bind(object, cache);
 
-			object_class = object_class.getSuperclass();
+			objectClass = objectClass.getSuperclass();
 		}
 
 	}
@@ -150,19 +150,19 @@ public class BinderManager
 
 		BinderCache cache = new BinderCache(classObject);
 
-		for (FieldBinder<?> field_binder : fieldBinders)
+		for (FieldBinder<?> fieldBinder : fieldBinders)
 		{
-			cache.register(field_binder);
+			cache.register(fieldBinder);
 		}
 
-		for (MethodBinder<?> field_binder : methodBinders)
+		for (MethodBinder<?> methodBinder : methodBinders)
 		{
-			cache.register(field_binder);
+			cache.register(methodBinder);
 		}
 
-		for (TypeBinder<?> field_binder : typeBinders)
+		for (TypeBinder<?> typeBinder : typeBinders)
 		{
-			cache.register(field_binder);
+			cache.register(typeBinder);
 		}
 
 		return cache;
