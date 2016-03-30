@@ -1,0 +1,3 @@
+rootProject.name = 'spork-android-root'
+
+include ':spork-android'

@@ -1,136 +1,17 @@
-buildscript {
+subprojects {
+    buildscript {
+        repositories {
+            jcenter()
+        }
+
+        dependencies {
+            classpath 'com.android.tools.build:gradle:2.0.0-beta7'
+            classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1x'
+            classpath 'org.jacoco:org.jacoco.core:0.7.5.201505241946'
+        }
+    }
+
     repositories {
         jcenter()
     }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0-beta7'
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1x'
-        classpath 'com.novoda:bintray-release:0.3.4'
-        classpath 'org.jacoco:org.jacoco.core:0.7.5.201505241946'
-        // bintray usage: ./gradlew clean build bintrayUpload -PbintrayUser=??? -PbintrayKey=??? -PdryRun=false
-    }
-}
-
-repositories {
-    jcenter()
-    maven {
-        url "https://dl.bintray.com/sporklibrary/spork"
-    }
-    flatDir {
-        dirs 'libs'
-    }
-}
-
-apply plugin: 'com.android.library'
-apply plugin: 'com.github.kt3k.coveralls'
-apply plugin: 'bintray-release'
-
-apply from: './jacoco.gradle'
-
-ext {
-    // Publishing
-    sporkVersion = '2.4.3'
-    sporkUserOrg = 'sporklibrary'
-    sporkWebsite = 'https://sporklibrary.github.io'
-    sporkGroupId = 'io.github.sporklibrary'
-    sporkRepoName = 'spork'
-    sporkName = 'Spork Android'
-    sporkArtifactId = 'spork-android'
-}
-
-dependencies {
-    compile (
-        [group: 'io.github.sporklibrary', name: 'spork', version: '3.0.1'],
-    )
-
-    provided (
-        [group: 'com.android.support', name: 'support-v4', version: '23+'],
-        [group: 'com.android.support', name: 'appcompat-v7', version: '23+'],
-        [group: 'com.android.support', name: 'recyclerview-v7', version: '23+']
-    )
-
-    androidTestCompile (
-        [name:'support-v4-23.2.1', ext:'aar'],
-        [name:'appcompat-v7-23.2.1', ext:'aar'],
-        [name:'recyclerview-v7-23.2.1', ext:'aar'],
-        [group: 'com.android.support.test', name: 'runner', version: '0.5'],
-        [group: 'com.android.support.test.espresso', name: 'espresso-core', version: '2.2.2'],
-        [group: 'com.android.support.test.espresso', name: 'espresso-contrib', version: '2.2.2']
-    )
-}
-
-coveralls {
-    jacocoReportPath 'build/reports/coverage/debug/report.xml'
-}
-
-android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.1'
-
-    defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 23
-        versionCode 1
-        versionName sporkVersion
-        testInstrumentationRunner 'io.github.sporklibrary.test.TestRunner'
-        testApplicationId 'io.github.sporklibrary.test'
-        testHandleProfiling true
-        testFunctionalTest true
-        consumerProguardFiles 'proguard.pro'
-    }
-
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/ASL2.0'
-        exclude 'META-INF/ASL2.0.txt'
-        exclude 'LICENSE.txt'
-        exclude 'LICENSE'
-    }
-
-    buildTypes {
-        debug {
-            testCoverageEnabled true
-        }
-    }
-}
-
-android.libraryVariants.all { variant ->
-    def name = variant.buildType.name
-    if (name.equals('debug')) {
-        return; // Skip debug builds.
-    }
-    def task = project.tasks.create "jar${name.capitalize()}", Jar
-    task.dependsOn variant.javaCompile
-    task.from variant.javaCompile.destinationDir
-    artifacts.add('archives', task);
-}
-
-android.libraryVariants.all { variant ->
-    task("generate${variant.name.capitalize()}Javadoc", type: Javadoc) {
-        title = sporkName
-        description "Generates Javadoc for $variant.name."
-        source = variant.javaCompile.source
-        classpath = files(variant.javaCompile.classpath.files, project.android.getBootClasspath())
-        options {
-            links "http://docs.oracle.com/javase/7/docs/api/"
-            linksOffline "https://d.android.com/reference","${android.sdkDirectory}/docs/reference"
-        }
-        exclude '**/BuildConfig.java'
-        exclude '**/R.java'
-    }
-}
-
-publish {
-    userOrg = sporkUserOrg
-    repoName = sporkRepoName
-    groupId = sporkGroupId
-    artifactId = sporkArtifactId
-    version = sporkVersion
-    description = sporkName
-    website = sporkWebsite
 }
