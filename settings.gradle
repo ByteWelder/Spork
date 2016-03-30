@@ -1,0 +1,3 @@
+rootProject.name = 'spork-root'
+
+include ':spork'
