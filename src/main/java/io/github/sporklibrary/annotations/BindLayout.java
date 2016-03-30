@@ -7,7 +7,6 @@ import java.lang.annotation.Target;
 
 /**
  * Bind a layout.
- * <p/>
  * Can be used with classes derived from:
  * <ul>
  * <li>{@link android.view.ViewGroup}</li>

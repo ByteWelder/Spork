@@ -9,7 +9,6 @@ import java.lang.annotation.Target;
 
 /**
  * Bind a resource object.
- * <p/>
  * Can be used with classes derived from:
  * <ul>
  * <li>{@link android.app.Activity}</li>
@@ -22,7 +21,6 @@ import java.lang.annotation.Target;
  * <li>{@link android.view.View}</li>
  * <li>{@link io.github.sporklibrary.interfaces.ContextProvider}</li>
  * </ul>
- * <p/>
  * The value specified is the resource id.
  * When not specified, the name of the field will be used to resolve the id's name.
  */

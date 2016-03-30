@@ -9,14 +9,12 @@ import java.lang.annotation.Target;
 
 /**
  * Bind a Fragment instance.
- * <p/>
  * Can be used with classes derived from:
  * <ul>
  * <li>{@link android.app.Activity}</li>
  * <li>{@link android.app.Fragment}</li>
  * <li>{@link android.support.v4.app.Fragment}</li>
  * </ul>
- * <p/>
  * The value specified is the Fragment id. When not specified, the name of the field will be used to resolve the id's name.
  */
 @Retention(RetentionPolicy.RUNTIME)
