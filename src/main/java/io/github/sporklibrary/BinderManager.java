@@ -1,10 +1,5 @@
 package io.github.sporklibrary;
 
-import io.github.sporklibrary.binders.FieldBinder;
-import io.github.sporklibrary.binders.MethodBinder;
-import io.github.sporklibrary.binders.TypeBinder;
-import io.github.sporklibrary.caching.BinderCache;
-import io.github.sporklibrary.interfaces.ObjectBinder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +8,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import io.github.sporklibrary.binders.FieldBinder;
+import io.github.sporklibrary.binders.MethodBinder;
+import io.github.sporklibrary.binders.TypeBinder;
+import io.github.sporklibrary.caching.BinderCache;
+import io.github.sporklibrary.interfaces.ObjectBinder;
 
 /**
  * The BinderManager manages all bindings and their cache.
@@ -150,6 +151,11 @@ public class BinderManager
 
 		BinderCache cache = new BinderCache(classObject);
 
+		for (TypeBinder<?> typeBinder : typeBinders)
+		{
+			cache.register(typeBinder);
+		}
+
 		for (FieldBinder<?> fieldBinder : fieldBinders)
 		{
 			cache.register(fieldBinder);
@@ -158,11 +164,6 @@ public class BinderManager
 		for (MethodBinder<?> methodBinder : methodBinders)
 		{
 			cache.register(methodBinder);
-		}
-
-		for (TypeBinder<?> typeBinder : typeBinders)
-		{
-			cache.register(typeBinder);
 		}
 
 		return cache;
