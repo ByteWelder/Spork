@@ -5,29 +5,28 @@ import io.github.sporklibrary.binders.component.factories.MockingComponentFactor
 import io.github.sporklibrary.test.components.mocking.domain.MockedImplementation;
 import io.github.sporklibrary.test.components.mocking.domain.ParentComponent;
 import io.github.sporklibrary.test.components.mocking.domain.RegularImplementation;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class MockingTests
-{
-	@Test
-	public void test()
-	{
-		ParentComponent regularInstance = new ParentComponent();
-		assertEquals("default binding", 1, regularInstance.getCommonInterface().get());
+public class MockingTests {
 
-		registerMockingClasses();
+    @Test
+    public void test() {
+        ParentComponent regularInstance = new ParentComponent();
+        assertEquals("default binding", 1, regularInstance.getCommonInterface().get());
 
-		ParentComponent mockedInstance = new ParentComponent();
-		assertEquals("mocked binding", 2, mockedInstance.getCommonInterface().get());
-	}
+        registerMockingClasses();
 
-	private void registerMockingClasses()
-	{
-		MockingComponentFactory mockingFactory = new MockingComponentFactory()
-			.register(RegularImplementation.class, MockedImplementation.class);
+        ParentComponent mockedInstance = new ParentComponent();
+        assertEquals("mocked binding", 2, mockedInstance.getCommonInterface().get());
+    }
 
-		ComponentInstanceManager.setComponentFactory(mockingFactory);
-	}
+    private void registerMockingClasses() {
+        MockingComponentFactory mockingFactory = new MockingComponentFactory()
+                .register(RegularImplementation.class, MockedImplementation.class);
+
+        ComponentInstanceManager.setComponentFactory(mockingFactory);
+    }
 }

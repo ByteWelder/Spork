@@ -3,50 +3,45 @@ package io.github.sporklibrary.test.fieldbinding;
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.binders.MethodBinder;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class FieldAndMethodBindingTests
-{
-	private BindFieldOrMethodBinder testBinder;
+public class FieldAndMethodBindingTests {
+    private BindFieldOrMethodBinder testBinder;
 
-	public static class BinderParent
-	{
-		@BindFieldOrMethod
-		private Object mField;
+    public static class BinderParent {
 
-		@BindFieldOrMethod
-		public void test()
-		{
-		}
+        @BindFieldOrMethod
+        private Object mField;
 
-		@BindFieldOrMethod
-		public static void testStatic()
-		{
-		}
-	}
+        @BindFieldOrMethod
+        public void test() {
+        }
 
-	@Before
-	public void registerTestBinders()
-	{
-		testBinder = new BindFieldOrMethodBinder();
+        @BindFieldOrMethod
+        public static void testStatic() {
+        }
+    }
 
-		Spork.getBinderManager().register((FieldBinder) testBinder);
-		Spork.getBinderManager().register((MethodBinder) testBinder);
-	}
+    @Before
+    public void registerTestBinders() {
+        testBinder = new BindFieldOrMethodBinder();
+        Spork.getBinderManager().register((FieldBinder<BindFieldOrMethod>) testBinder);
+        Spork.getBinderManager().register((MethodBinder<BindFieldOrMethod>) testBinder);
+    }
 
-	@Test
-	public void methodBinding()
-	{
-		Assert.assertEquals(testBinder.getFieldBindCount(), 0);
-		Assert.assertEquals(testBinder.getMethodBindCount(), 0);
+    @Test
+    public void methodBinding() {
+        Assert.assertEquals(0, testBinder.getFieldBindCount());
+        Assert.assertEquals(0, testBinder.getMethodBindCount());
 
-		BinderParent object = new BinderParent();
+        BinderParent object = new BinderParent();
 
-		Spork.bind(object);
+        Spork.bind(object);
 
-		Assert.assertEquals(testBinder.getFieldBindCount(), 1);
-		Assert.assertEquals(testBinder.getMethodBindCount(), 2);
-	}
+        Assert.assertEquals(1, testBinder.getFieldBindCount());
+        Assert.assertEquals(2, testBinder.getMethodBindCount());
+    }
 }

@@ -2,40 +2,35 @@ package io.github.sporklibrary.test.components.inheritance;
 
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindComponent;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
 
-public class ParentInheritanceTest
-{
-	public static class Parent extends ParentBase
-	{
-		@BindComponent
-		private Component component;
+public class ParentInheritanceTest {
 
-		public Component getComponent()
-		{
-			return component;
-		}
-	}
+    public static class Parent extends ParentBase {
+        @BindComponent
+        private Component component;
 
-	public static class ParentBase
-	{
-		public ParentBase()
-		{
-			Spork.bind(this);
-		}
-	}
+        public Component getComponent() {
+            return component;
+        }
+    }
 
-	public static class Component
-	{
-	}
+    public static class ParentBase {
+        public ParentBase() {
+            Spork.bind(this);
+        }
+    }
 
-	@Test
-	public void test()
-	{
-		Parent parent = new Parent();
+    public static class Component {
+    }
 
-		assertNotNull(parent.getComponent());
-	}
+    @Test
+    public void test() {
+        Parent parent = new Parent();
+
+        assertNotNull(parent.getComponent());
+    }
 }

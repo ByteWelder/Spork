@@ -12,28 +12,23 @@ import java.util.Set;
  *
  * @param <AnnotationType> the annotation type that is being bound
  */
-class AnnotatedMethodBinder<AnnotationType extends Annotation> implements ObjectBinder
-{
-	private final Set<AnnotatedMethod<AnnotationType>> annotatedMethods;
+class AnnotatedMethodBinder<AnnotationType extends Annotation> implements ObjectBinder {
+    private final Set<AnnotatedMethod<AnnotationType>> annotatedMethods;
+    private final MethodBinder<AnnotationType> methodBinder;
 
-	private final MethodBinder<AnnotationType> methodBinder;
+    AnnotatedMethodBinder(MethodBinder<AnnotationType> methodBinder, Set<AnnotatedMethod<AnnotationType>> annotatedMethods) {
+        this.methodBinder = methodBinder;
+        this.annotatedMethods = annotatedMethods;
+    }
 
-	AnnotatedMethodBinder(MethodBinder<AnnotationType> methodBinder, Set<AnnotatedMethod<AnnotationType>> annotatedMethods)
-	{
-		this.methodBinder = methodBinder;
-		this.annotatedMethods = annotatedMethods;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void bind(Object object)
-	{
-		// Bind all methods for this object
-		for (AnnotatedMethod<AnnotationType> annotated_method : annotatedMethods)
-		{
-			methodBinder.bind(object, annotated_method);
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void bind(Object object) {
+        // Bind all methods for this object
+        for (AnnotatedMethod<AnnotationType> annotatedMethod : annotatedMethods) {
+            methodBinder.bind(object, annotatedMethod);
+        }
+    }
 }

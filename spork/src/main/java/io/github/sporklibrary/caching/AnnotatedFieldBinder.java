@@ -12,28 +12,23 @@ import java.util.Set;
  *
  * @param <AnnotationType> the annotation type that is being bound
  */
-class AnnotatedFieldBinder<AnnotationType extends Annotation> implements ObjectBinder
-{
-	private final Set<AnnotatedField<AnnotationType>> annotatedFields;
+class AnnotatedFieldBinder<AnnotationType extends Annotation> implements ObjectBinder {
+    private final Set<AnnotatedField<AnnotationType>> annotatedFields;
+    private final FieldBinder<AnnotationType> fieldBinder;
 
-	private final FieldBinder<AnnotationType> fieldBinder;
+    AnnotatedFieldBinder(FieldBinder<AnnotationType> fieldBinder, Set<AnnotatedField<AnnotationType>> annotatedFields) {
+        this.fieldBinder = fieldBinder;
+        this.annotatedFields = annotatedFields;
+    }
 
-	AnnotatedFieldBinder(FieldBinder<AnnotationType> fieldBinder, Set<AnnotatedField<AnnotationType>> annotatedFields)
-	{
-		this.fieldBinder = fieldBinder;
-		this.annotatedFields = annotatedFields;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void bind(Object object)
-	{
-		// Bind all fields for this object
-		for (AnnotatedField<AnnotationType> annotated_field : annotatedFields)
-		{
-			fieldBinder.bind(object, annotated_field);
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void bind(Object object) {
+        // Bind all fields for this object
+        for (AnnotatedField<AnnotationType> annotatedField : annotatedFields) {
+            fieldBinder.bind(object, annotatedField);
+        }
+    }
 }

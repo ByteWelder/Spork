@@ -5,27 +5,26 @@ import io.github.sporklibrary.test.components.shopping.FaultyShoppingCart;
 import io.github.sporklibrary.test.components.shopping.IceCream;
 import io.github.sporklibrary.test.components.shopping.ShoppingCart;
 import io.github.sporklibrary.exceptions.BindException;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-public class ComponentTypeTests
-{
-	@Test
-	public void inheritanceTest()
-	{
-		ShoppingCart cart = new ShoppingCart();
+public class ComponentTypeTests {
 
-		Dairy dairy = cart.getDairy();
+    @Test
+    public void inheritanceTest() {
+        ShoppingCart cart = new ShoppingCart();
 
-		assertNotNull("Component injection", dairy);
-		assertTrue("Component class override", dairy.getClass().equals(IceCream.class));
-	}
+        Dairy dairy = cart.getDairy();
 
-	@Test(expected = BindException.class)
-	public void typeMismatchTest()
-	{
-		new FaultyShoppingCart();
-	}
+        assertNotNull("Component injection", dairy);
+        assertTrue("Component class override", dairy.getClass().equals(IceCream.class));
+    }
+
+    @Test(expected = BindException.class)
+    public void typeMismatchTest() {
+        new FaultyShoppingCart();
+    }
 }

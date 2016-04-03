@@ -7,6 +7,7 @@ import io.github.sporklibrary.test.components.scope.FaultyConstructorComponent;
 import io.github.sporklibrary.test.components.scope.SingletonScopeComponent;
 import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.annotations.BindComponent;
+
 import org.junit.Test;
 
 import java.lang.reflect.Field;
@@ -14,103 +15,83 @@ import java.lang.reflect.Field;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-public class ComponentScopeTests
-{
-	public static class Parent
-	{
-		// must be public for easy test access
-		@BindComponent
-		public DefaultImpliedScopeComponent defaultImpliedScopeComponent;
+public class ComponentScopeTests {
 
-		@BindComponent
-		public DefaultSpecifiedScopeComponent defaultSpecifiedScopeComponent;
+    public static class Parent {
 
-		@BindComponent
-		private SingletonScopeComponent singletonScopeComponent;
+        // must be public for easy test access
+        @BindComponent
+        public DefaultImpliedScopeComponent defaultImpliedScopeComponent;
 
-		public Parent()
-		{
-			Spork.bind(this);
-		}
+        @BindComponent
+        public DefaultSpecifiedScopeComponent defaultSpecifiedScopeComponent;
 
-		public SingletonScopeComponent getSingletonScopedComponent()
-		{
-			return singletonScopeComponent;
-		}
+        @BindComponent
+        private SingletonScopeComponent singletonScopeComponent;
 
-		public DefaultImpliedScopeComponent getDefaultImpliedScopeComponent()
-		{
-			return defaultImpliedScopeComponent;
-		}
+        public Parent() {
+            Spork.bind(this);
+        }
 
-		public DefaultSpecifiedScopeComponent getDefaultSpecifiedScopeComponent()
-		{
-			return defaultSpecifiedScopeComponent;
-		}
-	}
+        public SingletonScopeComponent getSingletonScopedComponent() {
+            return singletonScopeComponent;
+        }
 
-	public static class FaultyConstructorParent
-	{
-		@BindComponent
-		private FaultyConstructorComponent faultyConstructorComponent;
+        public DefaultImpliedScopeComponent getDefaultImpliedScopeComponent() {
+            return defaultImpliedScopeComponent;
+        }
 
-		public FaultyConstructorParent()
-		{
-			Spork.bind(this);
-		}
+        public DefaultSpecifiedScopeComponent getDefaultSpecifiedScopeComponent() {
+            return defaultSpecifiedScopeComponent;
+        }
+    }
 
-		public FaultyConstructorComponent getFaultyComponent()
-		{
-			return faultyConstructorComponent;
-		}
-	}
+    public static class FaultyConstructorParent {
 
-	@Test
-	public void defaultImpliedScopeClass() throws NoSuchFieldException
-	{
-		Parent parent = new Parent();
+        @BindComponent
+        private FaultyConstructorComponent faultyConstructorComponent;
 
-		Field defaultScopedComponentField = parent.getClass().getField("defaultImpliedScopeComponent");
+        public FaultyConstructorParent() {
+            Spork.bind(this);
+        }
 
-		BindComponent bindComponentAnnotation = defaultScopedComponentField.getAnnotation(BindComponent.class);
+        public FaultyConstructorComponent getFaultyComponent() {
+            return faultyConstructorComponent;
+        }
+    }
 
-		assertNotNull(bindComponentAnnotation);
+    @Test
+    public void defaultImpliedScopeClass() throws NoSuchFieldException {
+        Parent parent = new Parent();
+        Field defaultScopedComponentField = parent.getClass().getField("defaultImpliedScopeComponent");
+        BindComponent bindComponentAnnotation = defaultScopedComponentField.getAnnotation(BindComponent.class);
+        assertNotNull(bindComponentAnnotation);
+        assertTrue(BindComponent.Default.class.equals(bindComponentAnnotation.value()));
+    }
 
-		assertTrue(BindComponent.Default.class.equals(bindComponentAnnotation.value()));
-	}
+    @Test
+    public void defaultSpecifiedScopeClass() throws NoSuchFieldException {
+        Parent parent = new Parent();
+        Field defaultScopedComponentField = parent.getClass().getField("defaultSpecifiedScopeComponent");
+        BindComponent bindComponentAnnotation = defaultScopedComponentField.getAnnotation(BindComponent.class);
+        assertNotNull(bindComponentAnnotation);
+        assertTrue(BindComponent.Default.class.equals(bindComponentAnnotation.value()));
+    }
 
-	@Test
-	public void defaultSpecifiedScopeClass() throws NoSuchFieldException
-	{
-		Parent parent = new Parent();
+    @Test
+    public void binding() {
+        Parent firstParent = new Parent();
+        Parent secondParent = new Parent();
+        assertNotNull("default implied scoped component binding", firstParent.getDefaultImpliedScopeComponent());
+        assertNotNull("default specified scoped component binding", firstParent.getDefaultSpecifiedScopeComponent());
+        assertNotNull("singleton scoped component binding", firstParent.getSingletonScopedComponent());
+        assertTrue("default implied scope instance uniqueness", firstParent.getDefaultImpliedScopeComponent() != secondParent.getDefaultImpliedScopeComponent());
+        assertTrue("default specified scope instance uniqueness", firstParent.getDefaultSpecifiedScopeComponent() != secondParent.getDefaultSpecifiedScopeComponent());
+        assertTrue("instance scope instance uniqueness", firstParent.getSingletonScopedComponent() == secondParent.getSingletonScopedComponent());
+    }
 
-		Field defaultScopedComponentField = parent.getClass().getField("defaultSpecifiedScopeComponent");
-
-		BindComponent bindComponentAnnotation = defaultScopedComponentField.getAnnotation(BindComponent.class);
-
-		assertNotNull(bindComponentAnnotation);
-
-		assertTrue(BindComponent.Default.class.equals(bindComponentAnnotation.value()));
-	}
-
-	@Test
-	public void binding()
-	{
-		Parent firstParent = new Parent();
-		Parent secondParent = new Parent();
-
-		assertNotNull("default implied scoped component binding", firstParent.getDefaultImpliedScopeComponent());
-		assertNotNull("default specified scoped component binding", firstParent.getDefaultSpecifiedScopeComponent());
-		assertNotNull("singleton scoped component binding", firstParent.getSingletonScopedComponent());
-
-		assertTrue("default implied scope instance uniqueness", firstParent.getDefaultImpliedScopeComponent() != secondParent.getDefaultImpliedScopeComponent());
-		assertTrue("default specified scope instance uniqueness", firstParent.getDefaultSpecifiedScopeComponent() != secondParent.getDefaultSpecifiedScopeComponent());
-		assertTrue("instance scope instance uniqueness", firstParent.getSingletonScopedComponent() == secondParent.getSingletonScopedComponent());
-	}
-
-	@Test(expected = BindException.class)
-	public void bindingFailure()
-	{
-		new FaultyConstructorParent();
-	}
+    @Test(expected = BindException.class)
+    public void bindingFailure() {
+        new FaultyConstructorParent();
+    }
 }

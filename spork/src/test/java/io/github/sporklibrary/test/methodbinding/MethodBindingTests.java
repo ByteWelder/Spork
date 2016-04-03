@@ -1,15 +1,17 @@
 package io.github.sporklibrary.test.methodbinding;
 
-import io.github.sporklibrary.Spork;
-import io.github.sporklibrary.reflection.AnnotatedMethod;
-import io.github.sporklibrary.reflection.AnnotatedMethods;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import java.lang.reflect.Method;
 
-import static org.junit.Assert.*;
+import io.github.sporklibrary.Spork;
+import io.github.sporklibrary.reflection.AnnotatedMethod;
+import io.github.sporklibrary.reflection.AnnotatedMethods;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class MethodBindingTests {
     private BindMethodBinder bindMethodBinder;
@@ -78,6 +80,6 @@ public class MethodBindingTests {
 
         Object staticResult = AnnotatedMethods.invoke(staticAnnotatedMethod, null, 123);
         assertNotNull(staticResult);
-        assertTrue(staticResult.equals(123));
+        assertEquals(123, staticResult);
     }
 }

@@ -13,78 +13,65 @@ import java.util.Set;
 /**
  * A utility class for {@link AnnotatedMethod}.
  */
-public final class AnnotatedMethods
-{
-	private AnnotatedMethods()
-	{
-	}
+public final class AnnotatedMethods {
 
-	/**
-	 * Get an immutable set of annotated methods from the provided class
-	 * @param annotationClass the annotation class
-	 * @param annotatedClass the class to search for annotations
-	 * @param <AnnotationType> the annotationClass type
-	 * @return a set of AnnotatedMethod objects for the specified annotation type
-	 */
-	public static <AnnotationType extends Annotation> Set<AnnotatedMethod<AnnotationType>> get(Class<AnnotationType> annotationClass, Class<?> annotatedClass)
-	{
-		HashSet<AnnotatedMethod<AnnotationType>> annotatedMethodSet = new HashSet<>();
+    private AnnotatedMethods() {
+    }
 
-		for (Method method : annotatedClass.getDeclaredMethods())
-		{
-			AnnotationType annotation = method.getAnnotation(annotationClass);
+    /**
+     * Get an immutable set of annotated methods from the provided class
+     *
+     * @param annotationClass  the annotation class
+     * @param annotatedClass   the class to search for annotations
+     * @param <AnnotationType> the annotationClass type
+     * @return a set of AnnotatedMethod objects for the specified annotation type
+     */
+    public static <AnnotationType extends Annotation> Set<AnnotatedMethod<AnnotationType>> get(Class<AnnotationType> annotationClass, Class<?> annotatedClass) {
+        HashSet<AnnotatedMethod<AnnotationType>> annotatedMethodSet = new HashSet<>();
 
-			if (annotation != null)
-			{
-				annotatedMethodSet.add(new AnnotatedMethod<>(annotation, method));
-			}
-		}
+        for (Method method : annotatedClass.getDeclaredMethods()) {
+            AnnotationType annotation = method.getAnnotation(annotationClass);
 
-		return !annotatedMethodSet.isEmpty() ? annotatedMethodSet : Collections.<AnnotatedMethod<AnnotationType>>emptySet();
-	}
+            if (annotation != null) {
+                annotatedMethodSet.add(new AnnotatedMethod<>(annotation, method));
+            }
+        }
 
-	/**
-	 * Invoke an AnnotatedMethod
-	 * @param annotatedMethod the AnnotatedMethod
-	 * @param object the parent object
-	 * @param args the field value to bind
-	 * @return the result of the invoked method
-	 */
-	public static @Nullable Object invoke(AnnotatedMethod<?> annotatedMethod, Object object, Object... args)
-	{
-		Method method = annotatedMethod.getMethod();
+        return !annotatedMethodSet.isEmpty() ? annotatedMethodSet : Collections.<AnnotatedMethod<AnnotationType>>emptySet();
+    }
 
-		boolean accessible = method.isAccessible();
+    /**
+     * Invoke an AnnotatedMethod
+     *
+     * @param annotatedMethod the AnnotatedMethod
+     * @param object          the parent object
+     * @param args            the field value to bind
+     * @return the result of the invoked method
+     */
+    @Nullable
+    public static Object invoke(AnnotatedMethod<?> annotatedMethod, Object object, Object... args) {
+        Method method = annotatedMethod.getMethod();
 
-		try
-		{
-			if (accessible)
-			{
-				return method.invoke(object, args);
-			}
-			else
-			{
-				method.setAccessible(true);
-				Object result = method.invoke(object, args);
-				method.setAccessible(false);
-				return result;
-			}
-		}
-		catch (IllegalAccessException e)
-		{
-			throw new BindException(annotatedMethod.getAnnotation().getClass(), object.getClass(), method, "method not accessible", e);
-		}
-		catch (InvocationTargetException e)
-		{
-			throw new BindException(annotatedMethod.getAnnotation().getClass(), object.getClass(), method, "method calling failed because of an invocation issue", e);
-		}
-		finally
-		{
-			// ensure the Field isn't accessible when it shouldn't be
-			if (!accessible && method.isAccessible())
-			{
-				method.setAccessible(false);
-			}
-		}
-	}
+        boolean accessible = method.isAccessible();
+
+        try {
+            if (accessible) {
+                return method.invoke(object, args);
+            } else {
+                method.setAccessible(true);
+                Object result = method.invoke(object, args);
+                method.setAccessible(false);
+                return result;
+            }
+        } catch (IllegalAccessException e) {
+            throw new BindException(annotatedMethod.getAnnotation().getClass(), object.getClass(), method, "method not accessible", e);
+        } catch (InvocationTargetException e) {
+            throw new BindException(annotatedMethod.getAnnotation().getClass(), object.getClass(), method, "method calling failed because of an invocation issue", e);
+        } finally {
+            // ensure the Field isn't accessible when it shouldn't be
+            if (!accessible && method.isAccessible()) {
+                method.setAccessible(false);
+            }
+        }
+    }
 }

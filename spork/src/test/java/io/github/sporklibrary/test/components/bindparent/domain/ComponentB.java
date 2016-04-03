@@ -4,27 +4,24 @@ import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindComponent;
 import io.github.sporklibrary.annotations.ComponentParent;
 
-public class ComponentB
-{
-	@BindComponent
-	private ComponentC child;
+public class ComponentB {
 
-	private ComponentA parent;
+    @BindComponent
+    private ComponentC child;
 
-	public ComponentB(@ComponentParent ComponentA parent)
-	{
-		this.parent = parent;
+    private ComponentA parent;
 
-		Spork.bind(this);
-	}
+    public ComponentB(@ComponentParent ComponentA parent) {
+        this.parent = parent;
 
-	public ComponentC getChild()
-	{
-		return child;
-	}
+        Spork.bind(this);
+    }
 
-	public ComponentA getParent()
-	{
-		return parent;
-	}
+    public ComponentC getChild() {
+        return child;
+    }
+
+    public ComponentA getParent() {
+        return parent;
+    }
 }

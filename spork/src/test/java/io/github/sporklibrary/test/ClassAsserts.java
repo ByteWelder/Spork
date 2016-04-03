@@ -9,7 +9,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-public class ClassAsserts {
+public final class ClassAsserts {
+
+    private ClassAsserts() {
+    }
 
     /**
      * Based on http://stackoverflow.com/a/10872497/3848666

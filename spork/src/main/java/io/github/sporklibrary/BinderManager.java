@@ -18,154 +18,136 @@ import io.github.sporklibrary.interfaces.ObjectBinder;
 /**
  * The BinderManager manages all bindings and their cache.
  */
-public class BinderManager
-{
-	private static final Logger logger = LoggerFactory.getLogger(BinderManager.class);
+public class BinderManager {
+    private static final Logger logger = LoggerFactory.getLogger(BinderManager.class);
+    private final List<FieldBinder<?>> fieldBinders = new ArrayList<>();
+    private final List<MethodBinder<?>> methodBinders = new ArrayList<>();
+    private final List<TypeBinder<?>> typeBinders = new ArrayList<>();
+    private final Map<Class<?>, BinderCache> classBinderCacheMap = new HashMap<>();
 
-	private final List<FieldBinder<?>> fieldBinders = new ArrayList<>();
+    /**
+     * Register a FieldBinder
+     *
+     * @param binder           the binder instance
+     * @param <AnnotationType> the annotation type of the binder
+     */
+    public <AnnotationType extends Annotation> void register(FieldBinder<AnnotationType> binder) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("register {}", binder.getClass());
+        }
 
-	private final List<MethodBinder<?>> methodBinders = new ArrayList<>();
+        fieldBinders.add(binder);
 
-	private final List<TypeBinder<?>> typeBinders = new ArrayList<>();
+        // Update cache
+        for (BinderCache cache : classBinderCacheMap.values()) {
+            cache.register(binder);
+        }
+    }
 
-	private final Map<Class<?>, BinderCache> classBinderCacheMap = new HashMap<>();
+    /**
+     * Register a MethodBinder
+     *
+     * @param binder           the binder instance
+     * @param <AnnotationType> the annotation type of the binder
+     */
+    public <AnnotationType extends Annotation> void register(MethodBinder<AnnotationType> binder) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("register {}", binder.getClass());
+        }
 
-	/**
-	 * Register a FieldBinder
-	 * @param binder the binder instance
-	 * @param <AnnotationType> the annotation type of the binder
-	 */
-	public <AnnotationType extends Annotation> void register(FieldBinder<AnnotationType> binder)
-	{
-		if (logger.isDebugEnabled())
-		{
-			logger.debug("register {}", binder.getClass());
-		}
+        methodBinders.add(binder);
 
-		fieldBinders.add(binder);
+        // Update cache
+        for (BinderCache cache : classBinderCacheMap.values()) {
+            cache.register(binder);
+        }
+    }
 
-		// Update cache
-		for (BinderCache cache : classBinderCacheMap.values())
-		{
-			cache.register(binder);
-		}
-	}
+    /**
+     * Register a TypeBinder
+     *
+     * @param binder           the binder instance
+     * @param <AnnotationType> the annotation type of the binder
+     */
+    public <AnnotationType extends Annotation> void register(TypeBinder<AnnotationType> binder) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("register {}", binder.getClass());
+        }
 
-	/**
-	 * Register a MethodBinder
-	 * @param binder the binder instance
-	 * @param <AnnotationType> the annotation type of the binder
-	 */
-	public <AnnotationType extends Annotation> void register(MethodBinder<AnnotationType> binder)
-	{
-		if (logger.isDebugEnabled())
-		{
-			logger.debug("register {}", binder.getClass());
-		}
+        typeBinders.add(binder);
 
-		methodBinders.add(binder);
+        // Update cache
+        for (BinderCache cache : classBinderCacheMap.values()) {
+            cache.register(binder);
+        }
+    }
 
-		// Update cache
-		for (BinderCache cache : classBinderCacheMap.values())
-		{
-			cache.register(binder);
-		}
-	}
+    /**
+     * Bind all annotations for an object instance on all levels of inheritance.
+     *
+     * @param object the instance to bind annotations for
+     */
+    public void bind(Object object) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("bind {}", object);
+        }
 
-	/**
-	 * Register a TypeBinder
-	 * @param binder the binder instance
-	 * @param <AnnotationType> the annotation type of the binder
-	 */
-	public <AnnotationType extends Annotation> void register(TypeBinder<AnnotationType> binder)
-	{
-		if (logger.isDebugEnabled())
-		{
-			logger.debug("register {}", binder.getClass());
-		}
+        Class<?> objectClass = object.getClass();
 
-		typeBinders.add(binder);
+        while (objectClass != null && objectClass != Object.class) {
+            BinderCache cache = classBinderCacheMap.get(objectClass);
 
-		// Update cache
-		for (BinderCache cache : classBinderCacheMap.values())
-		{
-			cache.register(binder);
-		}
-	}
+            if (cache == null) {
+                cache = createCache(objectClass);
 
-	/**
-	 * Bind all annotations for an object instance on all levels of inheritance.
-	 * @param object the instance to bind annotations for
-	 */
-	public void bind(Object object)
-	{
-		if (logger.isDebugEnabled())
-		{
-			logger.debug("bind {}", object);
-		}
+                classBinderCacheMap.put(objectClass, cache);
+            }
 
-		Class<?> objectClass = object.getClass();
+            bind(object, cache);
 
-		while (objectClass != null && objectClass != Object.class)
-		{
-			BinderCache cache = classBinderCacheMap.get(objectClass);
+            objectClass = objectClass.getSuperclass();
+        }
 
-			if (cache == null)
-			{
-				cache = createCache(objectClass);
+    }
 
-				classBinderCacheMap.put(objectClass, cache);
-			}
+    /**
+     * Bind all annotations for an object instance for one specific class (one level of
+     * inheritance).
+     *
+     * @param object the instance to bind annotations for
+     * @param cache  the cache to bind with
+     */
+    private void bind(Object object, BinderCache cache) {
+        for (ObjectBinder binder : cache.getBinders()) {
+            binder.bind(object);
+        }
+    }
 
-			bind(object, cache);
+    /**
+     * Allocated the cache for the specified class
+     *
+     * @param classObject the class to create a cache for
+     * @return the cache
+     */
+    private BinderCache createCache(Class<?> classObject) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("createCache {}", classObject.getName());
+        }
 
-			objectClass = objectClass.getSuperclass();
-		}
+        BinderCache cache = new BinderCache(classObject);
 
-	}
+        for (TypeBinder<?> typeBinder : typeBinders) {
+            cache.register(typeBinder);
+        }
 
-	/**
-	 * Bind all annotations for an object instance for one specific class (one level of inheritance).
-	 * @param object the instance to bind annotations for
-	 * @param cache the cache to bind with
-	 */
-	private void bind(Object object, BinderCache cache)
-	{
-		for (ObjectBinder binder : cache.getBinders())
-		{
-			binder.bind(object);
-		}
-	}
+        for (FieldBinder<?> fieldBinder : fieldBinders) {
+            cache.register(fieldBinder);
+        }
 
-	/**
-	 * Allocated the cache for the specified class
-	 * @param classObject the class to create a cache for
-	 * @return the cache
-	 */
-	private BinderCache createCache(Class<?> classObject)
-	{
-		if (logger.isDebugEnabled())
-		{
-			logger.debug("createCache {}", classObject.getName());
-		}
+        for (MethodBinder<?> methodBinder : methodBinders) {
+            cache.register(methodBinder);
+        }
 
-		BinderCache cache = new BinderCache(classObject);
-
-		for (TypeBinder<?> typeBinder : typeBinders)
-		{
-			cache.register(typeBinder);
-		}
-
-		for (FieldBinder<?> fieldBinder : fieldBinders)
-		{
-			cache.register(fieldBinder);
-		}
-
-		for (MethodBinder<?> methodBinder : methodBinders)
-		{
-			cache.register(methodBinder);
-		}
-
-		return cache;
-	}
+        return cache;
+    }
 }

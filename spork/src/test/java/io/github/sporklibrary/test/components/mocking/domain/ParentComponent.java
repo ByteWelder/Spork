@@ -3,18 +3,16 @@ package io.github.sporklibrary.test.components.mocking.domain;
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindComponent;
 
-public class ParentComponent
-{
-	@BindComponent(RegularImplementation.class)
-	private CommonInterface commonInterface;
+public class ParentComponent {
 
-	public ParentComponent()
-	{
-		Spork.bind(this);
-	}
+    @BindComponent(RegularImplementation.class)
+    private CommonInterface commonInterface;
 
-	public CommonInterface getCommonInterface()
-	{
-		return commonInterface;
-	}
+    public ParentComponent() {
+        Spork.bind(this);
+    }
+
+    public CommonInterface getCommonInterface() {
+        return commonInterface;
+    }
 }

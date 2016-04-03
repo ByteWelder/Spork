@@ -3,18 +3,16 @@ package io.github.sporklibrary.test.components.shopping;
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindComponent;
 
-public class ShoppingCart
-{
-	@BindComponent(IceCream.class)
-	private Dairy dairy;
+public class ShoppingCart {
 
-	public ShoppingCart()
-	{
-		Spork.bind(this);
-	}
+    @BindComponent(IceCream.class)
+    private Dairy dairy;
 
-	public Dairy getDairy()
-	{
-		return dairy;
-	}
+    public ShoppingCart() {
+        Spork.bind(this);
+    }
+
+    public Dairy getDairy() {
+        return dairy;
+    }
 }

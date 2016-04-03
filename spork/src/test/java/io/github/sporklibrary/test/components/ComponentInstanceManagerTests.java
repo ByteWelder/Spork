@@ -5,7 +5,12 @@ import io.github.sporklibrary.annotations.BindComponent;
 import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.reflection.AnnotatedField;
 import io.github.sporklibrary.binders.component.ComponentInstanceManager;
-import io.github.sporklibrary.test.components.scope.*;
+import io.github.sporklibrary.test.components.scope.DefaultImpliedScopeComponent;
+import io.github.sporklibrary.test.components.scope.DefaultSpecifiedScopeComponent;
+import io.github.sporklibrary.test.components.scope.FaultyConstructorComponent;
+import io.github.sporklibrary.test.components.scope.FaultyInstantiationComponent;
+import io.github.sporklibrary.test.components.scope.SingletonScopeComponent;
+
 import org.junit.Test;
 
 import java.lang.reflect.Field;
@@ -13,98 +18,92 @@ import java.lang.reflect.Field;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-public class ComponentInstanceManagerTests
-{
-	// Fields are public for easy test access
-	public static class Parent
-	{
-		@BindComponent
-		public DefaultSpecifiedScopeComponent defaultSpecifiedScopeComponent;
+public class ComponentInstanceManagerTests {
 
-		@BindComponent
-		public DefaultImpliedScopeComponent defaultImpliedScopeComponent;
+    // Fields are public for easy test access
+    public static class Parent {
 
-		@BindComponent
-		public SingletonScopeComponent dingletonScopeComponent;
+        @BindComponent
+        public DefaultSpecifiedScopeComponent defaultSpecifiedScopeComponent;
 
-		public Parent()
-		{
-			Spork.bind(this);
-		}
-	}
+        @BindComponent
+        public DefaultImpliedScopeComponent defaultImpliedScopeComponent;
 
-	public static class FaultyConstructorParent
-	{
-		@BindComponent
-		private FaultyConstructorComponent child;
+        @BindComponent
+        public SingletonScopeComponent dingletonScopeComponent;
 
-		public FaultyConstructorParent()
-		{
-			Spork.bind(this);
-		}
-	}
+        public Parent() {
+            Spork.bind(this);
+        }
+    }
 
-	public static class FaultyInstantiationParent
-	{
-		@BindComponent
-		public FaultyInstantiationComponent child;
+    public static class FaultyConstructorParent {
 
-		public FaultyInstantiationParent()
-		{
-			Spork.bind(this);
-		}
-	}
+        @BindComponent
+        private FaultyConstructorComponent child;
 
-	@Test
-	public void componentInstanceManager() throws NoSuchFieldException
-	{
-		ComponentInstanceManager manager = new ComponentInstanceManager();
+        public FaultyConstructorParent() {
+            Spork.bind(this);
+        }
+    }
 
-		Parent parent = new Parent();
+    public static class FaultyInstantiationParent {
 
-		Field defaultImpliedField = parent.getClass().getField("defaultImpliedScopeComponent");
-		Field defaultSpecifiedField = parent.getClass().getField("defaultSpecifiedScopeComponent");
-		Field singletonField = parent.getClass().getField("dingletonScopeComponent");
+        @BindComponent
+        public FaultyInstantiationComponent child;
 
-		BindComponent defaultImpliedAnnotation = defaultImpliedField.getAnnotation(BindComponent.class);
-		BindComponent defaultSpecifiedAnnotation = defaultSpecifiedField.getAnnotation(BindComponent.class);
-		BindComponent singletonAnnotation = singletonField.getAnnotation(BindComponent.class);
+        public FaultyInstantiationParent() {
+            Spork.bind(this);
+        }
+    }
 
-		assertNotNull(defaultImpliedAnnotation);
-		assertNotNull(defaultSpecifiedAnnotation);
-		assertNotNull(singletonAnnotation);
+    @Test
+    public void componentInstanceManager() throws NoSuchFieldException {
+        ComponentInstanceManager manager = new ComponentInstanceManager();
 
-		AnnotatedField<BindComponent> defaultImpliedAnnotatedField = new AnnotatedField<>(defaultImpliedAnnotation, defaultImpliedField);
-		AnnotatedField<BindComponent> defaultSpecifiedAnnotatedField = new AnnotatedField<>(defaultSpecifiedAnnotation, defaultSpecifiedField);
-		AnnotatedField<BindComponent> singletonAnnotatedField = new AnnotatedField<>(singletonAnnotation, singletonField);
+        Parent parent = new Parent();
 
-		Object defaultImpliedInstance = manager.getInstance(parent, defaultImpliedAnnotatedField);
-		Object defaultSpecifiedInstance = manager.getInstance(parent, defaultSpecifiedAnnotatedField);
-		Object singletonInstance = manager.getInstance(parent, singletonAnnotatedField);
-		Object singletonInstanceCopy = manager.getInstance(parent, singletonAnnotatedField);
+        Field defaultImpliedField = parent.getClass().getField("defaultImpliedScopeComponent");
+        Field defaultSpecifiedField = parent.getClass().getField("defaultSpecifiedScopeComponent");
+        Field singletonField = parent.getClass().getField("dingletonScopeComponent");
 
-		assertNotNull(defaultImpliedInstance);
-		assertNotNull(defaultSpecifiedInstance);
-		assertNotNull(singletonInstance);
-		assertNotNull(singletonInstanceCopy);
+        BindComponent defaultImpliedAnnotation = defaultImpliedField.getAnnotation(BindComponent.class);
+        BindComponent defaultSpecifiedAnnotation = defaultSpecifiedField.getAnnotation(BindComponent.class);
+        BindComponent singletonAnnotation = singletonField.getAnnotation(BindComponent.class);
 
-		assertTrue(DefaultImpliedScopeComponent.class.isAssignableFrom(defaultImpliedInstance.getClass()));
-		assertTrue(DefaultSpecifiedScopeComponent.class.isAssignableFrom(defaultSpecifiedInstance.getClass()));
-		assertTrue(SingletonScopeComponent.class.isAssignableFrom(singletonInstance.getClass()));
-		assertTrue(SingletonScopeComponent.class.isAssignableFrom(singletonInstanceCopy.getClass()));
+        assertNotNull(defaultImpliedAnnotation);
+        assertNotNull(defaultSpecifiedAnnotation);
+        assertNotNull(singletonAnnotation);
 
-		assertTrue(singletonInstance == singletonInstanceCopy);
-	}
+        AnnotatedField<BindComponent> defaultImpliedAnnotatedField = new AnnotatedField<>(defaultImpliedAnnotation, defaultImpliedField);
+        AnnotatedField<BindComponent> defaultSpecifiedAnnotatedField = new AnnotatedField<>(defaultSpecifiedAnnotation, defaultSpecifiedField);
+        AnnotatedField<BindComponent> singletonAnnotatedField = new AnnotatedField<>(singletonAnnotation, singletonField);
 
-	@Test(expected = BindException.class)
-	public void faultyComponentConstructor()
-	{
-		new FaultyConstructorParent();
-	}
+        Object defaultImpliedInstance = manager.getInstance(parent, defaultImpliedAnnotatedField);
+        Object defaultSpecifiedInstance = manager.getInstance(parent, defaultSpecifiedAnnotatedField);
+        Object singletonInstance = manager.getInstance(parent, singletonAnnotatedField);
+        Object singletonInstanceCopy = manager.getInstance(parent, singletonAnnotatedField);
 
-	@Test(expected = BindException.class)
-	public void faultyInstantiationConstructor()
-	{
-		new FaultyInstantiationParent();
-	}
+        assertNotNull(defaultImpliedInstance);
+        assertNotNull(defaultSpecifiedInstance);
+        assertNotNull(singletonInstance);
+        assertNotNull(singletonInstanceCopy);
+
+        assertTrue(DefaultImpliedScopeComponent.class.isAssignableFrom(defaultImpliedInstance.getClass()));
+        assertTrue(DefaultSpecifiedScopeComponent.class.isAssignableFrom(defaultSpecifiedInstance.getClass()));
+        assertTrue(SingletonScopeComponent.class.isAssignableFrom(singletonInstance.getClass()));
+        assertTrue(SingletonScopeComponent.class.isAssignableFrom(singletonInstanceCopy.getClass()));
+
+        assertTrue(singletonInstance == singletonInstanceCopy);
+    }
+
+    @Test(expected = BindException.class)
+    public void faultyComponentConstructor() {
+        new FaultyConstructorParent();
+    }
+
+    @Test(expected = BindException.class)
+    public void faultyInstantiationConstructor() {
+        new FaultyInstantiationParent();
+    }
 }

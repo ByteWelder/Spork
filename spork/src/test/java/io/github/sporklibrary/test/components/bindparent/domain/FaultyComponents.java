@@ -5,79 +5,63 @@ import io.github.sporklibrary.annotations.BindComponent;
 import io.github.sporklibrary.annotations.ComponentParent;
 import io.github.sporklibrary.annotations.ComponentScope;
 
-public class FaultyComponents
-{
-	public static class NotAnnotatedParent
-	{
-		@BindComponent
-		private NotAnnotatedChild child;
+public class FaultyComponents {
 
-		public NotAnnotatedParent()
-		{
-			Spork.bind(this);
-		}
-	}
+    public static class NotAnnotatedParent {
+        @BindComponent
+        private NotAnnotatedChild child;
 
-	public static class NotAnnotatedChild
-	{
-		public NotAnnotatedChild(NotAnnotatedParent parent)
-		{
-		}
-	}
+        public NotAnnotatedParent() {
+            Spork.bind(this);
+        }
+    }
 
-	public static class TypeMismatchParent
-	{
-		@BindComponent
-		private TypeMismatchChild child;
+    public static class NotAnnotatedChild {
+        public NotAnnotatedChild(NotAnnotatedParent parent) {
+        }
+    }
 
-		public TypeMismatchParent()
-		{
-			Spork.bind(this);
-		}
-	}
+    public static class TypeMismatchParent {
+        @BindComponent
+        private TypeMismatchChild child;
 
-	public static class TypeMismatchChild
-	{
-		public TypeMismatchChild(@ComponentParent String parent)
-		{
-		}
-	}
+        public TypeMismatchParent() {
+            Spork.bind(this);
+        }
+    }
 
-	public static class SingletonParent
-	{
-		@BindComponent
-		private SingletonChild child;
+    public static class TypeMismatchChild {
+        public TypeMismatchChild(@ComponentParent String parent) {
+        }
+    }
 
-		public SingletonParent()
-		{
-			Spork.bind(this);
-		}
-	}
+    public static class SingletonParent {
+        @BindComponent
+        private SingletonChild child;
 
-	@ComponentScope(ComponentScope.Scope.SINGLETON)
-	public static class SingletonChild
-	{
-		public SingletonChild(@ComponentParent SingletonParent parent)
-		{
-		}
-	}
+        public SingletonParent() {
+            Spork.bind(this);
+        }
+    }
 
-	public static class MultiArgumentParent
-	{
-		@BindComponent
-		private MultiArgumentChild child;
+    @ComponentScope(ComponentScope.Scope.SINGLETON)
+    public static class SingletonChild {
+        public SingletonChild(@ComponentParent SingletonParent parent) {
+        }
+    }
 
-		public MultiArgumentParent()
-		{
-			Spork.bind(this);
-		}
-	}
+    public static class MultiArgumentParent {
+        @BindComponent
+        private MultiArgumentChild child;
 
-	@ComponentScope(ComponentScope.Scope.SINGLETON)
-	public static class MultiArgumentChild
-	{
-		public MultiArgumentChild(@ComponentParent MultiArgumentParent parent1, @ComponentParent MultiArgumentParent parent2)
-		{
-		}
-	}
+        public MultiArgumentParent() {
+            Spork.bind(this);
+        }
+    }
+
+    @ComponentScope(ComponentScope.Scope.SINGLETON)
+    public static class MultiArgumentChild {
+        public MultiArgumentChild(@ComponentParent MultiArgumentParent parent1, @ComponentParent MultiArgumentParent parent2) {
+        }
+    }
 }

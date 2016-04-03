@@ -77,8 +77,7 @@ public class ComponentInstanceManager {
 
         if (overrideClass == BindComponent.Default.class) {
             return annotatedField.getField().getType();
-        } else // override class is never null per annotation design
-        {
+        } else { // override class is never null per annotation design
             return overrideClass;
         }
     }
