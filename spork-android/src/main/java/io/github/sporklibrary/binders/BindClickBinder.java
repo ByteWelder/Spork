@@ -28,7 +28,7 @@ public class BindClickBinder implements MethodBinder<BindClick> {
             } else if (parameter_types.length == 1 && View.class.isAssignableFrom(parameter_types[0])) {
                 AnnotatedMethods.invoke(mAnnotatedMethod, mObject, v);
             } else {
-                throw new BindException(BindClick.class, v.getClass(), mAnnotatedMethod.getMethod(), "onClick failed because the method arguments must be either empty or accept a a single View type");
+                throw new BindException(BindClick.class, v.getClass(), mAnnotatedMethod.getMethod(), "onClick failed because the method arguments must be either empty or accept a single View type");
             }
         }
     }
