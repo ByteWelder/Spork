@@ -33,7 +33,7 @@ targetCompatibility = 1.7
 dependencies {
     compile (
         [group: 'io.github.sporklibrary', name: 'spork', version: '2.5.0'],
-        [group: 'org.mockito', name: 'mockito-core', version: '1.+']
+        [group: 'org.mockito', name: 'mockito-core', version: '1.10.19']
     )
 
     testCompile (
