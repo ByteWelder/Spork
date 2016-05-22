@@ -5,11 +5,10 @@ import io.github.sporklibrary.mockito.MockitoFilter;
 /**
  * A filter used to mock all (component) classes.
  */
-public class AllowAll implements MockitoFilter
-{
+public class AllowAll implements MockitoFilter {
+
 	@Override
-	public boolean shouldMockWithMockito(Class<?> classObject)
-	{
+	public boolean shouldMockWithMockito(Class<?> classObject) {
 		return true;
 	}
 }

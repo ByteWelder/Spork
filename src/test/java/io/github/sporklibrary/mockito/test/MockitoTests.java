@@ -1,43 +1,19 @@
 package io.github.sporklibrary.mockito.test;
 
+import org.junit.Test;
+
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindComponent;
 import io.github.sporklibrary.mockito.MockitoFilter;
 import io.github.sporklibrary.mockito.SporkMockito;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
-public class MockitoTests
-{
-	public static class Component
-	{
-		public int getValue()
-		{
-			return 1;
-		}
-	}
-
-	public static class Parent
-	{
-		@BindComponent
-		private Component mComponent;
-
-		public Parent()
-		{
-			Spork.bind(this);
-		}
-
-		public Component getComponent()
-		{
-			return mComponent;
-		}
-	}
+public class MockitoTests {
 
 	@Test
-	public void testDefaultMockingBehavior()
-	{
+	public void testDefaultMockingBehavior() {
 		// Enable Mockito for all classes
 		SporkMockito.initialize();
 
@@ -45,8 +21,7 @@ public class MockitoTests
 	}
 
 	@Test
-	public void testSpecificMockingBehavior()
-	{
+	public void testSpecificMockingBehavior() {
 		// Enable Mockito for 1 class
 		SporkMockito.initialize(Component.class);
 
@@ -54,32 +29,48 @@ public class MockitoTests
 	}
 
 	@Test
-	public void testDefaultBehavior()
-	{
+	public void testDefaultBehavior() {
 		// Check that non-mocking behavior is working
 
 		// Enable Mockito but don't allow any types
 		SporkMockito.initialize(new MockitoFilter() {
 			@Override
-			public boolean shouldMockWithMockito(Class<?> classObject)
-			{
+			public boolean shouldMockWithMockito(Class<?> classObject) {
 				return false;
 			}
 		});
 
 		// The created instance should not be mocked, since the filter disallows it
-		Parent mocked_parent = new Parent();
-		Component mocked_component = mocked_parent.getComponent();
-		assertEquals("Component default value", 1, mocked_component.getValue());
+		Parent mockedParent = new Parent();
+		Component mockedComponent = mockedParent.getComponent();
+		assertEquals("Component default value", 1, mockedComponent.getValue());
 	}
 
-	private void runMockingTests()
-	{
+	private void runMockingTests() {
 		Parent parent = new Parent();
-		Component mocked_component = parent.getComponent();
+		Component mockedParent = parent.getComponent();
 
-		assertEquals("mocked Component default value", 0, mocked_component.getValue());
-		when(mocked_component.getValue()).thenReturn(2);
-		assertEquals("mocked Component overridden value", 2, mocked_component.getValue());
+		assertEquals("mocked Component default value", 0, mockedParent.getValue());
+		when(mockedParent.getValue()).thenReturn(2);
+		assertEquals("mocked Component overridden value", 2, mockedParent.getValue());
+	}
+
+	public static class Component {
+		public int getValue() {
+			return 1;
+		}
+	}
+
+	public static class Parent {
+		@BindComponent
+		private Component component;
+
+		public Parent() {
+			Spork.bind(this);
+		}
+
+		public Component getComponent() {
+			return component;
+		}
 	}
 }
