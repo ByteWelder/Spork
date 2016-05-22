@@ -4,7 +4,6 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.novoda:bintray-release:0.3.4'
         classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.0'
         // bintray usage: ./gradlew clean build bintrayUpload -PbintrayUser=??? -PbintrayKey=??? -PdryRun=false
     }
@@ -20,18 +19,6 @@ repositories {
 apply plugin: 'java'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
-apply plugin: 'bintray-release'
-
-ext {
-    // Publishing
-    sporkVersion = '1.0.2'
-    sporkUserOrg = 'sporklibrary'
-    sporkWebsite = 'https://sporklibrary.github.io'
-    sporkGroupId = 'io.github.sporklibrary'
-    sporkRepoName = 'spork'
-    sporkName = 'Spork Mockito'
-    sporkArtifactId = 'spork-mockito'
-}
 
 jacocoTestReport {
     reports {
@@ -40,13 +27,8 @@ jacocoTestReport {
     }
 }
 
-// Fixes jar name
-archivesBaseName = sporkArtifactId
-
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
-
-version = sporkVersion
 
 dependencies {
     compile (
@@ -63,26 +45,4 @@ dependencies {
     )
 }
 
-publish {
-    userOrg = sporkUserOrg
-    repoName = sporkRepoName
-    groupId = sporkGroupId
-    artifactId = sporkArtifactId
-    version = sporkVersion
-    description = sporkName
-    website = sporkWebsite
-}
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives sourcesJar, javadocJar
-}
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
