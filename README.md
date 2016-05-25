@@ -5,7 +5,7 @@
 
 Mockito support for Spork.
 
-Documentation is available on the [website](https://sporklibrary.github.io/documentation/testing)
+Documentation is available on the [website](https://sporklibrary.github.io/documentation/current/java/testing/)
 
 ## License
 
