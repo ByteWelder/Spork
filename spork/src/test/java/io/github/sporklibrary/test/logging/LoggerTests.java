@@ -33,7 +33,7 @@ public class LoggerTests {
         @Override
         public void write(int b) throws IOException {
             if (b != '\n') {
-                lineBuilder.append((char)b);
+                lineBuilder.append((char) b);
             } else {
                 lines.add(lineBuilder.toString());
                 lineBuilder = new StringBuilder();
