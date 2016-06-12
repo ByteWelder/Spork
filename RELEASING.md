@@ -1,6 +1,6 @@
 # Publishing
 
-- updated the version in `build.gradle`
+- updated the version in `gradle.properties`
 - ensure changes are merged to `master`
 - run all tests: `./gradlew clean check`
 - build and publish artifact to Maven repository
