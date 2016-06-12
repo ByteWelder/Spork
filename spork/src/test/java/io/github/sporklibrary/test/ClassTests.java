@@ -2,6 +2,8 @@ package io.github.sporklibrary.test;
 
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindComponent;
+import io.github.sporklibrary.logging.LoggerFactory;
+import io.github.sporklibrary.logging.implementations.DefaultLoggerSettings;
 import io.github.sporklibrary.reflection.AnnotatedFields;
 import io.github.sporklibrary.reflection.AnnotatedMethods;
 import io.github.sporklibrary.reflection.AnnotatedTypes;
@@ -22,6 +24,8 @@ public class ClassTests {
         assertUtilityClassWellDefined(AnnotatedMethods.class);
         assertUtilityClassWellDefined(AnnotatedFields.class);
         assertUtilityClassWellDefined(AnnotatedTypes.class);
+        assertUtilityClassWellDefined(LoggerFactory.class);
+        assertUtilityClassWellDefined(DefaultLoggerSettings.class);
 
         assertAnnotationDefaultClassWellDefined(BindComponent.Default.class);
     }
