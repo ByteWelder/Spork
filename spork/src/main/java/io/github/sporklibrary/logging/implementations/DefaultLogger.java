@@ -46,7 +46,7 @@ class DefaultLogger implements Logger {
         } else {
             String[] items = format.split("\\{\\}");
 
-            if ( (items.length - 1) != arguments.length && !format.endsWith("{}")) {
+            if ((items.length - 1) != arguments.length && !format.endsWith("{}")) {
                 throw new RuntimeException("argument count mismatch");
             }
 
@@ -74,8 +74,9 @@ class DefaultLogger implements Logger {
 
     /**
      * Print out the splitted format string and its arguments
+     *
      * @param formatItems the splitted format string
-     * @param arguments the arguments
+     * @param arguments   the arguments
      */
     private static void printFormatted(StringBuilder builder, String[] formatItems, Object[] arguments) {
         for (int i = 0; i < formatItems.length; i++) {

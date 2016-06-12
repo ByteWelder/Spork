@@ -2,7 +2,10 @@ package io.github.sporklibrary.logging;
 
 import io.github.sporklibrary.logging.implementations.DefaultLoggerFactory;
 
-public class LoggerFactory {
+public final class LoggerFactory {
+
+    private LoggerFactory() {
+    }
 
     public interface Interface {
         Logger createLogger(String name);

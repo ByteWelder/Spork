@@ -4,11 +4,14 @@ import java.io.PrintStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-public class DefaultLoggerSettings {
+public final class DefaultLoggerSettings {
     private static int logLevel = DefaultLogger.Level.INFO;
     private static PrintStream regularPrintStream = System.out;
     private static PrintStream errorPrintStream = System.err;
     private static DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss.SSS");
+
+    private DefaultLoggerSettings() {
+    }
 
     public static int getLogLevel() {
         return logLevel;
