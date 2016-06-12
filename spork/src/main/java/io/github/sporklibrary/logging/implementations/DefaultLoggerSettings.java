@@ -5,12 +5,25 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 public final class DefaultLoggerSettings {
-    private static int logLevel = DefaultLogger.Level.INFO;
-    private static PrintStream regularPrintStream = System.out;
-    private static PrintStream errorPrintStream = System.err;
-    private static DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss.SSS");
+
+    private static final int defaultLogLevel = DefaultLogger.Level.INFO;
+    private static final PrintStream defaultRegularPrintStream = System.out;
+    private static final PrintStream defaultErrorPrintStream = System.err;
+    private static final DateFormat defaultDateFormat = new SimpleDateFormat("HH:mm:ss.SSS");
+
+    private static int logLevel = defaultLogLevel;
+    private static PrintStream regularPrintStream = defaultRegularPrintStream;
+    private static PrintStream errorPrintStream = defaultErrorPrintStream;
+    private static DateFormat dateFormat = defaultDateFormat;
 
     private DefaultLoggerSettings() {
+    }
+
+    public static void setDefault() {
+        logLevel = defaultLogLevel;
+        regularPrintStream = defaultRegularPrintStream;
+        errorPrintStream = defaultErrorPrintStream;
+        dateFormat = defaultDateFormat;
     }
 
     public static int getLogLevel() {

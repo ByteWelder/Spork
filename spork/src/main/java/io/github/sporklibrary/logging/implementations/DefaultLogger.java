@@ -7,16 +7,16 @@ import java.util.Date;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.logging.Logger;
 
-class DefaultLogger implements Logger {
+public class DefaultLogger implements Logger {
 
     private final String name;
 
     public static final class Level {
-        final static int TRACE = 0;
-        final static int DEBUG = 10;
-        final static int INFO = 20;
-        final static int WARN = 30;
-        final static int ERROR = 40;
+        public final static int TRACE = 0;
+        public final static int DEBUG = 10;
+        public final static int INFO = 20;
+        public final static int WARN = 30;
+        public final static int ERROR = 40;
     }
 
     DefaultLogger(String name) {
@@ -33,10 +33,19 @@ class DefaultLogger implements Logger {
         StringBuilder builder = new StringBuilder();
 
         // Prefix with date, log level and logger name
-        builder.append(DefaultLoggerSettings.getDateFormat().format(new Date()));
-        builder.append(' ');
-        builder.append(getLevelName(logLevel));
-        builder.append(' ');
+        String datePart = DefaultLoggerSettings.getDateFormat().format(new Date());
+        if (datePart.length() > 0) {
+            builder.append(datePart);
+            builder.append(' ');
+        }
+
+        // Add level name if it is not empty
+        String levelName = getLevelName(logLevel);
+        if (!levelName.isEmpty()) {
+            builder.append(levelName);
+            builder.append(' ');
+        }
+
         builder.append(name);
         builder.append(" - ");
 
@@ -82,8 +91,22 @@ class DefaultLogger implements Logger {
         for (int i = 0; i < formatItems.length; i++) {
             builder.append(formatItems[i]);
             if (i < arguments.length) {
-                builder.append(arguments[i].toString());
+                builder.append(toString(arguments[i]));
             }
+        }
+
+        if (arguments.length > formatItems.length) {
+            for (int i = formatItems.length; i < arguments.length; i++) {
+                builder.append(toString(arguments[i]));
+            }
+        }
+    }
+
+    private static String toString(Object object) {
+        if (object instanceof Class) {
+            return ((Class<?>)object).getName();
+        } else {
+            return object.toString();
         }
     }
 
@@ -126,7 +149,7 @@ class DefaultLogger implements Logger {
 
     @Override
     public boolean isTraceEnabled() {
-        return true;
+        return DefaultLoggerSettings.getLogLevel() <= Level.TRACE;
     }
 
     @Override
@@ -146,7 +169,7 @@ class DefaultLogger implements Logger {
 
     @Override
     public boolean isDebugEnabled() {
-        return true;
+        return DefaultLoggerSettings.getLogLevel() <= Level.DEBUG;
     }
 
     @Override
@@ -166,7 +189,7 @@ class DefaultLogger implements Logger {
 
     @Override
     public boolean isInfoEnabled() {
-        return true;
+        return DefaultLoggerSettings.getLogLevel() <= Level.INFO;
     }
 
     @Override
@@ -186,7 +209,7 @@ class DefaultLogger implements Logger {
 
     @Override
     public boolean isWarnEnabled() {
-        return true;
+        return DefaultLoggerSettings.getLogLevel() <= Level.WARN;
     }
 
     @Override
@@ -206,6 +229,6 @@ class DefaultLogger implements Logger {
 
     @Override
     public boolean isErrorEnabled() {
-        return true;
+        return DefaultLoggerSettings.getLogLevel() <= Level.ERROR;
     }
 }
