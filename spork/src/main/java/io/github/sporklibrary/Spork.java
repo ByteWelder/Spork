@@ -6,14 +6,14 @@ import java.lang.reflect.Method;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.component.ComponentFieldBinder;
 import io.github.sporklibrary.logging.Logger;
-import io.github.sporklibrary.logging.LoggerFactory;
+import io.github.sporklibrary.logging.LoggerFactoryTemp;
 
 /**
  * Main class to access Spork functionality.
  */
 public final class Spork {
 
-    private static final Logger logger = LoggerFactory.getLogger(Spork.class);
+    private static final Logger logger = LoggerFactoryTemp.getLogger(Spork.class);
 
     private Spork() {
     }

@@ -1,9 +1,9 @@
 package io.github.sporklibrary.logging.implementations;
 
 import io.github.sporklibrary.logging.Logger;
-import io.github.sporklibrary.logging.LoggerFactory;
+import io.github.sporklibrary.logging.LoggerFactoryTemp;
 
-public class DefaultLoggerFactory implements LoggerFactory.Interface {
+public class DefaultLoggerFactory implements LoggerFactoryTemp.Interface {
 
     @Override
     public Logger createLogger(String name) {

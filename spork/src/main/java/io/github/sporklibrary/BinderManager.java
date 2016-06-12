@@ -1,6 +1,6 @@
 package io.github.sporklibrary;
 
-import io.github.sporklibrary.logging.LoggerFactory;
+import io.github.sporklibrary.logging.LoggerFactoryTemp;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import io.github.sporklibrary.logging.Logger;
  * The BinderManager manages all bindings and their cache.
  */
 public class BinderManager {
-    private static final Logger logger = LoggerFactory.getLogger(BinderManager.class);
+    private static final Logger logger = LoggerFactoryTemp.getLogger(BinderManager.class);
     private final List<FieldBinder<?>> fieldBinders = new ArrayList<>();
     private final List<MethodBinder<?>> methodBinders = new ArrayList<>();
     private final List<TypeBinder<?>> typeBinders = new ArrayList<>();
