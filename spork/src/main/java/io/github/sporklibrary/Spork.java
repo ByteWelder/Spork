@@ -1,18 +1,18 @@
 package io.github.sporklibrary;
 
-import io.github.sporklibrary.annotations.Nullable;
-import io.github.sporklibrary.binders.component.ComponentFieldBinder;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import io.github.sporklibrary.annotations.Nullable;
+import io.github.sporklibrary.binders.component.ComponentFieldBinder;
+import io.github.sporklibrary.logging.Logger;
+import io.github.sporklibrary.logging.LoggerFactory;
 
 /**
  * Main class to access Spork functionality.
  */
 public final class Spork {
+
     private static final Logger logger = LoggerFactory.getLogger(Spork.class);
 
     private Spork() {
@@ -53,9 +53,9 @@ public final class Spork {
             Class<?> sporkAndroidClass = Class.forName("io.github.sporklibrary.SporkAndroid");
             Method initializeMethod = sporkAndroidClass.getDeclaredMethod("initialize", BinderManager.class);
             initializeMethod.invoke(null, binderManager);
-            logger.debug("BinderManager created with Spork for Android");
+            logger.info("BinderManager created with Spork for Android");
         } catch (ClassNotFoundException e) {
-            logger.debug("BinderManager created without Spork for Android");
+            logger.info("BinderManager created without Spork for Android");
         } catch (NoSuchMethodException e) {
             logger.warn("Spork for Android found, but initialize method is not present");
         } catch (InvocationTargetException e) {

@@ -1,7 +1,6 @@
 package io.github.sporklibrary;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.github.sporklibrary.logging.LoggerFactory;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -14,6 +13,7 @@ import io.github.sporklibrary.binders.MethodBinder;
 import io.github.sporklibrary.binders.TypeBinder;
 import io.github.sporklibrary.caching.BinderCache;
 import io.github.sporklibrary.interfaces.ObjectBinder;
+import io.github.sporklibrary.logging.Logger;
 
 /**
  * The BinderManager manages all bindings and their cache.
