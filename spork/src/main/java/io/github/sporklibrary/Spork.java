@@ -5,15 +5,11 @@ import java.lang.reflect.Method;
 
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.component.ComponentFieldBinder;
-import io.github.sporklibrary.logging.Logger;
-import io.github.sporklibrary.logging.LoggerFactory;
 
 /**
  * Main class to access Spork functionality.
  */
 public final class Spork {
-
-    private static final Logger logger = LoggerFactory.getLogger(Spork.class);
 
     private Spork() {
     }
@@ -53,15 +49,15 @@ public final class Spork {
             Class<?> sporkAndroidClass = Class.forName("io.github.sporklibrary.SporkAndroid");
             Method initializeMethod = sporkAndroidClass.getDeclaredMethod("initialize", BinderManager.class);
             initializeMethod.invoke(null, binderManager);
-            logger.info("BinderManager created with Spork for Android");
+            System.out.println("Spork: BinderManager created with Spork for Android");
         } catch (ClassNotFoundException e) {
-            logger.info("BinderManager created without Spork for Android");
+            System.out.println("Spork: BinderManager created without Spork for Android");
         } catch (NoSuchMethodException e) {
-            logger.warn("Spork for Android found, but initialize method is not present");
+            System.out.println("Spork: Spork for Android found, but initialize method is not present");
         } catch (InvocationTargetException e) {
-            logger.warn("Spork for Android found, but initialization failed because of InvocationTargetException: " + e.getMessage());
+            System.out.println("Spork: Spork for Android found, but initialization failed because of InvocationTargetException: " + e.getMessage());
         } catch (IllegalAccessException e) {
-            logger.warn("Spork for Android found, but initialization failed because of IllegalAccessException: " + e.getMessage());
+            System.out.println("Spork: Spork for Android found, but initialization failed because of IllegalAccessException: " + e.getMessage());
         }
     }
 }

@@ -1,6 +1,5 @@
 package io.github.sporklibrary;
 
-import io.github.sporklibrary.logging.LoggerFactory;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -13,13 +12,11 @@ import io.github.sporklibrary.binders.MethodBinder;
 import io.github.sporklibrary.binders.TypeBinder;
 import io.github.sporklibrary.caching.BinderCache;
 import io.github.sporklibrary.interfaces.ObjectBinder;
-import io.github.sporklibrary.logging.Logger;
 
 /**
  * The BinderManager manages all bindings and their cache.
  */
 public class BinderManager {
-    private static final Logger logger = LoggerFactory.getLogger(BinderManager.class);
     private final List<FieldBinder<?>> fieldBinders = new ArrayList<>();
     private final List<MethodBinder<?>> methodBinders = new ArrayList<>();
     private final List<TypeBinder<?>> typeBinders = new ArrayList<>();
@@ -32,10 +29,6 @@ public class BinderManager {
      * @param <AnnotationType> the annotation type of the binder
      */
     public <AnnotationType extends Annotation> void register(FieldBinder<AnnotationType> binder) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("register {}", binder.getClass());
-        }
-
         fieldBinders.add(binder);
 
         // Update cache
@@ -51,10 +44,6 @@ public class BinderManager {
      * @param <AnnotationType> the annotation type of the binder
      */
     public <AnnotationType extends Annotation> void register(MethodBinder<AnnotationType> binder) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("register {}", binder.getClass());
-        }
-
         methodBinders.add(binder);
 
         // Update cache
@@ -70,10 +59,6 @@ public class BinderManager {
      * @param <AnnotationType> the annotation type of the binder
      */
     public <AnnotationType extends Annotation> void register(TypeBinder<AnnotationType> binder) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("register {}", binder.getClass());
-        }
-
         typeBinders.add(binder);
 
         // Update cache
@@ -88,10 +73,6 @@ public class BinderManager {
      * @param object the instance to bind annotations for
      */
     public void bind(Object object) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("bind {}", object);
-        }
-
         Class<?> objectClass = object.getClass();
 
         while (objectClass != null && objectClass != Object.class) {
@@ -130,10 +111,6 @@ public class BinderManager {
      * @return the cache
      */
     private BinderCache createCache(Class<?> classObject) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("createCache {}", classObject.getName());
-        }
-
         BinderCache cache = new BinderCache(classObject);
 
         for (TypeBinder<?> typeBinder : typeBinders) {
