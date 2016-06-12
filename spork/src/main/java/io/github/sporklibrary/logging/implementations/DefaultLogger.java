@@ -104,7 +104,7 @@ public class DefaultLogger implements Logger {
 
     private static String toString(Object object) {
         if (object instanceof Class) {
-            return ((Class<?>)object).getName();
+            return ((Class<?>) object).getName();
         } else {
             return object.toString();
         }
