@@ -13,19 +13,14 @@ repositories {
 
 dependencies {
     compile (
-        [group: 'io.github.sporklibrary', name: 'spork', version: '3.0.2'],
-    )
-
-    provided (
-        [group: 'com.android.support', name: 'support-v4', version: '23+'],
-        [group: 'com.android.support', name: 'appcompat-v7', version: '23+'],
-        [group: 'com.android.support', name: 'recyclerview-v7', version: '23+']
+        [group: 'io.github.sporklibrary', name: 'spork', version: '3.1.0'],
     )
 
     androidTestCompile (
-        [name:'support-v4-23.2.1', ext:'aar'],
-        [name:'appcompat-v7-23.2.1', ext:'aar'],
-        [name:'recyclerview-v7-23.2.1', ext:'aar'],
+        [group: 'com.android.support', name: 'support-v4', version: '23+'],
+        [group: 'com.android.support', name: 'appcompat-v7', version: '23+'],
+        [group: 'com.android.support', name: 'recyclerview-v7', version: '23+'],
+
         [group: 'com.android.support.test', name: 'runner', version: '0.5'],
         [group: 'com.android.support.test.espresso', name: 'espresso-core', version: '2.2.2'],
         [group: 'com.android.support.test.espresso', name: 'espresso-contrib', version: '2.2.2']

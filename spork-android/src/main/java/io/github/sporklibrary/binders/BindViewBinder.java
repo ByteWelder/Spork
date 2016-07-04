@@ -6,7 +6,7 @@ import io.github.sporklibrary.annotations.BindView;
 import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.reflection.AnnotatedField;
 import io.github.sporklibrary.reflection.AnnotatedFields;
-import io.github.sporklibrary.utils.ViewResolver;
+import io.github.sporklibrary.utils.Views;
 
 import java.lang.reflect.Field;
 
@@ -30,6 +30,6 @@ public class BindViewBinder implements FieldBinder<BindView> {
             throw new BindException(BindView.class, object.getClass(), field, "field is not a View");
         }
 
-        return ViewResolver.getView(annotatedField.getAnnotation().value(), field.getName(), object);
+        return Views.getView(annotatedField.getAnnotation().value(), field.getName(), object);
     }
 }

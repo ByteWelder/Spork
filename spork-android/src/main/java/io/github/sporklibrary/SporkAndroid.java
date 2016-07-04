@@ -1,6 +1,15 @@
 package io.github.sporklibrary;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import io.github.sporklibrary.binders.*;
+import io.github.sporklibrary.resolvers.ContextResolverManager;
+import io.github.sporklibrary.resolvers.DefaultContextResolver;
+import io.github.sporklibrary.resolvers.DefaultFragmentResolver;
+import io.github.sporklibrary.resolvers.DefaultViewResolver;
+import io.github.sporklibrary.resolvers.FragmentResolverManager;
+import io.github.sporklibrary.resolvers.ViewResolverManager;
 
 public final class SporkAndroid {
 
@@ -23,5 +32,29 @@ public final class SporkAndroid {
         binderManager.register(new BindFragmentBinder());
         binderManager.register(new BindClickBinder());
         binderManager.register(new BindResourceBinder());
+
+        ViewResolverManager.shared().addViewResolver(new DefaultViewResolver());
+        ContextResolverManager.shared().addContextResolver(new DefaultContextResolver());
+        FragmentResolverManager.shared().addFragmentResolver(new DefaultFragmentResolver());
+
+        tryInitializeSupportBindings();
+    }
+
+    private static void tryInitializeSupportBindings() {
+        try {
+            Class e = Class.forName("io.github.sporklibrary.android.support.SporkAndroidSupport");
+            Method initializeMethod = e.getDeclaredMethod("initialize");
+            initializeMethod.invoke(null);
+            System.out.println("Spork Android: initialized with Support library bindings");
+        } catch (ClassNotFoundException var3) {
+            System.out.println("Spork Android: initialized without Support library bindings");
+        } catch (NoSuchMethodException var4) {
+            System.out.println("Spork Android: Spork Android Support library found, but initialize method is not present");
+        } catch (InvocationTargetException var5) {
+            System.out.println("Spork Android: Spork Android Support library found, but initialization failed because of InvocationTargetException: " + var5.getMessage());
+        } catch (IllegalAccessException var6) {
+            System.out.println("Spork Android: Spork Android Support library found, but initialization failed because of IllegalAccessException: " + var6.getMessage());
+        }
+
     }
 }

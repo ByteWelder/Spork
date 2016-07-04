@@ -1,0 +1,66 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.kt3k.coveralls'
+
+apply from: rootProject.file('gradle/jacoco.gradle')
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
+
+repositories {
+    jcenter()
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    compile (
+        project(':spork-android'),
+        [group: 'com.android.support', name: 'support-v4', version: '23+'],
+        [group: 'com.android.support', name: 'appcompat-v7', version: '23+'],
+        [group: 'com.android.support', name: 'recyclerview-v7', version: '23+']
+    )
+
+    androidTestCompile (
+        [group: 'com.android.support.test', name: 'runner', version: '0.5'],
+        [group: 'com.android.support.test.espresso', name: 'espresso-core', version: '2.2.2'],
+        [group: 'com.android.support.test.espresso', name: 'espresso-contrib', version: '2.2.2']
+    )
+}
+
+coveralls {
+    jacocoReportPath 'build/reports/coverage/debug/report.xml'
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion '23.0.1'
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName VERSION_NAME
+        testInstrumentationRunner 'io.github.sporklibrary.android.support.TestRunner'
+        testApplicationId 'io.github.sporklibrary.android.support.test'
+        testHandleProfiling true
+        testFunctionalTest true
+        consumerProguardFiles 'proguard.pro'
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/ASL2.0.txt'
+        exclude 'LICENSE.txt'
+        exclude 'LICENSE'
+    }
+
+    buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
+    }
+}

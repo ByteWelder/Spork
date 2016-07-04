@@ -6,7 +6,7 @@ import io.github.sporklibrary.annotations.BindClick;
 import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.reflection.AnnotatedMethod;
 import io.github.sporklibrary.reflection.AnnotatedMethods;
-import io.github.sporklibrary.utils.ViewResolver;
+import io.github.sporklibrary.utils.Views;
 
 public class BindClickBinder implements MethodBinder<BindClick> {
 
@@ -40,7 +40,7 @@ public class BindClickBinder implements MethodBinder<BindClick> {
 
     @Override
     public void bind(final Object object, AnnotatedMethod<BindClick> annotatedMethod) {
-        final View view = ViewResolver.getView(annotatedMethod.getAnnotation().value(), annotatedMethod.getMethod().getName(), object);
+        final View view = Views.getView(annotatedMethod.getAnnotation().value(), annotatedMethod.getMethod().getName(), object);
 
         view.setOnClickListener(new OnClickListener(annotatedMethod, object));
     }

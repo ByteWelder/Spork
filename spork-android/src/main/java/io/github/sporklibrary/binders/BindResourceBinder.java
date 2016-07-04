@@ -8,7 +8,7 @@ import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.reflection.AnnotatedField;
 import io.github.sporklibrary.reflection.AnnotatedFields;
-import io.github.sporklibrary.utils.ContextResolver;
+import io.github.sporklibrary.resolvers.ContextResolverManager;
 import io.github.sporklibrary.utils.ResourceId;
 
 public class BindResourceBinder implements FieldBinder<BindResource> {
@@ -19,7 +19,7 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 
     @Override
     public void bind(Object object, AnnotatedField<BindResource> annotatedField) {
-        Context context = ContextResolver.getContext(object);
+        Context context = ContextResolverManager.shared().resolveContext(object);
 
         if (context == null) {
             throw new BindException(BindResource.class, object.getClass(), annotatedField.getField(), "failed to find Context: make sure your parent class is a View, Fragment or Activity");

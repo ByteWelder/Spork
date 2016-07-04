@@ -1,11 +1,11 @@
 package io.github.sporklibrary.utils;
 
-import android.app.Activity;
-import android.app.Fragment;
+import android.content.Context;
 import android.view.View;
 
-import io.github.sporklibrary.annotations.Nullable;
-import io.github.sporklibrary.utils.support.SupportLibraries;
+import io.github.sporklibrary.annotations.BindView;
+import io.github.sporklibrary.exceptions.BindException;
+import io.github.sporklibrary.resolvers.ViewResolverManager;
 
 public final class Views {
 
@@ -13,25 +13,35 @@ public final class Views {
     }
 
     /**
-     * @param object a View, Fragment Activity or Support Fragment
-     * @return the root view from any regular/support Activity/Fragment/View
+     * @param viewId       R.id.* value or ResourceId.sDefaultValue
+     * @param nameFallback used when ResourceId.sDefaultValue is set, this name will be used to resolve R.id.namefallback
+     * @param object       any Activity, Fragment or View (including support library types)
+     * @return the found View
      */
-    @Nullable
-    public static View getRootView(Object object) {
-        Class<?> object_class = object.getClass();
+    public static View getView(int viewId, String nameFallback, Object object) {
+        View root_view = ViewResolverManager.shared().resolveView(object);
 
-        if (View.class.isAssignableFrom(object_class)) {
-            return (View) object;
-        } else if (Activity.class.isAssignableFrom(object_class)) {
-            return ((Activity) object).getWindow().getDecorView();
-        } else if (Fragment.class.isAssignableFrom(object_class)) {
-            return ((Fragment) object).getView();
-        } else if (SupportLibraries.hasSupportV4() && android.support.v4.app.Fragment.class.isAssignableFrom(object_class)) {
-            return ((android.support.v4.app.Fragment) object).getView();
-        } else if (SupportLibraries.hasRecyclerViewV7() && android.support.v7.widget.RecyclerView.ViewHolder.class.isAssignableFrom(object_class)) {
-            return ((android.support.v7.widget.RecyclerView.ViewHolder) object).itemView;
-        } else {
-            return null;
+        if (root_view == null) {
+            throw new BindException(BindView.class, object.getClass(), "incompatible class to find views");
         }
+
+        if (viewId == ResourceId.sDefaultValue) {
+            // find by name
+            Context context = root_view.getContext();
+
+            viewId = context.getResources().getIdentifier(nameFallback, "id", context.getPackageName());
+
+            if (viewId == 0) {
+                throw new BindException(BindView.class, object.getClass(), "View not found with name '" + nameFallback + "'");
+            }
+        }
+
+        View view = root_view.findViewById(viewId);
+
+        if (view == null) {
+            throw new BindException(BindView.class, object.getClass(), "View not found");
+        }
+
+        return view;
     }
 }
