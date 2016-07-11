@@ -19,9 +19,6 @@ android:
   components:
     - tools
     - platform-tools
-    - build-tools-23.0.1
-    - android-23
-    - android-22
     - sys-img-armeabi-v7a-$ANDROID_TARGET
     - extra-android-support
     - extra-android-m2repository
@@ -34,7 +31,7 @@ before_script:
   - adb logcat -v time > logcat.txt &
 
 script:
-  - ./gradlew createDebugCoverageReport coveralls --info
+  - ./gradlew createDebugCoverageReport jacocoTestReport --info
 
 after_script:
   - travis_fold:start:logcat

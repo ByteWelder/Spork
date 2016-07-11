@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import io.github.sporklibrary.Spork;
-import io.github.sporklibrary.annotations.BindFragment;
+import io.github.sporklibrary.android.annotations.BindFragment;
 import io.github.sporklibrary.android.support.test.R;
 
 public class TestFragmentSupport extends Fragment {

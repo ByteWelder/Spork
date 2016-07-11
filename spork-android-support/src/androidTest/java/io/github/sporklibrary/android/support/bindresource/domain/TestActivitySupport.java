@@ -9,9 +9,9 @@ import javax.annotation.Nullable;
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.android.support.bindresource.ResourceProvider;
 import io.github.sporklibrary.android.support.test.R;
-import io.github.sporklibrary.annotations.BindFragment;
-import io.github.sporklibrary.annotations.BindLayout;
-import io.github.sporklibrary.annotations.BindResource;
+import io.github.sporklibrary.android.annotations.BindFragment;
+import io.github.sporklibrary.android.annotations.BindLayout;
+import io.github.sporklibrary.android.annotations.BindResource;
 
 @BindLayout(R.layout.activity_resource_binding_support)
 public class TestActivitySupport extends AppCompatActivity implements ResourceProvider {

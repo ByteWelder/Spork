@@ -3,12 +3,12 @@ package io.github.sporklibrary.android.support.resolvers;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
-import io.github.sporklibrary.annotations.BindFragment;
+import io.github.sporklibrary.android.annotations.BindFragment;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.exceptions.BindException;
-import io.github.sporklibrary.interfaces.FragmentResolver;
+import io.github.sporklibrary.android.interfaces.FragmentResolver;
 
-import static io.github.sporklibrary.utils.Reflection.tryCast;
+import static io.github.sporklibrary.android.utils.Reflection.tryCast;
 
 public class SupportFragmentResolver implements FragmentResolver {
 
@@ -23,14 +23,7 @@ public class SupportFragmentResolver implements FragmentResolver {
         Fragment fragment = tryCast(Fragment.class, object);
 
         if (fragment != null) {
-            Fragment childFragment = fragment.getFragmentManager().findFragmentById(id);
-
-            // On a Wiko Sunset handset, the child fragment was registered with the regular FragmentManager:
-            if (childFragment == null) {
-                return fragment.getChildFragmentManager().findFragmentById(id);
-            }
-
-            return childFragment;
+            return fragment.getFragmentManager().findFragmentById(id);
         }
 
         return null;
@@ -59,14 +52,7 @@ public class SupportFragmentResolver implements FragmentResolver {
                 throw new BindException(BindFragment.class, fragment.getClass(), "Fragment not found by name for id '" + idName + "'");
             }
 
-            Fragment childFragment = fragment.getFragmentManager().findFragmentById(id);
-
-            // On a Wiko Sunset handset, the child fragment was registered with the regular FragmentManager:
-            if (childFragment == null) {
-                return fragment.getChildFragmentManager().findFragmentById(id);
-            }
-
-            return childFragment;
+            return fragment.getFragmentManager().findFragmentById(id);
         }
 
         return null;

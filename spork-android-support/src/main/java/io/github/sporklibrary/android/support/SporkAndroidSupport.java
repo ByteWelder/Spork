@@ -1,8 +1,8 @@
 package io.github.sporklibrary.android.support;
 
-import io.github.sporklibrary.resolvers.ContextResolverManager;
-import io.github.sporklibrary.resolvers.FragmentResolverManager;
-import io.github.sporklibrary.resolvers.ViewResolverManager;
+import io.github.sporklibrary.android.resolvers.ContextResolverManager;
+import io.github.sporklibrary.android.resolvers.FragmentResolverManager;
+import io.github.sporklibrary.android.resolvers.ViewResolverManager;
 import io.github.sporklibrary.android.support.resolvers.SupportContextResolver;
 import io.github.sporklibrary.android.support.resolvers.SupportFragmentResolver;
 import io.github.sporklibrary.android.support.resolvers.SupportViewResolver;

@@ -3,10 +3,10 @@ package io.github.sporklibrary.android.support.bindfragment;
 import android.support.test.rule.ActivityTestRule;
 import android.test.suitebuilder.annotation.SmallTest;
 
-import io.github.sporklibrary.android.support.bindfragment.domain.TestActivitySupport;
-
 import org.junit.Rule;
 import org.junit.Test;
+
+import io.github.sporklibrary.android.support.bindfragment.domain.TestActivitySupport;
 
 import static org.junit.Assert.assertNotNull;
 

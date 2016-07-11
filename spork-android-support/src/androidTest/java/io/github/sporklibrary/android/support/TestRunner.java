@@ -5,8 +5,6 @@ import android.app.KeyguardManager;
 import android.content.Context;
 import android.os.PowerManager;
 
-import io.github.sporklibrary.SporkAndroid;
-
 public class TestRunner extends android.support.test.runner.AndroidJUnitRunner {
     private PowerManager.WakeLock mWakeLock;
 

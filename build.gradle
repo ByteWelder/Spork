@@ -6,12 +6,15 @@ subprojects {
 
         dependencies {
             classpath 'com.android.tools.build:gradle:2.0.0'
-            classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1x'
             classpath 'org.jacoco:org.jacoco.core:0.7.5.201505241946'
         }
     }
 
     repositories {
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
         jcenter()
     }
+
+    apply from: rootProject.file('gradle/jacoco.gradle')
+    apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
 }

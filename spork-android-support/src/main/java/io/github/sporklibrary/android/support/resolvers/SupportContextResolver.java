@@ -3,7 +3,7 @@ package io.github.sporklibrary.android.support.resolvers;
 import android.content.Context;
 
 import io.github.sporklibrary.annotations.Nullable;
-import io.github.sporklibrary.interfaces.ContextResolver;
+import io.github.sporklibrary.android.interfaces.ContextResolver;
 
 public class SupportContextResolver implements ContextResolver {
 

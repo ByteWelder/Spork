@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import io.github.sporklibrary.Spork;
-import io.github.sporklibrary.annotations.BindView;
+import io.github.sporklibrary.android.annotations.BindView;
 import io.github.sporklibrary.android.support.test.R;
 import io.github.sporklibrary.android.support.bindview.ViewProvider;
 

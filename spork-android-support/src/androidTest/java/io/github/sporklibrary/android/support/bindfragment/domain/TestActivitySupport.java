@@ -5,9 +5,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import io.github.sporklibrary.Spork;
-import io.github.sporklibrary.annotations.BindFragment;
+import io.github.sporklibrary.android.annotations.BindFragment;
 import io.github.sporklibrary.android.support.test.R;
-import io.github.sporklibrary.annotations.BindLayout;
+import io.github.sporklibrary.android.annotations.BindLayout;
 
 @BindLayout(R.layout.activity_fragment_binding_support)
 public class TestActivitySupport extends AppCompatActivity {

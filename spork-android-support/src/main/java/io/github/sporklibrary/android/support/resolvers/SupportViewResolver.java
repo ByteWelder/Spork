@@ -2,9 +2,10 @@ package io.github.sporklibrary.android.support.resolvers;
 
 import android.view.View;
 
+import io.github.sporklibrary.android.interfaces.ViewResolver;
 import io.github.sporklibrary.annotations.Nullable;
 
-public class SupportViewResolver implements io.github.sporklibrary.interfaces.ViewResolver {
+public class SupportViewResolver implements ViewResolver {
 
     @Override
     public @Nullable View resolveView(Object object) {

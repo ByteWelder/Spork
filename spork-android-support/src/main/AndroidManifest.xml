@@ -1,8 +1,5 @@
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.github.sporklibrary.android.support">
+<manifest package="io.github.sporklibrary.android.support">
 
-    <application
-        android:allowBackup="true" />
+    <application />
 
 </manifest>

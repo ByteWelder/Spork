@@ -1,15 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.kt3k.coveralls'
-
-apply from: rootProject.file('gradle/jacoco.gradle')
-apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
-
-repositories {
-    jcenter()
-    flatDir {
-        dirs 'libs'
-    }
-}
 
 dependencies {
     compile (
@@ -19,15 +8,16 @@ dependencies {
         [group: 'com.android.support', name: 'recyclerview-v7', version: '23+']
     )
 
+    testCompile (
+        'junit:junit:4.12',
+        'org.mockito:mockito-core:1.9.5'
+    )
+
     androidTestCompile (
         [group: 'com.android.support.test', name: 'runner', version: '0.5'],
         [group: 'com.android.support.test.espresso', name: 'espresso-core', version: '2.2.2'],
         [group: 'com.android.support.test.espresso', name: 'espresso-contrib', version: '2.2.2']
     )
-}
-
-coveralls {
-    jacocoReportPath 'build/reports/coverage/debug/report.xml'
 }
 
 android {
@@ -40,7 +30,6 @@ android {
         versionCode 1
         versionName VERSION_NAME
         testInstrumentationRunner 'io.github.sporklibrary.android.support.TestRunner'
-        testApplicationId 'io.github.sporklibrary.android.support.test'
         testHandleProfiling true
         testFunctionalTest true
         consumerProguardFiles 'proguard.pro'

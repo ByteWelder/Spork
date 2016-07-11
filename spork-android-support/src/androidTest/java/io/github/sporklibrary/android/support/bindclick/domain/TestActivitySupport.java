@@ -7,10 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import io.github.sporklibrary.Spork;
-import io.github.sporklibrary.annotations.BindClick;
-import io.github.sporklibrary.annotations.BindFragment;
-import io.github.sporklibrary.annotations.BindLayout;
-import io.github.sporklibrary.annotations.BindView;
+import io.github.sporklibrary.android.annotations.BindClick;
+import io.github.sporklibrary.android.annotations.BindFragment;
+import io.github.sporklibrary.android.annotations.BindLayout;
+import io.github.sporklibrary.android.annotations.BindView;
 import io.github.sporklibrary.android.support.test.R;
 import io.github.sporklibrary.android.support.bindclick.ClickTestProvider;
 

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.android.support.test.R;
-import io.github.sporklibrary.annotations.BindClick;
+import io.github.sporklibrary.android.annotations.BindClick;
 import io.github.sporklibrary.android.support.bindclick.ClickTestProvider;
 
 public class TestFragmentSupport extends Fragment implements ClickTestProvider {

@@ -4,14 +4,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import io.github.sporklibrary.Spork;
-import io.github.sporklibrary.annotations.BindFragment;
-import io.github.sporklibrary.annotations.BindLayout;
-import io.github.sporklibrary.annotations.BindView;
+import io.github.sporklibrary.android.annotations.BindFragment;
+import io.github.sporklibrary.android.annotations.BindLayout;
+import io.github.sporklibrary.android.annotations.BindView;
 import io.github.sporklibrary.android.support.test.R;
-import io.github.sporklibrary.android.support.bindview.ViewProvider;
 
 import java.util.ArrayList;
 

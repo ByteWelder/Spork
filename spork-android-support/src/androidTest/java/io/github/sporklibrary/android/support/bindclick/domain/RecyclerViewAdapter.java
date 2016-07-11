@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import io.github.sporklibrary.Spork;
-import io.github.sporklibrary.annotations.BindClick;
-import io.github.sporklibrary.annotations.BindView;
+import io.github.sporklibrary.android.annotations.BindClick;
+import io.github.sporklibrary.android.annotations.BindView;
 import io.github.sporklibrary.android.support.test.R;
 
 import java.util.List;
