@@ -32,12 +32,7 @@ public final class Spork {
             binderManager.register(new ComponentFieldBinder());
 
             // Try auto-binding Spork for Android through reflection
-            if (!tryInitializeSporkAndroidBindings("io.github.sporklibrary.SporkAndroid", binderManager)
-                && !tryInitializeSporkAndroidBindings("io.github.sporklibrary.android.SporkAndroid", binderManager)) {
-                System.out.println("Spork: BinderManager created without Spork for Android");
-            } else {
-                System.out.println("Spork: BinderManager created with Spork for Android");
-            }
+            tryInitializeSporkAndroidBindings(binderManager);
         }
 
         return binderManager;
@@ -48,14 +43,14 @@ public final class Spork {
      *
      * @param binderManager the binder manager to register bindings to
      */
-    private static boolean tryInitializeSporkAndroidBindings(String namespace, BinderManager binderManager) {
+    private static void tryInitializeSporkAndroidBindings(BinderManager binderManager) {
         try {
-            Class<?> sporkAndroidClass = Class.forName(namespace);
+            Class<?> sporkAndroidClass = Class.forName("io.github.sporklibrary.android.SporkAndroid");
             Method initializeMethod = sporkAndroidClass.getDeclaredMethod("initialize", BinderManager.class);
             initializeMethod.invoke(null, binderManager);
-            return true;
+            System.out.println("Spork: BinderManager created without Spork for Android");
         } catch (ClassNotFoundException e) {
-            // ignore
+            System.out.println("Spork: BinderManager created with Spork for Android");
         } catch (NoSuchMethodException e) {
             System.out.println("Spork: Spork for Android found, but initialize method is not present");
         } catch (InvocationTargetException e) {
@@ -63,7 +58,5 @@ public final class Spork {
         } catch (IllegalAccessException e) {
             System.out.println("Spork: Spork for Android found, but initialization failed because of IllegalAccessException: " + e.getMessage());
         }
-
-        return false;
     }
 }
