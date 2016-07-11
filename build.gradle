@@ -6,7 +6,6 @@ subprojects {
 
         dependencies {
             classpath 'com.novoda:bintray-release:0.3.4'
-            classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.0'
             // bintray usage: ./gradlew clean build bintrayUpload -PbintrayUser=??? -PbintrayKey=??? -PdryRun=false
         }
     }
@@ -16,6 +15,12 @@ subprojects {
     }
 
     plugins.apply('checkstyle')
+
+    apply plugin: 'jacoco'
+
+    jacoco {
+        toolVersion = '0.7.6.201602180812'
+    }
 
     checkstyle {
         configFile = new File(rootDir, "checkstyle.xml")

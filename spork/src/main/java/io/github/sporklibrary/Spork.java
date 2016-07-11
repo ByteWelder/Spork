@@ -14,9 +14,7 @@ public final class Spork {
     private Spork() {
     }
 
-    private static
-    @Nullable
-    BinderManager binderManager;
+    private static @Nullable BinderManager binderManager;
 
     /**
      * Bind a single object with all relevant instances.
@@ -33,7 +31,13 @@ public final class Spork {
             binderManager = new BinderManager();
             binderManager.register(new ComponentFieldBinder());
 
-            tryInitializeSporkAndroidBindings(binderManager);
+            // Try auto-binding Spork for Android through reflection
+            if (!tryInitializeSporkAndroidBindings("io.github.sporklibrary.SporkAndroid", binderManager)
+                && !tryInitializeSporkAndroidBindings("io.github.sporklibrary.android.SporkAndroid", binderManager)) {
+                System.out.println("Spork: BinderManager created without Spork for Android");
+            } else {
+                System.out.println("Spork: BinderManager created with Spork for Android");
+            }
         }
 
         return binderManager;
@@ -44,14 +48,14 @@ public final class Spork {
      *
      * @param binderManager the binder manager to register bindings to
      */
-    private static void tryInitializeSporkAndroidBindings(BinderManager binderManager) {
+    private static boolean tryInitializeSporkAndroidBindings(String namespace, BinderManager binderManager) {
         try {
-            Class<?> sporkAndroidClass = Class.forName("io.github.sporklibrary.SporkAndroid");
+            Class<?> sporkAndroidClass = Class.forName(namespace);
             Method initializeMethod = sporkAndroidClass.getDeclaredMethod("initialize", BinderManager.class);
             initializeMethod.invoke(null, binderManager);
-            System.out.println("Spork: BinderManager created with Spork for Android");
+            return true;
         } catch (ClassNotFoundException e) {
-            System.out.println("Spork: BinderManager created without Spork for Android");
+            // ignore
         } catch (NoSuchMethodException e) {
             System.out.println("Spork: Spork for Android found, but initialize method is not present");
         } catch (InvocationTargetException e) {
@@ -59,5 +63,7 @@ public final class Spork {
         } catch (IllegalAccessException e) {
             System.out.println("Spork: Spork for Android found, but initialization failed because of IllegalAccessException: " + e.getMessage());
         }
+
+        return false;
     }
 }

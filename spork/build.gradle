@@ -1,16 +1,16 @@
 apply plugin: 'java'
-apply plugin: 'jacoco'
-apply plugin: 'com.github.kt3k.coveralls'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
 
 jacocoTestReport {
     reports {
-        xml.enabled = true // coveralls plugin depends on xml format report
+        xml.enabled = true
         html.enabled = true
     }
 }
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+test { finalizedBy jacocoTestReport }
 
 dependencies {
 	testCompile (

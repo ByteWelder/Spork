@@ -1,6 +1,7 @@
 branches:
   only:
     - master
+    - 3.2.0
 
 language: java
 sudo: false
@@ -17,4 +18,4 @@ cache:
     - $HOME/.m2/repository
 
 after_success:
-- ./gradlew jacocoTestReport coveralls
+- ./gradlew test
