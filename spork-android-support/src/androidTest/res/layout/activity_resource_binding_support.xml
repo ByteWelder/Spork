@@ -4,11 +4,6 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-	<io.github.sporklibrary.android.support.test.bindresource.domain.TestView
-		android:id="@+id/resourcebindingview"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"/>
-
 	<fragment android:name="io.github.sporklibrary.android.support.bindresource.domain.TestFragmentSupport"
 	          android:id="@+id/resourcebindingfragment"
 	          android:layout_width="wrap_content"

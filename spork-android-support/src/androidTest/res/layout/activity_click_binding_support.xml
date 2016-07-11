@@ -9,11 +9,6 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"/>
 
-	<View
-		android:id="@+id/testview"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"/>
-
 	<fragment android:name="io.github.sporklibrary.android.support.bindclick.domain.TestFragmentSupport"
 	          android:id="@+id/testfragment"
 	          android:layout_width="wrap_content"
@@ -23,11 +18,6 @@
 		android:id="@+id/test_recyclerview"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent" />
-
-	<io.github.sporklibrary.android.support.test.bindclick.domain.TestFaultyClickArgumentsView
-		android:id="@+id/testfaultyclickargumentsview"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"/>
 
 	<View
 		android:id="@+id/testview"

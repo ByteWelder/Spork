@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindFragment;
+import io.github.sporklibrary.annotations.BindLayout;
 import io.github.sporklibrary.annotations.BindResource;
 import io.github.sporklibrary.annotations.BindView;
 import io.github.sporklibrary.test.R;
@@ -12,6 +13,7 @@ import io.github.sporklibrary.test.bindresource.ResourceProvider;
 
 import javax.annotation.Nullable;
 
+@BindLayout(R.layout.activity_resource_binding)
 public class TestActivity extends android.app.Activity implements ResourceProvider {
 
     @BindResource(R.string.app_name)
@@ -40,8 +42,6 @@ public class TestActivity extends android.app.Activity implements ResourceProvid
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_resource_binding);
 
         Spork.bind(this);
     }

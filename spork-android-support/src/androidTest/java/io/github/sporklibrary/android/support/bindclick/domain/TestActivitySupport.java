@@ -9,12 +9,14 @@ import android.view.View;
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindClick;
 import io.github.sporklibrary.annotations.BindFragment;
+import io.github.sporklibrary.annotations.BindLayout;
 import io.github.sporklibrary.annotations.BindView;
 import io.github.sporklibrary.android.support.test.R;
 import io.github.sporklibrary.android.support.bindclick.ClickTestProvider;
 
 import java.util.ArrayList;
 
+@BindLayout(R.layout.activity_click_binding_support)
 public class TestActivitySupport extends AppCompatActivity implements ClickTestProvider {
 
     @BindFragment(R.id.testfragment)
@@ -30,8 +32,6 @@ public class TestActivitySupport extends AppCompatActivity implements ClickTestP
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_click_binding_support);
 
         Spork.bind(this);
 

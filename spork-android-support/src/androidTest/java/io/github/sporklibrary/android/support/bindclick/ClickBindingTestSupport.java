@@ -1,16 +1,16 @@
 package io.github.sporklibrary.android.support.bindclick;
 
-import android.support.test.espresso.PerformException;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.v7.widget.RecyclerView;
+
+import org.junit.Rule;
+import org.junit.Test;
 
 import io.github.sporklibrary.android.support.bindclick.domain.RecyclerViewAdapter;
 import io.github.sporklibrary.android.support.bindclick.domain.TestActivitySupport;
 import io.github.sporklibrary.android.support.bindclick.domain.TestFragmentSupport;
 import io.github.sporklibrary.android.support.test.R;
-import org.junit.Rule;
-import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;

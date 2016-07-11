@@ -7,7 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindFragment;
 import io.github.sporklibrary.android.support.test.R;
+import io.github.sporklibrary.annotations.BindLayout;
 
+@BindLayout(R.layout.activity_fragment_binding_support)
 public class TestActivitySupport extends AppCompatActivity {
 
     @BindFragment(R.id.testfragment)
@@ -18,7 +20,6 @@ public class TestActivitySupport extends AppCompatActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fragment_binding_support);
         Spork.bind(this);
     }
 

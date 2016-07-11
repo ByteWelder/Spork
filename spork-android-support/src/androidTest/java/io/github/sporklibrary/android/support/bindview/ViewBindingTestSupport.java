@@ -24,9 +24,10 @@ public class ViewBindingTestSupport
 	{
 		TestActivitySupport activity = mActivityRule.getActivity();
 
-		testBinding(activity);
-		testBinding(activity.getViewBindingFragment());
-		testBinding(activity.getViewBindingView());
+		String message = "binding " + activity.getViewBindingFragment().getClass().getSimpleName();
+
+		assertNotNull(message, activity.getViewBindingFragment().getViewByIdSpecified());
+		assertNotNull(message, activity.getViewBindingFragment().getViewByImplied());
 	}
 
 	@Test
@@ -42,13 +43,5 @@ public class ViewBindingTestSupport
 			.check(matches(hasDescendant(withText("Alpha"))))
 			.check(matches(hasDescendant(withText("Beta"))))
 			.check(matches(hasDescendant(withText("Gamma"))));
-	}
-
-	private void testBinding(ViewProvider provider)
-	{
-		String message = "binding " + provider.getClass().getSimpleName();
-
-		assertNotNull(message, provider.getViewByIdSpecified());
-		assertNotNull(message, provider.getViewByImplied());
 	}
 }

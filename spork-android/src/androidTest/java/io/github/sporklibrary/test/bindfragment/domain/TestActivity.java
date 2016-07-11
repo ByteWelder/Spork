@@ -6,8 +6,10 @@ import android.os.Bundle;
 
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindFragment;
+import io.github.sporklibrary.annotations.BindLayout;
 import io.github.sporklibrary.test.R;
 
+@BindLayout(R.layout.activity_fragment_binding)
 public class TestActivity extends Activity {
 
     @BindFragment(R.id.testfragment)
@@ -18,7 +20,6 @@ public class TestActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fragment_binding);
         Spork.bind(this);
     }
 

@@ -8,12 +8,14 @@ import android.os.Bundle;
 
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindFragment;
+import io.github.sporklibrary.annotations.BindLayout;
 import io.github.sporklibrary.test.R;
 
 /**
  * Tests child fragments.
  */
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+@BindLayout(R.layout.activity_fragment_binding_api17)
 public class TestActivityApi17 extends Activity {
 
     @BindFragment(R.id.testfragmentapi17)
@@ -24,7 +26,7 @@ public class TestActivityApi17 extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fragment_binding_api17);
+
         Spork.bind(this);
     }
 

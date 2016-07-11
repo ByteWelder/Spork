@@ -1,6 +1,5 @@
 package io.github.sporklibrary.android.support.resolvers;
 
-import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
@@ -18,7 +17,7 @@ public class SupportFragmentResolver implements FragmentResolver {
         AppCompatActivity activity = tryCast(AppCompatActivity.class, object);
 
         if (activity != null) {
-            return activity.getFragmentManager().findFragmentById(id);
+            return activity.getSupportFragmentManager().findFragmentById(id);
         }
 
         Fragment fragment = tryCast(Fragment.class, object);
@@ -39,7 +38,7 @@ public class SupportFragmentResolver implements FragmentResolver {
 
     @Override
     public @Nullable Object resolveFragment(Object object, String idName) {
-        Activity activity = tryCast(Activity.class, object);
+        AppCompatActivity activity = tryCast(AppCompatActivity.class, object);
 
         if (activity != null) {
             int id = activity.getResources().getIdentifier(idName, "id", activity.getPackageName());
@@ -48,7 +47,7 @@ public class SupportFragmentResolver implements FragmentResolver {
                 throw new BindException(BindFragment.class, activity.getClass(), "Fragment not found by name for id '" + idName + "'");
             }
 
-            return activity.getFragmentManager().findFragmentById(id);
+            return activity.getSupportFragmentManager().findFragmentById(id);
         }
 
         Fragment fragment = tryCast(Fragment.class, object);
