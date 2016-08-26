@@ -9,8 +9,7 @@ dependencies {
     )
 
     testCompile (
-        'junit:junit:4.12',
-        'org.mockito:mockito-core:1.9.5'
+        'junit:junit:4.12'
     )
 
     androidTestCompile (
@@ -22,7 +21,7 @@ dependencies {
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '23.0.1'
+    buildToolsVersion '23.0.3'
 
     defaultConfig {
         minSdkVersion 15

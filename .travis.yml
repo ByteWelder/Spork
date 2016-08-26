@@ -11,7 +11,7 @@ cache: false
 
 env:
   matrix:
-    - ANDROID_TARGET=android-22  ANDROID_ABI=default/armeabi-v7a
+    - ANDROID_TARGET=android-21 ANDROID_ABI=default/armeabi-v7a
   global:
     - ADB_INSTALL_TIMEOUT=8 # 2 is default - and currently not enough for Travis-CI
 
