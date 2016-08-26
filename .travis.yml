@@ -11,17 +11,19 @@ cache: false
 
 env:
   matrix:
-    - ANDROID_TARGET=android-22  ANDROID_ABI=default/armeabi-v7a
+    - BUILD_TOOLS=22.0.1 ANDROID_TARGET=android-22  ANDROID_ABI=default/armeabi-v7a
   global:
     - ADB_INSTALL_TIMEOUT=8 # 2 is default - and currently not enough for Travis-CI
 
 android:
   components:
+    - build-tools-$BUILD_TOOLS
     - tools
     - platform-tools
     - sys-img-armeabi-v7a-$ANDROID_TARGET
     - extra-android-support
     - extra-android-m2repository
+    - extra-google-m2repository
 
 before_script:
   - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
