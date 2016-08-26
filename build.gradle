@@ -1,7 +1,7 @@
 subprojects {
     buildscript {
         repositories {
-            jcenter()
+            mavenCentral()
         }
 
         dependencies {
@@ -11,8 +11,7 @@ subprojects {
     }
 
     repositories {
-        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-        jcenter()
+        mavenCentral()
     }
 
     apply from: rootProject.file('gradle/jacoco.gradle')

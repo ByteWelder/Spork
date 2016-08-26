@@ -1,11 +1,15 @@
 apply plugin: 'com.android.library'
 
+ext {
+    androidSupportVersion = '24.2.0'
+}
+
 dependencies {
     compile (
         project(':spork-android'),
-        [group: 'com.android.support', name: 'support-v4', version: '23+'],
-        [group: 'com.android.support', name: 'appcompat-v7', version: '23+'],
-        [group: 'com.android.support', name: 'recyclerview-v7', version: '23+']
+        [group: 'com.android.support', name: 'support-v4', version: androidSupportVersion],
+        [group: 'com.android.support', name: 'appcompat-v7', version: androidSupportVersion],
+        [group: 'com.android.support', name: 'recyclerview-v7', version: androidSupportVersion]
     )
 
     testCompile (
