@@ -1,7 +1,6 @@
 branches:
   only:
     - master
-    - 3.2.0
 
 language: java
 sudo: false
