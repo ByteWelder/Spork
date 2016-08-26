@@ -17,6 +17,7 @@ env:
 
 android:
   components:
+    - android-23
     - build-tools-23.0.3
     - tools
     - platform-tools
@@ -37,9 +38,7 @@ script:
   - ./gradlew createDebugCoverageReport jacocoTestReport --info
 
 after_script:
-  - travis_fold:start:logcat
   - cat logcat.txt
-  - travis_fold:end:logcat
 
 after_success:
   - echo success!
