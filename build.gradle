@@ -6,7 +6,7 @@ subprojects {
 
         dependencies {
             classpath 'com.android.tools.build:gradle:2.1.3'
-            classpath 'org.jacoco:org.jacoco.core:0.7.5.201505241946'
+            classpath 'org.jacoco:org.jacoco.core:0.7.7.201606060606'
         }
     }
 
@@ -14,7 +14,7 @@ subprojects {
         mavenCentral()
     }
 
-	apply plugin: 'jacoco'
+    apply plugin: 'jacoco'
 
     jacoco {
         toolVersion = '0.7.6.201602180812'
@@ -23,7 +23,7 @@ subprojects {
     apply plugin: 'checkstyle'
 
     checkstyle {
-        configFile = new File(rootDir, "checkstyle.xml")
+        configFile = new File(rootDir, 'checkstyle.xml')
     }
 
     group = GROUP
@@ -31,7 +31,7 @@ subprojects {
 
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile) {
-            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+            options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
         }
     }
 }

@@ -1,13 +1,12 @@
 apply plugin: 'com.android.library'
-apply from: rootProject.file('gradle/jacoco.gradle')
 
 dependencies {
     compile (
-        [group: 'io.github.sporklibrary', name: 'spork', version: '3.2.0'],
+        project(':spork')
     )
 
     testCompile (
-        'junit:junit:4.12',
+        [group: 'junit', name: 'junit', version: '4.12']
     )
 
     androidTestCompile (

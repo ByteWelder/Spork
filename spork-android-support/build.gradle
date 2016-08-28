@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply from: rootProject.file('gradle/jacoco.gradle')
 
 ext {
     androidSupportVersion = '24.2.0'
@@ -14,7 +13,7 @@ dependencies {
     )
 
     testCompile (
-        'junit:junit:4.12'
+            [group: 'junit', name: 'junit', version: '4.12']
     )
 
     androidTestCompile (
