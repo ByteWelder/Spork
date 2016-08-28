@@ -17,4 +17,4 @@ cache:
     - $HOME/.m2/repository
 
 after_success:
-- ./gradlew test
+- ./gradlew spork:test spork-mockito:test
