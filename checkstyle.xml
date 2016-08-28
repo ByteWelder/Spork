@@ -6,7 +6,7 @@
 <module name="Checker">
   <!--module name="NewlineAtEndOfFile"/-->
   <module name="FileLength"/>
-  <module name="FileTabCharacter"/>
+  <!-- <module name="FileTabCharacter"/> -->
 
   <!-- Trailing spaces -->
   <module name="RegexpSingleline">

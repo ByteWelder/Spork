@@ -11,6 +11,10 @@ import io.github.sporklibrary.mockito.filters.AllowSet;
  * The main entry point for Spork Mockito functionality.
  */
 public final class SporkMockito {
+
+	private SporkMockito() {
+	}
+
 	/**
 	 * Registers the MockitoComponentFactory that will mock all Spork components.
 	 */
