@@ -1,8 +1,8 @@
-*.iml
-.idea/
-
 .gradle/
+local.properties
 
 build/
 
-local.properties
+.idea/
+*.iml
+*.ipr

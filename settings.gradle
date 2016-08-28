@@ -1,3 +1,6 @@
-rootProject.name = 'spork-root'
+rootProject.name = 'project'
 
 include ':spork'
+include ':spork-android'
+include ':spork-android-support'
+include ':spork-mockito'

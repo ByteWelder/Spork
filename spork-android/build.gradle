@@ -1,0 +1,51 @@
+apply plugin: 'com.android.library'
+
+dependencies {
+    compile (
+        [group: 'io.github.sporklibrary', name: 'spork', version: '3.2.0'],
+    )
+
+    testCompile (
+        'junit:junit:4.12',
+    )
+
+    androidTestCompile (
+        [group: 'com.android.support.test', name: 'runner', version: '0.5'],
+        [group: 'com.android.support.test.espresso', name: 'espresso-core', version: '2.2.2'],
+        [group: 'com.android.support.test.espresso', name: 'espresso-contrib', version: '2.2.2']
+    )
+}
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion '24.0.2'
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 24
+        versionCode 1
+        versionName VERSION_NAME
+        testInstrumentationRunner 'io.github.sporklibrary.android.TestRunner'
+        testHandleProfiling true
+        testFunctionalTest true
+        consumerProguardFiles 'proguard.pro'
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/ASL2.0.txt'
+        exclude 'LICENSE.txt'
+        exclude 'LICENSE'
+    }
+
+    buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
+    }
+}

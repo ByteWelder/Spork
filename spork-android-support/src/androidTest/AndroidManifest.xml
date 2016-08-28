@@ -1,0 +1,19 @@
+<manifest
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	package="io.github.sporklibrary.android.support">
+
+	<uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+	<uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+	<application
+		android:label="Spork Android Support Tests">
+
+		<activity android:name=".bindfragment.domain.TestActivitySupport" android:theme="@style/Theme.AppCompat"/>
+		<activity android:name=".bindclick.domain.TestActivitySupport" android:theme="@style/Theme.AppCompat"/>
+		<activity android:name=".bindresource.domain.TestActivitySupport" android:theme="@style/Theme.AppCompat"/>
+		<activity android:name=".bindview.domain.TestActivitySupport" android:theme="@style/Theme.AppCompat"/>
+		<activity android:name=".bindlayout.domain.TestActivitySupport" android:theme="@style/Theme.AppCompat"/>
+
+	</application>
+
+</manifest>
