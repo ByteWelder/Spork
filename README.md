@@ -2,7 +2,7 @@
 [![Build Status][build-status-svg]][build-status-link]
 [![License][license-svg]][license-link]
 
-Spork is an extensible Java library for field and method binding.
+Spork is an extensible Java/Android library for annotation processing.
 
 Documentation is available on the [website](http://sporklibrary.github.io)
 
