@@ -20,6 +20,8 @@ subprojects {
         toolVersion = '0.7.6.201602180812'
     }
 
+    apply plugin: 'checkstyle'
+
     checkstyle {
         configFile = new File(rootDir, "checkstyle.xml")
     }
@@ -27,18 +29,9 @@ subprojects {
     group = GROUP
     version = VERSION_NAME
 
-
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile) {
             options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
         }
     }
-
-    apply from: rootProject.file('gradle/jacoco.gradle')
-    apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.10'
-    distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 }

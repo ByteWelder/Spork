@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply from: rootProject.file('gradle/jacoco.gradle')
 
 ext {
     androidSupportVersion = '24.2.0'
@@ -56,3 +57,5 @@ android {
         }
     }
 }
+
+apply from: rootProject.file('gradle/gradle-mvn-push-android.gradle')
