@@ -1,12 +1,5 @@
-branches:
-  only:
-    - master
-
-language: java
-sudo: false
-
-jdk:
-  - oraclejdk8
+language: android
+jdk: oraclejdk8
 
 script:
   - ./gradlew spork:check spork-mockito:check --continue --info
@@ -17,4 +10,4 @@ cache:
     - $HOME/.m2/repository
 
 after_success:
-- echo success
+  - echo success
