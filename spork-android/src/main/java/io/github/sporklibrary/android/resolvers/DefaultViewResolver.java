@@ -6,7 +6,6 @@ import android.view.View;
 
 import io.github.sporklibrary.android.interfaces.ViewProvider;
 import io.github.sporklibrary.annotations.Nullable;
-import io.github.sporklibrary.android.interfaces.ViewResolver;
 
 public class DefaultViewResolver implements ViewResolver {
 	@Override

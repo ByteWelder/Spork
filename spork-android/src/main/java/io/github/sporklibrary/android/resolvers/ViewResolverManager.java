@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.sporklibrary.annotations.Nullable;
-import io.github.sporklibrary.android.interfaces.ViewResolver;
 
 public final class ViewResolverManager implements ViewResolver {
 

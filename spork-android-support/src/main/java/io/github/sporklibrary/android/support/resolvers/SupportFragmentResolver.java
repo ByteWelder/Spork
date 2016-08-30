@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
 import io.github.sporklibrary.android.annotations.BindFragment;
-import io.github.sporklibrary.android.interfaces.FragmentResolver;
+import io.github.sporklibrary.android.resolvers.FragmentResolver;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.exceptions.BindException;
 

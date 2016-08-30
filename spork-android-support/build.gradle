@@ -7,8 +7,7 @@ ext {
 dependencies {
     compile (
         project(':spork-android'),
-        [group: 'com.android.support', name: 'support-fragment', version: androidSupportVersion],
-        [group: 'com.android.support', name: 'recyclerview-v7', version: androidSupportVersion]
+        [group: 'com.android.support', name: 'support-fragment', version: androidSupportVersion]
     )
 
     testCompile (

@@ -10,7 +10,6 @@ import android.view.View;
 import io.github.sporklibrary.android.interfaces.ContextProvider;
 import io.github.sporklibrary.android.interfaces.ViewProvider;
 import io.github.sporklibrary.annotations.Nullable;
-import io.github.sporklibrary.android.interfaces.ContextResolver;
 
 public class DefaultContextResolver implements ContextResolver {
 

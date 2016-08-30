@@ -7,7 +7,6 @@ import android.os.Build;
 import io.github.sporklibrary.android.annotations.BindFragment;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.exceptions.BindException;
-import io.github.sporklibrary.android.interfaces.FragmentResolver;
 
 import static io.github.sporklibrary.android.utils.Reflection.tryCast;
 

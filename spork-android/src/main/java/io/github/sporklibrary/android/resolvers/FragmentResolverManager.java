@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.sporklibrary.annotations.Nullable;
-import io.github.sporklibrary.android.interfaces.FragmentResolver;
 
 public class FragmentResolverManager implements FragmentResolver {
 
