@@ -1,11 +1,11 @@
 package io.github.sporklibrary.android.annotations;
 
-import io.github.sporklibrary.android.utils.ResourceId;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import io.github.sporklibrary.android.utils.ResourceId;
 
 /**
  * Bind a View's OnClickListener result.
@@ -14,8 +14,7 @@ import java.lang.annotation.Target;
  * <li>{@link android.view.View}</li>
  * <li>{@link android.app.Activity}</li>
  * <li>{@link android.app.Fragment}</li>
- * <li>{@link android.support.v4.app.Fragment}</li>
- * <li>{@link android.support.v7.widget.RecyclerView.ViewHolder}</li>
+ * <li>{@link io.github.sporklibrary.android.interfaces.ViewProvider}</li>
  * </ul>
  * The value specified is the View id. When not specified, the name of the method will be used to resolve the id's name.
  * For example:

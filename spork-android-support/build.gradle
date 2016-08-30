@@ -11,10 +11,12 @@ dependencies {
     )
 
     testCompile (
-            [group: 'junit', name: 'junit', version: '4.12']
+        [group: 'junit', name: 'junit', version: '4.12']
     )
 
     androidTestCompile (
+        [group: 'com.android.support', name: 'recyclerview-v7', version: androidSupportVersion],
+
         [group: 'com.android.support.test', name: 'runner', version: '0.5'],
         [group: 'com.android.support.test.espresso', name: 'espresso-core', version: '2.2.2'],
         [group: 'com.android.support.test.espresso', name: 'espresso-contrib', version: '2.2.2']

@@ -1,7 +1,5 @@
 package io.github.sporklibrary.android.resolvers;
 
-import android.app.Activity;
-import android.app.Application;
 import android.app.Fragment;
 import android.content.ContentProvider;
 import android.content.Context;
@@ -21,10 +19,8 @@ public class DefaultContextResolver implements ContextResolver {
 			return ((View) object).getContext();
 		} else if (Fragment.class.isAssignableFrom(object_class)) {
 			return ((Fragment) object).getActivity();
-		} else if (Activity.class.isAssignableFrom(object_class)) {
-			return (Activity) object;
-		} else if (Application.class.isAssignableFrom(object_class)) {
-			return (Application) object;
+		} else if (Context.class.isAssignableFrom(object_class)) {
+			return (Context) object;
 		} else if (ContentProvider.class.isAssignableFrom(object_class)) {
 			return ((ContentProvider) object).getContext();
 		} else if (ContextProvider.class.isAssignableFrom(object_class)) {

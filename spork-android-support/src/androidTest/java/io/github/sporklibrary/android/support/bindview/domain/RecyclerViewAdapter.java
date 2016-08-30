@@ -6,11 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import io.github.sporklibrary.Spork;
-import io.github.sporklibrary.android.support.test.R;
-import io.github.sporklibrary.android.annotations.BindView;
-
 import java.util.List;
+
+import io.github.sporklibrary.Spork;
+import io.github.sporklibrary.android.annotations.BindView;
+import io.github.sporklibrary.android.interfaces.ViewProvider;
+import io.github.sporklibrary.android.support.test.R;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.TestViewHolder> {
 
@@ -20,7 +21,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.items = items;
     }
 
-    public class TestViewHolder extends RecyclerView.ViewHolder {
+    public class TestViewHolder extends RecyclerView.ViewHolder implements ViewProvider {
         @BindView(R.id.textview)
         private TextView mTextView;
 
@@ -32,6 +33,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public void update(String text) {
             mTextView.setText(text);
+        }
+
+        @Override
+        public View getView() {
+            return itemView;
         }
     }
 

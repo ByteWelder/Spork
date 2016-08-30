@@ -6,18 +6,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.android.annotations.BindClick;
 import io.github.sporklibrary.android.annotations.BindView;
+import io.github.sporklibrary.android.interfaces.ViewProvider;
 import io.github.sporklibrary.android.support.test.R;
-
-import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.TestViewHolder> {
     private final List<String> items;
     private int clickCount = 0;
 
-    public class TestViewHolder extends RecyclerView.ViewHolder {
+    public class TestViewHolder extends RecyclerView.ViewHolder implements ViewProvider {
 
         @BindView(R.id.textview)
         private TextView textView;
@@ -34,6 +35,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         @BindClick(R.id.textview)
         private void onClick() {
             clickCount++;
+        }
+
+        @Override
+        public View getView() {
+            return itemView;
         }
     }
 
