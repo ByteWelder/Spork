@@ -1,15 +1,19 @@
 package io.github.sporklibrary.android.bindview;
 
 import android.support.test.rule.ActivityTestRule;
-import android.test.suitebuilder.annotation.SmallTest;
-import io.github.sporklibrary.exceptions.BindException;
-import io.github.sporklibrary.android.bindview.domain.*;
+
 import org.junit.Rule;
 import org.junit.Test;
 
+import io.github.sporklibrary.android.bindview.domain.FaultyImpliedIdView;
+import io.github.sporklibrary.android.bindview.domain.FaultySpecifiedIdView;
+import io.github.sporklibrary.android.bindview.domain.FaultyTargetTypeView;
+import io.github.sporklibrary.android.bindview.domain.Pojo;
+import io.github.sporklibrary.android.bindview.domain.TestActivity;
+import io.github.sporklibrary.exceptions.BindException;
+
 import static org.junit.Assert.assertNotNull;
 
-@SmallTest
 public class ViewBindingTest
 {
 	@Rule

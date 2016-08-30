@@ -3,7 +3,6 @@ package io.github.sporklibrary.android.bindresource;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.test.rule.ActivityTestRule;
-import android.test.suitebuilder.annotation.SmallTest;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,7 +17,6 @@ import io.github.sporklibrary.exceptions.BindException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-@SmallTest
 public class ResourceBindingTest {
 
     @Rule

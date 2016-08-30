@@ -2,6 +2,7 @@ package io.github.sporklibrary.android.binders;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 
 import io.github.sporklibrary.android.annotations.BindResource;
 import io.github.sporklibrary.annotations.Nullable;
@@ -71,6 +72,7 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
         return context.getResources().getDimension(resource_id);
     }
 
+    @SuppressWarnings("deprecation")
     @Nullable
     private Drawable getDrawableFieldObject(Context context, AnnotatedField<BindResource> annotatedField) {
         int resource_id = annotatedField.getAnnotation().value();
@@ -79,6 +81,10 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
             resource_id = context.getResources().getIdentifier(annotatedField.getField().getName(), "drawable", context.getPackageName());
         }
 
-        return context.getResources().getDrawable(resource_id);
+        if (Build.VERSION.SDK_INT < 21) {
+            return context.getResources().getDrawable(resource_id);
+        } else {
+            return context.getDrawable(resource_id);
+        }
     }
 }

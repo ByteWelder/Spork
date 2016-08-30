@@ -2,7 +2,6 @@ package io.github.sporklibrary.android.bindlayout;
 
 import android.content.res.Resources;
 import android.support.test.rule.ActivityTestRule;
-import android.test.suitebuilder.annotation.SmallTest;
 import android.view.View;
 
 import org.junit.Rule;
@@ -17,7 +16,6 @@ import io.github.sporklibrary.exceptions.BindException;
 
 import static org.junit.Assert.assertNotNull;
 
-@SmallTest
 public class LayoutBindingTest {
 
     @Rule

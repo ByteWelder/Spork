@@ -3,17 +3,15 @@ package io.github.sporklibrary.android.bindfragment;
 import android.os.Build;
 import android.support.test.filters.SdkSuppress;
 import android.support.test.rule.ActivityTestRule;
-import android.test.suitebuilder.annotation.SmallTest;
-
-import io.github.sporklibrary.android.bindfragment.domain.TestActivityApi17;
 
 import org.junit.Rule;
 import org.junit.Test;
 
+import io.github.sporklibrary.android.bindfragment.domain.TestActivityApi17;
+
 import static org.junit.Assert.assertNotNull;
 
 @SdkSuppress(minSdkVersion = Build.VERSION_CODES.JELLY_BEAN_MR1)
-@SmallTest
 public class FragmentBindingTestApi17 {
 
     @Rule

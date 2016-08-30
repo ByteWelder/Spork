@@ -2,7 +2,6 @@ package io.github.sporklibrary.android.bindclick;
 
 import android.support.test.espresso.PerformException;
 import android.support.test.rule.ActivityTestRule;
-import android.test.suitebuilder.annotation.SmallTest;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,7 +20,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-@SmallTest
 public class ClickBindingTest {
 
     @Rule
