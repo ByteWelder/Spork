@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.view.View;
 
+import io.github.sporklibrary.android.interfaces.ViewProvider;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.android.interfaces.ViewResolver;
 
@@ -18,6 +19,8 @@ public class DefaultViewResolver implements ViewResolver {
 			return ((Activity) object).getWindow().getDecorView();
 		} else if (Fragment.class.isAssignableFrom(object_class)) {
 			return ((Fragment) object).getView();
+		} else if (ViewProvider.class.isAssignableFrom(object_class)) {
+			return ((ViewProvider) object).getView();
 		} else {
 			return null;
 		}
