@@ -1,12 +1,12 @@
 package io.github.sporklibrary.android.support.resolvers;
 
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 
 import io.github.sporklibrary.android.annotations.BindFragment;
+import io.github.sporklibrary.android.interfaces.FragmentResolver;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.exceptions.BindException;
-import io.github.sporklibrary.android.interfaces.FragmentResolver;
 
 import static io.github.sporklibrary.android.utils.Reflection.tryCast;
 
@@ -14,7 +14,7 @@ public class SupportFragmentResolver implements FragmentResolver {
 
     @Override
     public @Nullable Object resolveFragment(Object object, int id) {
-        AppCompatActivity activity = tryCast(AppCompatActivity.class, object);
+        FragmentActivity activity = tryCast(FragmentActivity.class, object);
 
         if (activity != null) {
             return activity.getSupportFragmentManager().findFragmentById(id);
@@ -31,7 +31,7 @@ public class SupportFragmentResolver implements FragmentResolver {
 
     @Override
     public @Nullable Object resolveFragment(Object object, String idName) {
-        AppCompatActivity activity = tryCast(AppCompatActivity.class, object);
+        FragmentActivity activity = tryCast(FragmentActivity.class, object);
 
         if (activity != null) {
             int id = activity.getResources().getIdentifier(idName, "id", activity.getPackageName());
