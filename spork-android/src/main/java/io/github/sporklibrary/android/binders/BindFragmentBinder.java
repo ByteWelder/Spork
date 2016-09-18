@@ -19,7 +19,7 @@ public class BindFragmentBinder implements FieldBinder<BindFragment> {
     }
 
     @Override
-    public void bind(Object object, AnnotatedField<BindFragment> annotatedField) {
+    public void bind(Object object, AnnotatedField<BindFragment> annotatedField, @Nullable Object[] modules) {
         Object fragment_object = resolveFragment(object, annotatedField);
 
         if (fragment_object == null) {

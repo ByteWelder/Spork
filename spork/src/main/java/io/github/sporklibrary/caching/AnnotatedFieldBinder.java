@@ -1,11 +1,12 @@
 package io.github.sporklibrary.caching;
 
+import java.lang.annotation.Annotation;
+import java.util.Set;
+
+import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.interfaces.ObjectBinder;
 import io.github.sporklibrary.reflection.AnnotatedField;
-
-import java.lang.annotation.Annotation;
-import java.util.Set;
 
 /**
  * A binder that caches field bindings for a specific class.
@@ -25,10 +26,10 @@ class AnnotatedFieldBinder<AnnotationType extends Annotation> implements ObjectB
      * {@inheritDoc}
      */
     @Override
-    public void bind(Object object) {
+    public void bind(Object object, @Nullable Object[] modules) {
         // Bind all fields for this object
         for (AnnotatedField<AnnotationType> annotatedField : annotatedFields) {
-            fieldBinder.bind(object, annotatedField);
+            fieldBinder.bind(object, annotatedField, modules);
         }
     }
 }

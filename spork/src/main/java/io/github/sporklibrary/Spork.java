@@ -14,9 +14,11 @@ public final class Spork {
     private Spork() {
     }
 
-    private static @Nullable BinderManager binderManager;
+	private static @Nullable BinderManager binderManager;
 
-    /**
+	private static @Nullable ModuleManager moduleManager;
+
+	/**
      * Bind a single object with all relevant instances.
      *
      * @param object the object to bind into
@@ -25,18 +27,31 @@ public final class Spork {
         getBinderManager().bind(object);
     }
 
-    public static BinderManager getBinderManager() {
-        // Only create an binder if the code is actually used
-        if (binderManager == null) {
-            binderManager = new BinderManager();
-            binderManager.register(new ComponentFieldBinder());
+    /**
+     * Bind a single object with all relevant instances.
+     *
+     * @param object the object to bind into
+     * @param modules specifies 1 or more modules
+     */
+    public static void bind(Object object, Object... modules) {
+        getBinderManager().bind(object, modules);
+    }
 
-            // Try auto-binding Spork for Android through reflection
-            tryInitializeSporkAndroidBindings(binderManager);
-        }
+    public static BinderManager getBinderManager() {
+		if (binderManager == null) {
+			intialize();
+		}
 
         return binderManager;
     }
+
+	public static ModuleManager getModuleManager() {
+		if (moduleManager == null) {
+			intialize();
+		}
+
+		return moduleManager;
+	}
 
     /**
      * Tries to register the SporkAndroid bindings if the library is present in the classpath.
@@ -59,4 +74,14 @@ public final class Spork {
             System.out.println("Spork: Spork for Android found, but initialization failed because of IllegalAccessException: " + e.getMessage());
         }
     }
+
+	private static void intialize() {
+		binderManager = new BinderManager();
+		binderManager.register(new ComponentFieldBinder());
+
+		moduleManager = new ModuleManager();
+
+		// Try auto-binding Spork for Android through reflection
+		tryInitializeSporkAndroidBindings(binderManager);
+	}
 }

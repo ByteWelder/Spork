@@ -2,14 +2,15 @@ package io.github.sporklibrary.android.binders;
 
 import android.view.View;
 
+import java.lang.reflect.Field;
+
 import io.github.sporklibrary.android.annotations.BindView;
+import io.github.sporklibrary.android.utils.Views;
+import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.reflection.AnnotatedField;
 import io.github.sporklibrary.reflection.AnnotatedFields;
-import io.github.sporklibrary.android.utils.Views;
-
-import java.lang.reflect.Field;
 
 public class BindViewBinder implements FieldBinder<BindView> {
     @Override
@@ -18,7 +19,7 @@ public class BindViewBinder implements FieldBinder<BindView> {
     }
 
     @Override
-    public void bind(final Object object, final AnnotatedField<BindView> annotatedField) {
+    public void bind(final Object object, final AnnotatedField<BindView> annotatedField, @Nullable Object[] modules) {
         final View view = resolveView(object, annotatedField);
 
         AnnotatedFields.setValue(annotatedField, object, view);

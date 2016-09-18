@@ -1,5 +1,6 @@
 package io.github.sporklibrary.test.fieldbinding;
 
+import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.reflection.AnnotatedField;
 import io.github.sporklibrary.reflection.AnnotatedMethod;
 import io.github.sporklibrary.binders.FieldBinder;
@@ -16,12 +17,12 @@ public class BindFieldOrMethodBinder implements FieldBinder<BindFieldOrMethod>, 
     }
 
     @Override
-    public void bind(Object object, AnnotatedMethod<BindFieldOrMethod> annotatedMethod) {
+    public void bind(Object object, AnnotatedMethod<BindFieldOrMethod> annotatedMethod, @Nullable Object[] modules) {
         methodBindCount++;
     }
 
     @Override
-    public void bind(Object object, AnnotatedField<BindFieldOrMethod> annotatedField) {
+    public void bind(Object object, AnnotatedField<BindFieldOrMethod> annotatedField, @Nullable Object[] modules) {
         fieldBindCount++;
     }
 

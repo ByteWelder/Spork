@@ -3,6 +3,7 @@ package io.github.sporklibrary.android.binders;
 import android.view.View;
 
 import io.github.sporklibrary.android.annotations.BindClick;
+import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.MethodBinder;
 import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.reflection.AnnotatedMethod;
@@ -40,7 +41,7 @@ public class BindClickBinder implements MethodBinder<BindClick> {
     }
 
     @Override
-    public void bind(final Object object, AnnotatedMethod<BindClick> annotatedMethod) {
+    public void bind(final Object object, AnnotatedMethod<BindClick> annotatedMethod, @Nullable Object[] modules) {
         final View view = Views.getView(annotatedMethod.getAnnotation().value(), annotatedMethod.getMethod().getName(), object);
 
         view.setOnClickListener(new OnClickListener(annotatedMethod, object));

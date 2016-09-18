@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import io.github.sporklibrary.android.annotations.BindLayout;
+import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.TypeBinder;
 import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.reflection.AnnotatedType;
@@ -12,7 +13,7 @@ import io.github.sporklibrary.reflection.AnnotatedType;
 public class BindLayoutBinder implements TypeBinder<BindLayout> {
 
     @Override
-    public void bind(Object object, AnnotatedType<BindLayout> annotatedClass) {
+    public void bind(Object object, AnnotatedType<BindLayout> annotatedClass, @Nullable Object[] modules) {
         int layout_resource_id = annotatedClass.getAnnotation().value();
 
         if (Activity.class.isAssignableFrom(object.getClass())) {

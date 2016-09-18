@@ -20,7 +20,7 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
     }
 
     @Override
-    public void bind(Object object, AnnotatedField<BindResource> annotatedField) {
+    public void bind(Object object, AnnotatedField<BindResource> annotatedField, @Nullable Object[] modules) {
         Context context = ContextResolverManager.shared().resolveContext(object);
 
         if (context == null) {

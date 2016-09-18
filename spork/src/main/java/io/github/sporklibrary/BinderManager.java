@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.binders.MethodBinder;
 import io.github.sporklibrary.binders.TypeBinder;
@@ -73,6 +74,16 @@ public class BinderManager {
      * @param object the instance to bind annotations for
      */
     public void bind(Object object) {
+        bind(object, (Object[])null);
+    }
+
+    /**
+     * Bind all annotations for an object instance on all levels of inheritance.
+     *
+     * @param object the instance to bind annotations for
+     * @param modules either null or an array of non-null modules
+     */
+    public void bind(Object object, @Nullable Object... modules) {
         Class<?> objectClass = object.getClass();
 
         while (objectClass != null && objectClass != Object.class) {
@@ -80,15 +91,13 @@ public class BinderManager {
 
             if (cache == null) {
                 cache = createCache(objectClass);
-
                 classBinderCacheMap.put(objectClass, cache);
             }
 
-            bind(object, cache);
+            bindInternal(object, cache, modules);
 
             objectClass = objectClass.getSuperclass();
         }
-
     }
 
     /**
@@ -97,10 +106,11 @@ public class BinderManager {
      *
      * @param object the instance to bind annotations for
      * @param cache  the cache to bind with
+     * @param modules either null or an array of non-null modules
      */
-    private void bind(Object object, BinderCache cache) {
+    private void bindInternal(Object object, BinderCache cache, @Nullable Object[] modules) {
         for (ObjectBinder binder : cache.getBinders()) {
-            binder.bind(object);
+            binder.bind(object, modules);
         }
     }
 

@@ -1,10 +1,11 @@
 package io.github.sporklibrary.caching;
 
+import java.lang.annotation.Annotation;
+
+import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.TypeBinder;
 import io.github.sporklibrary.interfaces.ObjectBinder;
 import io.github.sporklibrary.reflection.AnnotatedType;
-
-import java.lang.annotation.Annotation;
 
 /**
  * A binder that caches type bindings for a specific class.
@@ -24,7 +25,7 @@ class AnnotatedTypeBinder<AnnotationType extends Annotation> implements ObjectBi
      * {@inheritDoc}
      */
     @Override
-    public void bind(Object object) {
-        typeBinder.bind(object, annotatedType);
+    public void bind(Object object, @Nullable Object[] modules) {
+        typeBinder.bind(object, annotatedType, modules);
     }
 }
