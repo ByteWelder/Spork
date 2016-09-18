@@ -4,6 +4,7 @@ import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindComponent;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.FieldBinder;
+import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.reflection.AnnotatedField;
 import io.github.sporklibrary.reflection.AnnotatedFields;
 
@@ -20,19 +21,19 @@ public class ComponentFieldBinder implements FieldBinder<BindComponent> {
 
     @Override
     public void bind(Object object, AnnotatedField<BindComponent> annotatedField, @Nullable Object[] modules) {
-
-		// First check if we can set the field by module @Provides methods
+		// Bind with module system (uses @Provides annotation on methods)
 		if (modules != null) {
 			Object instance = Spork.getModuleManager().getObject(modules, annotatedField.getField().getType());
 
-			if (instance != null) {
-				AnnotatedFields.setValue(annotatedField, object, instance);
-				return;
+			if (instance == null) {
+				throw new BindException(BindComponent.class, object.getClass(), annotatedField.getField(), "none of the modules provides an instance for " + annotatedField.getField().getType().getName());
 			}
-		}
 
-		// Alternatively, let the instance manager create a new instance
-		Object instance = componentInstanceManager.getInstance(object, annotatedField);
-		AnnotatedFields.setValue(annotatedField, object, instance);
+			AnnotatedFields.setValue(annotatedField, object, instance);
+		} else {
+			// Alternatively, let the instance manager create a new instance
+			Object instance = componentInstanceManager.getInstance(object, annotatedField);
+			AnnotatedFields.setValue(annotatedField, object, instance);
+		}
 	}
 }

@@ -88,7 +88,7 @@ public class ModuleManager {
 	 */
 	private @Nullable Method findMethod(List<Method> methodList, Class<?> returnType) {
 		for (Method method : methodList) {
-			if (method.getReturnType().equals(returnType)) {
+			if (returnType.isAssignableFrom(method.getReturnType())) {
 				return method;
 			}
 		}
