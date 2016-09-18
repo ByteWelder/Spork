@@ -1,7 +1,7 @@
 package io.github.sporklibrary.test.components.scope;
 
-import io.github.sporklibrary.annotations.ComponentScope;
+import io.github.sporklibrary.annotations.Singleton;
 
-@ComponentScope(ComponentScope.Scope.SINGLETON)
+@Singleton
 public class SingletonScopeComponent {
 }

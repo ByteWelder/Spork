@@ -3,7 +3,7 @@ package io.github.sporklibrary.test.components.bindparent.domain;
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.BindComponent;
 import io.github.sporklibrary.annotations.ComponentParent;
-import io.github.sporklibrary.annotations.ComponentScope;
+import io.github.sporklibrary.annotations.Singleton;
 
 public class FaultyComponents {
 
@@ -44,7 +44,7 @@ public class FaultyComponents {
         }
     }
 
-    @ComponentScope(ComponentScope.Scope.SINGLETON)
+    @Singleton
     public static class SingletonChild {
         public SingletonChild(@ComponentParent SingletonParent parent) {
         }
@@ -59,7 +59,7 @@ public class FaultyComponents {
         }
     }
 
-    @ComponentScope(ComponentScope.Scope.SINGLETON)
+    @Singleton
     public static class MultiArgumentChild {
         public MultiArgumentChild(@ComponentParent MultiArgumentParent parent1, @ComponentParent MultiArgumentParent parent2) {
         }

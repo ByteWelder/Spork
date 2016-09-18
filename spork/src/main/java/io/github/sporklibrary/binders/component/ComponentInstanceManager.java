@@ -1,13 +1,13 @@
 package io.github.sporklibrary.binders.component;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import io.github.sporklibrary.annotations.BindComponent;
-import io.github.sporklibrary.annotations.ComponentScope;
+import io.github.sporklibrary.annotations.Singleton;
 import io.github.sporklibrary.binders.component.factories.DefaultComponentFactory;
 import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.reflection.AnnotatedField;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Manages Component instances for types that are annotated with the Component annotation.
@@ -40,30 +40,14 @@ public class ComponentInstanceManager {
             throw new BindException(BindComponent.class, parent.getClass(), annotatedField.getField(), "incompatible type");
         }
 
-        ComponentScope.Scope scope = getScope(fieldTargetClass);
+        boolean isSingleton = (fieldTargetClass.getAnnotation(Singleton.class) != null);
 
-        switch (scope) {
-            case SINGLETON:
-                Object instance = singletonInstances.get(fieldTargetClass);
-                return (instance != null) ? instance : createSingletonInstance(fieldTargetClass);
-
-            case DEFAULT:
-            default:
-                return componentFactory.create(fieldTargetClass, parent);
+        if (isSingleton) {
+            Object instance = singletonInstances.get(fieldTargetClass);
+            return (instance != null) ? instance : createSingletonInstance(fieldTargetClass);
+        } else {
+            return componentFactory.create(fieldTargetClass, parent);
         }
-    }
-
-    /**
-     * Looks for the {@link ComponentScope} annotation and returns the {@link ComponentScope.Scope}
-     * when found or otherwise returns {@link ComponentScope.Scope.DEFAULT}.
-     *
-     * @param componentClass the class to check the scope for
-     * @return the scope for the specified class or otherwise {@link ComponentScope.Scope.DEFAULT}
-     */
-    private ComponentScope.Scope getScope(Class<?> componentClass) {
-        ComponentScope annotation = componentClass.getAnnotation(ComponentScope.class);
-
-        return annotation != null ? annotation.value() : ComponentScope.Scope.DEFAULT;
     }
 
     /**

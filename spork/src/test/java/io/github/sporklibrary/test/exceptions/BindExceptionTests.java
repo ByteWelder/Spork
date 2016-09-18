@@ -2,7 +2,7 @@ package io.github.sporklibrary.test.exceptions;
 
 import io.github.sporklibrary.annotations.BindComponent;
 import io.github.sporklibrary.exceptions.BindException;
-import io.github.sporklibrary.test.components.scope.DefaultImpliedScopeComponent;
+import io.github.sporklibrary.test.components.scope.DefaultScopeComponent;
 
 import org.junit.Test;
 
@@ -51,7 +51,7 @@ public class BindExceptionTests {
     @Test(expected = BindException.class)
     public void testThrow6() {
         Method method = TestClass.class.getMethods()[0];
-        throw new BindException(BindComponent.class, DefaultImpliedScopeComponent.class, method, "reason", new Exception());
+        throw new BindException(BindComponent.class, DefaultScopeComponent.class, method, "reason", new Exception());
     }
 
     @Test(expected = BindException.class)
