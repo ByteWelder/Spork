@@ -12,8 +12,8 @@ import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.binders.MethodBinder;
 import io.github.sporklibrary.binders.TypeBinder;
-import io.github.sporklibrary.internal.caching.BinderCache;
-import io.github.sporklibrary.internal.interfaces.ObjectBinder;
+import io.github.sporklibrary.internal.caching.ClassBinderCache;
+import io.github.sporklibrary.internal.interfaces.Binder;
 
 /**
  * The BinderManager manages all bindings and their cache.
@@ -22,7 +22,7 @@ public class BinderManagerImpl implements BinderManager {
     private final List<FieldBinder<?>> fieldBinders = new ArrayList<>();
     private final List<MethodBinder<?>> methodBinders = new ArrayList<>();
     private final List<TypeBinder<?>> typeBinders = new ArrayList<>();
-    private final Map<Class<?>, BinderCache> classBinderCacheMap = new HashMap<>();
+    private final Map<Class<?>, ClassBinderCache> classBinderCacheMap = new HashMap<>();
 
 	/**
 	 * {@inheritDoc}
@@ -31,7 +31,7 @@ public class BinderManagerImpl implements BinderManager {
         fieldBinders.add(fieldBinder);
 
         // Update cache
-        for (BinderCache cache : classBinderCacheMap.values()) {
+        for (ClassBinderCache cache : classBinderCacheMap.values()) {
             cache.register(fieldBinder);
         }
     }
@@ -43,7 +43,7 @@ public class BinderManagerImpl implements BinderManager {
         methodBinders.add(methodBinder);
 
         // Update cache
-        for (BinderCache cache : classBinderCacheMap.values()) {
+        for (ClassBinderCache cache : classBinderCacheMap.values()) {
             cache.register(methodBinder);
         }
     }
@@ -55,7 +55,7 @@ public class BinderManagerImpl implements BinderManager {
         typeBinders.add(typeBinder);
 
         // Update cache
-        for (BinderCache cache : classBinderCacheMap.values()) {
+        for (ClassBinderCache cache : classBinderCacheMap.values()) {
             cache.register(typeBinder);
         }
     }
@@ -74,7 +74,7 @@ public class BinderManagerImpl implements BinderManager {
         Class<?> objectClass = object.getClass();
 
         while (objectClass != null && objectClass != Object.class) {
-            BinderCache cache = classBinderCacheMap.get(objectClass);
+            ClassBinderCache cache = classBinderCacheMap.get(objectClass);
 
             if (cache == null) {
                 cache = createCache(objectClass);
@@ -95,8 +95,8 @@ public class BinderManagerImpl implements BinderManager {
      * @param cache  the cache to bind with
      * @param modules either null or an array of non-null modules
      */
-    private void bindInternal(Object object, BinderCache cache, @Nullable Object[] modules) {
-        for (ObjectBinder binder : cache.getBinders()) {
+    private void bindInternal(Object object, ClassBinderCache cache, @Nullable Object[] modules) {
+        for (Binder binder : cache.getBinders()) {
             binder.bind(object, modules);
         }
     }
@@ -107,8 +107,8 @@ public class BinderManagerImpl implements BinderManager {
      * @param classObject the class to create a cache for
      * @return the cache
      */
-    private BinderCache createCache(Class<?> classObject) {
-        BinderCache cache = new BinderCache(classObject);
+    private ClassBinderCache createCache(Class<?> classObject) {
+        ClassBinderCache cache = new ClassBinderCache(classObject);
 
         for (TypeBinder<?> typeBinder : typeBinders) {
             cache.register(typeBinder);

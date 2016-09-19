@@ -9,7 +9,7 @@ import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.binders.MethodBinder;
 import io.github.sporklibrary.binders.TypeBinder;
-import io.github.sporklibrary.internal.interfaces.ObjectBinder;
+import io.github.sporklibrary.internal.interfaces.Binder;
 import io.github.sporklibrary.internal.reflection.AnnotatedField;
 import io.github.sporklibrary.internal.reflection.AnnotatedFields;
 import io.github.sporklibrary.internal.reflection.AnnotatedMethod;
@@ -21,10 +21,10 @@ import io.github.sporklibrary.internal.reflection.AnnotatedTypes;
  * Holds the annotation type cache for one class. This only holds the data for the specified class
  * which excludes the cache of its superclasses.
  */
-public final class BinderCache {
-    private final List<ObjectBinder> objectBinders = new ArrayList<>();
+public final class ClassBinderCache {
+    private final List<Binder> binders = new ArrayList<>();
     private final Class<?> annotatedType;
-    public BinderCache(Class<?> annotatedType) {
+    public ClassBinderCache(Class<?> annotatedType) {
         this.annotatedType = annotatedType;
     }
 
@@ -38,7 +38,7 @@ public final class BinderCache {
         Set<AnnotatedField<AnnotationType>> annotatedFields = AnnotatedFields.get(fieldBinder.getAnnotationClass(), annotatedType);
 
         if (!annotatedFields.isEmpty()) {
-            objectBinders.add(new AnnotatedFieldBinder<>(fieldBinder, annotatedFields));
+            binders.add(new AnnotatedFieldBinderCache<>(fieldBinder, annotatedFields));
         }
     }
 
@@ -52,7 +52,7 @@ public final class BinderCache {
         Set<AnnotatedMethod<AnnotationType>> annotatedMethods = AnnotatedMethods.get(methodBinder.getAnnotationClass(), annotatedType);
 
         if (!annotatedMethods.isEmpty()) {
-            objectBinders.add(new AnnotatedMethodBinder<>(methodBinder, annotatedMethods));
+            binders.add(new AnnotatedMethodBinderCache<>(methodBinder, annotatedMethods));
         }
     }
 
@@ -66,14 +66,14 @@ public final class BinderCache {
         @Nullable AnnotatedType<AnnotationType> annotatedType = AnnotatedTypes.get(typeBinder.getAnnotationClass(), this.annotatedType);
 
         if (annotatedType != null) {
-            objectBinders.add(new AnnotatedTypeBinder<>(typeBinder, annotatedType));
+            binders.add(new AnnotatedTypeBinderCache<>(typeBinder, annotatedType));
         }
     }
 
     /**
-     * @return the list of all ObjectBinder instances managed for this cache.
+     * @return the list of all Binder instances managed for this cache.
      */
-    public List<ObjectBinder> getBinders() {
-        return objectBinders;
+    public List<Binder> getBinders() {
+        return binders;
     }
 }

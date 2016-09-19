@@ -5,7 +5,7 @@ import io.github.sporklibrary.annotations.Nullable;
 /**
  * Used by the caching mechanism to bind one or more annotations for a specified object.
  */
-public interface ObjectBinder {
+public interface Binder {
     /**
      * Bind one or more annotations for the specified object
      *

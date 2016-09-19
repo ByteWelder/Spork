@@ -60,6 +60,5 @@ public final class SporkAndroid {
         } catch (IllegalAccessException var6) {
             System.out.println("Spork Android: Spork Android Support library found, but initialization failed because of IllegalAccessException: " + var6.getMessage());
         }
-
     }
 }

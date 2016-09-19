@@ -4,7 +4,7 @@ import java.lang.annotation.Annotation;
 
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.TypeBinder;
-import io.github.sporklibrary.internal.interfaces.ObjectBinder;
+import io.github.sporklibrary.internal.interfaces.Binder;
 import io.github.sporklibrary.internal.reflection.AnnotatedType;
 
 /**
@@ -12,11 +12,11 @@ import io.github.sporklibrary.internal.reflection.AnnotatedType;
  *
  * @param <AnnotationType> the annotation type that is being bound
  */
-class AnnotatedTypeBinder<AnnotationType extends Annotation> implements ObjectBinder {
+class AnnotatedTypeBinderCache<AnnotationType extends Annotation> implements Binder {
     private final AnnotatedType<AnnotationType> annotatedType;
     private final TypeBinder<AnnotationType> typeBinder;
 
-    AnnotatedTypeBinder(TypeBinder<AnnotationType> typeBinder, AnnotatedType<AnnotationType> annotatedType) {
+    AnnotatedTypeBinderCache(TypeBinder<AnnotationType> typeBinder, AnnotatedType<AnnotationType> annotatedType) {
         this.annotatedType = annotatedType;
         this.typeBinder = typeBinder;
     }
