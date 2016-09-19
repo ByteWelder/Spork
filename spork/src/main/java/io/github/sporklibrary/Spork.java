@@ -4,22 +4,24 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import io.github.sporklibrary.annotations.Nullable;
-import io.github.sporklibrary.internal.BinderImpl;
-import io.github.sporklibrary.internal.BinderManagerImpl;
-import io.github.sporklibrary.internal.ModuleManager;
-import io.github.sporklibrary.internal.binders.InjectFieldBinder;
+import io.github.sporklibrary.internal.*;
+import io.github.sporklibrary.internal.inject.InjectFieldBinder;
 
 /**
  * Main class to access Spork functionality.
  */
 public final class Spork {
 
-    private Spork() {
+
+	private Spork() {
     }
 
 	private static @Nullable BinderManager binderManager;
-	private static @Nullable Binder binder;
+	private static @Nullable
+	io.github.sporklibrary.internal.Binder binder;
 	private static @Nullable ModuleManager moduleManager;
+	private static @Nullable
+	BinderCache binderCache;
 
 	/**
      * Bind a single object with all relevant instances.
@@ -79,12 +81,14 @@ public final class Spork {
     }
 
 	private static void intialize() {
+
 		binderManager = new BinderManagerImpl();
-		binderManager.register(new InjectFieldBinder());
-
-		binder = new BinderImpl(binderManager);
-
+		binderCache = new BinderCacheImpl(binderManager);
+		binder = new BinderImpl(binderCache);
 		moduleManager = new ModuleManager();
+
+		// registration must happen after cache is created and listening for registrations
+		binderManager.register(new InjectFieldBinder());
 
 		// Try auto-binding Spork for Android through reflection
 		tryInitializeSporkAndroidBindings(binderManager);

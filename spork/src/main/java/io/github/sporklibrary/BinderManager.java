@@ -1,13 +1,20 @@
 package io.github.sporklibrary;
 
 import java.lang.annotation.Annotation;
+import java.util.List;
 
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.binders.MethodBinder;
 import io.github.sporklibrary.binders.TypeBinder;
-import io.github.sporklibrary.internal.caching.ClassBinderCache;
 
 public interface BinderManager {
+
+	interface RegistrationListener {
+		void onRegisterFieldBinder(FieldBinder<?> fieldBinder);
+		void onRegisterMethodBinder(MethodBinder<?> methodBinder);
+		void onRegisterTypeBinder(TypeBinder<?> typeBinder);
+	}
+
 	/**
 	 * Register a FieldBinder
 	 *
@@ -33,10 +40,29 @@ public interface BinderManager {
 	<AnnotationType extends Annotation> void register(TypeBinder<AnnotationType> typeBinder);
 
 	/**
-	 * Gets the ClassBinderCache for the given type.
-	 * If the ClassBinderCache isn't available yet, it will create it.
-	 * @param type the class
-	 * @return the cache
+	 * @return all registered FieldBinder instances
 	 */
-	ClassBinderCache getOrCreateCache(Class<?> type);
+	List<FieldBinder<?>> getFieldBinders();
+
+	/**
+	 * @return all registered MethodBinder instances
+	 */
+	List<MethodBinder<?>> getMethodBinders();
+
+	/**
+	 * @return all registered TypeBinder instances
+	 */
+	List<TypeBinder<?>> getTypeBinders();
+
+	/**
+	 * Add a registration listener
+	 * @param registrationListener the listener
+	 */
+	void addRegistrationListener(RegistrationListener registrationListener);
+
+	/**
+	 * Remove a registration listener
+	 * @param registrationListener the listener
+	 */
+	void removeRegistrationListener(RegistrationListener registrationListener);
 }

@@ -1,4 +1,4 @@
-package io.github.sporklibrary.internal.binders;
+package io.github.sporklibrary.internal.inject;
 
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.Inject;

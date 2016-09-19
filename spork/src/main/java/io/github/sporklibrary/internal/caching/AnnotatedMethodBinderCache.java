@@ -5,7 +5,6 @@ import java.util.Set;
 
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.MethodBinder;
-import io.github.sporklibrary.internal.interfaces.Binder;
 import io.github.sporklibrary.internal.reflection.AnnotatedMethod;
 
 /**
@@ -13,7 +12,7 @@ import io.github.sporklibrary.internal.reflection.AnnotatedMethod;
  *
  * @param <AnnotationType> the annotation type that is being bound
  */
-class AnnotatedMethodBinderCache<AnnotationType extends Annotation> implements Binder {
+class AnnotatedMethodBinderCache<AnnotationType extends Annotation> implements CachedBinder {
     private final Set<AnnotatedMethod<AnnotationType>> annotatedMethods;
     private final MethodBinder<AnnotationType> methodBinder;
 

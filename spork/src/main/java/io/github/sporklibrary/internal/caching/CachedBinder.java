@@ -1,11 +1,11 @@
-package io.github.sporklibrary.internal.interfaces;
+package io.github.sporklibrary.internal.caching;
 
 import io.github.sporklibrary.annotations.Nullable;
 
 /**
  * Used by the caching mechanism to bind one or more annotations for a specified object.
  */
-public interface Binder {
+public interface CachedBinder {
     /**
      * Bind one or more annotations for the specified object
      *

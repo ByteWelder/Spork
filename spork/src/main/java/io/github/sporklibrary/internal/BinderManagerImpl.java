@@ -3,15 +3,12 @@ package io.github.sporklibrary.internal;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import io.github.sporklibrary.BinderManager;
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.binders.MethodBinder;
 import io.github.sporklibrary.binders.TypeBinder;
-import io.github.sporklibrary.internal.caching.ClassBinderCache;
 
 /**
  * The BinderManager manages all bindings and their cache.
@@ -20,7 +17,7 @@ public class BinderManagerImpl implements BinderManager {
     private final List<FieldBinder<?>> fieldBinders = new ArrayList<>();
     private final List<MethodBinder<?>> methodBinders = new ArrayList<>();
     private final List<TypeBinder<?>> typeBinders = new ArrayList<>();
-    private final Map<Class<?>, ClassBinderCache> classBinderCacheMap = new HashMap<>();
+	private final List<RegistrationListener> registrationListeners = new ArrayList<>(1);
 
 	/**
 	 * {@inheritDoc}
@@ -29,10 +26,9 @@ public class BinderManagerImpl implements BinderManager {
     public <AnnotationType extends Annotation> void register(FieldBinder<AnnotationType> fieldBinder) {
         fieldBinders.add(fieldBinder);
 
-        // Update cache
-        for (ClassBinderCache cache : classBinderCacheMap.values()) {
-            cache.register(fieldBinder);
-        }
+		for (RegistrationListener registrationListener : registrationListeners) {
+			registrationListener.onRegisterFieldBinder(fieldBinder);
+		}
     }
 
 	/**
@@ -42,10 +38,9 @@ public class BinderManagerImpl implements BinderManager {
     public <AnnotationType extends Annotation> void register(MethodBinder<AnnotationType> methodBinder) {
         methodBinders.add(methodBinder);
 
-        // Update cache
-        for (ClassBinderCache cache : classBinderCacheMap.values()) {
-            cache.register(methodBinder);
-        }
+		for (RegistrationListener registrationListener : registrationListeners) {
+			registrationListener.onRegisterMethodBinder(methodBinder);
+		}
     }
 
 	/**
@@ -55,48 +50,48 @@ public class BinderManagerImpl implements BinderManager {
     public <AnnotationType extends Annotation> void register(TypeBinder<AnnotationType> typeBinder) {
         typeBinders.add(typeBinder);
 
-        // Update cache
-        for (ClassBinderCache cache : classBinderCacheMap.values()) {
-            cache.register(typeBinder);
-        }
+		for (RegistrationListener registrationListener : registrationListeners) {
+			registrationListener.onRegisterTypeBinder(typeBinder);
+		}
     }
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ClassBinderCache getOrCreateCache(Class<?> type) {
-		ClassBinderCache cache = classBinderCacheMap.get(type);
-
-		if (cache == null) {
-			cache = createCache(type);
-			classBinderCacheMap.put(type, cache);
-		}
-
-		return cache;
+	public List<FieldBinder<?>> getFieldBinders() {
+		return fieldBinders;
 	}
 
-    /**
-     * Allocated the cache for the specified class
-     *
-     * @param classObject the class to create a cache for
-     * @return the cache
-     */
-    private ClassBinderCache createCache(Class<?> classObject) {
-        ClassBinderCache cache = new ClassBinderCache(classObject);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<MethodBinder<?>> getMethodBinders() {
+		return methodBinders;
+	}
 
-        for (TypeBinder<?> typeBinder : typeBinders) {
-            cache.register(typeBinder);
-        }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<TypeBinder<?>> getTypeBinders() {
+		return typeBinders;
+	}
 
-        for (FieldBinder<?> fieldBinder : fieldBinders) {
-            cache.register(fieldBinder);
-        }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addRegistrationListener(RegistrationListener registrationListener) {
+		registrationListeners.add(registrationListener);
+	}
 
-        for (MethodBinder<?> methodBinder : methodBinders) {
-            cache.register(methodBinder);
-        }
-
-        return cache;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeRegistrationListener(RegistrationListener registrationListener) {
+		registrationListeners.remove(registrationListener);
+	}
 }
