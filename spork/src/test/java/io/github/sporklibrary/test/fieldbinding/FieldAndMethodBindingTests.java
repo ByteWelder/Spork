@@ -28,8 +28,8 @@ public class FieldAndMethodBindingTests {
     @Before
     public void registerTestBinders() {
         testBinder = new BindFieldOrMethodBinder();
-        Spork.getBinderManager().register((FieldBinder<BindFieldOrMethod>) testBinder);
-        Spork.getBinderManager().register((MethodBinder<BindFieldOrMethod>) testBinder);
+        Spork.getBinderRegistry().register((FieldBinder<BindFieldOrMethod>) testBinder);
+        Spork.getBinderRegistry().register((MethodBinder<BindFieldOrMethod>) testBinder);
     }
 
     @Test

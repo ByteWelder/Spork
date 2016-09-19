@@ -41,7 +41,7 @@ public class MethodBindingTests {
     @Before
     public void registerTestBinders() {
         bindMethodBinder = new BindMethodBinder();
-        Spork.getBinderManager().register(bindMethodBinder);
+        Spork.getBinderRegistry().register(bindMethodBinder);
     }
 
     @Test

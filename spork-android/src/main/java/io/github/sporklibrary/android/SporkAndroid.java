@@ -3,7 +3,7 @@ package io.github.sporklibrary.android;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import io.github.sporklibrary.BinderManager;
+import io.github.sporklibrary.internal.BinderManager;
 import io.github.sporklibrary.android.binders.BindClickBinder;
 import io.github.sporklibrary.android.binders.BindFragmentBinder;
 import io.github.sporklibrary.android.binders.BindLayoutBinder;

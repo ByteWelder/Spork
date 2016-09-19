@@ -4,7 +4,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import io.github.sporklibrary.annotations.Nullable;
-import io.github.sporklibrary.internal.*;
+import io.github.sporklibrary.internal.Binder;
+import io.github.sporklibrary.internal.BinderCache;
+import io.github.sporklibrary.internal.BinderCacheImpl;
+import io.github.sporklibrary.internal.BinderImpl;
+import io.github.sporklibrary.internal.BinderManager;
+import io.github.sporklibrary.internal.BinderManagerImpl;
+import io.github.sporklibrary.internal.ModuleManager;
 import io.github.sporklibrary.internal.inject.InjectFieldBinder;
 
 /**
@@ -12,16 +18,12 @@ import io.github.sporklibrary.internal.inject.InjectFieldBinder;
  */
 public final class Spork {
 
-
 	private Spork() {
     }
 
-	private static @Nullable BinderManager binderManager;
-	private static @Nullable
-	io.github.sporklibrary.internal.Binder binder;
+	private static @Nullable BinderRegistry binderRegistry;
+	private static @Nullable Binder binder;
 	private static @Nullable ModuleManager moduleManager;
-	private static @Nullable
-	BinderCache binderCache;
 
 	/**
      * Bind a single object with all relevant instances.
@@ -42,12 +44,12 @@ public final class Spork {
         binder.bind(object, modules);
     }
 
-    public static BinderManager getBinderManager() {
-		if (binderManager == null) {
+    public static BinderRegistry getBinderRegistry() {
+		if (binderRegistry == null) {
 			intialize();
 		}
 
-        return binderManager;
+        return binderRegistry;
     }
 
 	public static ModuleManager getModuleManager() {
@@ -63,7 +65,7 @@ public final class Spork {
      *
      * @param binderManager the binder manager to register bindings to
      */
-    private static void tryInitializeSporkAndroidBindings(BinderManager binderManager) {
+    private static void tryInitializeSporkAndroidBindings(io.github.sporklibrary.internal.BinderManager binderManager) {
         try {
             Class<?> sporkAndroidClass = Class.forName("io.github.sporklibrary.android.SporkAndroid");
             Method initializeMethod = sporkAndroidClass.getDeclaredMethod("initialize", BinderManager.class);
@@ -81,9 +83,10 @@ public final class Spork {
     }
 
 	private static void intialize() {
-
-		binderManager = new BinderManagerImpl();
-		binderCache = new BinderCacheImpl(binderManager);
+		// create all instances
+		BinderManager binderManager = new BinderManagerImpl();
+		BinderCache binderCache = new BinderCacheImpl(binderManager);
+		binderRegistry = binderManager;
 		binder = new BinderImpl(binderCache);
 		moduleManager = new ModuleManager();
 

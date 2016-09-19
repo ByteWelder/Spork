@@ -37,7 +37,7 @@ public class TypeBindingTest {
 
     @Before
     public void registerTestBinders() {
-        Spork.getBinderManager().register(new BindTypeBinder());
+        Spork.getBinderRegistry().register(new BindTypeBinder());
     }
 
     @Test
