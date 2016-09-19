@@ -31,6 +31,10 @@ public final class Spork {
      * @param object the object to bind into
      */
     public static void bind(Object object) {
+		if (binder == null) {
+			initialize();
+		}
+
         binder.bind(object);
     }
 
@@ -41,12 +45,16 @@ public final class Spork {
      * @param modules specifies 1 or more modules
      */
     public static void bind(Object object, Object... modules) {
+		if (binder == null) {
+			initialize();
+		}
+
         binder.bind(object, modules);
     }
 
     public static BinderRegistry getBinderRegistry() {
 		if (binderRegistry == null) {
-			intialize();
+			initialize();
 		}
 
         return binderRegistry;
@@ -54,7 +62,7 @@ public final class Spork {
 
 	public static ModuleManager getModuleManager() {
 		if (moduleManager == null) {
-			intialize();
+			initialize();
 		}
 
 		return moduleManager;
@@ -82,7 +90,7 @@ public final class Spork {
         }
     }
 
-	private static void intialize() {
+	private static synchronized void initialize() {
 		// create all instances
 		BinderManager binderManager = new BinderManagerImpl();
 		BinderCache binderCache = new BinderCacheImpl(binderManager);
