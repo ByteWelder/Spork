@@ -9,8 +9,8 @@ import io.github.sporklibrary.android.utils.Views;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.exceptions.BindException;
-import io.github.sporklibrary.reflection.AnnotatedField;
-import io.github.sporklibrary.reflection.AnnotatedFields;
+import io.github.sporklibrary.internal.reflection.AnnotatedField;
+import io.github.sporklibrary.internal.reflection.AnnotatedFields;
 
 public class BindViewBinder implements FieldBinder<BindView> {
     @Override

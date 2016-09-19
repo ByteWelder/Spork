@@ -3,8 +3,8 @@ package io.github.sporklibrary.binders;
 import java.lang.annotation.Annotation;
 
 import io.github.sporklibrary.annotations.Nullable;
-import io.github.sporklibrary.interfaces.AnnotationClassProvider;
-import io.github.sporklibrary.reflection.AnnotatedField;
+import io.github.sporklibrary.internal.interfaces.AnnotationClassProvider;
+import io.github.sporklibrary.internal.reflection.AnnotatedField;
 
 /**
  * A FieldBinder provides binding for a specific Field annotation on an object instance.

@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import io.github.sporklibrary.annotations.Nullable;
-import io.github.sporklibrary.binders.component.ComponentFieldBinder;
+import io.github.sporklibrary.internal.binders.InjectFieldBinder;
 
 /**
  * Main class to access Spork functionality.
@@ -16,7 +16,8 @@ public final class Spork {
 
 	private static @Nullable BinderManager binderManager;
 
-	private static @Nullable ModuleManager moduleManager;
+	private static @Nullable
+	io.github.sporklibrary.internal.ModuleManager moduleManager;
 
 	/**
      * Bind a single object with all relevant instances.
@@ -45,7 +46,7 @@ public final class Spork {
         return binderManager;
     }
 
-	public static ModuleManager getModuleManager() {
+	public static io.github.sporklibrary.internal.ModuleManager getModuleManager() {
 		if (moduleManager == null) {
 			intialize();
 		}
@@ -77,9 +78,9 @@ public final class Spork {
 
 	private static void intialize() {
 		binderManager = new BinderManager();
-		binderManager.register(new ComponentFieldBinder());
+		binderManager.register(new InjectFieldBinder());
 
-		moduleManager = new ModuleManager();
+		moduleManager = new io.github.sporklibrary.internal.ModuleManager();
 
 		// Try auto-binding Spork for Android through reflection
 		tryInitializeSporkAndroidBindings(binderManager);

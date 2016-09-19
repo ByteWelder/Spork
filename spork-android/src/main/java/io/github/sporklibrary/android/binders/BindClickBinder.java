@@ -6,8 +6,8 @@ import io.github.sporklibrary.android.annotations.BindClick;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.MethodBinder;
 import io.github.sporklibrary.exceptions.BindException;
-import io.github.sporklibrary.reflection.AnnotatedMethod;
-import io.github.sporklibrary.reflection.AnnotatedMethods;
+import io.github.sporklibrary.internal.reflection.AnnotatedMethod;
+import io.github.sporklibrary.internal.reflection.AnnotatedMethods;
 import io.github.sporklibrary.android.utils.Views;
 
 public class BindClickBinder implements MethodBinder<BindClick> {

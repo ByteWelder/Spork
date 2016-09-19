@@ -42,29 +42,4 @@ public final class ClassAsserts {
             }
         }
     }
-
-    /**
-     * This assert is to test inner classes of Annotations that act as a default value for a field
-     * such as: <code>Class<?> value() default Default.class</code> as can be found in {@link
-     * io.github.sporklibrary.annotations.BindComponent}
-     *
-     * @param classObject the class
-     */
-    public static void assertAnnotationDefaultClassWellDefined(final Class<?> classObject)
-            throws NoSuchMethodException, IllegalAccessException,
-            InvocationTargetException, InstantiationException {
-        assertTrue("class must be final", Modifier.isFinal(classObject.getModifiers()));
-        assertEquals("There must be only one constructor", 1,
-                classObject.getDeclaredConstructors().length);
-
-        final Constructor<?> constructor = classObject.getDeclaredConstructor();
-
-        if (constructor.isAccessible() || !Modifier.isPrivate(constructor.getModifiers())) {
-            fail("constructor is not private");
-        }
-
-        constructor.setAccessible(true);
-        constructor.newInstance();
-        constructor.setAccessible(false);
-    }
 }

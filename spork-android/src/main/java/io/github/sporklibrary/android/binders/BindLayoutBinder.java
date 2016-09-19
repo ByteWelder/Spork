@@ -8,7 +8,7 @@ import io.github.sporklibrary.android.annotations.BindLayout;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.TypeBinder;
 import io.github.sporklibrary.exceptions.BindException;
-import io.github.sporklibrary.reflection.AnnotatedType;
+import io.github.sporklibrary.internal.reflection.AnnotatedType;
 
 public class BindLayoutBinder implements TypeBinder<BindLayout> {
 

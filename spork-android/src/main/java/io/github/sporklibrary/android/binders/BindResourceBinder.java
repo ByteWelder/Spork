@@ -8,8 +8,8 @@ import io.github.sporklibrary.android.annotations.BindResource;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.exceptions.BindException;
-import io.github.sporklibrary.reflection.AnnotatedField;
-import io.github.sporklibrary.reflection.AnnotatedFields;
+import io.github.sporklibrary.internal.reflection.AnnotatedField;
+import io.github.sporklibrary.internal.reflection.AnnotatedFields;
 import io.github.sporklibrary.android.resolvers.ContextResolverManager;
 import io.github.sporklibrary.android.utils.ResourceId;
 

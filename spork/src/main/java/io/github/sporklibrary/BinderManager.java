@@ -11,8 +11,8 @@ import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.binders.MethodBinder;
 import io.github.sporklibrary.binders.TypeBinder;
-import io.github.sporklibrary.caching.BinderCache;
-import io.github.sporklibrary.interfaces.ObjectBinder;
+import io.github.sporklibrary.internal.caching.BinderCache;
+import io.github.sporklibrary.internal.interfaces.ObjectBinder;
 
 /**
  * The BinderManager manages all bindings and their cache.

@@ -6,8 +6,8 @@ import org.junit.Test;
 import java.lang.reflect.Method;
 
 import io.github.sporklibrary.Spork;
-import io.github.sporklibrary.reflection.AnnotatedMethod;
-import io.github.sporklibrary.reflection.AnnotatedMethods;
+import io.github.sporklibrary.internal.reflection.AnnotatedMethod;
+import io.github.sporklibrary.internal.reflection.AnnotatedMethods;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

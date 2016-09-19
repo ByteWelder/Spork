@@ -3,7 +3,7 @@ package io.github.sporklibrary.test.typebinding;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.TypeBinder;
 import io.github.sporklibrary.exceptions.BindException;
-import io.github.sporklibrary.reflection.AnnotatedType;
+import io.github.sporklibrary.internal.reflection.AnnotatedType;
 
 public class BindTypeBinder implements TypeBinder<BindValue> {
 

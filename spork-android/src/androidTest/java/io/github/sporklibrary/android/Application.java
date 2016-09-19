@@ -1,8 +1,8 @@
 package io.github.sporklibrary.android;
 
 import io.github.sporklibrary.Spork;
-import io.github.sporklibrary.annotations.BindComponent;
 import io.github.sporklibrary.android.annotations.BindResource;
+import io.github.sporklibrary.annotations.Inject;
 
 public class Application extends android.app.Application {
     private static Application sInstance = null;
@@ -13,7 +13,7 @@ public class Application extends android.app.Application {
     @BindResource
     private Float spork_test_dimension;
 
-    @BindComponent
+    @Inject
     private Component component;
 
     @Override
