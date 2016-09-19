@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import io.github.sporklibrary.annotations.Nullable;
+import io.github.sporklibrary.internal.BinderManagerImpl;
 import io.github.sporklibrary.internal.binders.InjectFieldBinder;
 
 /**
@@ -16,8 +17,7 @@ public final class Spork {
 
 	private static @Nullable BinderManager binderManager;
 
-	private static @Nullable
-	io.github.sporklibrary.internal.ModuleManager moduleManager;
+	private static @Nullable io.github.sporklibrary.internal.ModuleManager moduleManager;
 
 	/**
      * Bind a single object with all relevant instances.
@@ -77,7 +77,7 @@ public final class Spork {
     }
 
 	private static void intialize() {
-		binderManager = new BinderManager();
+		binderManager = new BinderManagerImpl();
 		binderManager.register(new InjectFieldBinder());
 
 		moduleManager = new io.github.sporklibrary.internal.ModuleManager();

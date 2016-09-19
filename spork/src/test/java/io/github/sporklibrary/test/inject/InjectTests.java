@@ -11,7 +11,7 @@ import io.github.sporklibrary.test.inject.domain.SimpleInterfaceComponentModule;
 
 import static org.junit.Assert.assertNotNull;
 
-public class ComponentModuleTests {
+public class InjectTests {
 
 	// todo: add test with inheritance
 
