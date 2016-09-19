@@ -4,7 +4,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import io.github.sporklibrary.annotations.Nullable;
+import io.github.sporklibrary.internal.BinderImpl;
 import io.github.sporklibrary.internal.BinderManagerImpl;
+import io.github.sporklibrary.internal.ModuleManager;
 import io.github.sporklibrary.internal.binders.InjectFieldBinder;
 
 /**
@@ -16,8 +18,8 @@ public final class Spork {
     }
 
 	private static @Nullable BinderManager binderManager;
-
-	private static @Nullable io.github.sporklibrary.internal.ModuleManager moduleManager;
+	private static @Nullable Binder binder;
+	private static @Nullable ModuleManager moduleManager;
 
 	/**
      * Bind a single object with all relevant instances.
@@ -25,7 +27,7 @@ public final class Spork {
      * @param object the object to bind into
      */
     public static void bind(Object object) {
-        getBinderManager().bind(object);
+        binder.bind(object);
     }
 
     /**
@@ -35,7 +37,7 @@ public final class Spork {
      * @param modules specifies 1 or more modules
      */
     public static void bind(Object object, Object... modules) {
-        getBinderManager().bind(object, modules);
+        binder.bind(object, modules);
     }
 
     public static BinderManager getBinderManager() {
@@ -46,7 +48,7 @@ public final class Spork {
         return binderManager;
     }
 
-	public static io.github.sporklibrary.internal.ModuleManager getModuleManager() {
+	public static ModuleManager getModuleManager() {
 		if (moduleManager == null) {
 			intialize();
 		}
@@ -80,7 +82,9 @@ public final class Spork {
 		binderManager = new BinderManagerImpl();
 		binderManager.register(new InjectFieldBinder());
 
-		moduleManager = new io.github.sporklibrary.internal.ModuleManager();
+		binder = new BinderImpl(binderManager);
+
+		moduleManager = new ModuleManager();
 
 		// Try auto-binding Spork for Android through reflection
 		tryInitializeSporkAndroidBindings(binderManager);

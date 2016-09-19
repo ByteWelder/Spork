@@ -8,12 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 import io.github.sporklibrary.BinderManager;
-import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.binders.MethodBinder;
 import io.github.sporklibrary.binders.TypeBinder;
 import io.github.sporklibrary.internal.caching.ClassBinderCache;
-import io.github.sporklibrary.internal.interfaces.Binder;
 
 /**
  * The BinderManager manages all bindings and their cache.
@@ -27,6 +25,7 @@ public class BinderManagerImpl implements BinderManager {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
     public <AnnotationType extends Annotation> void register(FieldBinder<AnnotationType> fieldBinder) {
         fieldBinders.add(fieldBinder);
 
@@ -39,6 +38,7 @@ public class BinderManagerImpl implements BinderManager {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
     public <AnnotationType extends Annotation> void register(MethodBinder<AnnotationType> methodBinder) {
         methodBinders.add(methodBinder);
 
@@ -51,6 +51,7 @@ public class BinderManagerImpl implements BinderManager {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
     public <AnnotationType extends Annotation> void register(TypeBinder<AnnotationType> typeBinder) {
         typeBinders.add(typeBinder);
 
@@ -63,43 +64,17 @@ public class BinderManagerImpl implements BinderManager {
 	/**
 	 * {@inheritDoc}
 	 */
-    public void bind(Object object) {
-        bind(object, (Object[])null);
-    }
+	@Override
+	public ClassBinderCache getOrCreateCache(Class<?> type) {
+		ClassBinderCache cache = classBinderCacheMap.get(type);
 
-	/**
-	 * {@inheritDoc}
-	 */
-    public void bind(Object object, @Nullable Object... modules) {
-        Class<?> objectClass = object.getClass();
+		if (cache == null) {
+			cache = createCache(type);
+			classBinderCacheMap.put(type, cache);
+		}
 
-        while (objectClass != null && objectClass != Object.class) {
-            ClassBinderCache cache = classBinderCacheMap.get(objectClass);
-
-            if (cache == null) {
-                cache = createCache(objectClass);
-                classBinderCacheMap.put(objectClass, cache);
-            }
-
-            bindInternal(object, cache, modules);
-
-            objectClass = objectClass.getSuperclass();
-        }
-    }
-
-    /**
-     * Bind all annotations for an object instance for one specific class (one level of
-     * inheritance).
-     *
-     * @param object the instance to bind annotations for
-     * @param cache  the cache to bind with
-     * @param modules either null or an array of non-null modules
-     */
-    private void bindInternal(Object object, ClassBinderCache cache, @Nullable Object[] modules) {
-        for (Binder binder : cache.getBinders()) {
-            binder.bind(object, modules);
-        }
-    }
+		return cache;
+	}
 
     /**
      * Allocated the cache for the specified class

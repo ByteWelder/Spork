@@ -2,13 +2,12 @@ package io.github.sporklibrary;
 
 import java.lang.annotation.Annotation;
 
-import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.binders.MethodBinder;
 import io.github.sporklibrary.binders.TypeBinder;
+import io.github.sporklibrary.internal.caching.ClassBinderCache;
 
 public interface BinderManager {
-
 	/**
 	 * Register a FieldBinder
 	 *
@@ -34,17 +33,10 @@ public interface BinderManager {
 	<AnnotationType extends Annotation> void register(TypeBinder<AnnotationType> typeBinder);
 
 	/**
-	 * Bind all annotations for an object instance on all levels of inheritance.
-	 *
-	 * @param object the instance to bind annotations for
+	 * Gets the ClassBinderCache for the given type.
+	 * If the ClassBinderCache isn't available yet, it will create it.
+	 * @param type the class
+	 * @return the cache
 	 */
-	void bind(Object object);
-
-	/**
-	 * Bind all annotations for an object instance on all levels of inheritance.
-	 *
-	 * @param object the instance to bind annotations for
-	 * @param modules either null or an array of non-null modules
-	 */
-	void bind(Object object, @Nullable Object... modules);
+	ClassBinderCache getOrCreateCache(Class<?> type);
 }
