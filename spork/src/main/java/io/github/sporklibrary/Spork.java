@@ -71,16 +71,15 @@ public final class Spork {
     /**
      * Tries to register the SporkAndroid bindings if the library is present in the classpath.
      *
-     * @param binderManager the binder manager to register bindings to
+     * @param binderRegistry the binder registry to register bindings to
      */
-    private static void tryInitializeSporkAndroidBindings(io.github.sporklibrary.internal.BinderManager binderManager) {
+    private static void tryInitializeSporkAndroidBindings(BinderRegistry binderRegistry) {
         try {
             Class<?> sporkAndroidClass = Class.forName("io.github.sporklibrary.android.SporkAndroid");
-            Method initializeMethod = sporkAndroidClass.getDeclaredMethod("initialize", BinderManager.class);
-            initializeMethod.invoke(null, binderManager);
-            System.out.println("Spork: BinderManager created without Spork for Android");
+            Method initializeMethod = sporkAndroidClass.getDeclaredMethod("initialize", BinderRegistry.class);
+            initializeMethod.invoke(null, binderRegistry);
         } catch (ClassNotFoundException e) {
-            System.out.println("Spork: BinderManager created with Spork for Android");
+			// no-op
         } catch (NoSuchMethodException e) {
             System.out.println("Spork: Spork for Android found, but initialize method is not present");
         } catch (InvocationTargetException e) {
