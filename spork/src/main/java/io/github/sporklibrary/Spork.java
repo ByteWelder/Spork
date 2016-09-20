@@ -4,6 +4,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import io.github.sporklibrary.annotations.Nullable;
+import io.github.sporklibrary.binders.FieldBinder;
+import io.github.sporklibrary.binders.MethodBinder;
+import io.github.sporklibrary.binders.TypeBinder;
 import io.github.sporklibrary.internal.Binder;
 import io.github.sporklibrary.internal.BinderCache;
 import io.github.sporklibrary.internal.BinderCacheImpl;
@@ -92,10 +95,28 @@ public final class Spork {
 	private static synchronized void initialize() {
 		// create all instances
 		BinderManager binderManager = new BinderManagerImpl();
-		BinderCache binderCache = new BinderCacheImpl(binderManager);
+		final BinderCache binderCache = new BinderCacheImpl(binderManager);
 		binderRegistry = binderManager;
 		binder = new BinderImpl(binderCache);
 		moduleManager = new ModuleManager();
+
+		// ensure the cache is updated when a new type is registered
+		binderManager.addRegistrationListener(new BinderManager.RegistrationListener() {
+			@Override
+			public void onRegisterFieldBinder(FieldBinder<?> fieldBinder) {
+				binderCache.cache(fieldBinder);
+			}
+
+			@Override
+			public void onRegisterMethodBinder(MethodBinder<?> methodBinder) {
+				binderCache.cache(methodBinder);
+			}
+
+			@Override
+			public void onRegisterTypeBinder(TypeBinder<?> typeBinder) {
+				binderCache.cache(typeBinder);
+			}
+		});
 
 		// registration must happen after cache is created and listening for registrations
 		binderManager.register(new InjectFieldBinder());

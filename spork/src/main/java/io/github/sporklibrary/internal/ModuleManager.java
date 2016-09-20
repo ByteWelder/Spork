@@ -1,6 +1,5 @@
 package io.github.sporklibrary.internal;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,19 +13,44 @@ import io.github.sporklibrary.annotations.Provides;
 public class ModuleManager {
 	private final Map<Class<?>, List<Method>> classMethodListMap = new HashMap<>();
 
-	public @Nullable Object getObject(Object[] modules, Class<?> type) {
+	public interface Callable {
+		Object call();
+	}
+
+	public @Nullable Callable getCallable(Object[] modules, Class<?> type) {
 		for (Object module : modules) {
-			Object instance = getObject(module, type);
-			if (instance != null) {
-				return instance;
+			Callable callable = getCallable(module, type);
+
+			if (callable != null) {
+				return callable;
 			}
 		}
 
 		return null;
 	}
 
-	public @Nullable Object getObject(Object module, Class<?> type) {
+	private @Nullable Callable getCallable(final Object module, Class<?> type) {
+		final Method method = getMethod(module, type);
 
+		if (method == null) {
+			return null;
+		}
+
+		return new Callable() {
+			@Override
+			public Object call() {
+				try {
+					return method.invoke(module, (Object[])null);
+				} catch (IllegalAccessException e) {
+					throw new RuntimeException("method \"" + method.getName() + "\" on module " + module.getClass().getName() + " is not public", e);
+				} catch (Exception e) {
+					throw new RuntimeException("failed to invoke method \"" + method.getName() + "\" on module " + module.getClass().getName(), e);
+				}
+			}
+		};
+	}
+
+	private @Nullable Method getMethod(Object module, Class<?> type) {
 		Class<?> moduleClass = module.getClass();
 
 		while (moduleClass != null && moduleClass != Object.class) {
@@ -40,21 +64,9 @@ public class ModuleManager {
 			// Go through each method and find the one that matches
 			Method method = findMethod(methodList, type);
 
-			// Invoke the method
+			// Return the method that was found
 			if (method != null) {
-				try {
-					Object instance = method.invoke(module, (Object[])null);
-
-					if (instance == null) {
-						throw new RuntimeException("method \"" + method.getName() + "\" on module " + module.getClass().getName() + " returned null (which is not supported)");
-					}
-
-					return instance;
-				} catch (IllegalAccessException e) {
-					throw new RuntimeException("method \"" + method.getName() + "\" on module " + module.getClass().getName() + " is not public", e);
-				} catch (InvocationTargetException e) {
-					throw new RuntimeException("failed to invoke method \"" + method.getName() + "\" on module " + module.getClass().getName(), e);
-				}
+				return method;
 			}
 
 			moduleClass = moduleClass.getSuperclass();
