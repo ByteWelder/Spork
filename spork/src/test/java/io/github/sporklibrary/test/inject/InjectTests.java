@@ -15,6 +15,7 @@ import io.github.sporklibrary.test.inject.domain.SimpleInterfaceComponentModule;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class InjectTests {
 
@@ -72,6 +73,7 @@ public class InjectTests {
 	public void nullValueWithNullable() {
 		SimpleParentNullable parent = new SimpleParentNullable();
 		Spork.bind(parent, new SimpleComponentNullModule());
+		assertNull(parent.simpleComponent);
 	}
 
 	@Test(expected = BindException.class)
@@ -84,6 +86,7 @@ public class InjectTests {
 	public void instanceValueWithNonNull() {
 		SimpleParentNonNull parent = new SimpleParentNonNull();
 		Spork.bind(parent, new SimpleComponentModule());
+		assertNotNull(parent.simpleComponent);
 	}
 
 	@Test
