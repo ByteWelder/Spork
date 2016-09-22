@@ -2,6 +2,7 @@ package io.github.sporklibrary.test.inject;
 
 import org.junit.Test;
 
+import io.github.sporklibrary.Lazy;
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.Inject;
 import io.github.sporklibrary.annotations.NonNull;
@@ -12,6 +13,7 @@ import io.github.sporklibrary.test.inject.domain.SimpleComponentModule;
 import io.github.sporklibrary.test.inject.domain.SimpleComponentNullModule;
 import io.github.sporklibrary.test.inject.domain.SimpleInterfaceComponentModule;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class InjectTests {
@@ -33,6 +35,10 @@ public class InjectTests {
 
 	private static class SimpleParentNonNull {
 		@Inject	@NonNull SimpleComponent simpleComponent;
+	}
+
+	private static class SimpleParentLazy {
+		@Inject Lazy<SimpleComponent> simpleComponent;
 	}
 
 	@Test
@@ -78,5 +84,20 @@ public class InjectTests {
 	public void instanceValueWithNonNull() {
 		SimpleParentNonNull parent = new SimpleParentNonNull();
 		Spork.bind(parent, new SimpleComponentModule());
+	}
+
+	@Test
+	public void lazyValue() {
+		SimpleParentLazy parent = new SimpleParentLazy();
+		Spork.bind(parent, new SimpleComponentModule());
+
+		assertNotNull(parent.simpleComponent);
+
+		SimpleComponent first = parent.simpleComponent.get();
+		assertNotNull(first);
+
+		SimpleComponent second = parent.simpleComponent.get();
+		assertNotNull(second);
+		assertEquals(first, second);
 	}
 }

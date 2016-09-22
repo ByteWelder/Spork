@@ -1,4 +1,4 @@
-package io.github.sporklibrary.internal;
+package io.github.sporklibrary.internal.inject;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -10,59 +10,31 @@ import java.util.Map;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.annotations.Provides;
 
-public class ModuleManager {
+public class ModuleMethodRetriever {
 	private final Map<Class<?>, List<Method>> classMethodListMap = new HashMap<>();
 
-	public interface Callable {
-		Object call();
-	}
-
-	public @Nullable Callable getCallable(Object[] modules, Class<?> type) {
-		for (Object module : modules) {
-			Callable callable = getCallable(module, type);
-
-			if (callable != null) {
-				return callable;
-			}
-		}
-
-		return null;
-	}
-
-	private @Nullable Callable getCallable(final Object module, Class<?> type) {
-		final Method method = getMethod(module, type);
-
-		if (method == null) {
-			return null;
-		}
-
-		return new Callable() {
-			@Override
-			public Object call() {
-				try {
-					return method.invoke(module, (Object[])null);
-				} catch (IllegalAccessException e) {
-					throw new RuntimeException("method \"" + method.getName() + "\" on module " + module.getClass().getName() + " is not public", e);
-				} catch (Exception e) {
-					throw new RuntimeException("failed to invoke method \"" + method.getName() + "\" on module " + module.getClass().getName(), e);
-				}
-			}
-		};
-	}
-
-	private @Nullable Method getMethod(Object module, Class<?> type) {
+	/**
+	 * Find a method with a specific return type that is annotated with @Provides in the given class
+	 * @param module an object instance
+	 * @param type isAssignableTo(type) will be called on the return types to find a match in the interface
+	 * @return the method or null
+	 */
+	public @Nullable Method getMethod(Object module, Class<?> type) {
 		Class<?> moduleClass = module.getClass();
 
+		// Go through all classes in the inheritance tree
 		while (moduleClass != null && moduleClass != Object.class) {
+			// Find the cached method list
 			List<Method> methodList = classMethodListMap.get(module.getClass());
 
+			// If there is no cached method list, create one
 			if (methodList == null) {
-				methodList = findMethods(moduleClass);
+				methodList = ModuleMethodRetriever.findMethods(moduleClass);
 				classMethodListMap.put(moduleClass, methodList);
 			}
 
 			// Go through each method and find the one that matches
-			Method method = findMethod(methodList, type);
+			Method method = ModuleMethodRetriever.findMethod(methodList, type);
 
 			// Return the method that was found
 			if (method != null) {
@@ -80,7 +52,7 @@ public class ModuleManager {
 	 * @param moduleClass the module class to look for methods
 	 * @return a non-mutable list which contains 0 or more methods
 	 */
-	private List<Method> findMethods(Class<?> moduleClass) {
+	private static List<Method> findMethods(Class<?> moduleClass) {
 		List<Method> methods = new ArrayList<>();
 
 		for (Method method : moduleClass.getMethods()) {
@@ -98,7 +70,7 @@ public class ModuleManager {
 	 * @param returnType the return type to look for
 	 * @return the found method or null
 	 */
-	private @Nullable Method findMethod(List<Method> methodList, Class<?> returnType) {
+	private static @Nullable Method findMethod(List<Method> methodList, Class<?> returnType) {
 		for (Method method : methodList) {
 			if (returnType.isAssignableFrom(method.getReturnType())) {
 				return method;

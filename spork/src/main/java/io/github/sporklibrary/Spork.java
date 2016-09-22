@@ -13,7 +13,7 @@ import io.github.sporklibrary.internal.BinderCacheImpl;
 import io.github.sporklibrary.internal.BinderImpl;
 import io.github.sporklibrary.internal.BinderManager;
 import io.github.sporklibrary.internal.BinderManagerImpl;
-import io.github.sporklibrary.internal.ModuleManager;
+import io.github.sporklibrary.internal.inject.ModuleManager;
 import io.github.sporklibrary.internal.inject.InjectFieldBinder;
 
 /**
