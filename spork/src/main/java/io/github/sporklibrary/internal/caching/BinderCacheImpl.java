@@ -1,4 +1,4 @@
-package io.github.sporklibrary.internal;
+package io.github.sporklibrary.internal.caching;
 
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
@@ -7,7 +7,7 @@ import java.util.Map;
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.binders.MethodBinder;
 import io.github.sporklibrary.binders.TypeBinder;
-import io.github.sporklibrary.internal.caching.ClassBinderCache;
+import io.github.sporklibrary.internal.BinderManager;
 
 public class BinderCacheImpl implements BinderCache {
 	private final Map<Class<?>, ClassBinderCache> classBinderCacheMap = new HashMap<>();

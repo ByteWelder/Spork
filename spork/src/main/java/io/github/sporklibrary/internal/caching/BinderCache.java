@@ -1,11 +1,10 @@
-package io.github.sporklibrary.internal;
+package io.github.sporklibrary.internal.caching;
 
 import java.lang.annotation.Annotation;
 
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.binders.MethodBinder;
 import io.github.sporklibrary.binders.TypeBinder;
-import io.github.sporklibrary.internal.caching.ClassBinderCache;
 
 public interface BinderCache {
 	/**

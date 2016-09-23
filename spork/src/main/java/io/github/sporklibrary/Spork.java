@@ -8,13 +8,13 @@ import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.binders.MethodBinder;
 import io.github.sporklibrary.binders.TypeBinder;
 import io.github.sporklibrary.internal.Binder;
-import io.github.sporklibrary.internal.BinderCache;
-import io.github.sporklibrary.internal.BinderCacheImpl;
 import io.github.sporklibrary.internal.BinderImpl;
 import io.github.sporklibrary.internal.BinderManager;
 import io.github.sporklibrary.internal.BinderManagerImpl;
-import io.github.sporklibrary.internal.inject.ModuleManager;
+import io.github.sporklibrary.internal.caching.BinderCache;
+import io.github.sporklibrary.internal.caching.BinderCacheImpl;
 import io.github.sporklibrary.internal.inject.InjectFieldBinder;
+import io.github.sporklibrary.internal.inject.ModuleManager;
 
 /**
  * Main class to access Spork functionality.
@@ -55,13 +55,13 @@ public final class Spork {
         binder.bind(object, modules);
     }
 
-    public static BinderRegistry getBinderRegistry() {
+	public static BinderRegistry getBinderRegistry() {
 		if (binderRegistry == null) {
 			initialize();
 		}
 
-        return binderRegistry;
-    }
+		return binderRegistry;
+	}
 
 	public static ModuleManager getModuleManager() {
 		if (moduleManager == null) {
@@ -96,6 +96,7 @@ public final class Spork {
 		// create all instances
 		BinderManager binderManager = new BinderManagerImpl();
 		final BinderCache binderCache = new BinderCacheImpl(binderManager);
+
 		binderRegistry = binderManager;
 		binder = new BinderImpl(binderCache);
 		moduleManager = new ModuleManager();

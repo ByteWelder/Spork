@@ -1,12 +1,12 @@
 package io.github.sporklibrary.test.fieldbinding;
 
-import io.github.sporklibrary.Spork;
-import io.github.sporklibrary.binders.FieldBinder;
-import io.github.sporklibrary.binders.MethodBinder;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import io.github.sporklibrary.Spork;
+import io.github.sporklibrary.binders.FieldBinder;
+import io.github.sporklibrary.binders.MethodBinder;
 
 public class FieldAndMethodBindingTests {
     private BindFieldOrMethodBinder testBinder;
@@ -14,7 +14,7 @@ public class FieldAndMethodBindingTests {
     public static class BinderParent {
 
         @BindFieldOrMethod
-        private Object mField;
+        private Object field;
 
         @BindFieldOrMethod
         public void test() {

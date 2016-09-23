@@ -3,9 +3,10 @@ package io.github.sporklibrary.test.inject.domain;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.annotations.Provides;
 
-public class SimpleComponentNullModule {
+public class StringNullModule {
 	@Provides
-	public @Nullable SimpleComponent simpleComponent() {
+	@Nullable
+	public String stringValue() {
 		return null;
 	}
 }
