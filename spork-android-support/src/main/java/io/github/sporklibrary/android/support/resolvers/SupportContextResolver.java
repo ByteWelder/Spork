@@ -7,14 +7,12 @@ import io.github.sporklibrary.android.resolvers.ContextResolver;
 
 public class SupportContextResolver implements ContextResolver {
 
-    @Override
-    public @Nullable Context resolveContext(Object object) {
-        Class<?> object_class = object.getClass();
-
-        if (android.support.v4.app.Fragment.class.isAssignableFrom(object_class)) {
-            return ((android.support.v4.app.Fragment) object).getActivity();
-        } else {
-            return null;
-        }
-    }
+	@Override
+	public @Nullable Context resolveContext(Object object) {
+		if (android.support.v4.app.Fragment.class.isAssignableFrom(object.getClass())) {
+			return ((android.support.v4.app.Fragment) object).getActivity();
+		} else {
+			return null;
+		}
+	}
 }

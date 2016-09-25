@@ -21,58 +21,59 @@ import io.github.sporklibrary.internal.reflection.AnnotatedTypes;
  * which excludes the cache of its superclasses.
  */
 public final class ClassBinderCache {
-    private final List<CachedBinder> cachedBinders = new ArrayList<>();
-    private final Class<?> annotatedType;
-    public ClassBinderCache(Class<?> annotatedType) {
-        this.annotatedType = annotatedType;
-    }
+	private final List<CachedBinder> cachedBinders = new ArrayList<>();
+	private final Class<?> annotatedType;
 
-    /**
-     * Update the cache with this binder
-     *
-     * @param fieldBinder      the field binder to cache annotated fields for
-     * @param <AnnotationType> the annotation to search for in the annotated type
-     */
-    public <AnnotationType extends Annotation> void register(FieldBinder<AnnotationType> fieldBinder) {
-        Set<AnnotatedField<AnnotationType>> annotatedFields = AnnotatedFields.get(fieldBinder.getAnnotationClass(), annotatedType);
+	public ClassBinderCache(Class<?> annotatedType) {
+		this.annotatedType = annotatedType;
+	}
 
-        if (!annotatedFields.isEmpty()) {
-            cachedBinders.add(new AnnotatedFieldBinderCache<>(fieldBinder, annotatedFields));
-        }
-    }
+	/**
+	 * Update the cache with this binder
+	 *
+	 * @param fieldBinder      the field binder to cache annotated fields for
+	 * @param <AnnotationType> the annotation to search for in the annotated type
+	 */
+	public <AnnotationType extends Annotation> void register(FieldBinder<AnnotationType> fieldBinder) {
+		Set<AnnotatedField<AnnotationType>> annotatedFields = AnnotatedFields.get(fieldBinder.getAnnotationClass(), annotatedType);
 
-    /**
-     * Update the cache with this binder
-     *
-     * @param methodBinder     the method binder to cache annotated methods for
-     * @param <AnnotationType> the annotation to search for in the annotated type
-     */
-    public <AnnotationType extends Annotation> void register(MethodBinder<AnnotationType> methodBinder) {
-        Set<AnnotatedMethod<AnnotationType>> annotatedMethods = AnnotatedMethods.get(methodBinder.getAnnotationClass(), annotatedType);
+		if (!annotatedFields.isEmpty()) {
+			cachedBinders.add(new AnnotatedFieldBinderCache<>(fieldBinder, annotatedFields));
+		}
+	}
 
-        if (!annotatedMethods.isEmpty()) {
-            cachedBinders.add(new AnnotatedMethodBinderCache<>(methodBinder, annotatedMethods));
-        }
-    }
+	/**
+	 * Update the cache with this binder
+	 *
+	 * @param methodBinder     the method binder to cache annotated methods for
+	 * @param <AnnotationType> the annotation to search for in the annotated type
+	 */
+	public <AnnotationType extends Annotation> void register(MethodBinder<AnnotationType> methodBinder) {
+		Set<AnnotatedMethod<AnnotationType>> annotatedMethods = AnnotatedMethods.get(methodBinder.getAnnotationClass(), annotatedType);
 
-    /**
-     * Update the cache with this binder
-     *
-     * @param typeBinder       the type binder to cache annotated types for
-     * @param <AnnotationType> the annotation to search for in the annotated type
-     */
-    public <AnnotationType extends Annotation> void register(TypeBinder<AnnotationType> typeBinder) {
-        @Nullable AnnotatedType<AnnotationType> annotatedType = AnnotatedTypes.get(typeBinder.getAnnotationClass(), this.annotatedType);
+		if (!annotatedMethods.isEmpty()) {
+			cachedBinders.add(new AnnotatedMethodBinderCache<>(methodBinder, annotatedMethods));
+		}
+	}
 
-        if (annotatedType != null) {
-            cachedBinders.add(new AnnotatedTypeBinderCache<>(typeBinder, annotatedType));
-        }
-    }
+	/**
+	 * Update the cache with this binder
+	 *
+	 * @param typeBinder       the type binder to cache annotated types for
+	 * @param <AnnotationType> the annotation to search for in the annotated type
+	 */
+	public <AnnotationType extends Annotation> void register(TypeBinder<AnnotationType> typeBinder) {
+		@Nullable AnnotatedType<AnnotationType> annotatedType = AnnotatedTypes.get(typeBinder.getAnnotationClass(), this.annotatedType);
 
-    /**
-     * @return the list of all CachedBinder instances managed for this cache.
-     */
-    public List<CachedBinder> getCachedBinders() {
-        return cachedBinders;
-    }
+		if (annotatedType != null) {
+			cachedBinders.add(new AnnotatedTypeBinderCache<>(typeBinder, annotatedType));
+		}
+	}
+
+	/**
+	 * @return the list of all CachedBinder instances managed for this cache.
+	 */
+	public List<CachedBinder> getCachedBinders() {
+		return cachedBinders;
+	}
 }

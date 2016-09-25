@@ -8,19 +8,19 @@ import java.lang.annotation.Annotation;
  * @param <AnnotationType> the annotation type to store
  */
 public class AnnotatedType<AnnotationType extends Annotation> {
-    private final AnnotationType annotation;
-    private final Class<?> annotatedClass;
+	private final AnnotationType annotation;
+	private final Class<?> annotatedClass;
 
-    public AnnotatedType(AnnotationType annotation, Class<?> annotatedClass) {
-        this.annotation = annotation;
-        this.annotatedClass = annotatedClass;
-    }
+	public AnnotatedType(AnnotationType annotation, Class<?> annotatedClass) {
+		this.annotation = annotation;
+		this.annotatedClass = annotatedClass;
+	}
 
-    public AnnotationType getAnnotation() {
-        return annotation;
-    }
+	public AnnotationType getAnnotation() {
+		return annotation;
+	}
 
-    public Class<?> getAnnotatedClass() {
-        return annotatedClass;
-    }
+	public Class<?> getAnnotatedClass() {
+		return annotatedClass;
+	}
 }

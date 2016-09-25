@@ -12,22 +12,22 @@ import io.github.sporklibrary.internal.reflection.AnnotatedType;
 
 public class BindLayoutBinder implements TypeBinder<BindLayout> {
 
-    @Override
-    public void bind(Object object, AnnotatedType<BindLayout> annotatedClass, @Nullable Object[] modules) {
-        int layout_resource_id = annotatedClass.getAnnotation().value();
+	@Override
+	public void bind(Object object, AnnotatedType<BindLayout> annotatedClass, @Nullable Object[] modules) {
+		int layout_resource_id = annotatedClass.getAnnotation().value();
 
-        if (Activity.class.isAssignableFrom(object.getClass())) {
-            ((Activity) object).setContentView(layout_resource_id);
-        } else if (ViewGroup.class.isAssignableFrom(object.getClass())) {
-            ViewGroup view_group = (ViewGroup) object;
-            LayoutInflater.from(view_group.getContext()).inflate(layout_resource_id, view_group);
-        } else {
-            throw new BindException(BindLayout.class, object.getClass(), "annotation can only be used with Activity or ViewGroup");
-        }
-    }
+		if (Activity.class.isAssignableFrom(object.getClass())) {
+			((Activity) object).setContentView(layout_resource_id);
+		} else if (ViewGroup.class.isAssignableFrom(object.getClass())) {
+			ViewGroup view_group = (ViewGroup) object;
+			LayoutInflater.from(view_group.getContext()).inflate(layout_resource_id, view_group);
+		} else {
+			throw new BindException(BindLayout.class, object.getClass(), "annotation can only be used with Activity or ViewGroup");
+		}
+	}
 
-    @Override
-    public Class<BindLayout> getAnnotationClass() {
-        return BindLayout.class;
-    }
+	@Override
+	public Class<BindLayout> getAnnotationClass() {
+		return BindLayout.class;
+	}
 }

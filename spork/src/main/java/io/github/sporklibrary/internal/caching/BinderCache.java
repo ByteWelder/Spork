@@ -10,6 +10,7 @@ public interface BinderCache {
 	/**
 	 * Gets the ClassBinderCache for the given type.
 	 * If the ClassBinderCache isn't available yet, it will create it.
+	 *
 	 * @param type the class
 	 * @return the cache
 	 */

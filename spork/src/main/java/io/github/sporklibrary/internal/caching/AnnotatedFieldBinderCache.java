@@ -13,22 +13,22 @@ import io.github.sporklibrary.internal.reflection.AnnotatedField;
  * @param <AnnotationType> the annotation type that is being bound
  */
 class AnnotatedFieldBinderCache<AnnotationType extends Annotation> implements CachedBinder {
-    private final Set<AnnotatedField<AnnotationType>> annotatedFields;
-    private final FieldBinder<AnnotationType> fieldBinder;
+	private final Set<AnnotatedField<AnnotationType>> annotatedFields;
+	private final FieldBinder<AnnotationType> fieldBinder;
 
-    AnnotatedFieldBinderCache(FieldBinder<AnnotationType> fieldBinder, Set<AnnotatedField<AnnotationType>> annotatedFields) {
-        this.fieldBinder = fieldBinder;
-        this.annotatedFields = annotatedFields;
-    }
+	AnnotatedFieldBinderCache(FieldBinder<AnnotationType> fieldBinder, Set<AnnotatedField<AnnotationType>> annotatedFields) {
+		this.fieldBinder = fieldBinder;
+		this.annotatedFields = annotatedFields;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void bind(Object object, @Nullable Object[] modules) {
-        // Bind all fields for this object
-        for (AnnotatedField<AnnotationType> annotatedField : annotatedFields) {
-            fieldBinder.bind(object, annotatedField, modules);
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void bind(Object object, @Nullable Object[] modules) {
+		// Bind all fields for this object
+		for (AnnotatedField<AnnotationType> annotatedField : annotatedFields) {
+			fieldBinder.bind(object, annotatedField, modules);
+		}
+	}
 }

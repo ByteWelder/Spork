@@ -9,19 +9,19 @@ import java.lang.reflect.Method;
  * @param <AnnotationType> the annotation type to store
  */
 public class AnnotatedMethod<AnnotationType extends Annotation> {
-    private final AnnotationType annotation;
-    private final Method method;
+	private final AnnotationType annotation;
+	private final Method method;
 
-    public AnnotatedMethod(AnnotationType annotation, Method method) {
-        this.annotation = annotation;
-        this.method = method;
-    }
+	public AnnotatedMethod(AnnotationType annotation, Method method) {
+		this.annotation = annotation;
+		this.method = method;
+	}
 
-    public AnnotationType getAnnotation() {
-        return annotation;
-    }
+	public AnnotationType getAnnotation() {
+		return annotation;
+	}
 
-    public Method getMethod() {
-        return method;
-    }
+	public Method getMethod() {
+		return method;
+	}
 }

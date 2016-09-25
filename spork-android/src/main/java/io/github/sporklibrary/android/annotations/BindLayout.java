@@ -16,8 +16,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface BindLayout {
-    /**
-     * @return the layout resource id from R.layout.*
-     */
-    int value();
+	/**
+	 * @return the layout resource id from R.layout.*
+	 */
+	int value();
 }

@@ -8,12 +8,12 @@ import io.github.sporklibrary.android.support.resolvers.SupportFragmentResolver;
 import io.github.sporklibrary.android.support.resolvers.SupportViewResolver;
 
 public final class SporkAndroidSupport {
-    private SporkAndroidSupport() {
-    }
+	private SporkAndroidSupport() {
+	}
 
-    public static void initialize() {
-        ViewResolverManager.shared().addViewResolver(new SupportViewResolver());
-        ContextResolverManager.shared().addContextResolver(new SupportContextResolver());
-        FragmentResolverManager.shared().addFragmentResolver(new SupportFragmentResolver());
-    }
+	public static void initialize() {
+		ViewResolverManager.shared().addViewResolver(new SupportViewResolver());
+		ContextResolverManager.shared().addContextResolver(new SupportContextResolver());
+		FragmentResolverManager.shared().addFragmentResolver(new SupportFragmentResolver());
+	}
 }
