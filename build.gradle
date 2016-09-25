@@ -4,6 +4,7 @@ subprojects {
     buildscript {
         repositories {
             mavenCentral()
+            jcenter()
         }
 
         dependencies {

@@ -50,21 +50,21 @@ public final class SporkAndroid {
 	/**
 	 * @return the ResolverRegistry to register new FragmentResolver instances
 	 */
-	public ResolverRegistry<FragmentResolver> getFragmentResolverRegistry() {
+	public static ResolverRegistry<FragmentResolver> getFragmentResolverRegistry() {
 		return fragmentResolverManager;
 	}
 
 	/**
 	 * @return the ResolverRegistry to register new ViewResolver instances
 	 */
-	public ResolverRegistry<ViewResolver> getViewResolverRegistry() {
+	public static ResolverRegistry<ViewResolver> getViewResolverRegistry() {
 		return viewResolverManager;
 	}
 
 	/**
 	 * @return the ResolverRegistry to register new ContextResolver instances
 	 */
-	public ResolverRegistry<ContextResolver> getContextResolverRegistry() {
+	public static ResolverRegistry<ContextResolver> getContextResolverRegistry() {
 		return contextResolverManager;
 	}
 

@@ -1,8 +1,8 @@
-package io.github.sporklibrary.android.support.resolvers;
+package io.github.sporklibrary.android.support.internal;
 
 import android.view.View;
 
-import io.github.sporklibrary.android.resolvers.ViewResolver;
+import io.github.sporklibrary.android.interfaces.ViewResolver;
 import io.github.sporklibrary.annotations.Nullable;
 
 public class SupportViewResolver implements ViewResolver {

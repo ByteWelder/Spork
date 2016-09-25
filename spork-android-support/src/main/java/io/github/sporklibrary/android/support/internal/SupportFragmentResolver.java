@@ -1,14 +1,14 @@
-package io.github.sporklibrary.android.support.resolvers;
+package io.github.sporklibrary.android.support.internal;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
 import io.github.sporklibrary.android.annotations.BindFragment;
-import io.github.sporklibrary.android.resolvers.FragmentResolver;
+import io.github.sporklibrary.android.interfaces.FragmentResolver;
 import io.github.sporklibrary.exceptions.BindException;
 
-import static io.github.sporklibrary.android.utils.Reflection.tryCast;
+import static io.github.sporklibrary.android.internal.utils.Reflection.tryCast;
 
 public class SupportFragmentResolver implements FragmentResolver {
 

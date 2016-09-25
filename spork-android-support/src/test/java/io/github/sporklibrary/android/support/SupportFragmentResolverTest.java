@@ -2,7 +2,7 @@ package io.github.sporklibrary.android.support;
 
 import org.junit.Test;
 
-import io.github.sporklibrary.android.support.resolvers.SupportFragmentResolver;
+import io.github.sporklibrary.android.support.internal.SupportFragmentResolver;
 
 import static org.junit.Assert.assertNull;
 
