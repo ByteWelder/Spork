@@ -1,7 +1,8 @@
 package io.github.sporklibrary.internal;
 
 import io.github.sporklibrary.annotations.Nullable;
-import io.github.sporklibrary.internal.caching.*;
+import io.github.sporklibrary.internal.caching.CachedBinder;
+import io.github.sporklibrary.internal.caching.ClassBinderCache;
 
 public class BinderImpl implements Binder {
 	private io.github.sporklibrary.internal.caching.BinderCache binderCache;
@@ -14,7 +15,7 @@ public class BinderImpl implements Binder {
 	 * {@inheritDoc}
 	 */
 	public void bind(Object object) {
-		bind(object, (Object[])null);
+		bind(object, (Object[]) null);
 	}
 
 	/**

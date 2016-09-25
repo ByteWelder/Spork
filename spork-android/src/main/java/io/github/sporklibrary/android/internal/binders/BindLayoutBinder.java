@@ -1,4 +1,4 @@
-package io.github.sporklibrary.android.binders;
+package io.github.sporklibrary.android.internal.binders;
 
 import android.app.Activity;
 import android.view.LayoutInflater;

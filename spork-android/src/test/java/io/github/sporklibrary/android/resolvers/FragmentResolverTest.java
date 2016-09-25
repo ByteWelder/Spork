@@ -2,6 +2,8 @@ package io.github.sporklibrary.android.resolvers;
 
 import org.junit.Test;
 
+import io.github.sporklibrary.android.internal.DefaultFragmentResolver;
+
 import static org.junit.Assert.assertNull;
 
 public class FragmentResolverTest {

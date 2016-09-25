@@ -36,7 +36,7 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 		}
 
 		boolean isLazy = (fieldType == Lazy.class);
-		Class<?> targetType = isLazy ? (Class<?>)((ParameterizedType)field.getGenericType()).getActualTypeArguments()[0] : fieldType;
+		Class<?> targetType = isLazy ? (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0] : fieldType;
 
 		Callable<?> callable = Spork.getModuleManager().getCallable(modules, targetType);
 

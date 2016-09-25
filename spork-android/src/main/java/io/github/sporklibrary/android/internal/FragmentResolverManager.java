@@ -1,28 +1,15 @@
-package io.github.sporklibrary.android.resolvers;
+package io.github.sporklibrary.android.internal;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.sporklibrary.android.interfaces.FragmentResolver;
 import io.github.sporklibrary.annotations.Nullable;
 
-public class FragmentResolverManager implements FragmentResolver {
+public class FragmentResolverManager implements FragmentResolver, ResolverRegistry<FragmentResolver> {
+	private final List<FragmentResolver> fragmentResolvers = new ArrayList<>(2);
 
-	private static FragmentResolverManager instance;
-
-	private FragmentResolverManager() {
-	}
-
-	public static FragmentResolverManager shared() {
-		if (instance == null) {
-			instance = new FragmentResolverManager();
-		}
-
-		return instance;
-	}
-
-	private final List<FragmentResolver> fragmentResolvers = new ArrayList<>();
-
-	public void addFragmentResolver(FragmentResolver fragmentResolver) {
+	public void register(FragmentResolver fragmentResolver) {
 		fragmentResolvers.add(fragmentResolver);
 	}
 

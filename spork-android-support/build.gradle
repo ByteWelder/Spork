@@ -6,7 +6,8 @@ ext {
 
 dependencies {
     compile (
-        project(':spork-android'),
+        [group: 'io.github.sporklibrary', name: 'spork', version: VERSION_NAME],
+        [group: 'io.github.sporklibrary', name: 'spork-android', version: VERSION_NAME],
         [group: 'com.android.support', name: 'support-fragment', version: androidSupportVersion]
     )
 
@@ -57,4 +58,4 @@ android {
     }
 }
 
-apply from: rootProject.file('gradle/gradle-mvn-push-android.gradle')
+apply from: rootProject.file('gradle/maven-android.gradle')

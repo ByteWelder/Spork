@@ -38,13 +38,13 @@ public class ModuleManager {
 					boolean isSingleton = method.getAnnotation(Singleton.class) != null;
 
 					if (!isSingleton) {
-						return method.invoke(module, (Object[])null);
+						return method.invoke(module, (Object[]) null);
 					} else {
 						String typeName = method.getReturnType().getName();
 						Object instance = singletonInstanceMap.get(typeName);
 
 						if (instance == null) {
-							instance = method.invoke(module, (Object[])null);
+							instance = method.invoke(module, (Object[]) null);
 							singletonInstanceMap.put(typeName, instance);
 						}
 

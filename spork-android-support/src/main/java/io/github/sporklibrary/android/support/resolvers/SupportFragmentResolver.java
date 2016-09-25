@@ -1,11 +1,11 @@
 package io.github.sporklibrary.android.support.resolvers;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
 import io.github.sporklibrary.android.annotations.BindFragment;
 import io.github.sporklibrary.android.resolvers.FragmentResolver;
-import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.exceptions.BindException;
 
 import static io.github.sporklibrary.android.utils.Reflection.tryCast;

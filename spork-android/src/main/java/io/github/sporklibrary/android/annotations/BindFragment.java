@@ -1,6 +1,6 @@
 package io.github.sporklibrary.android.annotations;
 
-import io.github.sporklibrary.android.utils.ResourceId;
+import io.github.sporklibrary.android.internal.utils.ResourceId;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

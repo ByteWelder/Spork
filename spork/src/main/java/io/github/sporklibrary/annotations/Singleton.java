@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * Defines that the relevant target has/returns only one instance.
  *
- * Can be used with {@link BindComponent} or {@link Provides}.
+ * Can be used with {@link Inject} or {@link Provides}.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})

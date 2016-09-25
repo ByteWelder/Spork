@@ -1,4 +1,4 @@
-package io.github.sporklibrary.android.resolvers;
+package io.github.sporklibrary.android.internal;
 
 import android.app.Fragment;
 import android.content.ContentProvider;
@@ -6,6 +6,7 @@ import android.content.Context;
 import android.view.View;
 
 import io.github.sporklibrary.android.interfaces.ContextProvider;
+import io.github.sporklibrary.android.interfaces.ContextResolver;
 import io.github.sporklibrary.android.interfaces.ViewProvider;
 import io.github.sporklibrary.annotations.Nullable;
 

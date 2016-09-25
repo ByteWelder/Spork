@@ -30,5 +30,4 @@ public interface BinderRegistry {
 	 * @param <AnnotationType> the annotation type of the binder
 	 */
 	<AnnotationType extends Annotation> void register(TypeBinder<AnnotationType> typeBinder);
-
 }

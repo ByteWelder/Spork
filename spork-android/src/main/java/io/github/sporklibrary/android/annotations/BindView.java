@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import io.github.sporklibrary.android.utils.ResourceId;
+import io.github.sporklibrary.android.internal.utils.ResourceId;
 
 /**
  * Bind a View instance.

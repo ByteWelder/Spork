@@ -2,8 +2,8 @@ package io.github.sporklibrary.android;
 
 import org.junit.Test;
 
-import io.github.sporklibrary.android.utils.Reflection;
-import io.github.sporklibrary.android.utils.Views;
+import io.github.sporklibrary.android.internal.utils.Reflection;
+import io.github.sporklibrary.android.internal.utils.Views;
 
 import static io.github.sporklibrary.android.ClassAsserts.assertUtilityClassWellDefined;
 

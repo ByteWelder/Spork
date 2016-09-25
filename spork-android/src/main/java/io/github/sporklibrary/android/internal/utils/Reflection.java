@@ -1,4 +1,4 @@
-package io.github.sporklibrary.android.utils;
+package io.github.sporklibrary.android.internal.utils;
 
 import io.github.sporklibrary.annotations.Nullable;
 

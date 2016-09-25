@@ -1,4 +1,4 @@
-package io.github.sporklibrary.android.resolvers;
+package io.github.sporklibrary.android.interfaces;
 
 import io.github.sporklibrary.annotations.Nullable;
 

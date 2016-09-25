@@ -1,11 +1,11 @@
-package io.github.sporklibrary.android.utils;
+package io.github.sporklibrary.android.internal.utils;
 
 import android.content.Context;
 import android.view.View;
 
 import io.github.sporklibrary.android.annotations.BindView;
+import io.github.sporklibrary.android.interfaces.ViewResolver;
 import io.github.sporklibrary.exceptions.BindException;
-import io.github.sporklibrary.android.resolvers.ViewResolverManager;
 
 public final class Views {
 
@@ -18,8 +18,8 @@ public final class Views {
      * @param object       any Activity, Fragment or View (including support library types)
      * @return the found View
      */
-    public static View getView(int viewId, String nameFallback, Object object) {
-        View root_view = ViewResolverManager.shared().resolveView(object);
+    public static View getView(ViewResolver viewResolver, int viewId, String nameFallback, Object object) {
+        View root_view = viewResolver.resolveView(object);
 
         if (root_view == null) {
             throw new BindException(BindView.class, object.getClass(), "incompatible class to find views");

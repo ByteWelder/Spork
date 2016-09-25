@@ -1,8 +1,8 @@
 package io.github.sporklibrary.android.support.resolvers;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
-import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.android.resolvers.ContextResolver;
 
 public class SupportContextResolver implements ContextResolver {

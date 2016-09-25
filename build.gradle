@@ -1,3 +1,5 @@
+apply from: rootProject.file('gradle/maven-base.gradle')
+
 subprojects {
     buildscript {
         repositories {
@@ -5,21 +7,21 @@ subprojects {
         }
 
         dependencies {
-            classpath 'com.android.tools.build:gradle:2.1.3'
+            classpath 'com.android.tools.build:gradle:2.2.0'
             classpath 'org.jacoco:org.jacoco.core:0.7.7.201606060606'
         }
     }
 
     repositories {
+        // Non-release builds get dependencies from local maven
+        if (!mavenConfig.isReleaseBuild()) {
+            mavenLocal()
+        }
+
         mavenCentral()
     }
 
     apply plugin: 'jacoco'
-
-    jacoco {
-        toolVersion = '0.7.6.201602180812'
-    }
-
     apply plugin: 'checkstyle'
 
     checkstyle {

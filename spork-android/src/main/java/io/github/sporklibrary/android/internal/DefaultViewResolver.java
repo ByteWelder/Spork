@@ -1,10 +1,11 @@
-package io.github.sporklibrary.android.resolvers;
+package io.github.sporklibrary.android.internal;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.view.View;
 
 import io.github.sporklibrary.android.interfaces.ViewProvider;
+import io.github.sporklibrary.android.interfaces.ViewResolver;
 import io.github.sporklibrary.annotations.Nullable;
 
 public class DefaultViewResolver implements ViewResolver {
