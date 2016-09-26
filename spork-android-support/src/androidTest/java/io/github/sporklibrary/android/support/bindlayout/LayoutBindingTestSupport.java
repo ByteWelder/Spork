@@ -13,7 +13,6 @@ import io.github.sporklibrary.android.support.test.R;
 
 import static org.junit.Assert.assertNotNull;
 
-@SmallTest
 public class LayoutBindingTestSupport {
 
     @Rule

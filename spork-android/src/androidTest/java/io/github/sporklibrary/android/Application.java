@@ -2,19 +2,17 @@ package io.github.sporklibrary.android;
 
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.android.annotations.BindResource;
+import io.github.sporklibrary.android.inject.domain.StringModule;
 import io.github.sporklibrary.annotations.Inject;
 
 public class Application extends android.app.Application {
     private static Application sInstance = null;
 
-    public static class Component {
-    }
-
     @BindResource
     private Float spork_test_dimension;
 
     @Inject
-    private Component component;
+    private String testString;
 
     @Override
     public void onCreate() {
@@ -22,15 +20,15 @@ public class Application extends android.app.Application {
 
         sInstance = this;
 
-        Spork.bind(this);
+        Spork.bind(this, new StringModule());
     }
 
     public Float getTestDimension() {
         return spork_test_dimension;
     }
 
-    public Component getComponent() {
-        return component;
+    public String getTestString() {
+        return testString;
     }
 
     public static Application getInstance() {

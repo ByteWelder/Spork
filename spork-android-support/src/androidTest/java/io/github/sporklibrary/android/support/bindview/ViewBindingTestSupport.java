@@ -13,7 +13,6 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.*;
 import static org.junit.Assert.assertNotNull;
 
-@SmallTest
 public class ViewBindingTestSupport
 {
 	@Rule

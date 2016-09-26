@@ -5,6 +5,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.sporklibrary.android.interfaces.ResolverRegistry;
 import io.github.sporklibrary.android.interfaces.ViewResolver;
 import io.github.sporklibrary.annotations.Nullable;
 

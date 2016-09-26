@@ -3,6 +3,7 @@ package io.github.sporklibrary.android.internal;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.sporklibrary.android.interfaces.ResolverRegistry;
 import io.github.sporklibrary.android.interfaces.FragmentResolver;
 import io.github.sporklibrary.annotations.Nullable;
 
