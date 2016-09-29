@@ -34,6 +34,8 @@ public final class AnnotatedFields {
 			}
 		}
 
+		annotatedFields.trimToSize();
+
 		return annotatedFields;
 	}
 

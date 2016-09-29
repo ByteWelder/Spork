@@ -36,6 +36,8 @@ public final class AnnotatedMethods {
 			}
 		}
 
+		annotatedMethods.trimToSize();
+
 		return annotatedMethods;
 	}
 
