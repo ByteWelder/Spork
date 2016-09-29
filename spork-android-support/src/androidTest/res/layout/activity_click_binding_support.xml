@@ -9,7 +9,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"/>
 
-	<fragment android:name="io.github.sporklibrary.android.support.bindclick.domain.TestFragmentSupport"
+	<fragment android:name="io.github.sporklibrary.android.support.test.bindclick.domain.TestFragmentSupport"
 	          android:id="@+id/testfragment"
 	          android:layout_width="wrap_content"
 	          android:layout_height="wrap_content" />

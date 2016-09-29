@@ -6,7 +6,7 @@
 
 	<fragment
 		android:id="@+id/testfragment"
-		android:name="io.github.sporklibrary.android.support.bindfragment.domain.TestFragmentSupportChild"
+		android:name="io.github.sporklibrary.android.support.test.bindfragment.domain.TestFragmentSupportChild"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content" />
 

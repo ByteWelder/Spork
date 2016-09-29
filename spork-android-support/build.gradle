@@ -33,7 +33,7 @@ android {
         targetSdkVersion 24
         versionCode 1
         versionName VERSION_NAME
-        testInstrumentationRunner 'io.github.sporklibrary.android.support.TestRunner'
+        testInstrumentationRunner 'io.github.sporklibrary.android.support.test.TestRunner'
         testHandleProfiling true
         testFunctionalTest true
         consumerProguardFiles 'proguard.pro'
