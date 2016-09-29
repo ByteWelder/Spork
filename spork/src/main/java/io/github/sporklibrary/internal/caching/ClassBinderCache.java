@@ -3,13 +3,12 @@ package io.github.sporklibrary.internal.caching;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
+import io.github.sporklibrary.Binder;
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.binders.MethodBinder;
 import io.github.sporklibrary.binders.TypeBinder;
-import io.github.sporklibrary.Binder;
 import io.github.sporklibrary.internal.reflection.AnnotatedField;
 import io.github.sporklibrary.internal.reflection.AnnotatedFields;
 import io.github.sporklibrary.internal.reflection.AnnotatedMethod;
@@ -36,7 +35,7 @@ public final class ClassBinderCache {
 	 * @param <AnnotationType> the annotation to search for in the annotated type
 	 */
 	public <AnnotationType extends Annotation> void register(FieldBinder<AnnotationType> fieldBinder) {
-		Set<AnnotatedField<AnnotationType>> annotatedFields = AnnotatedFields.get(fieldBinder.getAnnotationClass(), annotatedType);
+		List<AnnotatedField<AnnotationType>> annotatedFields = AnnotatedFields.get(fieldBinder.getAnnotationClass(), annotatedType);
 
 		if (!annotatedFields.isEmpty()) {
 			cachedBinders.add(new AnnotatedFieldBinderCache<>(fieldBinder, annotatedFields));
@@ -50,7 +49,7 @@ public final class ClassBinderCache {
 	 * @param <AnnotationType> the annotation to search for in the annotated type
 	 */
 	public <AnnotationType extends Annotation> void register(MethodBinder<AnnotationType> methodBinder) {
-		Set<AnnotatedMethod<AnnotationType>> annotatedMethods = AnnotatedMethods.get(methodBinder.getAnnotationClass(), annotatedType);
+		List<AnnotatedMethod<AnnotationType>> annotatedMethods = AnnotatedMethods.get(methodBinder.getAnnotationClass(), annotatedType);
 
 		if (!annotatedMethods.isEmpty()) {
 			cachedBinders.add(new AnnotatedMethodBinderCache<>(methodBinder, annotatedMethods));

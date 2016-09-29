@@ -2,9 +2,8 @@ package io.github.sporklibrary.internal.reflection;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.github.sporklibrary.exceptions.BindException;
 
@@ -24,30 +23,29 @@ public final class AnnotatedFields {
 	 * @param <AnnotationType> the annotationClass type
 	 * @return a set of AnnotatedField objects for the specified annotation type
 	 */
-	public static <AnnotationType extends Annotation> Set<AnnotatedField<AnnotationType>> get(Class<AnnotationType> annotationClass, Class<?> annotatedClass) {
-		HashSet<AnnotatedField<AnnotationType>> annotatedFieldSet = new HashSet<>();
+	public static <AnnotationType extends Annotation> List<AnnotatedField<AnnotationType>> get(Class<AnnotationType> annotationClass, Class<?> annotatedClass) {
+		ArrayList<AnnotatedField<AnnotationType>> annotatedFields = new ArrayList<>();
 
 		for (Field field : annotatedClass.getDeclaredFields()) {
 			AnnotationType annotation = field.getAnnotation(annotationClass);
 
 			if (annotation != null) {
-				annotatedFieldSet.add(new AnnotatedField<>(annotation, field));
+				annotatedFields.add(new AnnotatedField<>(annotation, field));
 			}
 		}
 
-		return !annotatedFieldSet.isEmpty() ? annotatedFieldSet : Collections.<AnnotatedField<AnnotationType>>emptySet();
+		return annotatedFields;
 	}
 
 	/**
 	 * Set a value for an AnnotatedField on an object
 	 *
-	 * @param annotatedField the AnnotatedField
-	 * @param parentObject   the parent object
-	 * @param valueObject    the field value to bind
+	 * @param annotation   the annotation to set a value for
+	 * @param field        the field where the annotation was placed
+	 * @param parentObject the parent object
+	 * @param valueObject  the field value to bind
 	 */
-	public static void setValue(AnnotatedField<?> annotatedField, Object parentObject, Object valueObject) {
-		Field field = annotatedField.getField();
-
+	public static void setValue(Annotation annotation, Field field, Object parentObject, Object valueObject) {
 		boolean accessible = field.isAccessible();
 
 		try {
@@ -59,7 +57,7 @@ public final class AnnotatedFields {
 				field.setAccessible(false);
 			}
 		} catch (IllegalAccessException e) {
-			throw new BindException(annotatedField.getAnnotation().getClass(), parentObject.getClass(), field, "field not accessible", e);
+			throw new BindException(annotation.getClass(), parentObject.getClass(), field, "field not accessible", e);
 		} finally {
 			// ensure the Field isn't accessible when it shouldn't be
 			if (!accessible && field.isAccessible()) {

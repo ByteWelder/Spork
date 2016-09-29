@@ -11,7 +11,6 @@ import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.internal.Callable;
 import io.github.sporklibrary.internal.LazyImpl;
-import io.github.sporklibrary.internal.reflection.AnnotatedField;
 import io.github.sporklibrary.internal.reflection.AnnotatedFields;
 
 /**
@@ -26,13 +25,12 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 	}
 
 	@Override
-	public void bind(Object object, AnnotatedField<Inject> annotatedField, @Nullable Object[] modules) {
-		Field field = annotatedField.getField();
+	public void bind(Object instance, Inject annotation, Field field, @Nullable Object[] modules) {
 		Class<?> fieldType = field.getType();
 
 		// Bind with module system (uses @Provides annotation on methods)
 		if (modules == null || modules.length == 0) {
-			throw new BindException(Inject.class, object.getClass(), field, "must use modules in Spork.bind(instance, ...) when using @Inject at " + fieldType.getName());
+			throw new BindException(Inject.class, instance.getClass(), field, "must use modules in Spork.bind(instance, ...) when using @Inject at " + fieldType.getName());
 		}
 
 		boolean isLazy = (fieldType == Lazy.class);
@@ -41,15 +39,15 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 		Callable<?> callable = moduleManager.getCallable(modules, targetType);
 
 		if (callable == null) {
-			throw new BindException(Inject.class, object.getClass(), field, "none of the modules provides an instance for " + fieldType.getName());
+			throw new BindException(Inject.class, instance.getClass(), field, "none of the modules provides an instance for " + fieldType.getName());
 		}
 
-		if (!isLazy) {
-			Object instance = call(callable, field, object);
-			AnnotatedFields.setValue(annotatedField, object, instance);
-		} else {
+		if (isLazy) {
 			LazyImpl<?> lazyImpl = new LazyImpl<>(callable);
-			AnnotatedFields.setValue(annotatedField, object, lazyImpl);
+			AnnotatedFields.setValue(annotation, field, instance, lazyImpl);
+		} else {
+			Object bindInstance = call(callable, field, instance);
+			AnnotatedFields.setValue(annotation, field, instance, bindInstance);
 		}
 	}
 

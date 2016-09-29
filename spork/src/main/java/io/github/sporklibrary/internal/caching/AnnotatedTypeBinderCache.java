@@ -26,6 +26,6 @@ class AnnotatedTypeBinderCache<AnnotationType extends Annotation> implements Bin
 	 */
 	@Override
 	public void bind(Object object, @Nullable Object... modules) {
-		typeBinder.bind(object, annotatedType, modules);
+		typeBinder.bind(object, annotatedType.getAnnotation(), annotatedType.getAnnotatedClass(), modules);
 	}
 }

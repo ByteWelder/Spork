@@ -1,36 +1,36 @@
 package io.github.sporklibrary.test.fieldbinding;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 import io.github.sporklibrary.annotations.Nullable;
-import io.github.sporklibrary.internal.reflection.AnnotatedField;
-import io.github.sporklibrary.internal.reflection.AnnotatedMethod;
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.binders.MethodBinder;
 
 public class BindFieldOrMethodBinder implements FieldBinder<BindFieldOrMethod>, MethodBinder<BindFieldOrMethod> {
-    private int methodBindCount = 0;
+	private int methodBindCount = 0;
+	private int fieldBindCount = 0;
 
-    private int fieldBindCount = 0;
+	@Override
+	public void bind(Object instance, BindFieldOrMethod annotation, Field field, @Nullable Object[] modules) {
+		fieldBindCount++;
+	}
 
-    @Override
-    public Class<BindFieldOrMethod> getAnnotationClass() {
-        return BindFieldOrMethod.class;
-    }
+	@Override
+	public void bind(Object instance, BindFieldOrMethod annotation, Method method, @Nullable Object[] modules) {
+		methodBindCount++;
+	}
 
-    @Override
-    public void bind(Object object, AnnotatedMethod<BindFieldOrMethod> annotatedMethod, @Nullable Object[] modules) {
-        methodBindCount++;
-    }
+	@Override
+	public Class<BindFieldOrMethod> getAnnotationClass() {
+		return BindFieldOrMethod.class;
+	}
 
-    @Override
-    public void bind(Object object, AnnotatedField<BindFieldOrMethod> annotatedField, @Nullable Object[] modules) {
-        fieldBindCount++;
-    }
+	public int getMethodBindCount() {
+		return methodBindCount;
+	}
 
-    public int getMethodBindCount() {
-        return methodBindCount;
-    }
-
-    public int getFieldBindCount() {
-        return fieldBindCount;
-    }
+	public int getFieldBindCount() {
+		return fieldBindCount;
+	}
 }

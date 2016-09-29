@@ -3,9 +3,8 @@ package io.github.sporklibrary.internal.reflection;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.exceptions.BindException;
@@ -26,18 +25,18 @@ public final class AnnotatedMethods {
 	 * @param <AnnotationType> the annotationClass type
 	 * @return a set of AnnotatedMethod objects for the specified annotation type
 	 */
-	public static <AnnotationType extends Annotation> Set<AnnotatedMethod<AnnotationType>> get(Class<AnnotationType> annotationClass, Class<?> annotatedClass) {
-		HashSet<AnnotatedMethod<AnnotationType>> annotatedMethodSet = new HashSet<>();
+	public static <AnnotationType extends Annotation> List<AnnotatedMethod<AnnotationType>> get(Class<AnnotationType> annotationClass, Class<?> annotatedClass) {
+		ArrayList<AnnotatedMethod<AnnotationType>> annotatedMethods = new ArrayList<>();
 
 		for (Method method : annotatedClass.getDeclaredMethods()) {
 			AnnotationType annotation = method.getAnnotation(annotationClass);
 
 			if (annotation != null) {
-				annotatedMethodSet.add(new AnnotatedMethod<>(annotation, method));
+				annotatedMethods.add(new AnnotatedMethod<>(annotation, method));
 			}
 		}
 
-		return !annotatedMethodSet.isEmpty() ? annotatedMethodSet : Collections.<AnnotatedMethod<AnnotationType>>emptySet();
+		return annotatedMethods;
 	}
 
 	/**
