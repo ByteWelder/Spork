@@ -2,6 +2,7 @@ package io.github.sporklibrary.android.test;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class ApplicationTest {
@@ -9,6 +10,6 @@ public class ApplicationTest {
     @Test
     public void test() {
         assertNotNull(Application.getInstance().getTestDimension());
-        assertNotNull(Application.getInstance().getComponent());
+        assertEquals("test", Application.getInstance().getTestString());
     }
 }

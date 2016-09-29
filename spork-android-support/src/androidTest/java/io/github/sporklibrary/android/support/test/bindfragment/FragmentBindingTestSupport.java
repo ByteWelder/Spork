@@ -10,7 +10,6 @@ import io.github.sporklibrary.android.support.test.bindfragment.domain.TestActiv
 
 import static org.junit.Assert.assertNotNull;
 
-@SmallTest
 public class FragmentBindingTestSupport {
 
     @Rule

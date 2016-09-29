@@ -38,9 +38,8 @@ public class BindFragmentBinder implements FieldBinder<BindFragment> {
 		AnnotatedFields.setValue(annotatedField, object, fragment_object);
 	}
 
-	private
 	@Nullable
-	Object resolveFragment(Object object, AnnotatedField<BindFragment> annotatedField) {
+	private Object resolveFragment(Object object, AnnotatedField<BindFragment> annotatedField) {
 		BindFragment annotation = annotatedField.getAnnotation();
 		int id = annotation.value();
 

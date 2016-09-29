@@ -22,7 +22,7 @@ public class BindClickBinder implements MethodBinder<BindClick> {
 		private final AnnotatedMethod mAnnotatedMethod;
 		private final Object mObject;
 
-		public OnClickListener(AnnotatedMethod annotatedMethod, Object object) {
+		OnClickListener(AnnotatedMethod annotatedMethod, Object object) {
 			mAnnotatedMethod = annotatedMethod;
 			mObject = object;
 		}
