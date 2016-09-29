@@ -1,53 +1,49 @@
 package io.github.sporklibrary.test.typebinding;
 
-import io.github.sporklibrary.Spork;
-import io.github.sporklibrary.exceptions.BindException;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import io.github.sporklibrary.Spork;
+import io.github.sporklibrary.exceptions.BindException;
 
 import static org.junit.Assert.assertEquals;
 
 public class TypeBindingTest {
+	private final Spork spork = new Spork();
 
-    @BindValue(123)
-    public final class IntegerHolder implements IntSettable {
-        private int mValue = 100;
+	@BindValue(123)
+	public final class IntegerHolder implements IntSettable {
+		private int value = 100;
 
-        public IntegerHolder() {
-            Spork.bind(this);
-        }
+		@Override
+		public void setValue(int value) {
+			this.value = value;
+		}
 
-        @Override
-        public void setValue(int value) {
-            mValue = value;
-        }
+		public int getValue() {
+			return value;
+		}
+	}
 
-        public int getValue() {
-            return mValue;
-        }
-    }
+	@BindValue(123)
+	public final class FaultyIntegerHolder {
+	}
 
-    @BindValue(123)
-    public final class FaultyIntegerHolder {
-        public FaultyIntegerHolder() {
-            Spork.bind(this);
-        }
-    }
+	@Before
+	public void registerTestBinders() {
+		spork.getBinderRegistry().register(new BindTypeBinder());
+	}
 
-    @Before
-    public void registerTestBinders() {
-        Spork.getBinderRegistry().register(new BindTypeBinder());
-    }
+	@Test
+	public void test() {
+		IntegerHolder holder = new IntegerHolder();
+		spork.getBinder().bind(holder);
+		assertEquals(123, holder.getValue());
+	}
 
-    @Test
-    public void test() {
-        IntegerHolder holder = new IntegerHolder();
-        assertEquals(123, holder.getValue());
-    }
-
-    @Test(expected = BindException.class)
-    public void testFaultyType() {
-        new FaultyIntegerHolder();
-    }
+	@Test(expected = BindException.class)
+	public void testFaultyType() {
+		FaultyIntegerHolder holder = new FaultyIntegerHolder();
+		spork.getBinder().bind(holder);
+	}
 }

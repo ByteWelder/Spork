@@ -5,6 +5,7 @@ import java.util.Set;
 
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.MethodBinder;
+import io.github.sporklibrary.Binder;
 import io.github.sporklibrary.internal.reflection.AnnotatedMethod;
 
 /**
@@ -12,7 +13,7 @@ import io.github.sporklibrary.internal.reflection.AnnotatedMethod;
  *
  * @param <AnnotationType> the annotation type that is being bound
  */
-class AnnotatedMethodBinderCache<AnnotationType extends Annotation> implements CachedBinder {
+class AnnotatedMethodBinderCache<AnnotationType extends Annotation> implements Binder {
 	private final Set<AnnotatedMethod<AnnotationType>> annotatedMethods;
 	private final MethodBinder<AnnotationType> methodBinder;
 
@@ -25,7 +26,7 @@ class AnnotatedMethodBinderCache<AnnotationType extends Annotation> implements C
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void bind(Object object, @Nullable Object[] modules) {
+	public void bind(Object object, @Nullable Object... modules) {
 		// Bind all methods for this object
 		for (AnnotatedMethod<AnnotationType> annotatedMethod : annotatedMethods) {
 			methodBinder.bind(object, annotatedMethod, modules);

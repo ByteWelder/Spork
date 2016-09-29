@@ -9,6 +9,7 @@ import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.binders.MethodBinder;
 import io.github.sporklibrary.binders.TypeBinder;
+import io.github.sporklibrary.Binder;
 import io.github.sporklibrary.internal.reflection.AnnotatedField;
 import io.github.sporklibrary.internal.reflection.AnnotatedFields;
 import io.github.sporklibrary.internal.reflection.AnnotatedMethod;
@@ -21,7 +22,7 @@ import io.github.sporklibrary.internal.reflection.AnnotatedTypes;
  * which excludes the cache of its superclasses.
  */
 public final class ClassBinderCache {
-	private final List<CachedBinder> cachedBinders = new ArrayList<>();
+	private final List<Binder> cachedBinders = new ArrayList<>();
 	private final Class<?> annotatedType;
 
 	public ClassBinderCache(Class<?> annotatedType) {
@@ -73,7 +74,7 @@ public final class ClassBinderCache {
 	/**
 	 * @return the list of all CachedBinder instances managed for this cache.
 	 */
-	public List<CachedBinder> getCachedBinders() {
+	public List<Binder> getCachedBinders() {
 		return cachedBinders;
 	}
 }

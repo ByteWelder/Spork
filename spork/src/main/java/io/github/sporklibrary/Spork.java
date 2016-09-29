@@ -7,99 +7,29 @@ import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.binders.MethodBinder;
 import io.github.sporklibrary.binders.TypeBinder;
-import io.github.sporklibrary.internal.Binder;
 import io.github.sporklibrary.internal.BinderImpl;
 import io.github.sporklibrary.internal.BinderManager;
 import io.github.sporklibrary.internal.BinderManagerImpl;
 import io.github.sporklibrary.internal.caching.BinderCache;
 import io.github.sporklibrary.internal.caching.BinderCacheImpl;
 import io.github.sporklibrary.internal.inject.InjectFieldBinder;
-import io.github.sporklibrary.internal.inject.ModuleManager;
 
 /**
  * Main class to access Spork functionality.
  */
-public final class Spork {
+public class Spork {
+	private final BinderRegistry binderRegistry;
+	private final Binder binder;
 
-	private Spork() {
-	}
+	private static @Nullable Spork sharedInstance;
 
-	private static @Nullable BinderRegistry binderRegistry;
-	private static @Nullable Binder binder;
-	private static @Nullable ModuleManager moduleManager;
-
-	/**
-	 * Bind a single object with all relevant instances.
-	 *
-	 * @param object the object to bind into
-	 */
-	public static void bind(Object object) {
-		if (binder == null) {
-			initialize();
-		}
-
-		binder.bind(object);
-	}
-
-	/**
-	 * Bind a single object with all relevant instances.
-	 *
-	 * @param object  the object to bind into
-	 * @param modules specifies 1 or more modules
-	 */
-	public static void bind(Object object, Object... modules) {
-		if (binder == null) {
-			initialize();
-		}
-
-		binder.bind(object, modules);
-	}
-
-	public static BinderRegistry getBinderRegistry() {
-		if (binderRegistry == null) {
-			initialize();
-		}
-
-		return binderRegistry;
-	}
-
-	public static ModuleManager getModuleManager() {
-		if (moduleManager == null) {
-			initialize();
-		}
-
-		return moduleManager;
-	}
-
-	/**
-	 * Tries to register the SporkAndroid bindings if the library is present in the classpath.
-	 *
-	 * @param binderRegistry the binder registry to register bindings to
-	 */
-	private static void tryInitializeSporkAndroidBindings(BinderRegistry binderRegistry) {
-		try {
-			Class<?> sporkAndroidClass = Class.forName("io.github.sporklibrary.android.SporkAndroid");
-			Method initializeMethod = sporkAndroidClass.getDeclaredMethod("initialize", BinderRegistry.class);
-			initializeMethod.invoke(null, binderRegistry);
-		} catch (ClassNotFoundException e) {
-			// no-op
-		} catch (NoSuchMethodException e) {
-			System.out.println("Spork: Spork for Android found, but initialize method is not present");
-		} catch (InvocationTargetException e) {
-			System.out.println("Spork: Spork for Android found, but initialization failed because of InvocationTargetException: " + e.getMessage());
-		} catch (IllegalAccessException e) {
-			System.out.println("Spork: Spork for Android found, but initialization failed because of IllegalAccessException: " + e.getMessage());
-		}
-	}
-
-	private static synchronized void initialize() {
+	public Spork() {
 		// create all instances
 		BinderManager binderManager = new BinderManagerImpl();
 		final BinderCache binderCache = new BinderCacheImpl(binderManager);
 
 		binderRegistry = binderManager;
 		binder = new BinderImpl(binderCache);
-		moduleManager = new ModuleManager();
 
 		// ensure the cache is updated when a new type is registered
 		binderManager.addRegistrationListener(new BinderManager.RegistrationListener() {
@@ -123,6 +53,53 @@ public final class Spork {
 		binderManager.register(new InjectFieldBinder());
 
 		// Try auto-binding Spork for Android through reflection
-		tryInitializeSporkAndroidBindings(binderManager);
+		try {
+			Class<?> sporkAndroidClass = Class.forName("io.github.sporklibrary.android.SporkAndroid");
+			Method initializeMethod = sporkAndroidClass.getDeclaredMethod("initialize", BinderRegistry.class);
+			initializeMethod.invoke(null, binderRegistry);
+		} catch (ClassNotFoundException e) {
+			// no-op
+		} catch (NoSuchMethodException e) {
+			System.out.println("Spork: Spork for Android found, but initialize method is not present");
+		} catch (InvocationTargetException e) {
+			System.out.println("Spork: Spork for Android found, but initialization failed because of InvocationTargetException: " + e.getMessage());
+		} catch (IllegalAccessException e) {
+			System.out.println("Spork: Spork for Android found, but initialization failed because of IllegalAccessException: " + e.getMessage());
+		}
 	}
+
+	/**
+	 * @return the interface for binding
+	 */
+	public Binder getBinder() {
+		return binder;
+	}
+
+	public BinderRegistry getBinderRegistry() {
+		return binderRegistry;
+	}
+
+	// region static methods
+
+	/**
+	 * @return a shared instance of Spork (creates one if one hasn't been created yet)
+	 */
+	public static Spork sharedInstance() {
+		if (sharedInstance == null) {
+			sharedInstance = new Spork();
+		}
+
+		return sharedInstance;
+	}
+
+	/**
+	 * A shortcut to Spork.sharedInstance().getBinder().bind(object, modules)
+	 * @param object the object to bind
+	 * @param modules an optional array of non-null module instances
+	 */
+	public static void bind(Object object, @Nullable Object... modules) {
+		sharedInstance().getBinder().bind(object, modules);
+	}
+
+	// endregion
 }

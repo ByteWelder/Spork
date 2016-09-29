@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 
 import io.github.sporklibrary.Lazy;
-import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.Inject;
 import io.github.sporklibrary.annotations.NonNull;
 import io.github.sporklibrary.annotations.Nullable;
@@ -19,6 +18,7 @@ import io.github.sporklibrary.internal.reflection.AnnotatedFields;
  * The default FieldBinder that binds field annotated with the Inject annotation.
  */
 public class InjectFieldBinder implements FieldBinder<Inject> {
+	private final ModuleManager moduleManager = new ModuleManager();
 
 	@Override
 	public Class<Inject> getAnnotationClass() {
@@ -38,7 +38,7 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 		boolean isLazy = (fieldType == Lazy.class);
 		Class<?> targetType = isLazy ? (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0] : fieldType;
 
-		Callable<?> callable = Spork.getModuleManager().getCallable(modules, targetType);
+		Callable<?> callable = moduleManager.getCallable(modules, targetType);
 
 		if (callable == null) {
 			throw new BindException(Inject.class, object.getClass(), field, "none of the modules provides an instance for " + fieldType.getName());

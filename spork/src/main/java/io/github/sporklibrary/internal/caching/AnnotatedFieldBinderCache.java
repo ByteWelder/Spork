@@ -5,6 +5,7 @@ import java.util.Set;
 
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.binders.FieldBinder;
+import io.github.sporklibrary.Binder;
 import io.github.sporklibrary.internal.reflection.AnnotatedField;
 
 /**
@@ -12,7 +13,7 @@ import io.github.sporklibrary.internal.reflection.AnnotatedField;
  *
  * @param <AnnotationType> the annotation type that is being bound
  */
-class AnnotatedFieldBinderCache<AnnotationType extends Annotation> implements CachedBinder {
+class AnnotatedFieldBinderCache<AnnotationType extends Annotation> implements Binder {
 	private final Set<AnnotatedField<AnnotationType>> annotatedFields;
 	private final FieldBinder<AnnotationType> fieldBinder;
 
@@ -25,7 +26,7 @@ class AnnotatedFieldBinderCache<AnnotationType extends Annotation> implements Ca
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void bind(Object object, @Nullable Object[] modules) {
+	public void bind(Object object, @Nullable Object... modules) {
 		// Bind all fields for this object
 		for (AnnotatedField<AnnotationType> annotatedField : annotatedFields) {
 			fieldBinder.bind(object, annotatedField, modules);

@@ -1,13 +1,14 @@
 package io.github.sporklibrary.internal;
 
+import io.github.sporklibrary.Binder;
 import io.github.sporklibrary.annotations.Nullable;
-import io.github.sporklibrary.internal.caching.CachedBinder;
+import io.github.sporklibrary.internal.caching.BinderCache;
 import io.github.sporklibrary.internal.caching.ClassBinderCache;
 
 public class BinderImpl implements Binder {
-	private io.github.sporklibrary.internal.caching.BinderCache binderCache;
+	private BinderCache binderCache;
 
-	public BinderImpl(io.github.sporklibrary.internal.caching.BinderCache binderCache) {
+	public BinderImpl(BinderCache binderCache) {
 		this.binderCache = binderCache;
 	}
 
@@ -40,7 +41,7 @@ public class BinderImpl implements Binder {
 	 * @param modules either null or an array of non-null modules
 	 */
 	private void bindInternal(Object object, ClassBinderCache cache, @Nullable Object[] modules) {
-		for (CachedBinder cachedBinder : cache.getCachedBinders()) {
+		for (Binder cachedBinder : cache.getCachedBinders()) {
 			cachedBinder.bind(object, modules);
 		}
 	}
