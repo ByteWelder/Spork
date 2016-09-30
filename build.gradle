@@ -1,40 +1,40 @@
 apply from: rootProject.file('gradle/maven-base.gradle')
 
 subprojects {
-    buildscript {
-        repositories {
-            mavenCentral()
-            jcenter()
-        }
+	buildscript {
+		repositories {
+			mavenCentral()
+			jcenter()
+		}
 
-        dependencies {
-            classpath 'com.android.tools.build:gradle:2.2.0'
-            classpath 'org.jacoco:org.jacoco.core:0.7.7.201606060606'
-        }
-    }
+		dependencies {
+			classpath 'com.android.tools.build:gradle:2.2.0'
+			classpath 'org.jacoco:org.jacoco.core:0.7.7.201606060606'
+		}
+	}
 
-    repositories {
-        // Non-release builds get dependencies from local maven
-        if (!mavenConfig.isReleaseBuild()) {
-            mavenLocal()
-        }
+	repositories {
+		// Non-release builds get dependencies from local maven
+		if (!mavenConfig.isReleaseBuild()) {
+			mavenLocal()
+		}
 
-        mavenCentral()
-    }
+		mavenCentral()
+	}
 
-    apply plugin: 'jacoco'
-    apply plugin: 'checkstyle'
+	apply plugin: 'jacoco'
+	apply plugin: 'checkstyle'
 
-    checkstyle {
-        configFile = new File(rootDir, 'checkstyle.xml')
-    }
+	checkstyle {
+		configFile = new File(rootDir, 'checkstyle.xml')
+	}
 
-    group = GROUP
-    version = VERSION_NAME
+	group = GROUP
+	version = VERSION_NAME
 
-    gradle.projectsEvaluated {
-        tasks.withType(JavaCompile) {
-            options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
-        }
-    }
+	gradle.projectsEvaluated {
+		tasks.withType(JavaCompile) {
+			options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
+		}
+	}
 }
