@@ -4,14 +4,15 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 
+import java.lang.reflect.Field;
+
 import io.github.sporklibrary.android.annotations.BindResource;
 import io.github.sporklibrary.android.interfaces.ContextResolver;
 import io.github.sporklibrary.android.internal.utils.ResourceId;
 import io.github.sporklibrary.annotations.Nullable;
-import io.github.sporklibrary.binders.FieldBinder;
 import io.github.sporklibrary.exceptions.BindException;
-import io.github.sporklibrary.internal.reflection.AnnotatedField;
-import io.github.sporklibrary.internal.reflection.AnnotatedFields;
+import io.github.sporklibrary.interfaces.FieldBinder;
+import io.github.sporklibrary.internal.Reflection;
 
 public class BindResourceBinder implements FieldBinder<BindResource> {
 	private ContextResolver contextResolver;
@@ -21,58 +22,58 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 	}
 
 	@Override
+	public void bind(Object object, BindResource annotation, Field field, @Nullable Object[] modules) {
+		Context context = contextResolver.resolveContext(object);
+
+		if (context == null) {
+			throw new BindException(BindResource.class, object.getClass(), field, "failed to find Context: make sure your parent class is a View, Fragment or Activity");
+		}
+
+		Object field_object = getFieldObject(context, annotation, field);
+
+		if (field_object == null) {
+			throw new BindException(BindResource.class, object.getClass(), field, "resource not found");
+		}
+
+		Reflection.setFieldValue(annotation, field, object, field_object);
+	}
+
+	@Override
 	public Class<BindResource> getAnnotationClass() {
 		return BindResource.class;
 	}
 
-	@Override
-	public void bind(Object object, AnnotatedField<BindResource> annotatedField, @Nullable Object[] modules) {
-		Context context = contextResolver.resolveContext(object);
-
-		if (context == null) {
-			throw new BindException(BindResource.class, object.getClass(), annotatedField.getField(), "failed to find Context: make sure your parent class is a View, Fragment or Activity");
-		}
-
-		Object field_object = getFieldObject(context, annotatedField);
-
-		if (field_object == null) {
-			throw new BindException(BindResource.class, object.getClass(), annotatedField.getField(), "resource not found");
-		}
-
-		AnnotatedFields.setValue(annotatedField, object, field_object);
-	}
-
 	@Nullable
-	private Object getFieldObject(Context context, AnnotatedField<BindResource> annotatedField) {
-		Class<?> field_class = annotatedField.getField().getType();
+	private Object getFieldObject(Context context, BindResource annotation, Field field) {
+		Class<?> field_class = field.getType();
 
 		if (field_class == String.class) {
-			return getStringObject(context, annotatedField);
+			return getStringObject(context, annotation, field);
 		} else if (field_class == Float.class || field_class == float.class) {
-			return getDimensionFieldObject(context, annotatedField);
+			return getDimensionFieldObject(context, annotation, field);
 		} else if (field_class == Drawable.class) {
-			return getDrawableFieldObject(context, annotatedField);
+			return getDrawableFieldObject(context, annotation, field);
 		} else {
-			throw new BindException(BindResource.class, annotatedField.getField().getDeclaringClass(), annotatedField.getField(), "unsupported field type");
+			throw new BindException(BindResource.class, field.getDeclaringClass(), field, "unsupported field type");
 		}
 	}
 
 	@Nullable
-	private String getStringObject(Context context, AnnotatedField<BindResource> annotatedField) {
-		int resource_id = annotatedField.getAnnotation().value();
+	private String getStringObject(Context context, BindResource annotation, Field field) {
+		int resource_id = annotation.value();
 
 		if (resource_id == ResourceId.sDefaultValue) {
-			resource_id = context.getResources().getIdentifier(annotatedField.getField().getName(), "string", context.getPackageName());
+			resource_id = context.getResources().getIdentifier(field.getName(), "string", context.getPackageName());
 		}
 
 		return context.getResources().getString(resource_id);
 	}
 
-	private float getDimensionFieldObject(Context context, AnnotatedField<BindResource> annotatedField) {
-		int resource_id = annotatedField.getAnnotation().value();
+	private float getDimensionFieldObject(Context context, BindResource annotation, Field field) {
+		int resource_id = annotation.value();
 
 		if (resource_id == ResourceId.sDefaultValue) {
-			resource_id = context.getResources().getIdentifier(annotatedField.getField().getName(), "dimen", context.getPackageName());
+			resource_id = context.getResources().getIdentifier(field.getName(), "dimen", context.getPackageName());
 		}
 
 		return context.getResources().getDimension(resource_id);
@@ -80,11 +81,11 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 
 	@SuppressWarnings("deprecation")
 	@Nullable
-	private Drawable getDrawableFieldObject(Context context, AnnotatedField<BindResource> annotatedField) {
-		int resource_id = annotatedField.getAnnotation().value();
+	private Drawable getDrawableFieldObject(Context context, BindResource annotation, Field field) {
+		int resource_id = annotation.value();
 
 		if (resource_id == ResourceId.sDefaultValue) {
-			resource_id = context.getResources().getIdentifier(annotatedField.getField().getName(), "drawable", context.getPackageName());
+			resource_id = context.getResources().getIdentifier(field.getName(), "drawable", context.getPackageName());
 		}
 
 		if (Build.VERSION.SDK_INT < 21) {

@@ -55,28 +55,27 @@ public class Spork {
 		// registration must happen after cache is created and listening for registrations
 		binderManager.register(new InjectFieldBinder());
 
-		initializeSporkExtension("io.github.sporklibrary.android.SporkExtension");
-		initializeSporkExtension("io.github.sporklibrary.android.support.SporkExtension");
+		initializeExtension("io.github.sporklibrary.android.SporkAndroid");
 	}
 
 	/**
 	 * Try to initialize a SporkExtension.
-	 * @param sporkExtensionClassName the SporkExtension class name
+	 * @param extensionClassName the SporkExtension class name
 	 */
-	private void initializeSporkExtension(String sporkExtensionClassName) {
+	private void initializeExtension(String extensionClassName) {
 		try {
-			Class<?> sporkExtensionClass = Class.forName(sporkExtensionClassName);
-			Object sporkExtensionObject = sporkExtensionClass.newInstance();
-			if (sporkExtensionObject instanceof SporkExtension) {
-				SporkExtension sporkExtension = (SporkExtension)sporkExtensionObject;
-				sporkExtension.initialize(this);
+			Class<?> extensionClass = Class.forName(extensionClassName);
+			Object extensionObject = extensionClass.newInstance();
+			if (extensionObject instanceof SporkExtension) {
+				SporkExtension extension = (SporkExtension)extensionObject;
+				extension.initialize(this);
 			}
 		} catch (ClassNotFoundException e) {
 			// no-op
 		} catch (IllegalAccessException e) {
-			System.out.println("Spork: extension " + sporkExtensionClassName + "found, but initialization failed because of IllegalAccessException: " + e.getMessage());
+			System.out.println("Spork: extension " + extensionClassName + "found, but initialization failed because of IllegalAccessException: " + e.getMessage());
 		} catch (InstantiationException e) {
-			System.out.println("Spork: extension " + sporkExtensionClassName + "found, but failed to create instance: " + e.getMessage());
+			System.out.println("Spork: extension " + extensionClassName + "found, but failed to create instance: " + e.getMessage());
 		}
 	}
 
