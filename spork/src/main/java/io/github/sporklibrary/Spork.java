@@ -4,14 +4,16 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import io.github.sporklibrary.annotations.Nullable;
-import io.github.sporklibrary.binders.FieldBinder;
-import io.github.sporklibrary.binders.MethodBinder;
-import io.github.sporklibrary.binders.TypeBinder;
+import io.github.sporklibrary.interfaces.Binder;
+import io.github.sporklibrary.interfaces.BinderRegistry;
+import io.github.sporklibrary.interfaces.FieldBinder;
+import io.github.sporklibrary.interfaces.MethodBinder;
+import io.github.sporklibrary.interfaces.TypeBinder;
 import io.github.sporklibrary.internal.BinderImpl;
 import io.github.sporklibrary.internal.BinderManager;
 import io.github.sporklibrary.internal.BinderManagerImpl;
-import io.github.sporklibrary.internal.caching.BinderCache;
-import io.github.sporklibrary.internal.caching.BinderCacheImpl;
+import io.github.sporklibrary.internal.BinderCache;
+import io.github.sporklibrary.internal.BinderCacheImpl;
 import io.github.sporklibrary.internal.inject.InjectFieldBinder;
 
 /**
@@ -23,6 +25,10 @@ public class Spork {
 
 	private static @Nullable Spork sharedInstance;
 
+	/**
+	 * Creates a new instances of Spork with its own BinderManager, Binder and BinderCache.
+	 * Spork.sharedInstance() should be used for normal usage.
+	 */
 	public Spork() {
 		// create all instances
 		BinderManager binderManager = new BinderManagerImpl();
@@ -35,17 +41,17 @@ public class Spork {
 		binderManager.addRegistrationListener(new BinderManager.RegistrationListener() {
 			@Override
 			public void onRegisterFieldBinder(FieldBinder<?> fieldBinder) {
-				binderCache.cache(fieldBinder);
+				binderCache.register(fieldBinder);
 			}
 
 			@Override
 			public void onRegisterMethodBinder(MethodBinder<?> methodBinder) {
-				binderCache.cache(methodBinder);
+				binderCache.register(methodBinder);
 			}
 
 			@Override
 			public void onRegisterTypeBinder(TypeBinder<?> typeBinder) {
-				binderCache.cache(typeBinder);
+				binderCache.register(typeBinder);
 			}
 		});
 

@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import io.github.sporklibrary.Spork;
-import io.github.sporklibrary.binders.FieldBinder;
-import io.github.sporklibrary.binders.MethodBinder;
+import io.github.sporklibrary.interfaces.FieldBinder;
+import io.github.sporklibrary.interfaces.MethodBinder;
 
 public class FieldAndMethodBindingTests {
 	private BindFieldOrMethodBinder testBinder;

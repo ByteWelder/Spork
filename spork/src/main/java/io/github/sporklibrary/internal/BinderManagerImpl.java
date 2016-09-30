@@ -1,16 +1,15 @@
 package io.github.sporklibrary.internal;
 
 
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.sporklibrary.binders.FieldBinder;
-import io.github.sporklibrary.binders.MethodBinder;
-import io.github.sporklibrary.binders.TypeBinder;
+import io.github.sporklibrary.interfaces.FieldBinder;
+import io.github.sporklibrary.interfaces.MethodBinder;
+import io.github.sporklibrary.interfaces.TypeBinder;
 
 /**
- * The BinderManager manages all bindings and their cache.
+ * {@inheritDoc}
  */
 public class BinderManagerImpl implements BinderManager {
 	private final List<FieldBinder<?>> fieldBinders = new ArrayList<>();
@@ -22,7 +21,7 @@ public class BinderManagerImpl implements BinderManager {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <AnnotationType extends Annotation> void register(FieldBinder<AnnotationType> fieldBinder) {
+	public void register(FieldBinder<?> fieldBinder) {
 		fieldBinders.add(fieldBinder);
 
 		for (RegistrationListener registrationListener : registrationListeners) {
@@ -34,7 +33,7 @@ public class BinderManagerImpl implements BinderManager {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <AnnotationType extends Annotation> void register(MethodBinder<AnnotationType> methodBinder) {
+	public void register(MethodBinder<?> methodBinder) {
 		methodBinders.add(methodBinder);
 
 		for (RegistrationListener registrationListener : registrationListeners) {
@@ -46,7 +45,7 @@ public class BinderManagerImpl implements BinderManager {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <AnnotationType extends Annotation> void register(TypeBinder<AnnotationType> typeBinder) {
+	public void register(TypeBinder<?> typeBinder) {
 		typeBinders.add(typeBinder);
 
 		for (RegistrationListener registrationListener : registrationListeners) {

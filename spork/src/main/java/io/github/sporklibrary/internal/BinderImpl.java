@@ -1,12 +1,12 @@
 package io.github.sporklibrary.internal;
 
-import io.github.sporklibrary.Binder;
+import java.util.List;
+
+import io.github.sporklibrary.interfaces.Binder;
 import io.github.sporklibrary.annotations.Nullable;
-import io.github.sporklibrary.internal.caching.BinderCache;
-import io.github.sporklibrary.internal.caching.ClassBinderCache;
 
 public class BinderImpl implements Binder {
-	private BinderCache binderCache;
+	private final BinderCache binderCache;
 
 	public BinderImpl(BinderCache binderCache) {
 		this.binderCache = binderCache;
@@ -15,34 +15,27 @@ public class BinderImpl implements Binder {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void bind(Object object) {
-		bind(object, (Object[]) null);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
+	@Override
 	public void bind(Object object, @Nullable Object... modules) {
 		Class<?> objectClass = object.getClass();
 
 		while (objectClass != null && objectClass != Object.class) {
-			ClassBinderCache cache = binderCache.getClassBinderCache(objectClass);
-			bindInternal(object, cache, modules);
+			List<Binder> binders = binderCache.getBinders(objectClass);
+			bind(object, binders, modules);
 			objectClass = objectClass.getSuperclass();
 		}
 	}
 
 	/**
-	 * Bind all annotations for an object instance for one specific class (one level of
-	 * inheritance).
+	 * Bind all annotations for an object instance for one specific class at a single level of inheritance.
 	 *
-	 * @param object the instance to bind annotations for
-	 * @param cache  the cache to bind with
+	 * @param object  the instance to bind annotations for
+	 * @param binders the list of cached binders
 	 * @param modules either null or an array of non-null modules
 	 */
-	private void bindInternal(Object object, ClassBinderCache cache, @Nullable Object[] modules) {
-		for (Binder cachedBinder : cache.getCachedBinders()) {
-			cachedBinder.bind(object, modules);
+	private void bind(Object object, List<Binder> binders, @Nullable Object[] modules) {
+		for (Binder binder : binders) {
+			binder.bind(object, modules);
 		}
 	}
 }

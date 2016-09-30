@@ -1,6 +1,6 @@
 package io.github.sporklibrary.internal;
 
-import io.github.sporklibrary.Lazy;
+import io.github.sporklibrary.interfaces.Lazy;
 import io.github.sporklibrary.annotations.Nullable;
 
 public class LazyImpl<T> implements Lazy<T> {

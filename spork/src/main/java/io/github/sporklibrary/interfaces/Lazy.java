@@ -1,4 +1,4 @@
-package io.github.sporklibrary;
+package io.github.sporklibrary.interfaces;
 
 /**
  * A handle to a lazily-computed object instance (referred to as "property").

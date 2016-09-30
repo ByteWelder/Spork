@@ -3,15 +3,15 @@ package io.github.sporklibrary.internal.inject;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 
-import io.github.sporklibrary.Lazy;
+import io.github.sporklibrary.interfaces.Lazy;
 import io.github.sporklibrary.annotations.Inject;
 import io.github.sporklibrary.annotations.NonNull;
 import io.github.sporklibrary.annotations.Nullable;
-import io.github.sporklibrary.binders.FieldBinder;
+import io.github.sporklibrary.interfaces.FieldBinder;
 import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.internal.Callable;
 import io.github.sporklibrary.internal.LazyImpl;
-import io.github.sporklibrary.internal.reflection.AnnotatedFields;
+import io.github.sporklibrary.internal.AnnotatedFields;
 
 /**
  * The default FieldBinder that binds field annotated with the Inject annotation.

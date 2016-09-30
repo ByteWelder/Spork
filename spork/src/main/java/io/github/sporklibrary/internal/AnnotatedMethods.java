@@ -1,4 +1,4 @@
-package io.github.sporklibrary.internal.reflection;
+package io.github.sporklibrary.internal;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;

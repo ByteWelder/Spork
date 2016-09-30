@@ -3,7 +3,7 @@ package io.github.sporklibrary.test.methodbinding;
 import java.lang.reflect.Method;
 
 import io.github.sporklibrary.annotations.Nullable;
-import io.github.sporklibrary.binders.MethodBinder;
+import io.github.sporklibrary.interfaces.MethodBinder;
 
 public class BindMethodBinder implements MethodBinder<BindMethod> {
 	private int methodCount = 0;

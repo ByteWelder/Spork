@@ -1,4 +1,4 @@
-package io.github.sporklibrary.binders;
+package io.github.sporklibrary.interfaces;
 
 import java.lang.annotation.Annotation;
 

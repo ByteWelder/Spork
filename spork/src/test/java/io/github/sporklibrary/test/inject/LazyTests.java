@@ -2,7 +2,7 @@ package io.github.sporklibrary.test.inject;
 
 import org.junit.Test;
 
-import io.github.sporklibrary.Lazy;
+import io.github.sporklibrary.interfaces.Lazy;
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.annotations.Inject;
 import io.github.sporklibrary.test.inject.domain.StringModule;
