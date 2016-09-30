@@ -16,9 +16,9 @@ public final class Reflection {
 	/**
 	 * Set a value for a Field on an object
 	 *
-	 * @param annotation   the annotation that was relevant to this invocation (used for exception throwing only)
-	 * @param field        the field where the annotation was placed
-	 * @param parentObject the parent object
+	 * @param annotation   the annotation that belongs to the field (used for Exception throwing only)
+	 * @param field        the Field to set the value for
+	 * @param parentObject the parent object that holds the Field
 	 * @param valueObject  the field value to bind
 	 */
 	public static void setFieldValue(Annotation annotation, Field field, Object parentObject, Object valueObject) {
@@ -45,9 +45,10 @@ public final class Reflection {
 	/**
 	 * Invoke a Method
 	 *
-	 * @param annotation the annotation that was relevant to this invocation (used for exception throwing only)
-	 * @param object     the parent object
-	 * @param args       the field value to bind
+	 * @param annotation the annotation that was relevant to this invocation (used for Exception throwing only)
+	 * @param method     the method to invoke on the specified instance
+	 * @param object     the parent object to invoke the method on
+	 * @param args       the method invocation arguments
 	 * @return the result of the invoked method
 	 */
 	@Nullable
