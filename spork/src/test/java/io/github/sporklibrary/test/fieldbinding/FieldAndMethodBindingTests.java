@@ -1,18 +1,30 @@
 package io.github.sporklibrary.test.fieldbinding;
 
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import io.github.sporklibrary.Spork;
 import io.github.sporklibrary.interfaces.FieldBinder;
 import io.github.sporklibrary.interfaces.MethodBinder;
 
-public class FieldAndMethodBindingTests {
-	private BindFieldOrMethodBinder testBinder;
-	private final Spork spork = new Spork();
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
 
-	public static class BinderParent {
+/**
+ * Tests for combining Field and Method binding in 1 binder instance.
+ */
+public class FieldAndMethodBindingTests {
+
+	private static class Parent {
 
 		@BindFieldOrMethod
 		private Object field;
@@ -26,23 +38,44 @@ public class FieldAndMethodBindingTests {
 		}
 	}
 
-	@Before
-	public void registerTestBinders() {
-		testBinder = new BindFieldOrMethodBinder();
-		spork.getBinderRegistry().register((FieldBinder<BindFieldOrMethod>) testBinder);
-		spork.getBinderRegistry().register((MethodBinder<BindFieldOrMethod>) testBinder);
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target({ElementType.METHOD, ElementType.FIELD})
+	@interface BindFieldOrMethod {
+	}
+
+	interface BindFieldAndMethodBinder extends FieldBinder<BindFieldOrMethod>, MethodBinder<BindFieldOrMethod> {
+	}
+
+	private static BindFieldAndMethodBinder createBinder(Spork spork) {
+		BindFieldAndMethodBinder binder = Mockito.mock(BindFieldAndMethodBinder.class);
+		when(binder.getAnnotationClass()).thenReturn(BindFieldOrMethod.class);
+
+		spork.getBinderRegistry().register((FieldBinder<BindFieldOrMethod>) binder);
+		spork.getBinderRegistry().register((MethodBinder<BindFieldOrMethod>) binder);
+
+		return binder;
 	}
 
 	@Test
-	public void methodBinding() {
-		Assert.assertEquals(0, testBinder.getFieldBindCount());
-		Assert.assertEquals(0, testBinder.getMethodBindCount());
+	public void methodBinding() throws NoSuchFieldException, NoSuchMethodException {
+		Spork spork = new Spork();
 
-		BinderParent object = new BinderParent();
+		BindFieldAndMethodBinder binder = createBinder(spork);
 
-		spork.getBinder().bind(object);
+		verifyZeroInteractions(binder);
 
-		Assert.assertEquals(1, testBinder.getFieldBindCount());
-		Assert.assertEquals(2, testBinder.getMethodBindCount());
+		Parent parent = new Parent();
+		spork.getBinder().bind(parent);
+
+		Field field = Parent.class.getDeclaredField("field");
+		BindFieldOrMethod fieldAnnotation = field.getAnnotation(BindFieldOrMethod.class);
+		Method instanceMethod = Parent.class.getDeclaredMethod("test");
+		BindFieldOrMethod instanceMethodAnnotation = instanceMethod.getAnnotation(BindFieldOrMethod.class);
+		Method staticMethod = Parent.class.getDeclaredMethod("testStatic");
+		BindFieldOrMethod staticMethodAnnotation = staticMethod.getAnnotation(BindFieldOrMethod.class);
+
+		verify(binder, times(1)).bind(parent, fieldAnnotation, field, new Object[] {});
+		verify(binder, times(1)).bind(parent, instanceMethodAnnotation, instanceMethod, new Object[] {});
+		verify(binder, times(1)).bind(parent, staticMethodAnnotation, staticMethod, new Object[] {});
 	}
 }

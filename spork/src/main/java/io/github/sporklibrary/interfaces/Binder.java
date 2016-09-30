@@ -1,7 +1,5 @@
 package io.github.sporklibrary.interfaces;
 
-import io.github.sporklibrary.annotations.Nullable;
-
 /**
  * Binds annotations for a specified instance with 0 or more modules specified.
  *
@@ -14,5 +12,5 @@ public interface Binder {
 	 * @param object the instance to bind annotations for
 	 * @param modules either null or an array of non-null modules
 	 */
-	void bind(Object object, @Nullable Object... modules);
+	void bind(Object object, Object... modules);
 }

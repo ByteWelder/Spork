@@ -108,7 +108,7 @@ public class Spork {
 	 * @param object the object to bind
 	 * @param modules an optional array of non-null module instances
 	 */
-	public static void bind(Object object, @Nullable Object... modules) {
+	public static void bind(Object object, Object... modules) {
 		sharedInstance().getBinder().bind(object, modules);
 	}
 
