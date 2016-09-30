@@ -2,8 +2,7 @@ package io.github.sporklibrary.test;
 
 import org.junit.Test;
 
-import io.github.sporklibrary.internal.AnnotatedFields;
-import io.github.sporklibrary.internal.AnnotatedMethods;
+import io.github.sporklibrary.internal.Reflection;
 
 import static io.github.sporklibrary.test.ClassAsserts.assertUtilityClassWellDefined;
 
@@ -14,7 +13,6 @@ public class ClassTests {
 
 	@Test
 	public void test() throws Exception {
-		assertUtilityClassWellDefined(AnnotatedMethods.class);
-		assertUtilityClassWellDefined(AnnotatedFields.class);
+		assertUtilityClassWellDefined(Reflection.class);
 	}
 }

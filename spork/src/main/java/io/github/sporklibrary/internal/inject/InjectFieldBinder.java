@@ -11,7 +11,7 @@ import io.github.sporklibrary.interfaces.FieldBinder;
 import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.internal.Callable;
 import io.github.sporklibrary.internal.LazyImpl;
-import io.github.sporklibrary.internal.AnnotatedFields;
+import io.github.sporklibrary.internal.Reflection;
 
 /**
  * The default FieldBinder that binds field annotated with the Inject annotation.
@@ -44,10 +44,10 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 
 		if (isLazy) {
 			LazyImpl<?> lazyImpl = new LazyImpl<>(callable);
-			AnnotatedFields.setValue(annotation, field, instance, lazyImpl);
+			Reflection.setFieldValue(annotation, field, instance, lazyImpl);
 		} else {
 			Object bindInstance = call(callable, field, instance);
-			AnnotatedFields.setValue(annotation, field, instance, bindInstance);
+			Reflection.setFieldValue(annotation, field, instance, bindInstance);
 		}
 	}
 

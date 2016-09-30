@@ -6,8 +6,7 @@ import org.junit.Test;
 import java.lang.reflect.Method;
 
 import io.github.sporklibrary.Spork;
-import io.github.sporklibrary.internal.AnnotatedMethod;
-import io.github.sporklibrary.internal.AnnotatedMethods;
+import io.github.sporklibrary.internal.Reflection;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -58,26 +57,20 @@ public class MethodBindingTests {
 
 		Method method = MethodBinderParent.class.getDeclaredMethod("privateCallCountMethod");
 		BindMethod annotation = method.getAnnotation(BindMethod.class);
-		AnnotatedMethod<BindMethod> annotatedMethod = new AnnotatedMethod<>(annotation, method);
-
-		// Testing AnnotatedMethod
-		assertEquals(annotation, annotatedMethod.getAnnotation());
-		assertEquals(method, annotatedMethod.getMethod());
 
 		assertEquals(0, object.getPrivateCallCount());
 
-		Object regularResult = AnnotatedMethods.invoke(annotatedMethod, object);
+		Object regularResult = Reflection.invokeMethod(annotation, method, object);
 		assertNull(regularResult);
 
 		assertEquals(1, object.getPrivateCallCount());
 
 		Method staticMethod = MethodBinderParent.class.getMethod("staticEchoMethod", int.class);
 		BindMethod staticMethodAnnotation = staticMethod.getAnnotation(BindMethod.class);
-		AnnotatedMethod<BindMethod> staticAnnotatedMethod = new AnnotatedMethod<>(staticMethodAnnotation, staticMethod);
 
 		assertEquals(123, MethodBinderParent.staticEchoMethod(123));
 
-		Object staticResult = AnnotatedMethods.invoke(staticAnnotatedMethod, null, 123);
+		Object staticResult = Reflection.invokeMethod(staticMethodAnnotation, staticMethod, null, 123);
 		assertNotNull(staticResult);
 		assertEquals(123, staticResult);
 	}
