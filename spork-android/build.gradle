@@ -51,3 +51,4 @@ android {
 }
 
 apply from: rootProject.file('gradle/maven-android.gradle')
+apply plugin: 'com.getkeepsafe.dexcount'
