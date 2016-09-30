@@ -1,19 +1,16 @@
 package io.github.sporklibrary;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.interfaces.Binder;
 import io.github.sporklibrary.interfaces.BinderRegistry;
 import io.github.sporklibrary.interfaces.FieldBinder;
 import io.github.sporklibrary.interfaces.MethodBinder;
 import io.github.sporklibrary.interfaces.TypeBinder;
+import io.github.sporklibrary.internal.BinderCache;
+import io.github.sporklibrary.internal.BinderCacheImpl;
 import io.github.sporklibrary.internal.BinderImpl;
 import io.github.sporklibrary.internal.BinderManager;
 import io.github.sporklibrary.internal.BinderManagerImpl;
-import io.github.sporklibrary.internal.BinderCache;
-import io.github.sporklibrary.internal.BinderCacheImpl;
 import io.github.sporklibrary.internal.inject.InjectFieldBinder;
 
 /**
@@ -58,19 +55,28 @@ public class Spork {
 		// registration must happen after cache is created and listening for registrations
 		binderManager.register(new InjectFieldBinder());
 
-		// Try auto-binding Spork for Android through reflection
+		initializeSporkExtension("io.github.sporklibrary.android.SporkExtension");
+		initializeSporkExtension("io.github.sporklibrary.android.support.SporkExtension");
+	}
+
+	/**
+	 * Try to initialize a SporkExtension.
+	 * @param sporkExtensionClassName the SporkExtension class name
+	 */
+	private void initializeSporkExtension(String sporkExtensionClassName) {
 		try {
-			Class<?> sporkAndroidClass = Class.forName("io.github.sporklibrary.android.SporkAndroid");
-			Method initializeMethod = sporkAndroidClass.getDeclaredMethod("initialize", BinderRegistry.class);
-			initializeMethod.invoke(null, binderRegistry);
+			Class<?> sporkExtensionClass = Class.forName(sporkExtensionClassName);
+			Object sporkExtensionObject = sporkExtensionClass.newInstance();
+			if (sporkExtensionObject instanceof SporkExtension) {
+				SporkExtension sporkExtension = (SporkExtension)sporkExtensionObject;
+				sporkExtension.initialize(this);
+			}
 		} catch (ClassNotFoundException e) {
 			// no-op
-		} catch (NoSuchMethodException e) {
-			System.out.println("Spork: Spork for Android found, but initialize method is not present");
-		} catch (InvocationTargetException e) {
-			System.out.println("Spork: Spork for Android found, but initialization failed because of InvocationTargetException: " + e.getMessage());
 		} catch (IllegalAccessException e) {
-			System.out.println("Spork: Spork for Android found, but initialization failed because of IllegalAccessException: " + e.getMessage());
+			System.out.println("Spork: extension " + sporkExtensionClassName + "found, but initialization failed because of IllegalAccessException: " + e.getMessage());
+		} catch (InstantiationException e) {
+			System.out.println("Spork: extension " + sporkExtensionClassName + "found, but failed to create instance: " + e.getMessage());
 		}
 	}
 
