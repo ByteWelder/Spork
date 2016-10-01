@@ -15,27 +15,27 @@ import io.github.sporklibrary.interfaces.FieldBinder;
 import io.github.sporklibrary.internal.Reflection;
 
 public class BindResourceBinder implements FieldBinder<BindResource> {
-	private ContextResolver contextResolver;
+	private final ContextResolver contextResolver;
 
 	public BindResourceBinder(ContextResolver contextResolver) {
 		this.contextResolver = contextResolver;
 	}
 
 	@Override
-	public void bind(Object object, BindResource annotation, Field field, @Nullable Object[] modules) {
+	public void bind(Object object, BindResource annotation, Field field, Object[] modules) {
 		Context context = contextResolver.resolveContext(object);
 
 		if (context == null) {
 			throw new BindException(BindResource.class, object.getClass(), field, "failed to find Context: make sure your parent class is a View, Fragment or Activity");
 		}
 
-		Object field_object = getFieldObject(context, annotation, field);
+		Object fieldObject = getFieldObject(context, annotation, field);
 
-		if (field_object == null) {
+		if (fieldObject == null) {
 			throw new BindException(BindResource.class, object.getClass(), field, "resource not found");
 		}
 
-		Reflection.setFieldValue(annotation, field, object, field_object);
+		Reflection.setFieldValue(annotation, field, object, fieldObject);
 	}
 
 	@Override
@@ -45,13 +45,13 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 
 	@Nullable
 	private Object getFieldObject(Context context, BindResource annotation, Field field) {
-		Class<?> field_class = field.getType();
+		Class<?> fieldClass = field.getType();
 
-		if (field_class == String.class) {
+		if (fieldClass == String.class) {
 			return getStringObject(context, annotation, field);
-		} else if (field_class == Float.class || field_class == float.class) {
+		} else if (fieldClass == Float.class || fieldClass == float.class) {
 			return getDimensionFieldObject(context, annotation, field);
-		} else if (field_class == Drawable.class) {
+		} else if (fieldClass == Drawable.class) {
 			return getDrawableFieldObject(context, annotation, field);
 		} else {
 			throw new BindException(BindResource.class, field.getDeclaringClass(), field, "unsupported field type");
@@ -60,38 +60,38 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 
 	@Nullable
 	private String getStringObject(Context context, BindResource annotation, Field field) {
-		int resource_id = annotation.value();
+		int resourceId = annotation.value();
 
-		if (resource_id == ResourceId.sDefaultValue) {
-			resource_id = context.getResources().getIdentifier(field.getName(), "string", context.getPackageName());
+		if (resourceId == ResourceId.sDefaultValue) {
+			resourceId = context.getResources().getIdentifier(field.getName(), "string", context.getPackageName());
 		}
 
-		return context.getResources().getString(resource_id);
+		return context.getResources().getString(resourceId);
 	}
 
 	private float getDimensionFieldObject(Context context, BindResource annotation, Field field) {
-		int resource_id = annotation.value();
+		int resourceId = annotation.value();
 
-		if (resource_id == ResourceId.sDefaultValue) {
-			resource_id = context.getResources().getIdentifier(field.getName(), "dimen", context.getPackageName());
+		if (resourceId == ResourceId.sDefaultValue) {
+			resourceId = context.getResources().getIdentifier(field.getName(), "dimen", context.getPackageName());
 		}
 
-		return context.getResources().getDimension(resource_id);
+		return context.getResources().getDimension(resourceId);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Nullable
 	private Drawable getDrawableFieldObject(Context context, BindResource annotation, Field field) {
-		int resource_id = annotation.value();
+		int resourceId = annotation.value();
 
-		if (resource_id == ResourceId.sDefaultValue) {
-			resource_id = context.getResources().getIdentifier(field.getName(), "drawable", context.getPackageName());
+		if (resourceId == ResourceId.sDefaultValue) {
+			resourceId = context.getResources().getIdentifier(field.getName(), "drawable", context.getPackageName());
 		}
 
 		if (Build.VERSION.SDK_INT < 21) {
-			return context.getResources().getDrawable(resource_id);
+			return context.getResources().getDrawable(resourceId);
 		} else {
-			return context.getDrawable(resource_id);
+			return context.getDrawable(resourceId);
 		}
 	}
 }

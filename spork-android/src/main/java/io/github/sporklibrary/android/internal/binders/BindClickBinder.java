@@ -46,8 +46,7 @@ public class BindClickBinder implements MethodBinder<BindClick> {
 
 	@Override
 	public void bind(Object object, BindClick annotation, Method method, @Nullable Object[] modules) {
-		final View view = Views.getView(viewResolver, annotation.value(), method.getName(), object);
-
+		View view = Views.getView(viewResolver, annotation.value(), method.getName(), object);
 		view.setOnClickListener(new OnClickListener(annotation, method, object));
 	}
 

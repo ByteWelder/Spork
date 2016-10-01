@@ -3,8 +3,6 @@ package io.github.sporklibrary.interfaces;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import io.github.sporklibrary.annotations.Nullable;
-
 /**
  * A MethodBinder provides binding for a specific Method annotation.
  */
@@ -17,7 +15,7 @@ public interface MethodBinder<AnnotationType extends Annotation> {
 	 * @param method     the method that was annotated
 	 * @param modules    either null or an array of non-null modules
 	 */
-	void bind(Object object, AnnotationType annotation, Method method, @Nullable Object[] modules);
+	void bind(Object object, AnnotationType annotation, Method method, Object[] modules);
 
 	/**
 	 * @return the annotation to provide bindings for

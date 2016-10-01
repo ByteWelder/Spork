@@ -17,7 +17,7 @@ public interface FieldBinder<AnnotationType extends Annotation> {
 	 * @param field      the field that was annotated
 	 * @param modules    either null or an array of non-null modules
 	 */
-	void bind(Object object, AnnotationType annotation, Field field, @Nullable Object[] modules);
+	void bind(Object object, AnnotationType annotation, Field field, Object[] modules);
 
 	/**
 	 * @return the annotation to provide bindings for

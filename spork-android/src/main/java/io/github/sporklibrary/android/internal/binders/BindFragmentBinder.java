@@ -18,7 +18,7 @@ public class BindFragmentBinder implements FieldBinder<BindFragment> {
 	}
 
 	@Override
-	public void bind(Object object, BindFragment annotation, Field field, @Nullable Object[] modules) {
+	public void bind(Object object, BindFragment annotation, Field field, Object[] modules) {
 		int id = annotation.value();
 		@Nullable Object fragment_object;
 

@@ -5,14 +5,13 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import io.github.sporklibrary.android.annotations.BindLayout;
-import io.github.sporklibrary.annotations.Nullable;
 import io.github.sporklibrary.exceptions.BindException;
 import io.github.sporklibrary.interfaces.TypeBinder;
 
 public class BindLayoutBinder implements TypeBinder<BindLayout> {
 
 	@Override
-	public void bind(Object object, BindLayout annotation, Class<?> annotatedType, @Nullable Object[] modules) {
+	public void bind(Object object, BindLayout annotation, Class<?> annotatedType, Object[] modules) {
 		int layout_resource_id = annotation.value();
 
 		if (Activity.class.isAssignableFrom(object.getClass())) {
