@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <fragment android:name="io.github.sporklibrary.android.test.bindfragment.domain.TestFragmentApi17"
+    <fragment android:name="spork.android.test.bindfragment.domain.TestFragmentApi17"
         android:id="@+id/testfragmentapi17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
