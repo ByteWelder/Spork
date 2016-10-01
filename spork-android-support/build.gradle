@@ -4,25 +4,6 @@ ext {
 	androidSupportVersion = '24.2.1'
 }
 
-dependencies {
-	compile(
-			[group: 'io.github.sporklibrary', name: 'spork', version: VERSION_NAME],
-			[group: 'io.github.sporklibrary', name: 'spork-android', version: VERSION_NAME],
-			[group: 'com.android.support', name: 'support-fragment', version: androidSupportVersion]
-	)
-
-	testCompile(
-			[group: 'junit', name: 'junit', version: '4.12']
-	)
-
-	androidTestCompile([group: 'com.android.support.test', name: 'runner', version: '0.5'])
-	androidTestCompile([group: 'com.android.support.test.espresso', name: 'espresso-core', version: '2.2.2'])
-	androidTestCompile([group: 'com.android.support.test.espresso', name: 'espresso-contrib', version: '2.2.2']) {
-		exclude group: 'com.android.support', module: 'support-compat'
-		exclude group: 'com.android.support', module: 'support-v4'
-	}
-}
-
 android {
 	compileSdkVersion 24
 	buildToolsVersion '24.0.3'
@@ -51,9 +32,29 @@ android {
 	}
 
 	buildTypes {
+		release {
+			testCoverageEnabled false
+		}
 		debug {
 			testCoverageEnabled true
 		}
+	}
+}
+
+dependencies {
+
+	compile "io.github.sporklibrary:spork:$VERSION_NAME"
+	compile "io.github.sporklibrary:spork-android:$VERSION_NAME"
+
+	compile "com.android.support:support-fragment:$androidSupportVersion"
+
+	testCompile "junit:junit:4.12"
+
+	androidTestCompile "com.android.support.test:runner:0.5"
+	androidTestCompile "com.android.support.test.espresso:espresso-core:2.2.2"
+	androidTestCompile ("com.android.support.test.espresso:espresso-contrib:2.2.2") {
+		exclude module: 'support-compat'
+		exclude module: 'support-v4'
 	}
 }
 
