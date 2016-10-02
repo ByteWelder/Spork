@@ -1,14 +1,15 @@
-package spork.internal.inject;
+package spork.injection.internal;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 
-import spork.interfaces.Lazy;
-import spork.annotations.Inject;
-import spork.annotations.NonNull;
-import spork.annotations.Nullable;
-import spork.interfaces.FieldBinder;
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+
 import spork.exceptions.BindException;
+import spork.injection.Lazy;
+import spork.interfaces.FieldBinder;
 
 /**
  * The default FieldBinder that binds field annotated with the Inject annotation.
@@ -40,7 +41,7 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 		}
 
 		if (isLazy) {
-			spork.internal.LazyImpl<?> lazyImpl = new spork.internal.LazyImpl<>(callable);
+			LazyImpl<?> lazyImpl = new LazyImpl<>(callable);
 			spork.internal.Reflection.setFieldValue(annotation, field, instance, lazyImpl);
 		} else {
 			Object bindInstance = call(callable, field, instance);
@@ -52,7 +53,7 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 		Object instance = callable.call();
 
 		boolean isNullableAnnotated = field.getAnnotation(Nullable.class) != null;
-		boolean isNonNullAnnotated = field.getAnnotation(NonNull.class) != null;
+		boolean isNonNullAnnotated = field.getAnnotation(Nonnull.class) != null;
 
 		if (!isNullableAnnotated && instance == null) {
 			throw new BindException(Inject.class, object.getClass(), field, "field is not annotated as Nullable but module tries to inject null value");

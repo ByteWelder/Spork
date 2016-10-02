@@ -1,4 +1,4 @@
-package spork.internal.inject;
+package spork.injection.internal;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -7,8 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import spork.annotations.Nullable;
-import spork.annotations.Provides;
+import javax.annotation.Nullable;
+
+import spork.injection.Provides;
 
 public class ModuleMethodRetriever {
 	private final Map<Class<?>, List<Method>> classMethodListMap = new HashMap<>();

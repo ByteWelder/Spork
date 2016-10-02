@@ -1,22 +1,26 @@
-package spork.test.inject;
+package spork.injection.test;
 
 import org.junit.Test;
 
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+
 import spork.Spork;
-import spork.annotations.Inject;
-import spork.annotations.Nullable;
 import spork.exceptions.BindException;
-import spork.test.inject.domain.StringNullModule;
+import spork.injection.test.modules.StringNullModule;
 
 import static org.junit.Assert.assertNull;
 
 public class NullableTests {
 	private static class GoodParent {
-		@Inject @Nullable String string;
+		@Inject
+		@Nullable
+		String string;
 	}
 
 	private static class BadParent {
-		@Inject String string;
+		@Inject
+		String string;
 	}
 
 	@Test

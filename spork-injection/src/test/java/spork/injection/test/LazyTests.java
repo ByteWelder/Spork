@@ -1,11 +1,12 @@
-package spork.test.inject;
+package spork.injection.test;
 
 import org.junit.Test;
 
-import spork.interfaces.Lazy;
+import javax.inject.Inject;
+
 import spork.Spork;
-import spork.annotations.Inject;
-import spork.test.inject.domain.StringModule;
+import spork.injection.Lazy;
+import spork.injection.test.modules.StringModule;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

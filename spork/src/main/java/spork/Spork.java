@@ -1,6 +1,7 @@
 package spork;
 
-import spork.annotations.Nullable;
+import javax.annotation.Nullable;
+
 import spork.interfaces.Binder;
 import spork.interfaces.BinderRegistry;
 import spork.interfaces.FieldBinder;
@@ -11,7 +12,6 @@ import spork.internal.BinderCacheImpl;
 import spork.internal.BinderImpl;
 import spork.internal.BinderManager;
 import spork.internal.BinderManagerImpl;
-import spork.internal.inject.InjectFieldBinder;
 
 /**
  * Main class to access Spork functionality.
@@ -52,9 +52,7 @@ public class Spork {
 			}
 		});
 
-		// registration must happen after cache is created and listening for registrations
-		binderManager.register(new InjectFieldBinder());
-
+		initializeExtension("spork.injection.SporkInjection");
 		initializeExtension("spork.android.SporkAndroid");
 	}
 
@@ -66,8 +64,8 @@ public class Spork {
 		try {
 			Class<?> extensionClass = Class.forName(extensionClassName);
 			Object extensionObject = extensionClass.newInstance();
-			if (extensionObject instanceof SporkExtension) {
-				SporkExtension extension = (SporkExtension)extensionObject;
+			if (extensionObject instanceof spork.interfaces.SporkExtension) {
+				spork.interfaces.SporkExtension extension = (spork.interfaces.SporkExtension)extensionObject;
 				extension.initialize(this);
 			}
 		} catch (ClassNotFoundException e) {

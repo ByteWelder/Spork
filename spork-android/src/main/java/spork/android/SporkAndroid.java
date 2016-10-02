@@ -1,7 +1,6 @@
 package spork.android;
 
 import spork.Spork;
-import spork.SporkExtension;
 import spork.android.interfaces.ContextResolver;
 import spork.android.interfaces.FragmentResolver;
 import spork.android.interfaces.ResolverRegistry;
@@ -18,6 +17,7 @@ import spork.android.internal.binders.BindLayoutBinder;
 import spork.android.internal.binders.BindResourceBinder;
 import spork.android.internal.binders.BindViewBinder;
 import spork.interfaces.BinderRegistry;
+import spork.interfaces.SporkExtension;
 
 public final class SporkAndroid implements SporkExtension {
 	private final FragmentResolverManager fragmentResolverManager = new FragmentResolverManager();
@@ -45,6 +45,7 @@ public final class SporkAndroid implements SporkExtension {
 
 	/**
 	 * Try to initialize a SporkAndroidExtension.
+	 *
 	 * @param extensionClassName the SporkAndroidExtension class name
 	 */
 	private void initializeExtension(String extensionClassName) {
@@ -52,7 +53,7 @@ public final class SporkAndroid implements SporkExtension {
 			Class<?> extensionClass = Class.forName(extensionClassName);
 			Object extensionObject = extensionClass.newInstance();
 			if (extensionObject instanceof SporkAndroidExtension) {
-				SporkAndroidExtension extension = (SporkAndroidExtension)extensionObject;
+				SporkAndroidExtension extension = (SporkAndroidExtension) extensionObject;
 				extension.initialize(this);
 			}
 		} catch (ClassNotFoundException e) {

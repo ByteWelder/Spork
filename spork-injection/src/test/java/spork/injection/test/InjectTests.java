@@ -1,12 +1,13 @@
-package spork.test.inject;
+package spork.injection.test;
 
 import org.junit.Test;
 
+import javax.inject.Inject;
+
 import spork.Spork;
-import spork.annotations.Inject;
 import spork.exceptions.BindException;
-import spork.test.inject.domain.IntegerModule;
-import spork.test.inject.domain.StringModule;
+import spork.injection.test.modules.IntegerModule;
+import spork.injection.test.modules.StringModule;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,7 +1,9 @@
-package spork.internal;
+package spork.injection.internal;
 
-import spork.interfaces.Lazy;
-import spork.annotations.Nullable;
+import javax.annotation.Nullable;
+
+import spork.injection.Lazy;
+import spork.internal.Callable;
 
 public class LazyImpl<T> implements Lazy<T> {
 	private @Nullable T value;

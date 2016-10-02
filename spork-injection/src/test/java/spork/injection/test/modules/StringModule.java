@@ -1,6 +1,6 @@
-package spork.test.inject.domain;
+package spork.injection.test.modules;
 
-import spork.annotations.Provides;
+import spork.injection.Provides;
 
 public class StringModule {
 	@Provides

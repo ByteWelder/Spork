@@ -5,15 +5,16 @@ import android.content.ContentProvider;
 import android.content.Context;
 import android.view.View;
 
+import javax.annotation.Nullable;
+
 import spork.android.interfaces.ContextProvider;
 import spork.android.interfaces.ContextResolver;
 import spork.android.interfaces.ViewProvider;
-import spork.annotations.Nullable;
 
 public class DefaultContextResolver implements ContextResolver {
-
 	@Override
-	public @Nullable Context resolveContext(Object object) {
+	@Nullable
+	public Context resolveContext(Object object) {
 		Class<?> object_class = object.getClass();
 
 		if (View.class.isAssignableFrom(object_class)) {

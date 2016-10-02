@@ -5,9 +5,10 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import spork.android.interfaces.ResolverRegistry;
 import spork.android.interfaces.ViewResolver;
-import spork.annotations.Nullable;
 
 public final class ViewResolverManager implements ViewResolver, ResolverRegistry<ViewResolver> {
 	private final List<ViewResolver> viewResolvers = new ArrayList<>(2);
@@ -17,7 +18,8 @@ public final class ViewResolverManager implements ViewResolver, ResolverRegistry
 	}
 
 	@Override
-	public @Nullable View resolveView(Object object) {
+	@Nullable
+	public View resolveView(Object object) {
 		for (ViewResolver viewResolver : viewResolvers) {
 			View view = viewResolver.resolveView(object);
 

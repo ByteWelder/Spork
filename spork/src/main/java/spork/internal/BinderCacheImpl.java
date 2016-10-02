@@ -8,7 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import spork.annotations.Nullable;
+import javax.annotation.Nullable;
+
 import spork.interfaces.Binder;
 import spork.interfaces.FieldBinder;
 import spork.interfaces.MethodBinder;

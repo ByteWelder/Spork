@@ -7,7 +7,6 @@ import java.lang.reflect.Method;
 import spork.android.annotations.BindClick;
 import spork.android.interfaces.ViewResolver;
 import spork.android.internal.utils.Views;
-import spork.annotations.Nullable;
 import spork.exceptions.BindException;
 import spork.interfaces.MethodBinder;
 import spork.internal.Reflection;
@@ -45,7 +44,7 @@ public class BindClickBinder implements MethodBinder<BindClick> {
 	}
 
 	@Override
-	public void bind(Object object, BindClick annotation, Method method, @Nullable Object[] modules) {
+	public void bind(Object object, BindClick annotation, Method method, Object[] modules) {
 		View view = Views.getView(viewResolver, annotation.value(), method.getName(), object);
 		view.setOnClickListener(new OnClickListener(annotation, method, object));
 	}

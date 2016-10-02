@@ -1,7 +1,6 @@
-package spork.test.inject.domain;
+package spork.injection.test.modules;
 
-import spork.annotations.Nullable;
-import spork.annotations.Provides;
+import spork.injection.Provides;
 
 public class StringNullModule {
 	@Provides

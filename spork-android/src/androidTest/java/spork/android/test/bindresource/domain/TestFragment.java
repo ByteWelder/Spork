@@ -42,25 +42,25 @@ public class TestFragment extends android.app.Fragment implements ResourceProvid
         Spork.bind(this);
     }
 
-    @javax.annotation.Nullable
+    @Nullable
     @Override
     public String getStringByIdSpecified() {
         return appName;
     }
 
-    @javax.annotation.Nullable
+    @Nullable
     @Override
     public String getStringByIdImplied() {
         return app_name;
     }
 
-    @javax.annotation.Nullable
+    @Nullable
     @Override
     public Drawable getDrawableByIdSpecified() {
         return sporkTestDrawable;
     }
 
-    @javax.annotation.Nullable
+    @Nullable
     @Override
     public Drawable getDrawableByIdImplied() {
         return spork_test_drawable;

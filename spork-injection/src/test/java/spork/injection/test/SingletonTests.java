@@ -1,11 +1,12 @@
-package spork.test.inject;
+package spork.injection.test;
 
 import org.junit.Test;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import spork.Spork;
-import spork.annotations.Inject;
-import spork.annotations.Provides;
-import spork.annotations.Singleton;
+import spork.injection.Provides;
 
 import static org.junit.Assert.assertEquals;
 

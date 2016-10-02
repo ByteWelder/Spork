@@ -1,19 +1,22 @@
-package spork.test.inject;
+package spork.injection.test;
 
 import org.junit.Test;
 
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+
 import spork.Spork;
-import spork.annotations.Inject;
-import spork.annotations.NonNull;
 import spork.exceptions.BindException;
-import spork.test.inject.domain.StringModule;
-import spork.test.inject.domain.StringNullModule;
+import spork.injection.test.modules.StringModule;
+import spork.injection.test.modules.StringNullModule;
 
 import static org.junit.Assert.assertEquals;
 
-public class NonNullTests {
+public class NonnullTests {
 	private static class Parent {
-		@Inject @NonNull String string;
+		@Inject
+		@Nonnull
+		String string = "";
 	}
 
 	@Test

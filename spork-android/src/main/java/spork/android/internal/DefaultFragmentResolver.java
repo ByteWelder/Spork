@@ -4,16 +4,18 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Build;
 
+import javax.annotation.Nullable;
+
 import spork.android.annotations.BindFragment;
 import spork.android.interfaces.FragmentResolver;
-import spork.annotations.Nullable;
-import spork.exceptions.BindException;
 import spork.android.internal.utils.Reflection;
+import spork.exceptions.BindException;
 
 public class DefaultFragmentResolver implements FragmentResolver {
 
 	@Override
-	public @Nullable Object resolveFragment(Object object, int id) {
+	@Nullable
+	public Object resolveFragment(Object object, int id) {
 		Activity activity = Reflection.tryCast(Activity.class, object);
 
 		if (activity != null) {
@@ -37,7 +39,8 @@ public class DefaultFragmentResolver implements FragmentResolver {
 	}
 
 	@Override
-	public @Nullable Object resolveFragment(Object object, String idName) {
+	@Nullable
+	public Object resolveFragment(Object object, String idName) {
 		Activity activity = Reflection.tryCast(Activity.class, object);
 
 		if (activity != null) {

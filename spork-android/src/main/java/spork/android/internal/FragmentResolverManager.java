@@ -3,9 +3,10 @@ package spork.android.internal;
 import java.util.ArrayList;
 import java.util.List;
 
-import spork.android.interfaces.ResolverRegistry;
+import javax.annotation.Nullable;
+
 import spork.android.interfaces.FragmentResolver;
-import spork.annotations.Nullable;
+import spork.android.interfaces.ResolverRegistry;
 
 public class FragmentResolverManager implements FragmentResolver, ResolverRegistry<FragmentResolver> {
 	private final List<FragmentResolver> fragmentResolvers = new ArrayList<>(2);
@@ -15,7 +16,8 @@ public class FragmentResolverManager implements FragmentResolver, ResolverRegist
 	}
 
 	@Override
-	public @Nullable Object resolveFragment(Object parent, int id) {
+	@Nullable
+	public Object resolveFragment(Object parent, int id) {
 		for (FragmentResolver fragmentResolver : fragmentResolvers) {
 			Object fragment = fragmentResolver.resolveFragment(parent, id);
 
@@ -28,7 +30,8 @@ public class FragmentResolverManager implements FragmentResolver, ResolverRegist
 	}
 
 	@Override
-	public @Nullable Object resolveFragment(Object parent, String idName) {
+	@Nullable
+	public Object resolveFragment(Object parent, String idName) {
 		for (FragmentResolver fragmentResolver : fragmentResolvers) {
 			Object fragment = fragmentResolver.resolveFragment(parent, idName);
 

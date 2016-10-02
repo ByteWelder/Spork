@@ -1,5 +1,6 @@
 rootProject.name = 'project'
 
 include ':spork'
+include ':spork-injection'
 include ':spork-android'
 include ':spork-android-support'

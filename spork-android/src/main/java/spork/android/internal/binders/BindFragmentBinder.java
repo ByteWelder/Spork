@@ -2,10 +2,11 @@ package spork.android.internal.binders;
 
 import java.lang.reflect.Field;
 
+import javax.annotation.Nullable;
+
 import spork.android.annotations.BindFragment;
 import spork.android.interfaces.FragmentResolver;
 import spork.android.internal.utils.ResourceId;
-import spork.annotations.Nullable;
 import spork.exceptions.BindException;
 import spork.interfaces.FieldBinder;
 import spork.internal.Reflection;

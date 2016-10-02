@@ -1,18 +1,19 @@
-package spork.internal.inject;
+package spork.injection.internal;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import spork.annotations.Nullable;
-import spork.annotations.Singleton;
+import javax.annotation.Nullable;
+import javax.inject.Singleton;
+
+import spork.internal.Callable;
 
 public class ModuleManager {
 	private final ModuleMethodRetriever moduleMethodRetriever = new ModuleMethodRetriever();
 	private final Map<String, Object> singletonInstanceMap = new HashMap<>();
 
-	public @Nullable
-	spork.internal.Callable<?> getCallable(Object[] modules, Class<?> type) {
+	public @Nullable spork.internal.Callable<?> getCallable(Object[] modules, Class<?> type) {
 		for (Object module : modules) {
 			spork.internal.Callable callable = getCallable(module, type);
 
@@ -24,8 +25,7 @@ public class ModuleManager {
 		return null;
 	}
 
-	private @Nullable
-	spork.internal.Callable<?> getCallable(final Object module, final Class<?> type) {
+	private @Nullable Callable<?> getCallable(final Object module, final Class<?> type) {
 		final Method method = moduleMethodRetriever.getMethod(module, type);
 
 		if (method == null) {

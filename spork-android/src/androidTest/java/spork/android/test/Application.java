@@ -1,9 +1,10 @@
 package spork.android.test;
 
+import javax.inject.Inject;
+
 import spork.Spork;
 import spork.android.annotations.BindResource;
 import spork.android.test.domain.StringModule;
-import spork.annotations.Inject;
 
 public class Application extends android.app.Application {
     private static Application sInstance = null;

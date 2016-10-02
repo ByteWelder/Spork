@@ -2,8 +2,9 @@ package spork.android.interfaces;
 
 import android.view.View;
 
-import spork.annotations.Nullable;
+import javax.annotation.Nullable;
 
 public interface ViewResolver {
-	@Nullable View resolveView(Object object);
+	@Nullable
+	View resolveView(Object object);
 }

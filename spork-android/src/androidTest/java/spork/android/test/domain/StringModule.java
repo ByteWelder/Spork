@@ -1,6 +1,6 @@
 package spork.android.test.domain;
 
-import spork.annotations.Provides;
+import spork.injection.Provides;
 
 public class StringModule {
 	@Provides

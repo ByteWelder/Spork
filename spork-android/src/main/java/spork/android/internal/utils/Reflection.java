@@ -1,6 +1,6 @@
 package spork.android.internal.utils;
 
-import spork.annotations.Nullable;
+import javax.annotation.Nullable;
 
 public final class Reflection {
 
@@ -8,11 +8,12 @@ public final class Reflection {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static @Nullable <T> T tryCast(Class<T> objectClass, Object object) {
+	@Nullable
+	public static <T> T tryCast(Class<T> objectClass, Object object) {
 		if (!objectClass.isAssignableFrom(object.getClass())) {
 			return null;
 		}
 
-		return (T)object;
+		return (T) object;
 	}
 }
