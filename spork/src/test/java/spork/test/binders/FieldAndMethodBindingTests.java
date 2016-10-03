@@ -1,4 +1,4 @@
-package spork.test.fieldbinding;
+package spork.test.binders;
 
 import org.junit.Test;
 import org.mockito.Mockito;

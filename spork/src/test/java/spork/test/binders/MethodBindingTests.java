@@ -1,11 +1,16 @@
-package spork.test.methodbinding;
+package spork.test.binders;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.lang.reflect.Method;
 
 import spork.Spork;
+import spork.interfaces.MethodBinder;
 import spork.internal.Reflection;
 
 import static org.junit.Assert.assertEquals;
@@ -15,6 +20,29 @@ import static org.junit.Assert.assertNull;
 public class MethodBindingTests {
 	private final Spork spork = new Spork();
 	private BindMethodBinder bindMethodBinder;
+
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target({ElementType.METHOD})
+	public @interface BindMethod {
+	}
+
+	private class BindMethodBinder implements MethodBinder<BindMethod> {
+		private int methodCount = 0;
+
+		@Override
+		public void bind(Object instance, BindMethod annotation, Method method, Object[] modules) {
+			methodCount++;
+		}
+
+		@Override
+		public Class<BindMethod> getAnnotationClass() {
+			return BindMethod.class;
+		}
+
+		public int getMethodCount() {
+			return methodCount;
+		}
+	}
 
 	public static class MethodBinderParent {
 		private int testCallCount = 0;
