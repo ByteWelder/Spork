@@ -1,6 +1,8 @@
 # Contributing
 
-## Java 7
+## Language
+
+### Java 7
 
 Only use Java 7 features that are fully supported on Android:
 
@@ -16,3 +18,7 @@ NOT supported:
 - `java.lang.SafeVarargs`
 
 See http://stackoverflow.com/a/13550632/3848666 for more information.
+
+### Nullability
+
+All variables are non-null by default. Any nullable variable must be annotated with `@Nonnull`.
