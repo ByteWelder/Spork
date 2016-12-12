@@ -1,4 +1,4 @@
-package spork.injection.test.modules;
+package spork.injection.modules;
 
 import javax.annotation.Nullable;
 

@@ -1,4 +1,4 @@
-package spork.injection.test;
+package spork.injection;
 
 import org.junit.Test;
 
@@ -7,12 +7,12 @@ import javax.inject.Inject;
 
 import spork.Spork;
 import spork.exceptions.BindException;
-import spork.injection.test.modules.StringModule;
-import spork.injection.test.modules.StringNullModule;
+import spork.injection.modules.StringModule;
+import spork.injection.modules.StringNullModule;
 
 import static org.junit.Assert.assertEquals;
 
-public class NonnullTests {
+public class InjectNonnullTests {
 	private static class Parent {
 		@Inject
 		@Nonnull

@@ -1,4 +1,4 @@
-package spork.injection.test;
+package spork.injection;
 
 import org.junit.Test;
 
@@ -7,11 +7,11 @@ import javax.inject.Inject;
 
 import spork.Spork;
 import spork.exceptions.BindException;
-import spork.injection.test.modules.StringNullModule;
+import spork.injection.modules.StringNullModule;
 
 import static org.junit.Assert.assertNull;
 
-public class NullableTests {
+public class InjectNullableTests {
 	private static class GoodParent {
 		@Inject
 		@Nullable

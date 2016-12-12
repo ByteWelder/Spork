@@ -1,4 +1,4 @@
-package spork.injection.test;
+package spork.injection;
 
 import org.junit.Test;
 
@@ -6,11 +6,10 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import spork.Spork;
-import spork.injection.Provides;
 
 import static org.junit.Assert.assertEquals;
 
-public class SingletonTests {
+public class InjectSingletonTests {
 	private static class Parent {
 		@Inject
 		int counter = -1;
