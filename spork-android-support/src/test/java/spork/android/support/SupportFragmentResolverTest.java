@@ -1,16 +1,16 @@
-package io.github.sporklibrary.android.test.resolvers;
+package spork.android.support;
 
 import org.junit.Test;
 
-import spork.android.internal.DefaultFragmentResolver;
+import spork.android.support.internal.SupportFragmentResolver;
 
 import static org.junit.Assert.assertNull;
 
-public class FragmentResolverTest {
+public class SupportFragmentResolverTest {
 
 	@Test
 	public void testFaulty() {
-		DefaultFragmentResolver resolver = new DefaultFragmentResolver();
+		SupportFragmentResolver resolver = new SupportFragmentResolver();
 		assertNull(resolver.resolveFragment("Nothing", 1));
 		assertNull(resolver.resolveFragment("Nothing", "anything"));
 	}

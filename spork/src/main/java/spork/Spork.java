@@ -20,9 +20,8 @@ public class Spork {
 	private final BinderRegistry binderRegistry;
 	private final Binder binder;
 
-	private static
 	@Nullable
-	Spork sharedInstance;
+	private static Spork sharedInstance;
 
 	/**
 	 * Create a new instance of Spork with custom BinderRegistry and Binder implementations.

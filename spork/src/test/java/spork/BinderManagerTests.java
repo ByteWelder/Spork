@@ -1,4 +1,4 @@
-package spork.test;
+package spork;
 
 import org.junit.Test;
 

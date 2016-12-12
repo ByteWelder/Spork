@@ -1,4 +1,4 @@
-package spork.test.binders;
+package spork.binders;
 
 import org.junit.Before;
 import org.junit.Test;

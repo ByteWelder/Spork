@@ -1,4 +1,4 @@
-package spork.test.binders;
+package spork.binders;
 
 import org.junit.Test;
 import org.mockito.Mockito;

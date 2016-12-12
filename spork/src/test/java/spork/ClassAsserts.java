@@ -1,4 +1,4 @@
-package spork.test;
+package spork;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

@@ -1,6 +1,4 @@
-package spork.test.exceptions;
-
-import spork.exceptions.NotSupportedException;
+package spork.exceptions;
 
 import org.junit.Test;
 

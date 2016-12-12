@@ -1,4 +1,4 @@
-package spork.test.exceptions;
+package spork.exceptions;
 
 import org.junit.Test;
 
@@ -6,8 +6,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import javax.annotation.Nullable;
-
-import spork.exceptions.BindException;
 
 public class BindExceptionTests {
 
