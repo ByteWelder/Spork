@@ -48,10 +48,10 @@ dependencies {
 
 	compile "com.android.support:support-fragment:$androidSupportVersion"
 
-	testCompile "io.github.sporklibrary:spork-injection:$VERSION_NAME"
+	testCompile "io.github.sporklibrary:spork-inject:$VERSION_NAME"
 	testCompile "junit:junit:4.12"
 
-	androidTestCompile "io.github.sporklibrary:spork-injection:$VERSION_NAME"
+	androidTestCompile "io.github.sporklibrary:spork-inject:$VERSION_NAME"
 	androidTestCompile "com.android.support.test:runner:0.5"
 	androidTestCompile "com.android.support.test.espresso:espresso-core:2.2.2"
 	androidTestCompile ("com.android.support.test.espresso:espresso-contrib:2.2.2") {
