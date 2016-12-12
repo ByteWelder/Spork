@@ -1,25 +1,21 @@
 package spork.injection.internal;
 
-import javax.annotation.Nullable;
-
 import spork.injection.Lazy;
 import spork.internal.Callable;
 
-public class LazyImpl<T> implements Lazy<T> {
-	private @Nullable T value;
+/**
+ * {@link Callable} implementation for {@link Lazy}
+ * @param <T> the type that can be lazily retrieved
+ */
+class LazyImpl<T> implements Lazy<T> {
 	private Callable<T> callable;
 
-	public LazyImpl(Callable<T> callable) {
+	LazyImpl(Callable<T> callable) {
 		this.callable = callable;
 	}
 
 	@Override
 	public T get() {
-		if (callable != null) {
-			value = callable.call();
-			callable = null;
-		}
-
-		return value;
+		return callable.call();
 	}
 }
