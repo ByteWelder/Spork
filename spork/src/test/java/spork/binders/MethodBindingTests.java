@@ -23,10 +23,10 @@ public class MethodBindingTests {
 
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target({ElementType.METHOD})
-	public @interface BindMethod {
+	private @interface BindMethod {
 	}
 
-	private class BindMethodBinder implements MethodBinder<BindMethod> {
+	private static class BindMethodBinder implements MethodBinder<BindMethod> {
 		private int methodCount = 0;
 
 		@Override
@@ -44,7 +44,7 @@ public class MethodBindingTests {
 		}
 	}
 
-	public static class MethodBinderParent {
+	private static class MethodBinderParent {
 		private int testCallCount = 0;
 
 		@BindMethod

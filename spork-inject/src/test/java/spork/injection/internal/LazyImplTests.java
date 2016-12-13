@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 public class LazyImplTests {
 
 	@Test
-	public void testConstructor() {
+	public void constructor() {
 		LazyImpl<String> lazy = new LazyImpl<>(new Callable<String>() {
 			@Nullable
 			@Override
@@ -24,8 +24,23 @@ public class LazyImplTests {
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void testFaultyConstructor() {
+	public void faultyConstructor() {
 		LazyImpl<String> lazy = new LazyImpl<>(null);
 		lazy.get();
+	}
+
+	@Test
+	public void caching() {
+		LazyImpl<Integer> lazy = new LazyImpl<>(new Callable<Integer>() {
+			private int counter = 0;
+			@Nullable
+			@Override
+			public Integer call() {
+				return ++counter;
+			}
+		});
+
+		assertEquals((Integer) 1, lazy.get());
+		assertEquals((Integer) 1, lazy.get());
 	}
 }

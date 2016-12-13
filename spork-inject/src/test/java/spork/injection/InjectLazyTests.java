@@ -9,7 +9,6 @@ import spork.injection.modules.StringModule;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 public class InjectLazyTests {
 
@@ -29,6 +28,6 @@ public class InjectLazyTests {
 
 		String second = parent.lazyString.get();
 		assertNotNull(second);
-		assertTrue(first == second);
+		assertEquals(first, second);
 	}
 }

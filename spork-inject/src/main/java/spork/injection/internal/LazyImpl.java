@@ -1,5 +1,7 @@
 package spork.injection.internal;
 
+import javax.annotation.Nullable;
+
 import spork.injection.Lazy;
 import spork.internal.Callable;
 
@@ -8,14 +10,21 @@ import spork.internal.Callable;
  * @param <T> the type that can be lazily retrieved
  */
 class LazyImpl<T> implements Lazy<T> {
-	private Callable<T> callable;
+	@Nullable private T value;
+	private final Callable<T> callable;
+	private boolean isCached = false;
 
 	LazyImpl(Callable<T> callable) {
 		this.callable = callable;
 	}
 
 	@Override
-	public T get() {
-		return callable.call();
+	public synchronized T get() {
+		if (!isCached) {
+			value = callable.call();
+			isCached = true;
+		}
+
+		return value;
 	}
 }

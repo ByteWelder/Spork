@@ -113,7 +113,7 @@ public class Spork {
 	 *
 	 * @return a shared instance of Spork (creates one if one hasn't been created yet)
 	 */
-	public static Spork sharedInstance() {
+	public static synchronized Spork sharedInstance() {
 		if (sharedInstance == null) {
 			sharedInstance = new Spork();
 

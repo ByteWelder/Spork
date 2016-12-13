@@ -19,15 +19,15 @@ public class TypeBindingTest {
 
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target({ElementType.TYPE})
-	public @interface BindValue {
+	private @interface BindValue {
 		int value();
 	}
 
-	public interface IntSettable {
+	private interface IntSettable {
 		void setValue(int value);
 	}
 
-	public class BindTypeBinder implements TypeBinder<BindValue> {
+	private static class BindTypeBinder implements TypeBinder<BindValue> {
 
 		@Override
 		public void bind(Object instance, BindValue annotation, Class<?> annotatedType, Object[] modules) {
@@ -47,7 +47,7 @@ public class TypeBindingTest {
 	}
 
 	@BindValue(123)
-	public final class IntegerHolder implements IntSettable {
+	private static final class IntegerHolder implements IntSettable {
 		private int value = 100;
 
 		@Override
@@ -61,7 +61,7 @@ public class TypeBindingTest {
 	}
 
 	@BindValue(123)
-	public final class FaultyIntegerHolder {
+	private static final class FaultyIntegerHolder {
 	}
 
 	@Before
