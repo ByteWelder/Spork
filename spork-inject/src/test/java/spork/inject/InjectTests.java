@@ -1,4 +1,4 @@
-package spork.injection;
+package spork.inject;
 
 import org.junit.Test;
 
@@ -6,8 +6,8 @@ import javax.inject.Inject;
 
 import spork.Spork;
 import spork.exceptions.BindException;
-import spork.injection.modules.IntegerModule;
-import spork.injection.modules.StringModule;
+import spork.inject.modules.IntegerModule;
+import spork.inject.modules.StringModule;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,8 +1,8 @@
-package spork.injection.modules;
+package spork.inject.modules;
 
 import javax.annotation.Nullable;
 
-import spork.injection.Provides;
+import spork.inject.Provides;
 
 public class StringNullModule {
 	@Provides

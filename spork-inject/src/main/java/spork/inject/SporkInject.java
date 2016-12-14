@@ -1,10 +1,10 @@
-package spork.injection;
+package spork.inject;
 
 import spork.Spork;
-import spork.injection.internal.InjectFieldBinder;
+import spork.inject.internal.InjectFieldBinder;
 import spork.interfaces.SporkExtension;
 
-public class SporkInjection implements SporkExtension {
+public class SporkInject implements SporkExtension {
 	@Override
 	public void initialize(Spork spork) {
 		spork.getBinderRegistry().register(new InjectFieldBinder());

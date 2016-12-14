@@ -1,4 +1,4 @@
-package spork.injection.internal;
+package spork.inject.internal;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;

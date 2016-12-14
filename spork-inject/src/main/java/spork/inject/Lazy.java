@@ -1,4 +1,4 @@
-package spork.injection;
+package spork.inject;
 
 /**
  * A handle to a lazily-computed object instance (referred to as "property").

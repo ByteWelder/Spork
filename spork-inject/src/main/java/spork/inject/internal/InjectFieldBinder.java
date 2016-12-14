@@ -1,4 +1,4 @@
-package spork.injection.internal;
+package spork.inject.internal;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import spork.exceptions.BindException;
-import spork.injection.Lazy;
+import spork.inject.Lazy;
 import spork.interfaces.FieldBinder;
 
 /**

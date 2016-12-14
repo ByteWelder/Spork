@@ -1,11 +1,11 @@
-package spork.injection;
+package spork.inject;
 
 import org.junit.Test;
 
 import javax.inject.Inject;
 
 import spork.Spork;
-import spork.injection.modules.StringModule;
+import spork.inject.modules.StringModule;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -13,7 +13,8 @@ import static org.junit.Assert.assertNotNull;
 public class InjectLazyTests {
 
 	private static class SimpleParentLazy {
-		@Inject Lazy<String> lazyString;
+		@Inject
+		Lazy<String> lazyString;
 	}
 
 	@Test

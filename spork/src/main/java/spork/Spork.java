@@ -117,7 +117,7 @@ public class Spork {
 		if (sharedInstance == null) {
 			sharedInstance = new Spork();
 
-			sharedInstance.initializeExtension("spork.injection.SporkInjection");
+			sharedInstance.initializeExtension("spork.inject.SporkInject");
 			sharedInstance.initializeExtension("spork.android.SporkAndroid");
 		}
 

@@ -1,6 +1,6 @@
-package spork.injection.modules;
+package spork.inject.modules;
 
-import spork.injection.Provides;
+import spork.inject.Provides;
 
 public class StringModule {
 	@Provides

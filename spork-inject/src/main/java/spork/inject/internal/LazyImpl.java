@@ -1,8 +1,8 @@
-package spork.injection.internal;
+package spork.inject.internal;
 
 import javax.annotation.Nullable;
 
-import spork.injection.Lazy;
+import spork.inject.Lazy;
 import spork.internal.Callable;
 
 /**
