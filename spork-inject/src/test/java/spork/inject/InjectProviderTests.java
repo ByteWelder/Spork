@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 import spork.Spork;
+import spork.inject.modules.IncreasingIntegerModule;
 import spork.inject.modules.StringModule;
 
 import static org.junit.Assert.assertEquals;
@@ -15,21 +16,21 @@ public class InjectProviderTests {
 
 	private static class ProviderParent {
 		@Inject
-		Provider<String> provider;
+		Provider<Integer> provider;
 	}
 
 	@Test
-	public void test() {
+	public void multipleGet() {
+		// given
 		ProviderParent parent = new ProviderParent();
-		Spork.bind(parent, new StringModule());
+		Spork.bind(parent, new IncreasingIntegerModule());
 
-		assertNotNull(parent.provider);
+		// when
+		Integer first = parent.provider.get();
+		Integer second = parent.provider.get();
 
-		String first = parent.provider.get();
-		assertEquals("test", first);
-
-		String second = parent.provider.get();
-		assertNotNull(second);
-		assertEquals(first, second);
+		// then
+		assertEquals((Integer) 1, first);
+		assertEquals((Integer) 1, second);
 	}
 }

@@ -10,7 +10,7 @@ import javax.inject.Provider;
 
 import spork.exceptions.BindException;
 import spork.interfaces.FieldBinder;
-import spork.internal.Callable;
+import spork.internal.Reflection;
 
 /**
  * The default FieldBinder that binds field annotated with the Inject annotation.
@@ -36,38 +36,22 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 			throw new BindException(Inject.class, instance.getClass(), field, "must use modules in Spork.bind(instance, ...) when using @Inject at " + fieldType.getName());
 		}
 
-		boolean isProvider = (fieldType == Provider.class);
-		Class<?> targetType = isProvider ? (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0] : fieldType;
+		boolean fieldIsProvider = (fieldType == Provider.class);
+		// Determine the true type of the instance (so not Provider.class)
+		Class<?> targetType = fieldIsProvider ? (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0] : fieldType;
+		// Retrieve a provider from the module methods
+		Provider<?> provider = moduleManager.getProvider(field, modules, targetType);
 
-		Callable<?> callable = moduleManager.getCallable(modules, targetType);
-
-		if (callable == null) {
+		if (provider == null) {
 			throw new BindException(Inject.class, instance.getClass(), field, "none of the modules provides an instance for " + fieldType.getName());
 		}
 
-		if (isProvider) {
-			CallableProvider<?> callableProvider = new CallableProvider<>(callable);
-			spork.internal.Reflection.setFieldValue(annotation, field, instance, callableProvider);
+		// Either set the provider instance or the real instance
+		if (fieldIsProvider) {
+			Reflection.setFieldValue(annotation, field, instance, provider);
 		} else {
-			Object bindInstance = call(callable, field, instance);
-			spork.internal.Reflection.setFieldValue(annotation, field, instance, bindInstance);
+			Object bindInstance = provider.get();
+			Reflection.setFieldValue(annotation, field, instance, bindInstance);
 		}
-	}
-
-	private Object call(spork.internal.Callable<?> callable, Field field, Object object) {
-		Object instance = callable.call();
-
-		boolean isNullableAnnotated = field.getAnnotation(Nullable.class) != null;
-		boolean isNonNullAnnotated = field.getAnnotation(Nonnull.class) != null;
-
-		if (!isNullableAnnotated && instance == null) {
-			throw new BindException(Inject.class, object.getClass(), field, "field is not annotated as Nullable but module tries to inject null value");
-		}
-
-		if (isNonNullAnnotated && instance == null) {
-			throw new BindException(Inject.class, object.getClass(), field, "field is annotated as NonNull but module tries to inject null value");
-		}
-
-		return instance;
 	}
 }
