@@ -28,11 +28,11 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 	}
 
 	@Override
-	public void bind(Object instance, Inject annotation, Field field, @Nullable Object[] modules) {
+	public void bind(Object instance, Inject annotation, Field field, Object[] modules) {
 		Class<?> fieldType = field.getType();
 
 		// Bind with module system (uses @Provides annotation on methods)
-		if (modules == null || modules.length == 0) {
+		if (modules.length == 0) {
 			throw new BindException(Inject.class, instance.getClass(), field, "must use modules in Spork.bind(instance, ...) when using @Inject at " + fieldType.getName());
 		}
 
