@@ -2,7 +2,7 @@ package spork.android.test.domain;
 
 import javax.annotation.Nullable;
 
-import spork.injection.Provides;
+import spork.inject.Provides;
 
 public class StringNullModule {
 	@Provides

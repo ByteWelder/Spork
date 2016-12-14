@@ -6,16 +6,21 @@ import java.lang.reflect.ParameterizedType;
 import javax.annotation.Nullable;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 import spork.exceptions.BindException;
-import spork.inject.Lazy;
 import spork.interfaces.FieldBinder;
+import spork.internal.Callable;
 
 /**
  * The default FieldBinder that binds field annotated with the Inject annotation.
  */
 public class InjectFieldBinder implements FieldBinder<Inject> {
-	private final ModuleManager moduleManager = new ModuleManager();
+	private final ModuleManager moduleManager;
+
+	public InjectFieldBinder(ModuleManager moduleManager) {
+		this.moduleManager = moduleManager;
+	}
 
 	@Override
 	public Class<Inject> getAnnotationClass() {
@@ -31,18 +36,18 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 			throw new BindException(Inject.class, instance.getClass(), field, "must use modules in Spork.bind(instance, ...) when using @Inject at " + fieldType.getName());
 		}
 
-		boolean isLazy = (fieldType == Lazy.class);
-		Class<?> targetType = isLazy ? (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0] : fieldType;
+		boolean isProvider = (fieldType == Provider.class);
+		Class<?> targetType = isProvider ? (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0] : fieldType;
 
-		spork.internal.Callable<?> callable = moduleManager.getCallable(modules, targetType);
+		Callable<?> callable = moduleManager.getCallable(modules, targetType);
 
 		if (callable == null) {
 			throw new BindException(Inject.class, instance.getClass(), field, "none of the modules provides an instance for " + fieldType.getName());
 		}
 
-		if (isLazy) {
-			LazyImpl<?> lazyImpl = new LazyImpl<>(callable);
-			spork.internal.Reflection.setFieldValue(annotation, field, instance, lazyImpl);
+		if (isProvider) {
+			CallableProvider<?> callableProvider = new CallableProvider<>(callable);
+			spork.internal.Reflection.setFieldValue(annotation, field, instance, callableProvider);
 		} else {
 			Object bindInstance = call(callable, field, instance);
 			spork.internal.Reflection.setFieldValue(annotation, field, instance, bindInstance);

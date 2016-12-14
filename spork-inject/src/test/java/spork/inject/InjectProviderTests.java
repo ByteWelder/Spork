@@ -3,6 +3,7 @@ package spork.inject;
 import org.junit.Test;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 import spork.Spork;
 import spork.inject.modules.StringModule;
@@ -10,24 +11,24 @@ import spork.inject.modules.StringModule;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class InjectLazyTests {
+public class InjectProviderTests {
 
-	private static class SimpleParentLazy {
+	private static class ProviderParent {
 		@Inject
-		Lazy<String> lazyString;
+		Provider<String> provider;
 	}
 
 	@Test
 	public void test() {
-		SimpleParentLazy parent = new SimpleParentLazy();
+		ProviderParent parent = new ProviderParent();
 		Spork.bind(parent, new StringModule());
 
-		assertNotNull(parent.lazyString);
+		assertNotNull(parent.provider);
 
-		String first = parent.lazyString.get();
+		String first = parent.provider.get();
 		assertEquals("test", first);
 
-		String second = parent.lazyString.get();
+		String second = parent.provider.get();
 		assertNotNull(second);
 		assertEquals(first, second);
 	}

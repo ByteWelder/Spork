@@ -1,20 +1,20 @@
 package spork.inject.internal;
 
 import javax.annotation.Nullable;
+import javax.inject.Provider;
 
-import spork.inject.Lazy;
 import spork.internal.Callable;
 
 /**
- * {@link Callable} implementation for {@link Lazy}
+ * {@link Callable} implementation for {@link Provider}
  * @param <T> the type that can be lazily retrieved
  */
-class LazyImpl<T> implements Lazy<T> {
+class CallableProvider<T> implements Provider<T> {
 	@Nullable private T value;
 	private final Callable<T> callable;
 	private boolean isCached = false;
 
-	LazyImpl(Callable<T> callable) {
+	CallableProvider(Callable<T> callable) {
 		this.callable = callable;
 	}
 

@@ -1,6 +1,6 @@
 package spork.android.test.domain;
 
-import spork.injection.Provides;
+import spork.inject.Provides;
 
 public class IntegerModule {
 	@Provides
