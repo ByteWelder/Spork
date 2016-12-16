@@ -7,8 +7,13 @@ import javax.annotation.Nullable;
 import javax.inject.Provider;
 
 public class ModuleManager {
-	private final ModuleMethodRetriever moduleMethodRetriever = new ModuleMethodRetriever();
-	private final SingletonCache singletonCache = new SingletonCache();
+	private final ModuleMethodRetriever moduleMethodRetriever;
+	private final SingletonCache singletonCache;
+
+	public ModuleManager(ModuleMethodRetriever moduleMethodRetriever, SingletonCache singletonCache) {
+		this.moduleMethodRetriever = moduleMethodRetriever;
+		this.singletonCache = singletonCache;
+	}
 
 	public @Nullable <T> Provider<T> getProvider(Field field, Object[] modules, Class<T> type) {
 		for (Object module : modules) {
