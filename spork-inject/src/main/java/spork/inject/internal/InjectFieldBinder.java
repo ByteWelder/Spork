@@ -3,8 +3,6 @@ package spork.inject.internal;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 
-import javax.annotation.Nullable;
-import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Provider;
 

@@ -40,17 +40,19 @@ class InstanceProvider<T> implements Provider<T> {
 		boolean isSingleton = method.getAnnotation(Singleton.class) != null;
 
 		if (!isSingleton) {
-			return invokeMethod();
+			@Nullable Object[] methodParameters = collectMethodParameters(method);
+			return invokeMethod(methodParameters);
 		} else {
 			String typeName = method.getReturnType().getName();
 			Object instance = singletonCache.get(typeName);
 
 			if (instance == null) {
-				instance = invokeMethod();
+				@Nullable Object[] methodParameters = collectMethodParameters(method);
+				instance = invokeMethod(methodParameters);
 				singletonCache.put(typeName, instance);
 			}
 
-			return (T)instance;
+			return (T) instance;
 		}
 	}
 
@@ -68,13 +70,22 @@ class InstanceProvider<T> implements Provider<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	private T invokeMethod() {
+	private T invokeMethod(@Nullable Object[] params) {
 		try {
-			return (T)method.invoke(parent, (Object[]) null);
+			return (T) method.invoke(parent, params);
 		} catch (IllegalAccessException e) {
 			throw new BindException(Inject.class, parent.getClass(), field, "method \"" + method.getName() + "\" on module " + parent.getClass().getName() + " is not public", e);
 		} catch (Exception e) {
 			throw new BindException(Inject.class, parent.getClass(), field, "failed to invoke method \"" + method.getName() + "\" on module " + parent.getClass().getName(), e);
+		}
+	}
+
+	private @Nullable Object[] collectMethodParameters(Method method) {
+		int parameterCount = method.getParameterTypes().length;
+		if (parameterCount == 0) {
+			return null;
+		} else {
+			return new Object[parameterCount];
 		}
 	}
 }

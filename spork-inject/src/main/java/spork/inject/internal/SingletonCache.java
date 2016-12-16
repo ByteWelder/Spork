@@ -2,7 +2,7 @@ package spork.inject.internal;
 
 import java.util.HashMap;
 
-class SingletonCache {
+public class SingletonCache {
 	private final HashMap<String, Object> map = new HashMap<>();
 
 	synchronized Object get(String key) {

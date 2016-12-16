@@ -1,19 +1,19 @@
 package spork.inject.tck;
 
+import junit.framework.TestCase;
+
 import org.atinject.tck.Tck;
-import org.junit.Test;
 
 import spork.Spork;
 
-public class TckTests {
+public class TckTests extends TestCase {
 
-	@Test
-	public void test() {
+	public static junit.framework.Test suite() {
 		CarHolder carHolder = new CarHolder();
 		CarModule carModule = new CarModule();
 
 		Spork.bind(carHolder, carModule);
 
-		Tck.testsFor(carHolder.getCar(), true, true);
+		return Tck.testsFor(carHolder.getCar(), true, true);
 	}
 }

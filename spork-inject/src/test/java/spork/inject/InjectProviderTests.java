@@ -7,10 +7,8 @@ import javax.inject.Provider;
 
 import spork.Spork;
 import spork.inject.modules.IncreasingIntegerModule;
-import spork.inject.modules.StringModule;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class InjectProviderTests {
 
