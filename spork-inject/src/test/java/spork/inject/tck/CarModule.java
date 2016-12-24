@@ -14,8 +14,10 @@ import org.atinject.tck.auto.accessories.SpareTire;
 import javax.inject.Named;
 import javax.inject.Provider;
 
+import spork.inject.Module;
 import spork.inject.Provides;
 
+@Module
 public class CarModule {
 
     @Provides

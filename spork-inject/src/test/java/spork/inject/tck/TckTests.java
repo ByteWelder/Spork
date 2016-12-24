@@ -14,6 +14,6 @@ public class TckTests extends TestCase {
 
 		Spork.bind(carHolder, carModule);
 
-		return Tck.testsFor(carHolder.getCar(), true, true);
+		return Tck.testsFor(carHolder.getCar(), false, false);
 	}
 }

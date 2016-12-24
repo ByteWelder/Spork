@@ -12,9 +12,9 @@ public interface TypeBinder<AnnotationType extends Annotation> {
 	 * @param object        the annotated instance
 	 * @param annotation    the annotation
 	 * @param annotatedType the class level where this annotation was found
-	 * @param modules       either null or an array of non-null modules
+	 * @param parameters    an array of non-null modules
 	 */
-	void bind(Object object, AnnotationType annotation, Class<?> annotatedType, Object[] modules);
+	void bind(Object object, AnnotationType annotation, Class<?> annotatedType, Object[] parameters);
 
 	/**
 	 * @return the annotation to provide bindings for

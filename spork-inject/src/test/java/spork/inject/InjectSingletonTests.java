@@ -10,12 +10,13 @@ import spork.Spork;
 import static org.junit.Assert.assertEquals;
 
 public class InjectSingletonTests {
-	public static class Parent {
+	private static class Parent {
 		@Inject
 		int counter = -1;
 	}
 
-	public static class Module {
+	@Module
+	public static class ParentModule {
 		private int counter = 1;
 
 		@Provides
@@ -28,7 +29,7 @@ public class InjectSingletonTests {
 	@Test
 	public void test() {
 		Parent parent = new Parent();
-		Module module = new Module();
+		ParentModule module = new ParentModule();
 
 		// ensure wrong defaults
 		parent.counter = -1;
