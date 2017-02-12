@@ -45,6 +45,10 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
             return getDimensionFieldObject(context, annotatedField);
         } else if (field_class == Drawable.class) {
             return getDrawableFieldObject(context, annotatedField);
+        } else if (field_class == Integer.class || field_class == int.class) {
+            return getIntegerFieldObject(context, annotatedField);
+        } else if (field_class == Boolean.class || field_class == boolean.class) {
+            return getBooleanFieldObject(context, annotatedField);
         } else {
             throw new BindException(BindResource.class, annotatedField.getField().getDeclaringClass(), annotatedField.getField(), "unsupported field type");
         }
@@ -69,6 +73,26 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
         }
 
         return context.getResources().getDimension(resource_id);
+    }
+
+    private int getIntegerFieldObject(Context context, AnnotatedField<BindResource> annotatedField) {
+        int resource_id = annotatedField.getAnnotation().value();
+
+        if (resource_id == ResourceId.sDefaultValue) {
+            resource_id = context.getResources().getIdentifier(annotatedField.getField().getName(), "integer", context.getPackageName());
+        }
+
+        return context.getResources().getInteger(resource_id);
+    }
+
+    private boolean getBooleanFieldObject(Context context, AnnotatedField<BindResource> annotatedField) {
+        int resource_id = annotatedField.getAnnotation().value();
+
+        if (resource_id == ResourceId.sDefaultValue) {
+            resource_id = context.getResources().getIdentifier(annotatedField.getField().getName(), "bool", context.getPackageName());
+        }
+
+        return context.getResources().getBoolean(resource_id);
     }
 
     @Nullable
