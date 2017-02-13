@@ -38,47 +38,4 @@ public class CarModule {
                 plainTireProvider,
                 spareTireProvider);
     }
-
-    // region car components
-
-    @Provides
-    public Seat provideDriverSeat(Cupholder cupholder) {
-        return new DriversSeat(cupholder);
-    }
-
-    @Provides
-    public Tire providePlainTire(FuelTank fuelTank) {
-        return new Tire(fuelTank);
-    }
-
-    @Provides @Named("spare")
-    public Tire provideSpareTire(FuelTank forSupertype, FuelTank forSubtype) {
-        return new SpareTire(forSupertype, forSubtype);
-    }
-
-    @Provides
-    public Seat providePlainSeat(Cupholder cupholder) {
-        return SeatFactory.create(cupholder);
-    }
-
-    @Provides @Drivers
-    public Seat provideDriversSeat(Cupholder cupholder) {
-        return new DriversSeat(cupholder);
-    }
-
-    // endregion
-
-    // region subcomponents
-
-    @Provides
-    public Cupholder provideCupholder(Provider<Seat> seatProvider) {
-        return new Cupholder(seatProvider);
-    }
-
-    @Provides
-    public FuelTank provideFuelTank() {
-        return new FuelTank();
-    }
-
-    // endregion
 }

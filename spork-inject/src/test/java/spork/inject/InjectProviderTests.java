@@ -6,7 +6,9 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 import spork.Spork;
+import spork.inject.internal.objectgraph.ObjectGraph;
 import spork.inject.modules.IncreasingIntegerModule;
+import spork.inject.modules.StringModule;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,7 +23,12 @@ public class InjectProviderTests {
 	public void multipleGet() {
 		// given
 		ProviderParent parent = new ProviderParent();
-		Spork.bind(parent, new IncreasingIntegerModule());
+
+		ObjectGraph graph = new ObjectGraph.Builder()
+				.module(new IncreasingIntegerModule())
+				.build();
+
+		Spork.bind(parent, graph);
 
 		// when
 		Integer first = parent.provider.get();

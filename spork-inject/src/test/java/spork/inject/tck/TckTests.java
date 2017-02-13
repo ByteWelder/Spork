@@ -5,14 +5,19 @@ import junit.framework.TestCase;
 import org.atinject.tck.Tck;
 
 import spork.Spork;
+import spork.inject.internal.objectgraph.ObjectGraph;
 
 public class TckTests extends TestCase {
 
 	public static junit.framework.Test suite() {
-		CarHolder carHolder = new CarHolder();
-		CarModule carModule = new CarModule();
+		ObjectGraph graph = new ObjectGraph.Builder()
+				.module(new CarModule())
+				.module(new CarComponentsModule())
+				.build();
 
-		Spork.bind(carHolder, carModule);
+		CarHolder carHolder = new CarHolder();
+
+		Spork.bind(carHolder, graph);
 
 		return Tck.testsFor(carHolder.getCar(), false, false);
 	}

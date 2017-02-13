@@ -7,6 +7,8 @@ import javax.inject.Inject;
 
 import spork.Spork;
 import spork.exceptions.BindException;
+import spork.inject.internal.objectgraph.ObjectGraph;
+import spork.inject.modules.IntegerModule;
 import spork.inject.modules.StringNullModule;
 import spork.inject.modules.StringModule;
 
@@ -22,13 +24,24 @@ public class InjectNonnullTests {
 	@Test
 	public void instanceValueTest() {
 		Parent parent = new Parent();
-		Spork.bind(parent, new StringModule());
+
+		ObjectGraph graph = new ObjectGraph.Builder()
+				.module(new StringModule())
+				.build();
+
+		Spork.bind(parent, graph);
+
 		assertEquals("test", parent.string);
 	}
 
 	@Test(expected = BindException.class)
 	public void nullValueTest() {
 		Parent parent = new Parent();
-		Spork.bind(parent, new StringNullModule());
+
+		ObjectGraph graph = new ObjectGraph.Builder()
+				.module(new StringNullModule())
+				.build();
+
+		Spork.bind(parent, graph);
 	}
 }

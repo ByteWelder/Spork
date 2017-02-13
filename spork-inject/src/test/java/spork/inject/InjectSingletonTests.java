@@ -6,6 +6,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import spork.Spork;
+import spork.inject.internal.objectgraph.ObjectGraph;
+import spork.inject.modules.StringModule;
 
 import static org.junit.Assert.assertEquals;
 
@@ -29,14 +31,19 @@ public class InjectSingletonTests {
 	@Test
 	public void test() {
 		Parent parent = new Parent();
-		ParentModule module = new ParentModule();
+
+		ObjectGraph graph = new ObjectGraph.Builder()
+				.module(new ParentModule())
+				.build();
 
 		// ensure wrong defaults
 		parent.counter = -1;
 
-		Spork.bind(parent, module);
-		assertEquals(1, parent.counter);
-		Spork.bind(parent, module);
+		// inject twice
+		Spork.bind(parent, graph);
+		Spork.bind(parent, graph);
+
+		// verify same value
 		assertEquals(1, parent.counter);
 	}
 }

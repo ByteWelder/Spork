@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import spork.Spork;
 import spork.exceptions.BindException;
+import spork.inject.internal.objectgraph.ObjectGraph;
 import spork.inject.modules.IntegerModule;
 import spork.inject.modules.StringModule;
 
@@ -17,7 +18,6 @@ public class InjectTests {
 
 	private static class Parent {
 		@Inject String string;
-		@Inject CharSequence charSequence;
 		@Inject Integer integer;
 	}
 
@@ -25,9 +25,15 @@ public class InjectTests {
 	public void regularTest() {
 		// normal case with a class-bound and interface-bound field
 		Parent parent = new Parent();
-		Spork.bind(parent, new StringModule(), new IntegerModule());
+
+		ObjectGraph graph = new ObjectGraph.Builder()
+				.module(new StringModule())
+				.module(new IntegerModule())
+				.build();
+
+		Spork.bind(parent, graph);
+
 		assertEquals("test", parent.string);
-		assertEquals("test", parent.charSequence);
 		assertEquals(Integer.valueOf(1), parent.integer);
 	}
 
