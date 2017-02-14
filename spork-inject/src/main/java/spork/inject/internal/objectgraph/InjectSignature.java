@@ -3,30 +3,38 @@ package spork.inject.internal.objectgraph;
 import java.lang.annotation.Annotation;
 
 import javax.annotation.Nullable;
-import javax.inject.Singleton;
+import javax.inject.Named;
 
+/**
+ * Class that defines compatibility of inject target/source
+ */
 public class InjectSignature {
 	private static final String SEPARATOR = ":";
 	private final String value;
 	private final Class<?> targetType;
+
 	private final Nullability nullability;
 	@Nullable
-	private final Annotation scopeAnnotation;
+	private final Annotation qualifierAnnotation;
 
-	public InjectSignature(Class<?> targetType, Nullability nullability, @Nullable Annotation scopeAnnotation) {
+	public InjectSignature(Class<?> targetType, Nullability nullability, @Nullable Annotation qualifierAnnotation) {
 		this.targetType = targetType;
 		this.nullability = nullability;
-		this.scopeAnnotation = scopeAnnotation;
-		value = createSignature(targetType, nullability, scopeAnnotation);
+		this.qualifierAnnotation = qualifierAnnotation;
+		value = createSignature(targetType, nullability, qualifierAnnotation);
 	}
 
 	public Class<?> getType() {
 		return targetType;
 	}
 
+	public Nullability getNullability() {
+		return nullability;
+	}
+
 	@Nullable
-	public Annotation getScopeAnnotation() {
-		return scopeAnnotation;
+	public Annotation getQualifierAnnotation() {
+		return qualifierAnnotation;
 	}
 
 	@Override
@@ -48,17 +56,45 @@ public class InjectSignature {
 
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
-		return new InjectSignature(targetType, nullability, scopeAnnotation);
+		return new InjectSignature(targetType, nullability, qualifierAnnotation);
 	}
 
 	/**
 	 * @return a signature to match injectable fields with Module methods
 	 */
-	private static String createSignature(Class<?> type, Nullability nullability, @Nullable Annotation scope) {
-		if (scope != null && !(scope instanceof Singleton)) {
-			return type.getName() + SEPARATOR + nullability + SEPARATOR + scope.getClass().getName();
+	private static String createSignature(Class<?> type, Nullability nullability, @Nullable Annotation qualifierAnnotation) {
+		if (qualifierAnnotation == null) {
+			return type.getName()
+					+ SEPARATOR + nullability;
 		} else {
-			return type.getName() + SEPARATOR + nullability;
+			return type.getName()
+					+ SEPARATOR + nullability
+					+ SEPARATOR + getQualifierName(qualifierAnnotation);
+		}
+	}
+
+	public String toStringReadable() {
+		String qualifier = qualifierAnnotation != null
+				? ("qualifier " + getQualifierName(qualifierAnnotation))
+				: "no qualifier";
+
+		return "["
+				+ targetType.getName()
+				+ " " + nullability
+				+ " and " + qualifier
+				+ "]";
+	}
+
+	@Nullable
+	private static String getQualifierName(@Nullable Annotation qualifierAnnotation) {
+		if (qualifierAnnotation == null) {
+			return null;
+		}
+
+		if (qualifierAnnotation.annotationType() == Named.class) {
+			return "Named:" + ((Named) qualifierAnnotation).value();
+		} else {
+			return qualifierAnnotation.annotationType().getName();
 		}
 	}
 }

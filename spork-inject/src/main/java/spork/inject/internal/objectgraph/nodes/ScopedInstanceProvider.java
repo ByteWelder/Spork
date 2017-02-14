@@ -6,12 +6,12 @@ import spork.inject.internal.objectgraph.InjectSignature;
 
 public class ScopedInstanceProvider<T> implements Provider<T> {
 	private final InjectSignature injectSignature;
-	private final MethodInvoker<T> methodInvoker;
+	private final ModuleMethodInvoker<T> moduleMethodInvoker;
 	private final ScopedInstanceCache scopedInstanceCache;
 
-	public ScopedInstanceProvider(InjectSignature injectSignature, MethodInvoker<T> methodInvoker, ScopedInstanceCache scopedInstanceCache) {
+	public ScopedInstanceProvider(InjectSignature injectSignature, ModuleMethodInvoker<T> moduleMethodInvoker, ScopedInstanceCache scopedInstanceCache) {
 		this.injectSignature = injectSignature;
-		this.methodInvoker = methodInvoker;
+		this.moduleMethodInvoker = moduleMethodInvoker;
 		this.scopedInstanceCache = scopedInstanceCache;
 	}
 
@@ -22,7 +22,7 @@ public class ScopedInstanceProvider<T> implements Provider<T> {
 			T instance = (T) scopedInstanceCache.get(injectSignature);
 
 			if (instance == null) {
-				instance = methodInvoker.invoke();
+				instance = moduleMethodInvoker.invoke();
 				scopedInstanceCache.put(injectSignature, instance);
 			}
 

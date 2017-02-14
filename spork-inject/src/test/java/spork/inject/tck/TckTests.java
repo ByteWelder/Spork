@@ -18,6 +18,7 @@ public class TckTests extends TestCase {
 		CarHolder carHolder = new CarHolder();
 
 		Spork.bind(carHolder, graph);
+		Spork.bind(carHolder.getCar(), graph);
 
 		return Tck.testsFor(carHolder.getCar(), false, false);
 	}

@@ -28,7 +28,12 @@ public class CarComponentsModule {
 	}
 
 	@Provides @Named("spare")
-	public Tire provideSpareTire(FuelTank forSupertype, FuelTank forSubtype) {
+	public Tire provideSpareTire1(FuelTank forSupertype, FuelTank forSubtype) {
+		return new SpareTire(forSupertype, forSubtype);
+	}
+
+	@Provides @Named("spare")
+	public SpareTire provideSpareTire2(FuelTank forSupertype, FuelTank forSubtype) {
 		return new SpareTire(forSupertype, forSubtype);
 	}
 

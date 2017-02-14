@@ -5,23 +5,23 @@ import javax.annotation.Nullable;
 import javax.inject.Provider;
 
 /**
- * Wrapper around MethodInvoker that caches the given value the first time it is retrieved.
+ * Wrapper around ModuleMethodInvoker that caches the given value the first time it is retrieved.
  * @param <T>
  */
 class ScopelessInstanceProvider<T> implements Provider<T> {
 	@Nullable
-	private MethodInvoker<T> methodInvoker;
+	private ModuleMethodInvoker<T> moduleMethodInvoker;
 	private T cachedInstance;
 
-	ScopelessInstanceProvider(@Nonnull MethodInvoker<T> methodInvoker) {
-		this.methodInvoker = methodInvoker;
+	ScopelessInstanceProvider(@Nonnull ModuleMethodInvoker<T> moduleMethodInvoker) {
+		this.moduleMethodInvoker = moduleMethodInvoker;
 	}
 
 	@Override
 	public T get() {
-		if (methodInvoker != null) {
-			cachedInstance = methodInvoker.invoke();
-			methodInvoker = null;
+		if (moduleMethodInvoker != null) {
+			cachedInstance = moduleMethodInvoker.invoke();
+			moduleMethodInvoker = null;
 		}
 
 		return cachedInstance;

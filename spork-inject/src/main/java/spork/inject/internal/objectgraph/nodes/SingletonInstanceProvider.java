@@ -7,12 +7,12 @@ import spork.inject.internal.objectgraph.InjectSignature;
 
 public class SingletonInstanceProvider<T> implements Provider<T> {
 	private final InjectSignature injectSignature;
-	private final MethodInvoker<T> methodInvoker;
+	private final ModuleMethodInvoker<T> moduleMethodInvoker;
 	private final ScopedInstanceCache scopedInstanceCache;
 
-	SingletonInstanceProvider(InjectSignature injectSignature, @Nonnull MethodInvoker<T> methodInvoker, ScopedInstanceCache scopedInstanceCache) {
+	SingletonInstanceProvider(InjectSignature injectSignature, @Nonnull ModuleMethodInvoker<T> moduleMethodInvoker, ScopedInstanceCache scopedInstanceCache) {
 		this.injectSignature = injectSignature;
-		this.methodInvoker = methodInvoker;
+		this.moduleMethodInvoker = moduleMethodInvoker;
 		this.scopedInstanceCache = scopedInstanceCache;
 	}
 
@@ -23,7 +23,7 @@ public class SingletonInstanceProvider<T> implements Provider<T> {
 			Object instance = scopedInstanceCache.get(injectSignature);
 
 			if (instance == null) {
-				instance = methodInvoker.invoke();
+				instance = moduleMethodInvoker.invoke();
 
 				if (instance == null) {
 					// TODO: throw a BindException

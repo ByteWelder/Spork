@@ -1,5 +1,6 @@
 package spork.inject.internal.objectgraph;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -23,5 +24,15 @@ public enum Nullability {
 		} else { // If @Nullable is not defined, we assume the default @Nonnull
 			return NONNULL;
 		}
+	}
+
+	public static Nullability create(Annotation[] annotations) {
+		for (Annotation annotation : annotations) {
+			if (annotation.getClass() == Nullable.class) {
+				return NULLABLE;
+			}
+		}
+
+		return NONNULL;
 	}
 }
