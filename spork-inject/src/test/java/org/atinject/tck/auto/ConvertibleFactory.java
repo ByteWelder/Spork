@@ -3,8 +3,6 @@ package org.atinject.tck.auto;
 import javax.inject.Named;
 import javax.inject.Provider;
 
-import spork.Spork;
-
 public final class ConvertibleFactory {
 	private ConvertibleFactory() {
 	}

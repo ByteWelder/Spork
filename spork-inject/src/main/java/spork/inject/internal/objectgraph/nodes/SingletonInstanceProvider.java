@@ -1,6 +1,5 @@
 package spork.inject.internal.objectgraph.nodes;
 
-import javax.annotation.Nonnull;
 import javax.inject.Provider;
 
 import spork.inject.internal.objectgraph.InjectSignature;
@@ -10,7 +9,7 @@ public class SingletonInstanceProvider<T> implements Provider<T> {
 	private final ModuleMethodInvoker<T> moduleMethodInvoker;
 	private final ScopedInstanceCache scopedInstanceCache;
 
-	SingletonInstanceProvider(InjectSignature injectSignature, @Nonnull ModuleMethodInvoker<T> moduleMethodInvoker, ScopedInstanceCache scopedInstanceCache) {
+	SingletonInstanceProvider(InjectSignature injectSignature, ModuleMethodInvoker<T> moduleMethodInvoker, ScopedInstanceCache scopedInstanceCache) {
 		this.injectSignature = injectSignature;
 		this.moduleMethodInvoker = moduleMethodInvoker;
 		this.scopedInstanceCache = scopedInstanceCache;

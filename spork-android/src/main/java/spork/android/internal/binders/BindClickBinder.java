@@ -12,7 +12,7 @@ import spork.interfaces.MethodBinder;
 import spork.internal.Reflection;
 
 public class BindClickBinder implements MethodBinder<BindClick> {
-	private ViewResolver viewResolver;
+	private final ViewResolver viewResolver;
 
 	public BindClickBinder(ViewResolver viewResolver) {
 		this.viewResolver = viewResolver;

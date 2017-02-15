@@ -12,7 +12,7 @@ import spork.interfaces.FieldBinder;
 import spork.internal.Reflection;
 
 public class BindViewBinder implements FieldBinder<BindView> {
-	private ViewResolver viewResolver;
+	private final ViewResolver viewResolver;
 
 	public BindViewBinder(ViewResolver viewResolver) {
 		this.viewResolver = viewResolver;

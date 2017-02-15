@@ -18,7 +18,7 @@ import spork.inject.internal.objectgraph.Nullability;
 import spork.inject.internal.objectgraph.ObjectGraph;
 
 public class ModuleMethodInvoker<T> {
-	private ObjectGraph objectGraph;
+	private final ObjectGraph objectGraph;
 	private final Object module;
 	private final Method method;
 	private final Class<?> targetType;

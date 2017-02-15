@@ -54,11 +54,6 @@ public class InjectSignature {
 		return value;
 	}
 
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		return new InjectSignature(targetType, nullability, qualifierAnnotation);
-	}
-
 	/**
 	 * @return a signature to match injectable fields with Module methods
 	 */

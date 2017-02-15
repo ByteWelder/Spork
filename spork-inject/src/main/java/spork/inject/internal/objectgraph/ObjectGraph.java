@@ -8,7 +8,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Qualifier;
-import javax.inject.Scope;
 
 import spork.exceptions.BindException;
 import spork.inject.internal.objectgraph.nodes.ModuleNode;
