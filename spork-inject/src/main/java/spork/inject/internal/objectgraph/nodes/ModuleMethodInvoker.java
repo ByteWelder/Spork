@@ -40,9 +40,9 @@ public class ModuleMethodInvoker<T> {
 		try {
 			return (T) method.invoke(module, params);
 		} catch (IllegalAccessException e) {
-			throw new BindException(Inject.class, module.getClass(), targetType, module.getClass().getName() + "." + method.getName() + "\" is not public (check class and method)", e);
+			throw new BindException(Inject.class, module.getClass(), targetType, module.getClass().getName() + "." + method.getName() + "() is not public (check class and method)", e);
 		} catch (Exception e) {
-			throw new BindException(Inject.class, module.getClass(), targetType, "failed to invoke method " + module.getClass().getName() + "." + method.getName(), e);
+			throw new BindException(Inject.class, module.getClass(), targetType, "failed to invoke method " + module.getClass().getName() + "." + method.getName() + "()", e);
 		}
 	}
 
@@ -63,6 +63,13 @@ public class ModuleMethodInvoker<T> {
 			// retrieve provider
 			InjectSignature injectSignature = getInjectSignature(parameterClass, annotations, genericParameterType);
 			Provider provider = objectGraph.findProvider(injectSignature);
+
+			if (provider == null) {
+				String message = "none of the modules provides an instance for the argument " + injectSignature.getType().getName()
+						+ " of " + method.getDeclaringClass().getName() + "." + method.getName() + "()";
+				throw new BindException(Inject.class, method.getDeclaringClass(), injectSignature.getType(), message);
+			}
+
 			boolean parameterIsProvider = (parameterClass == Provider.class);
 
 			// store provider or instance

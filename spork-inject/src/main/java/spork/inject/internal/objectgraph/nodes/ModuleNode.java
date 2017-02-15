@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nullable;
 import javax.inject.Provider;
 import javax.inject.Qualifier;
 import javax.inject.Singleton;
@@ -40,6 +41,7 @@ public class ModuleNode implements ObjectGraphNode {
 
 	@SuppressWarnings("unchecked")
 	@Override
+	@Nullable
 	public <T> Provider<T> findProvider(ObjectGraph objectGraph, InjectSignature injectSignature) {
 		Method method = methodCache.get(injectSignature);
 

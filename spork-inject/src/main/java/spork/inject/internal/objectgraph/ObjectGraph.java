@@ -5,11 +5,10 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
+import javax.annotation.Nullable;
 import javax.inject.Provider;
 import javax.inject.Qualifier;
 
-import spork.exceptions.BindException;
 import spork.inject.internal.objectgraph.nodes.ModuleNode;
 import spork.inject.internal.objectgraph.nodes.ScopedInstanceCache;
 
@@ -20,6 +19,7 @@ public class ObjectGraph {
 		this.nodes = nodes;
 	}
 
+	@Nullable
 	public <T> Provider<T> findProvider(Field targetField, Class<T> targetType) {
 		Annotation qualifierAnnotation = Annotations.findAnnotationAnnotatedWith(Qualifier.class, targetField);
 		Nullability nullability = Nullability.create(targetField);
@@ -28,6 +28,7 @@ public class ObjectGraph {
 		return findProvider(injectSignature);
 	}
 
+	@Nullable
 	public <T> Provider<T> findProvider(InjectSignature injectSignature) {
 		for (ObjectGraphNode node : nodes) {
 			Provider<T> provider = node.findProvider(this, injectSignature);
@@ -37,9 +38,7 @@ public class ObjectGraph {
 			}
 		}
 
-		String message = "no provider found in ObjectGraph for " + injectSignature.toString();
-
-		throw new BindException(Inject.class, message);
+		return null;
 	}
 
 	public static class Builder {
