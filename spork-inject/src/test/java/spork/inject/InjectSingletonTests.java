@@ -7,17 +7,12 @@ import javax.inject.Singleton;
 
 import spork.Spork;
 import spork.inject.internal.objectgraph.ObjectGraph;
-import spork.inject.modules.StringModule;
 
 import static org.junit.Assert.assertEquals;
 
 public class InjectSingletonTests {
-	private static class Parent {
-		@Inject
-		int counter = -1;
-	}
 
-	public static class ParentModule {
+	public static class Module {
 		private int counter = 1;
 
 		@Provides
@@ -26,13 +21,18 @@ public class InjectSingletonTests {
 			return counter++;
 		}
 	}
+	
+	private static class Parent {
+		@Inject
+		int counter = -1;
+	}
 
 	@Test
 	public void test() {
 		Parent parent = new Parent();
 
 		ObjectGraph graph = new ObjectGraph.Builder()
-				.module(new ParentModule())
+				.module(new Module())
 				.build();
 
 		// ensure wrong defaults
