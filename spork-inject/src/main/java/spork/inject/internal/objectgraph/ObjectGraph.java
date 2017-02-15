@@ -8,10 +8,11 @@ import javax.annotation.Nullable;
 import javax.inject.Provider;
 import javax.inject.Qualifier;
 
+import spork.inject.internal.InjectSignature;
 import spork.inject.internal.lang.Annotations;
 import spork.inject.internal.lang.Nullability;
-import spork.inject.internal.objectgraph.nodes.ModuleNode;
-import spork.inject.internal.objectgraph.nodes.ScopedInstanceCache;
+import spork.inject.internal.objectgraph.modulenode.ModuleNode;
+import spork.inject.internal.objectgraph.modulenode.ScopedInstanceCache;
 
 public class ObjectGraph {
 	private final ObjectGraphNode[] nodes;

@@ -1,11 +1,11 @@
-package spork.inject.internal.objectgraph.nodes;
+package spork.inject.internal.objectgraph.modulenode;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nullable;
 
-import spork.inject.internal.objectgraph.InjectSignature;
+import spork.inject.internal.InjectSignature;
 
 public class ScopedInstanceCache {
 	private final Map<InjectSignature, Object> map = new HashMap<>();

@@ -14,11 +14,11 @@ import static org.junit.Assert.assertEquals;
 public class InjectSingletonTests {
 
 	public static class Module {
-		private int counter = 1;
+		private Integer counter = 1;
 
 		@Provides
 		@Singleton
-		public int counter() {
+		public Integer counter() {
 			return counter++;
 		}
 	}
@@ -26,14 +26,14 @@ public class InjectSingletonTests {
 	public static class NullSingletonModule {
 		@Provides
 		@Singleton
-		public Object value() {
+		public Integer value() {
 			return null;
 		}
 	}
 
 	private static class Parent {
 		@Inject
-		int counter = -1;
+		Integer counter = -1;
 	}
 
 	@Test
@@ -52,7 +52,7 @@ public class InjectSingletonTests {
 		Spork.bind(parent, graph);
 
 		// verify same value
-		assertEquals(1, parent.counter);
+		assertEquals(Integer.valueOf(1), parent.counter);
 	}
 
 	@Test(expected = BindException.class)

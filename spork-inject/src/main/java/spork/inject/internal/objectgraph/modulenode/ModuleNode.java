@@ -1,4 +1,4 @@
-package spork.inject.internal.objectgraph.nodes;
+package spork.inject.internal.objectgraph.modulenode;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -12,7 +12,7 @@ import javax.inject.Singleton;
 
 import spork.inject.Provides;
 import spork.inject.internal.lang.Annotations;
-import spork.inject.internal.objectgraph.InjectSignature;
+import spork.inject.internal.InjectSignature;
 import spork.inject.internal.lang.Nullability;
 import spork.inject.internal.objectgraph.ObjectGraph;
 import spork.inject.internal.objectgraph.ObjectGraphNode;
@@ -59,7 +59,7 @@ public class ModuleNode implements ObjectGraphNode {
 		boolean isSingleton = method.getAnnotation(Singleton.class) != null;
 
 		if (isSingleton) {
-			// TODO: implement custom qualifiers
+			// TODO: implement custom scopes
 			return new SingletonInstanceProvider(injectSignature, moduleMethodInvoker, scopedInstanceCache);
 		} else if (injectSignature.getQualifierAnnotation() != null) {
 				return new ScopedInstanceProvider(injectSignature, moduleMethodInvoker, scopedInstanceCache);

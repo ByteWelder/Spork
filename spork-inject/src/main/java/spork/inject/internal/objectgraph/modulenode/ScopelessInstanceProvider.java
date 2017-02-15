@@ -1,4 +1,4 @@
-package spork.inject.internal.objectgraph.nodes;
+package spork.inject.internal.objectgraph.modulenode;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

@@ -1,4 +1,4 @@
-package spork.inject.internal.objectgraph;
+package spork.inject.internal;
 
 import java.lang.annotation.Annotation;
 

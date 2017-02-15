@@ -1,8 +1,10 @@
-package spork.inject.internal.objectgraph.nodes;
+package spork.inject.internal.objectgraph.modulenode;
 
+import javax.inject.Inject;
 import javax.inject.Provider;
 
-import spork.inject.internal.objectgraph.InjectSignature;
+import spork.exceptions.BindException;
+import spork.inject.internal.InjectSignature;
 
 public class SingletonInstanceProvider<T> implements Provider<T> {
 	private final InjectSignature injectSignature;
@@ -25,8 +27,9 @@ public class SingletonInstanceProvider<T> implements Provider<T> {
 				instance = moduleMethodInvoker.invoke();
 
 				if (instance == null) {
-					// TODO: throw a BindException
-					throw new RuntimeException("singleton instances cannot be null");
+					String message = "singletons are not nullable but is null at " + moduleMethodInvoker.getModule().getClass().getName()
+							+ "." + moduleMethodInvoker.getMethod().getName() + "()";
+					throw new BindException(Inject.class, moduleMethodInvoker.getModule().getClass(), message);
 				}
 
 				scopedInstanceCache.put(injectSignature, instance);

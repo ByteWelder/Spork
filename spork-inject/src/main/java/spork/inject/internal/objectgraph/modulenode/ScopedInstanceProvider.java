@@ -1,8 +1,8 @@
-package spork.inject.internal.objectgraph.nodes;
+package spork.inject.internal.objectgraph.modulenode;
 
 import javax.inject.Provider;
 
-import spork.inject.internal.objectgraph.InjectSignature;
+import spork.inject.internal.InjectSignature;
 
 public class ScopedInstanceProvider<T> implements Provider<T> {
 	private final InjectSignature injectSignature;

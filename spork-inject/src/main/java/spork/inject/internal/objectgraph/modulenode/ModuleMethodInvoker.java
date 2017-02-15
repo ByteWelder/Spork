@@ -1,4 +1,4 @@
-package spork.inject.internal.objectgraph.nodes;
+package spork.inject.internal.objectgraph.modulenode;
 
 
 import java.lang.annotation.Annotation;
@@ -13,7 +13,7 @@ import javax.inject.Qualifier;
 
 import spork.exceptions.BindException;
 import spork.inject.internal.lang.Annotations;
-import spork.inject.internal.objectgraph.InjectSignature;
+import spork.inject.internal.InjectSignature;
 import spork.inject.internal.lang.Nullability;
 import spork.inject.internal.objectgraph.ObjectGraph;
 
@@ -33,6 +33,14 @@ public class ModuleMethodInvoker<T> {
 	public T invoke() {
 		@Nullable Object[] methodParameters = collectMethodParameters(method);
 		return invokeMethod(methodParameters);
+	}
+
+	public Object getModule() {
+		return module;
+	}
+
+	public Method getMethod() {
+		return method;
 	}
 
 	@SuppressWarnings("unchecked")
