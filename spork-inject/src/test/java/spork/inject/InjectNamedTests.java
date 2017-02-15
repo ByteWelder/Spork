@@ -3,41 +3,45 @@ package spork.inject;
 import org.junit.Test;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import spork.Spork;
 import spork.inject.internal.objectgraph.ObjectGraph;
 
 import static org.junit.Assert.assertEquals;
 
-public class InjectMethodArgumentsTests {
-
+public class InjectNamedTests {
 	public static class Module {
 
-		@Provides
-		public Integer one() {
+		@Provides @Named("one")
+		public int one() {
 			return 1;
 		}
 
-		@Provides
-		public String two() {
-			return "2";
+		@Provides @Named("two")
+		public int two() {
+			return 2;
 		}
 
 		@Provides
-		public StringBuilder combination(Integer first, String second) {
-			return new StringBuilder()
-					.append(first)
-					.append(second);
+		public int unnamed() {
+			return 3;
 		}
 	}
 
 	private static class Parent {
+		@Inject @Named("one")
+		public int one;
+
+		@Inject @Named("two")
+		public int two;
+
 		@Inject
-		StringBuilder stringBuilder;
+		public int unnamed;
 	}
 
 	@Test
-	public void methodTest() {
+	public void namedTest() {
 		Parent parent = new Parent();
 
 		ObjectGraph graph = new ObjectGraph.Builder()
@@ -46,6 +50,8 @@ public class InjectMethodArgumentsTests {
 
 		Spork.bind(parent, graph);
 
-		assertEquals("12", parent.stringBuilder.toString());
+		assertEquals(1, parent.one);
+		assertEquals(2, parent.two);
+		assertEquals(3, parent.unnamed);
 	}
 }

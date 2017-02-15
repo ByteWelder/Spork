@@ -7,25 +7,40 @@ import javax.inject.Provider;
 
 import spork.Spork;
 import spork.inject.internal.objectgraph.ObjectGraph;
-import spork.inject.modules.IncreasingIntegerModule;
-import spork.inject.modules.StringModule;
 
 import static org.junit.Assert.assertEquals;
 
 public class InjectProviderTests {
 
-	private static class ProviderParent {
+	/**
+	 * A module that increases a counter every time a method is called.
+	 */
+	public static class Module {
+		private int counter = 0;
+
+		@Provides
+		public Integer integerValue() {
+			return ++counter;
+		}
+	}
+
+
+	private static class Parent {
 		@Inject
 		Provider<Integer> provider;
 	}
 
+	/**
+	 * Test that when Provider.get() is called multiple times,
+	 * the same instance is returned every time.
+	 */
 	@Test
 	public void multipleGet() {
 		// given
-		ProviderParent parent = new ProviderParent();
+		Parent parent = new Parent();
 
 		ObjectGraph graph = new ObjectGraph.Builder()
-				.module(new IncreasingIntegerModule())
+				.module(new Module())
 				.build();
 
 		Spork.bind(parent, graph);
