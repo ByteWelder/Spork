@@ -30,11 +30,11 @@ public class BindException extends RuntimeException {
 	}
 
 	public BindException(Class<? extends Annotation> annotation, Class<?> parent, Class<?> targetType, String reason) {
-		super(annotation.getSimpleName() + " failed for " + parent.getSimpleName() + " with target type '" + targetType.getClass().getName() + "': " + reason);
+		super(annotation.getSimpleName() + " failed for " + parent.getSimpleName() + " with target type '" + targetType.getName() + "': " + reason);
 	}
 
 	public BindException(Class<? extends Annotation> annotation, Class<?> parent, Class<?> targetType, String reason, Exception cause) {
-		super(annotation.getSimpleName() + " failed for " + parent.getSimpleName() + " with target type '" + targetType.getClass().getName() + "': " + reason, cause);
+		super(annotation.getSimpleName() + " failed for " + parent.getSimpleName() + " with target type '" + targetType.getName() + "': " + reason, cause);
 	}
 
 	public BindException(Class<? extends Annotation> annotation, Class<?> parent, Method method, String reason) {

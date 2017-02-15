@@ -73,18 +73,6 @@ public class InjectSignature {
 		}
 	}
 
-	public String toStringReadable() {
-		String qualifier = qualifierAnnotation != null
-				? ("qualifier " + getQualifierName(qualifierAnnotation))
-				: "no qualifier";
-
-		return "["
-				+ targetType.getName()
-				+ " " + nullability
-				+ " and " + qualifier
-				+ "]";
-	}
-
 	@Nullable
 	private static String getQualifierName(@Nullable Annotation qualifierAnnotation) {
 		if (qualifierAnnotation == null) {

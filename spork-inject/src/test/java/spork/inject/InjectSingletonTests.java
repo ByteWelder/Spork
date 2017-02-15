@@ -17,7 +17,6 @@ public class InjectSingletonTests {
 		int counter = -1;
 	}
 
-	@Module
 	public static class ParentModule {
 		private int counter = 1;
 

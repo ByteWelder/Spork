@@ -38,7 +38,7 @@ public class ObjectGraph {
 			}
 		}
 
-		String message = "no provider found in ObjectGraph for " + injectSignature.toStringReadable();
+		String message = "no provider found in ObjectGraph for " + injectSignature.toString();
 
 		throw new BindException(Inject.class, message);
 	}

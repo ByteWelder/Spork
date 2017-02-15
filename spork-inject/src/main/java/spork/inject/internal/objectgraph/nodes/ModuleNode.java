@@ -48,7 +48,7 @@ public class ModuleNode implements ObjectGraphNode {
 		}
 
 		// code that can invoke a method on the module to create an instance
-		ModuleMethodInvoker moduleMethodInvoker = new ModuleMethodInvoker(objectGraph, module, method, injectSignature.getClass());
+		ModuleMethodInvoker moduleMethodInvoker = new ModuleMethodInvoker(objectGraph, module, method, injectSignature.getType());
 
 		boolean isSingleton = method.getAnnotation(Singleton.class) != null;
 
