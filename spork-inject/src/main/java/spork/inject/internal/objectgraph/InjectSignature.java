@@ -5,6 +5,8 @@ import java.lang.annotation.Annotation;
 import javax.annotation.Nullable;
 import javax.inject.Named;
 
+import spork.inject.internal.lang.Nullability;
+
 /**
  * Class that defines compatibility of inject target/source
  */

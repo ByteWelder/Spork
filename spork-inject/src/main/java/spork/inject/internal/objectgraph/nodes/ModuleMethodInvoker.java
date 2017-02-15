@@ -12,9 +12,9 @@ import javax.inject.Provider;
 import javax.inject.Qualifier;
 
 import spork.exceptions.BindException;
-import spork.inject.internal.objectgraph.Annotations;
+import spork.inject.internal.lang.Annotations;
 import spork.inject.internal.objectgraph.InjectSignature;
-import spork.inject.internal.objectgraph.Nullability;
+import spork.inject.internal.lang.Nullability;
 import spork.inject.internal.objectgraph.ObjectGraph;
 
 public class ModuleMethodInvoker<T> {

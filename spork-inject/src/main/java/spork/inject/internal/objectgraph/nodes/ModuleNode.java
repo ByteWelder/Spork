@@ -3,7 +3,6 @@ package spork.inject.internal.objectgraph.nodes;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nullable;
@@ -11,10 +10,10 @@ import javax.inject.Provider;
 import javax.inject.Qualifier;
 import javax.inject.Singleton;
 
-import spork.inject.internal.objectgraph.Annotations;
+import spork.inject.Provides;
+import spork.inject.internal.lang.Annotations;
 import spork.inject.internal.objectgraph.InjectSignature;
-import spork.inject.internal.objectgraph.Modules;
-import spork.inject.internal.objectgraph.Nullability;
+import spork.inject.internal.lang.Nullability;
 import spork.inject.internal.objectgraph.ObjectGraph;
 import spork.inject.internal.objectgraph.ObjectGraphNode;
 
@@ -24,18 +23,23 @@ public class ModuleNode implements ObjectGraphNode {
 	private final ScopedInstanceCache scopedInstanceCache;
 
 	public ModuleNode(Object module, ScopedInstanceCache scopedInstanceCache) {
+		Method[] methods = module.getClass().getMethods();
+
 		this.module = module;
 		this.scopedInstanceCache = scopedInstanceCache;
+		this.methodCache = new HashMap<>(methods.length);
 
-		List<Method> methods = Modules.getProvidesMethods(module.getClass());
-		methodCache = new HashMap<>(methods.size());
-
-		// cache each method
+		// find all relevant methods and store them with their respective keys into the method cache
 		for (Method method : methods) {
-			Nullability nullability = Nullability.create(method);
-			Annotation qualifierAnnotation = Annotations.findAnnotationAnnotatedWith(Qualifier.class, method);
-			InjectSignature key = new InjectSignature(method.getReturnType(), nullability, qualifierAnnotation);
-			methodCache.put(key, method);
+			// find a matching method
+			if (method.getAnnotation(Provides.class) != null) {
+				// create key
+				Nullability nullability = Nullability.create(method);
+				Annotation qualifierAnnotation = Annotations.findAnnotationAnnotatedWith(Qualifier.class, method);
+				InjectSignature key = new InjectSignature(method.getReturnType(), nullability, qualifierAnnotation);
+				// store method
+				methodCache.put(key, method);
+			}
 		}
 	}
 

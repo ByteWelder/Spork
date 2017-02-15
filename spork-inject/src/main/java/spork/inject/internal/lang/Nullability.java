@@ -1,4 +1,4 @@
-package spork.inject.internal.objectgraph;
+package spork.inject.internal.lang;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
