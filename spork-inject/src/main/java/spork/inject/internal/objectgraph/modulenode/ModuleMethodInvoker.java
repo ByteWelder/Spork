@@ -31,7 +31,7 @@ public class ModuleMethodInvoker<T> {
 	}
 
 	public T invoke() {
-		@Nullable Object[] methodParameters = collectMethodParameters(method);
+		@Nullable Object[] methodParameters = collectMethodParameters(objectGraph, method);
 		return invokeMethod(methodParameters);
 	}
 
@@ -54,7 +54,7 @@ public class ModuleMethodInvoker<T> {
 		}
 	}
 
-	private @Nullable Object[] collectMethodParameters(Method method) {
+	private static @Nullable Object[] collectMethodParameters(ObjectGraph objectGraph, Method method) {
 		int parameterCount = method.getParameterTypes().length;
 		if (parameterCount == 0) {
 			return null;
@@ -87,7 +87,7 @@ public class ModuleMethodInvoker<T> {
 		return argumentInstances;
 	}
 
-	private InjectSignature getInjectSignature(Class<?> parameterClass, Annotation[] annotations, Type genericParameterType) {
+	private static InjectSignature getInjectSignature(Class<?> parameterClass, Annotation[] annotations, Type genericParameterType) {
 		Annotation qualifierAnnotation = Annotations.findAnnotationAnnotatedWith(Qualifier.class, annotations);
 		Nullability nullability = Nullability.create(annotations);
 		boolean parameterIsProvider = (parameterClass == Provider.class);

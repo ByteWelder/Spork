@@ -8,6 +8,7 @@ import javax.inject.Provider;
 
 import spork.exceptions.BindException;
 import spork.inject.internal.objectgraph.ObjectGraph;
+import spork.inject.internal.objectgraph.ObjectGraphs;
 import spork.interfaces.FieldBinder;
 import spork.internal.Reflection;
 
@@ -22,31 +23,28 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 	}
 
 	@Override
-	public void bind(Object instance, Inject annotation, Field targetField, Object[] parameters) {
-		Class<?> fieldType = targetField.getType();
-
-		// Bind with module system (uses @Provides annotation on methods)
-		if (parameters.length != 1 || !(parameters[0] instanceof ObjectGraph)) {
-			throw new BindException(Inject.class, instance.getClass(), targetField, "must specify a single ObjectGraph instance arguments in Spork.bind(instance, ...) when using @Inject at " + fieldType.getName());
+	public void bind(Object instance, Inject annotation, Field field, Object[] parameters) {
+		ObjectGraph objectGraph = ObjectGraphs.findObjectGraph(parameters);
+		if (objectGraph == null) {
+			throw new BindException(Inject.class, instance.getClass(), field, "no ObjectGraph specified in instance arguments of Spork.bind() when injecting " + instance.getClass().getName());
 		}
 
-		ObjectGraph objectGraph = (ObjectGraph) parameters[0];
-
+		Class<?> fieldType = field.getType();
 		boolean fieldIsProvider = (fieldType == Provider.class);
 		// Determine the true type of the instance (so not Provider.class)
-		Class<?> targetType = fieldIsProvider ? (Class<?>) ((ParameterizedType) targetField.getGenericType()).getActualTypeArguments()[0] : fieldType;
-		Provider<?> provider = objectGraph.findProvider(targetField, targetType);
+		Class<?> targetType = fieldIsProvider ? (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0] : fieldType;
+		Provider<?> provider = objectGraph.findProvider(field, targetType);
 
 		if (provider == null) {
-			throw new BindException(Inject.class, instance.getClass(), targetField, "none of the modules provides an instance for " + fieldType.getName());
+			throw new BindException(Inject.class, instance.getClass(), field, "none of the modules provides an instance for " + fieldType.getName());
 		}
 
 		// Either set the provider instance or the real instance
 		if (fieldIsProvider) {
-			Reflection.setFieldValue(annotation, targetField, instance, provider);
+			Reflection.setFieldValue(annotation, field, instance, provider);
 		} else {
 			Object bindInstance = provider.get();
-			Reflection.setFieldValue(annotation, targetField, instance, bindInstance);
+			Reflection.setFieldValue(annotation, field, instance, bindInstance);
 		}
 	}
 }
