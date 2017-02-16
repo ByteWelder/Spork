@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Provider;
 import javax.inject.Qualifier;
@@ -15,9 +16,12 @@ import spork.inject.internal.objectgraph.modulenode.ModuleNode;
 import spork.inject.internal.objectgraph.modulenode.InstanceCache;
 
 public class ObjectGraph {
+	@Nullable
+	private final ObjectGraph parentGraph;
 	private final ObjectGraphNode[] nodes;
 
-	private ObjectGraph(ObjectGraphNode[] nodes) {
+	private ObjectGraph(@Nullable ObjectGraph parentGraph, ObjectGraphNode[] nodes) {
+		this.parentGraph = parentGraph;
 		this.nodes = nodes;
 	}
 
@@ -40,12 +44,26 @@ public class ObjectGraph {
 			}
 		}
 
-		return null;
+		if (parentGraph != null) {
+			return parentGraph.findProvider(injectSignature);
+		} else {
+			return null;
+		}
 	}
 
 	public static class Builder {
+		@Nullable
+		private final ObjectGraph parentGraph;
 		private final ArrayList<ObjectGraphNode> nodeList = new ArrayList<>(2);
 		private final InstanceCache instanceCache = new InstanceCache();
+
+		public Builder() {
+			this.parentGraph = null;
+		}
+
+		public Builder(@Nonnull ObjectGraph parentGraph) {
+			this.parentGraph = parentGraph;
+		}
 
 		public Builder module(Object module) {
 			nodeList.add(new ModuleNode(module, instanceCache));
@@ -54,7 +72,7 @@ public class ObjectGraph {
 
 		public ObjectGraph build() {
 			ObjectGraphNode[] nodeArray = nodeList.toArray(new ObjectGraphNode[nodeList.size()]);
-			return new ObjectGraph(nodeArray);
+			return new ObjectGraph(parentGraph, nodeArray);
 		}
 	}
 }
