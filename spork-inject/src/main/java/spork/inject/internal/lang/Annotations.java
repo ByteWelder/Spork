@@ -24,7 +24,7 @@ public final class Annotations {
 	@Nullable
 	public static Annotation findAnnotationAnnotatedWith(Class<? extends Annotation> annotationClass, Annotation[] annotations) {
 		for (Annotation annotation : annotations) {
-			if (annotation.annotationType().getAnnotation(annotationClass) != null) {
+			if (annotation.annotationType().isAnnotationPresent(annotationClass)) {
 				return annotation;
 			}
 		}

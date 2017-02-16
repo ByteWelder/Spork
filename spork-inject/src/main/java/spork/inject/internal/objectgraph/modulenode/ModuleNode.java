@@ -8,31 +8,33 @@ import java.util.Map;
 import javax.annotation.Nullable;
 import javax.inject.Provider;
 import javax.inject.Qualifier;
-import javax.inject.Singleton;
+import javax.inject.Scope;
 
 import spork.inject.Provides;
-import spork.inject.internal.lang.Annotations;
 import spork.inject.internal.InjectSignature;
+import spork.inject.internal.lang.Annotations;
 import spork.inject.internal.lang.Nullability;
 import spork.inject.internal.objectgraph.ObjectGraph;
 import spork.inject.internal.objectgraph.ObjectGraphNode;
+import spork.inject.internal.objectgraph.modulenode.providers.CachedProvider;
+import spork.inject.internal.objectgraph.modulenode.providers.InstanceCacheProvider;
 
 public class ModuleNode implements ObjectGraphNode {
 	private final Object module;
 	private final Map<InjectSignature, Method> methodCache;
-	private final ScopedInstanceCache scopedInstanceCache;
+	private final InstanceCache instanceCache;
 
-	public ModuleNode(Object module, ScopedInstanceCache scopedInstanceCache) {
+	public ModuleNode(Object module, InstanceCache instanceCache) {
 		Method[] methods = module.getClass().getMethods();
 
 		this.module = module;
-		this.scopedInstanceCache = scopedInstanceCache;
+		this.instanceCache = instanceCache;
 		this.methodCache = new HashMap<>(methods.length);
 
 		// find all relevant methods and store them with their respective keys into the method cache
 		for (Method method : methods) {
 			// find a matching method
-			if (method.getAnnotation(Provides.class) != null) {
+			if (method.isAnnotationPresent(Provides.class)) {
 				// create key
 				Nullability nullability = Nullability.create(method);
 				Annotation qualifierAnnotation = Annotations.findAnnotationAnnotatedWith(Qualifier.class, method);
@@ -53,18 +55,14 @@ public class ModuleNode implements ObjectGraphNode {
 			return null;
 		}
 
-		// code that can invoke a method on the module to create an instance
-		ModuleMethodInvoker moduleMethodInvoker = new ModuleMethodInvoker(objectGraph, module, method, injectSignature.getType());
+		ModuleMethodInvoker<T> moduleMethodInvoker = new ModuleMethodInvoker(objectGraph, module, method, injectSignature.getType());
+		Annotation scopeAnnotation = Annotations.findAnnotationAnnotatedWith(Scope.class, method);
 
-		boolean isSingleton = method.getAnnotation(Singleton.class) != null;
-
-		if (isSingleton) {
-			// TODO: implement custom scopes
-			return new SingletonInstanceProvider(injectSignature, moduleMethodInvoker, scopedInstanceCache);
-		} else if (injectSignature.getQualifierAnnotation() != null) {
-				return new ScopedInstanceProvider(injectSignature, moduleMethodInvoker, scopedInstanceCache);
+		// No scope and no qualifier means a new instance per injection
+		if (scopeAnnotation == null && injectSignature.getQualifierAnnotation() == null) {
+			return new CachedProvider<>(moduleMethodInvoker);
 		} else {
-			return new ScopelessInstanceProvider(moduleMethodInvoker);
+			return new InstanceCacheProvider<>(injectSignature, moduleMethodInvoker, instanceCache, scopeAnnotation);
 		}
 	}
 }

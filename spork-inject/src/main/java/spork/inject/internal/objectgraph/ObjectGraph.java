@@ -12,7 +12,7 @@ import spork.inject.internal.InjectSignature;
 import spork.inject.internal.lang.Annotations;
 import spork.inject.internal.lang.Nullability;
 import spork.inject.internal.objectgraph.modulenode.ModuleNode;
-import spork.inject.internal.objectgraph.modulenode.ScopedInstanceCache;
+import spork.inject.internal.objectgraph.modulenode.InstanceCache;
 
 public class ObjectGraph {
 	private final ObjectGraphNode[] nodes;
@@ -45,10 +45,10 @@ public class ObjectGraph {
 
 	public static class Builder {
 		private final ArrayList<ObjectGraphNode> nodeList = new ArrayList<>(2);
-		private final ScopedInstanceCache scopedInstanceCache = new ScopedInstanceCache();
+		private final InstanceCache instanceCache = new InstanceCache();
 
 		public Builder module(Object module) {
-			nodeList.add(new ModuleNode(module, scopedInstanceCache));
+			nodeList.add(new ModuleNode(module, instanceCache));
 			return this;
 		}
 

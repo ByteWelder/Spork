@@ -11,7 +11,7 @@ public enum Nullability {
 	NONNULL;
 
 	public static Nullability create(Field field) {
-		if (field.getAnnotation(Nullable.class) != null) {
+		if (field.isAnnotationPresent(Nullable.class)) {
 			return NULLABLE;
 		} else { // If @Nullable is not defined, we assume the default @Nonnull
 			return NONNULL;
@@ -19,7 +19,7 @@ public enum Nullability {
 	}
 
 	public static Nullability create(Method method) {
-		if (method.getAnnotation(Nullable.class) != null) {
+		if (method.isAnnotationPresent(Nullable.class)) {
 			return NULLABLE;
 		} else { // If @Nullable is not defined, we assume the default @Nonnull
 			return NONNULL;

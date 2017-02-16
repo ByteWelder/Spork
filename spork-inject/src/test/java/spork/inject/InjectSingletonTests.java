@@ -6,7 +6,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import spork.Spork;
-import spork.exceptions.BindException;
 import spork.inject.internal.objectgraph.ObjectGraph;
 
 import static org.junit.Assert.assertEquals;
@@ -20,14 +19,6 @@ public class InjectSingletonTests {
 		@Singleton
 		public Integer counter() {
 			return counter++;
-		}
-	}
-
-	public static class NullSingletonModule {
-		@Provides
-		@Singleton
-		public Integer value() {
-			return null;
 		}
 	}
 
@@ -53,18 +44,5 @@ public class InjectSingletonTests {
 
 		// verify same value
 		assertEquals(Integer.valueOf(1), parent.counter);
-	}
-
-	@Test(expected = BindException.class)
-	public void nullTest() {
-		// given
-		Parent parent = new Parent();
-
-		ObjectGraph graph = new ObjectGraph.Builder()
-				.module(new NullSingletonModule())
-				.build();
-
-		// when bind, then exception
-		Spork.bind(parent, graph);
 	}
 }

@@ -1,19 +1,21 @@
-package spork.inject.internal.objectgraph.modulenode;
+package spork.inject.internal.objectgraph.modulenode.providers;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Provider;
 
+import spork.inject.internal.objectgraph.modulenode.ModuleMethodInvoker;
+
 /**
  * Wrapper around ModuleMethodInvoker that caches the given value the first time it is retrieved.
- * @param <T>
+ * @param <T> the return type
  */
-class ScopelessInstanceProvider<T> implements Provider<T> {
+public class CachedProvider<T> implements Provider<T> {
 	@Nullable
 	private ModuleMethodInvoker<T> moduleMethodInvoker;
 	private T cachedInstance;
 
-	ScopelessInstanceProvider(@Nonnull ModuleMethodInvoker<T> moduleMethodInvoker) {
+	public CachedProvider(@Nonnull ModuleMethodInvoker<T> moduleMethodInvoker) {
 		this.moduleMethodInvoker = moduleMethodInvoker;
 	}
 
