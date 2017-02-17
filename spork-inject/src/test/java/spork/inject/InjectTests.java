@@ -7,12 +7,24 @@ import javax.inject.Inject;
 import spork.Spork;
 import spork.exceptions.BindException;
 import spork.inject.internal.objectgraph.ObjectGraph;
-import spork.inject.modules.IntegerModule;
-import spork.inject.modules.StringModule;
 
 import static org.junit.Assert.assertEquals;
 
 public class InjectTests {
+
+	public class StringModule {
+		@Provides
+		public String stringValue() {
+			return "test";
+		}
+	}
+
+	public class IntegerModule {
+		@Provides
+		public Integer integerValue() {
+			return 1;
+		}
+	}
 
 	// todo: add test with inheritance
 

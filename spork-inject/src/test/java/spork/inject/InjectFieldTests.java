@@ -6,7 +6,6 @@ import javax.inject.Inject;
 
 import spork.Spork;
 import spork.inject.internal.objectgraph.ObjectGraph;
-import spork.inject.modules.IntegerModule;
 
 import static org.junit.Assert.assertEquals;
 
@@ -14,6 +13,13 @@ import static org.junit.Assert.assertEquals;
  * Tests related to injecting fields.
  */
 public class InjectFieldTests {
+
+	public class Module {
+		@Provides
+		public Integer integerValue() {
+			return 1;
+		}
+	}
 
 	private static class Parent {
 		@Inject
@@ -47,7 +53,7 @@ public class InjectFieldTests {
 		Parent parent = new Parent();
 
 		ObjectGraph graph = new ObjectGraph.Builder()
-				.module(new IntegerModule())
+				.module(new Module())
 				.build();
 
 		// when
