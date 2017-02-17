@@ -10,7 +10,7 @@ import spork.inject.internal.InjectSignature;
 /**
  * A 2-dimensional cache that maps as follows:
  *
- *   scope -> injection signature -> instance
+ *   scope identifier -> injection signature -> instance
  *
  */
 public class InstanceCache {
@@ -21,8 +21,8 @@ public class InstanceCache {
 	}
 
 	@Nullable
-	public Object get(String scope, InjectSignature injectSignature) {
-		Map<InjectSignature, Object> map = scopeMap.get(scope);
+	public Object get(@Nullable String scopeIdentifier, InjectSignature injectSignature) {
+		Map<InjectSignature, Object> map = scopeMap.get(scopeIdentifier);
 
 		if (map == null) {
 			return null;
@@ -31,12 +31,12 @@ public class InstanceCache {
 		return map.get(injectSignature);
 	}
 
-	private Map<InjectSignature, Object> getOrCreateInjectSignatureMap(String scope) {
-		Map<InjectSignature, Object> map = scopeMap.get(scope);
+	private Map<InjectSignature, Object> getOrCreateInjectSignatureMap(@Nullable String scopeIdentifier) {
+		Map<InjectSignature, Object> map = scopeMap.get(scopeIdentifier);
 
 		if (map == null) {
 			map = new HashMap<>(2);
-			scopeMap.put(scope, map);
+			scopeMap.put(scopeIdentifier, map);
 		}
 
 		return map;

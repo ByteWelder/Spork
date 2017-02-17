@@ -3,8 +3,8 @@ package spork.inject.internal;
 import java.lang.annotation.Annotation;
 
 import javax.annotation.Nullable;
-import javax.inject.Named;
 
+import spork.inject.AnnotationSerializers;
 import spork.inject.internal.lang.Nullability;
 
 /**
@@ -12,18 +12,16 @@ import spork.inject.internal.lang.Nullability;
  */
 public class InjectSignature {
 	private static final String SEPARATOR = ":";
-	private final String value;
 	private final Class<?> targetType;
-
 	private final Nullability nullability;
+
 	@Nullable
-	private final Annotation qualifierAnnotation;
+	private final String qualifier;
 
 	public InjectSignature(Class<?> targetType, Nullability nullability, @Nullable Annotation qualifierAnnotation) {
 		this.targetType = targetType;
 		this.nullability = nullability;
-		this.qualifierAnnotation = qualifierAnnotation;
-		value = createSignature(targetType, nullability, qualifierAnnotation);
+		this.qualifier = (qualifierAnnotation != null) ? AnnotationSerializers.serialize(qualifierAnnotation) : null;
 	}
 
 	public Class<?> getType() {
@@ -34,52 +32,45 @@ public class InjectSignature {
 		return nullability;
 	}
 
-	@Nullable
-	public Annotation getQualifierAnnotation() {
-		return qualifierAnnotation;
+	public boolean hasQualifier() {
+		return qualifier != null;
 	}
 
 	@Override
 	public int hashCode() {
-		return value.hashCode();
+		int result = 17;
+		result = 31 * result + targetType.hashCode();
+		result = 31 * result + nullability.hashCode();
+		result = 31 * result + ( (qualifier != null) ? qualifier.hashCode() : 0 );
+		return result;
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		return o != null
-				&& o instanceof InjectSignature
-				&& value.equals(((InjectSignature) o).value);
+		if (o == null || o.getClass() != InjectSignature.class) {
+			return false;
+		}
+
+		InjectSignature other = (InjectSignature)o;
+
+		if ( ((this.qualifier == null) != (other.qualifier == null)) ) {
+			return false;
+		}
+
+		return this.targetType.equals(other.targetType)
+				&& this.nullability.equals(other.nullability)
+				&& (this.qualifier == null || this.qualifier.equals(other.qualifier));
 	}
 
 	@Override
 	public String toString() {
-		return value;
-	}
-
-	/**
-	 * @return a signature to match injectable fields with Module methods
-	 */
-	private static String createSignature(Class<?> type, Nullability nullability, @Nullable Annotation qualifierAnnotation) {
-		if (qualifierAnnotation == null) {
-			return type.getName()
+		if (qualifier == null) {
+			return targetType.getName()
 					+ SEPARATOR + nullability;
 		} else {
-			return type.getName()
+			return targetType.getName()
 					+ SEPARATOR + nullability
-					+ SEPARATOR + getQualifierName(qualifierAnnotation);
-		}
-	}
-
-	@Nullable
-	private static String getQualifierName(@Nullable Annotation qualifierAnnotation) {
-		if (qualifierAnnotation == null) {
-			return null;
-		}
-
-		if (qualifierAnnotation.annotationType() == Named.class) {
-			return "Named:" + ((Named) qualifierAnnotation).value();
-		} else {
-			return qualifierAnnotation.annotationType().getName();
+					+ SEPARATOR + qualifier;
 		}
 	}
 }

@@ -1,10 +1,11 @@
-package spork.inject;
+package spork.inject.objectgraph;
 
 import org.junit.Test;
 
 import javax.inject.Inject;
 
 import spork.Spork;
+import spork.inject.Provides;
 import spork.inject.internal.objectgraph.ObjectGraph;
 
 import static org.junit.Assert.assertEquals;

@@ -28,7 +28,7 @@ public enum Nullability {
 
 	public static Nullability create(Annotation[] annotations) {
 		for (Annotation annotation : annotations) {
-			if (annotation.getClass() == Nullable.class) {
+			if (annotation.annotationType() == Nullable.class) {
 				return NULLABLE;
 			}
 		}

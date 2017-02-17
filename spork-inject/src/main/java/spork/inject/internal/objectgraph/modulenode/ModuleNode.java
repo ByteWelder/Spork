@@ -59,7 +59,7 @@ public class ModuleNode implements ObjectGraphNode {
 		Annotation scopeAnnotation = Annotations.findAnnotationAnnotatedWith(Scope.class, method);
 
 		// No scope and no qualifier means a new instance per injection
-		if (scopeAnnotation == null && injectSignature.getQualifierAnnotation() == null) {
+		if (scopeAnnotation == null && injectSignature.hasQualifier()) {
 			return new CachedProvider<>(moduleMethodInvoker);
 		} else {
 			return new InstanceCacheProvider<>(injectSignature, moduleMethodInvoker, instanceCache, scopeAnnotation);

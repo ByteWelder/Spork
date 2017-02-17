@@ -13,7 +13,6 @@ public final class Annotations {
 	@Nullable
 	public static Annotation findAnnotationAnnotatedWith(Class<? extends Annotation> annotationClass, Field field) {
 		return findAnnotationAnnotatedWith(annotationClass, field.getAnnotations());
-
 	}
 
 	@Nullable

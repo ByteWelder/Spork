@@ -39,10 +39,6 @@ public class ModuleMethodInvoker<T> {
 		return module;
 	}
 
-	public Method getMethod() {
-		return method;
-	}
-
 	@SuppressWarnings("unchecked")
 	private T invokeMethod(@Nullable Object[] params) {
 		try {

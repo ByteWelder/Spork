@@ -5,10 +5,10 @@ import java.lang.annotation.Annotation;
 import javax.annotation.Nullable;
 import javax.inject.Provider;
 
+import spork.inject.AnnotationSerializers;
 import spork.inject.internal.InjectSignature;
 import spork.inject.internal.objectgraph.modulenode.InstanceCache;
 import spork.inject.internal.objectgraph.modulenode.ModuleMethodInvoker;
-import spork.inject.internal.objectgraph.modulenode.Scopes;
 
 /**
  * Wrapper around ModuleMethodInvoker that caches/retrieves the given value in the provided InstanceCache.
@@ -21,7 +21,7 @@ public class InstanceCacheProvider<T> implements Provider<T> {
 	private final ModuleMethodInvoker<T> moduleMethodInvoker;
 	private final InstanceCache instanceCache;
 	@Nullable
-	private Annotation scopeAnnotation;
+	private final Annotation scopeAnnotation;
 
 	public InstanceCacheProvider(InjectSignature injectSignature,
 	                      ModuleMethodInvoker<T> moduleMethodInvoker,
@@ -37,13 +37,16 @@ public class InstanceCacheProvider<T> implements Provider<T> {
 	@Override
 	public T get() {
 		synchronized (instanceCache) {
-			String scopeName = (scopeAnnotation != null) ? Scopes.getName(scopeAnnotation) : null;
-			Object instance = instanceCache.get(scopeName, injectSignature);
+			// get the scope or null
+			String scope = (scopeAnnotation != null) ? AnnotationSerializers.serialize(scopeAnnotation) : null;
+			// try to find the instance in the cache first
+			Object instance = instanceCache.get(scope, injectSignature);
 
+			// if we don't have an instance, create it and cache it
 			if (instance == null) {
 				instance = moduleMethodInvoker.invoke();
 
-				instanceCache.put(scopeName, injectSignature, instance);
+				instanceCache.put(scope, injectSignature, instance);
 			}
 
 			return (T) instance;
