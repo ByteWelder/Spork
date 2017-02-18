@@ -33,6 +33,18 @@ public class TestView extends android.view.View implements ResourceProvider {
     @BindResource
     private Drawable spork_test_drawable;
 
+    @BindResource
+    private int spork_test_int;
+
+    @BindResource(R.integer.spork_test_int)
+    private Integer spork_test_integer;
+
+    @BindResource
+    private boolean spork_test_boolean;
+
+    @BindResource(R.bool.spork_test_boolean)
+    private Boolean spork_test_boolean_object;
+
     public TestView(Context context) {
         super(context);
         init();
@@ -83,6 +95,16 @@ public class TestView extends android.view.View implements ResourceProvider {
     }
 
     @Override
+    public int getIntByIdImplied() {
+        return spork_test_int;
+    }
+
+    @Override
+    public Integer getIntegerByIdSpecified() {
+        return spork_test_integer;
+    }
+
+    @Override
     public float getDimensionByIdSpecified() {
         return sporkTestDimension;
     }
@@ -90,5 +112,16 @@ public class TestView extends android.view.View implements ResourceProvider {
     @Override
     public float getDimensionByIdImplied() {
         return spork_test_dimension;
+    }
+
+    @Override
+    public boolean getBooleanByIdImplied() {
+        return spork_test_boolean;
+    }
+
+    @Nullable
+    @Override
+    public Boolean getBooleanByIdSpecified() {
+        return spork_test_boolean_object;
     }
 }

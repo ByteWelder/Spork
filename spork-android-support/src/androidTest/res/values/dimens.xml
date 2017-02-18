@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<dimen name="spork_test_dimension">12345px</dimen>
+	<integer name="spork_test_int">1</integer>
+	<bool name="spork_test_boolean">true</bool>
 </resources>

@@ -1,10 +1,19 @@
 # Contributing
 
+## Checklist
+
+Please check the following items before creating a pull request:
+
+- add tests for new features
+- check code coverage for your tests: `./gradlew jacocoTestReport`
+- run all checks: `./gradlew clean check`
+- run all Android tests: `./gradlew connectedAndroidTest`
+
 ## Language
 
 ### Java 7
 
-Only use Java 7 features that are fully supported on Android:
+Only use Java 7 features that are fully supported on Android.
 
 Supported:
 - Diamond operator
