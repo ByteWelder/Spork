@@ -41,7 +41,7 @@ public class InjectSignature {
 		int result = 17;
 		result = 31 * result + targetType.hashCode();
 		result = 31 * result + nullability.hashCode();
-		result = 31 * result + ( (qualifier != null) ? qualifier.hashCode() : 0 );
+		result = 31 * result + ( ( qualifier != null ) ? qualifier.hashCode() : 0 );
 		return result;
 	}
 
@@ -51,9 +51,9 @@ public class InjectSignature {
 			return false;
 		}
 
-		InjectSignature other = (InjectSignature)o;
+		InjectSignature other = (InjectSignature) o;
 
-		if ( ((this.qualifier == null) != (other.qualifier == null)) ) {
+		if ( ( (this.qualifier == null) != (other.qualifier == null) ) ) {
 			return false;
 		}
 
