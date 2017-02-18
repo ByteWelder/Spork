@@ -15,12 +15,12 @@ public class BinderImpl implements Binder {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void bind(Object object, Object... modules) {
+	public void bind(Object object, Object... parameters) {
 		Class<?> objectClass = object.getClass();
 
 		while (objectClass != null && objectClass != Object.class) {
 			List<Binder> binders = binderCache.getBinders(objectClass);
-			bind(object, binders, modules);
+			bind(object, binders, parameters);
 			objectClass = objectClass.getSuperclass();
 		}
 	}

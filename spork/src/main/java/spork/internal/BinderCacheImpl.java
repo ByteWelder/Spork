@@ -107,8 +107,8 @@ public class BinderCacheImpl implements BinderCache {
 
 			binders.add(new Binder() {
 				@Override
-				public void bind(Object object, Object... modules) {
-					fieldBinder.bind(object, annotation, field, modules);
+				public void bind(Object object, Object... parameters) {
+					fieldBinder.bind(object, annotation, field, parameters);
 				}
 			});
 		}
@@ -132,8 +132,8 @@ public class BinderCacheImpl implements BinderCache {
 
 			binders.add(new Binder() {
 				@Override
-				public void bind(Object object, Object... modules) {
-					methodBinder.bind(object, annotation, method, modules);
+				public void bind(Object object, Object... parameters) {
+					methodBinder.bind(object, annotation, method, parameters);
 				}
 			});
 		}
@@ -153,8 +153,8 @@ public class BinderCacheImpl implements BinderCache {
 		if (annotation != null) {
 			binders.add(new Binder() {
 				@Override
-				public void bind(Object object, Object... modules) {
-					typeBinder.bind(object, annotation, annotatedType, modules);
+				public void bind(Object object, Object... parameters) {
+					typeBinder.bind(object, annotation, annotatedType, parameters);
 				}
 			});
 		}

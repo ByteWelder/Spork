@@ -10,7 +10,7 @@ public interface Binder {
 	 * Bind all annotations for an object instance on all levels of inheritance.
 	 *
 	 * @param object the instance to bind annotations for
-	 * @param modules either null or an array of non-null modules
+	 * @param parameters optional arguments (e.g. an ObjectGraph for spork-inject)
 	 */
-	void bind(Object object, Object... modules);
+	void bind(Object object, Object... parameters);
 }

@@ -104,7 +104,7 @@ public class Spork {
 
 	/**
 	 * Get the shard instance of Spork.
-	 * This instance tries to automatically initialize the spork-injection and spork-android libraries when they are available.
+	 * This instance tries to automatically initialize the spork-inject and spork-android libraries when they are available.
 	 *
 	 * This method is not synchronized as the single-check idiom is applied here:
 	 * If by chance on first call, 2 threads call this method, 2 instances of Spork might be created.
@@ -130,11 +130,11 @@ public class Spork {
 	/**
 	 * A shortcut to Spork.sharedInstance().getBinder().bind(object, modules)
 	 *
-	 * @param object  the object to bind
-	 * @param modules an optional array of non-null module instances
+	 * @param object the object to bind
+	 * @param parameters an optional array of non-null module instances
 	 */
-	public static void bind(Object object, Object... modules) {
-		sharedInstance().getBinder().bind(object, modules);
+	public static void bind(Object object, Object... parameters) {
+		sharedInstance().getBinder().bind(object, parameters);
 	}
 
 	// endregion
