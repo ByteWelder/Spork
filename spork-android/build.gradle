@@ -39,12 +39,14 @@ android {
 
 dependencies {
 
-	compile "io.github.sporklibrary:spork:$VERSION_NAME"
+	if (SPORK_RELEASING == true) {
+		compile "io.github.sporklibrary:spork:$VERSION_NAME"
+	} else {
+		compile project(':spork')
+	}
 
-	testCompile "io.github.sporklibrary:spork-inject:$VERSION_NAME"
-	testCompile "junit:junit:4.12"
+	testCompile "junit:junit:$junitVersion"
 
-	androidTestCompile "io.github.sporklibrary:spork-inject:$VERSION_NAME"
 	androidTestCompile "com.android.support.test:runner:0.5"
 	androidTestCompile "com.android.support.test.espresso:espresso-core:2.2.2"
 	androidTestCompile "com.android.support.test.espresso:espresso-contrib:2.2.2"

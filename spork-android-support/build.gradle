@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 
 ext {
-	androidSupportVersion = '25.1.0'
+	androidSupportVersion = '25.1.1'
 }
 
 android {
@@ -43,15 +43,16 @@ android {
 
 dependencies {
 
-	compile "io.github.sporklibrary:spork:$VERSION_NAME"
-	compile "io.github.sporklibrary:spork-android:$VERSION_NAME"
+	if (SPORK_RELEASING == true) {
+		compile "io.github.sporklibrary:spork-android:$VERSION_NAME"
+	} else {
+		compile project(':spork-android')
+	}
 
 	compile "com.android.support:support-fragment:$androidSupportVersion"
 
-	testCompile "io.github.sporklibrary:spork-inject:$VERSION_NAME"
-	testCompile "junit:junit:4.12"
+	testCompile "junit:junit:$junitVersion"
 
-	androidTestCompile "io.github.sporklibrary:spork-inject:$VERSION_NAME"
 	androidTestCompile "com.android.support.test:runner:0.5"
 	androidTestCompile "com.android.support.test.espresso:espresso-core:2.2.2"
 	androidTestCompile ("com.android.support.test.espresso:espresso-contrib:2.2.2") {

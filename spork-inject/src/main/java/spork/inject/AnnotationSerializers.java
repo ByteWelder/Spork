@@ -22,6 +22,7 @@ public final class AnnotationSerializers {
 
 	/**
 	 * Register a Qualifier annotation and its serializer.
+	 * @param <T> an annotation
 	 * @param annotationType .
 	 * @param serializer .
 	 */
@@ -31,6 +32,7 @@ public final class AnnotationSerializers {
 
 	/**
 	 * Serialize a qualifier annotation.
+	 * @param <T> an annotation
 	 * @param annotation the annotation (type) to find a serializer for
 	 * @return a serialized annotation
 	 * @throws UnsupportedOperationException when a serializer is not found for the given annotation

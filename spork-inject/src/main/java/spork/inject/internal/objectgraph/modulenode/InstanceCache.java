@@ -10,7 +10,7 @@ import spork.inject.internal.InjectSignature;
 /**
  * A 2-dimensional cache that maps as follows:
  *
- *   scope identifier -> injection signature -> instance
+ *   scope identifier -&gt; injection signature -&gt; instance
  *
  */
 public class InstanceCache {

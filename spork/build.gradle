@@ -9,8 +9,8 @@ test { finalizedBy jacocoTestReport }
 dependencies {
 	compile "com.google.code.findbugs:jsr305:3.0.1" // for Nullable/NonNull
 
-	testCompile "junit:junit:4.12"
-	testCompile "org.mockito:mockito-core:1.+"
+	testCompile "junit:junit:$junitVersion"
+	testCompile "org.mockito:mockito-core:$mockitoVersion"
 }
 
 jacocoTestReport {

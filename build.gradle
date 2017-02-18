@@ -1,5 +1,10 @@
 apply from: rootProject.file('gradle/maven-base.gradle')
 
+ext {
+	junitVersion = '4.12'
+	mockitoVersion = '2.7.9'
+}
+
 subprojects {
 	buildscript {
 		repositories {
