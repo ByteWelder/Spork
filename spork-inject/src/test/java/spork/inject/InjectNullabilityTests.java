@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import spork.Spork;
-import spork.exceptions.BindException;
+import spork.BindException;
 import spork.inject.internal.objectgraph.ObjectGraph;
 
 import static org.junit.Assert.assertEquals;

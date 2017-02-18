@@ -10,10 +10,10 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-import spork.interfaces.Binder;
-import spork.interfaces.FieldBinder;
-import spork.interfaces.MethodBinder;
-import spork.interfaces.TypeBinder;
+import spork.Binder;
+import spork.FieldBinder;
+import spork.MethodBinder;
+import spork.TypeBinder;
 
 public class BinderCacheImpl implements BinderCache {
 	private final Map<Class<?>, List<Binder>> classBinderCacheMap = new HashMap<>();

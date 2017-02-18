@@ -1,4 +1,4 @@
-package spork.binders;
+package spork;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 import java.lang.reflect.Method;
 
 import spork.Spork;
-import spork.interfaces.MethodBinder;
+import spork.MethodBinder;
 import spork.internal.Reflection;
 
 import static org.junit.Assert.assertEquals;

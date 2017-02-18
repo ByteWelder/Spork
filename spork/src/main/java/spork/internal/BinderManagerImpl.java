@@ -4,9 +4,9 @@ package spork.internal;
 import java.util.ArrayList;
 import java.util.List;
 
-import spork.interfaces.FieldBinder;
-import spork.interfaces.MethodBinder;
-import spork.interfaces.TypeBinder;
+import spork.FieldBinder;
+import spork.MethodBinder;
+import spork.TypeBinder;
 
 /**
  * {@inheritDoc}

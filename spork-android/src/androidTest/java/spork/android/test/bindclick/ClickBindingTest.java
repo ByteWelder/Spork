@@ -12,7 +12,7 @@ import spork.android.test.bindclick.domain.TestFaultyView;
 import spork.android.test.bindclick.domain.TestFragment;
 import spork.android.test.bindclick.domain.TestPojo;
 import spork.android.test.bindclick.domain.TestView;
-import spork.exceptions.BindException;
+import spork.BindException;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;

@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 import spork.android.annotations.BindFragment;
 import spork.android.interfaces.FragmentResolver;
 import spork.android.internal.utils.Reflection;
-import spork.exceptions.BindException;
+import spork.BindException;
 
 public class DefaultFragmentResolver implements FragmentResolver {
 

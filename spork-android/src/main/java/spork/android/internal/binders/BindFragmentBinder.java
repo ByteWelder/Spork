@@ -7,8 +7,8 @@ import javax.annotation.Nullable;
 import spork.android.annotations.BindFragment;
 import spork.android.interfaces.FragmentResolver;
 import spork.android.internal.utils.ResourceId;
-import spork.exceptions.BindException;
-import spork.interfaces.FieldBinder;
+import spork.BindException;
+import spork.FieldBinder;
 import spork.internal.Reflection;
 
 public class BindFragmentBinder implements FieldBinder<BindFragment> {

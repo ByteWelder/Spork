@@ -2,7 +2,7 @@ package spork.internal;
 
 import java.util.List;
 
-import spork.interfaces.Binder;
+import spork.Binder;
 
 public class BinderImpl implements Binder {
 	private final BinderCache binderCache;

@@ -10,7 +10,7 @@ import spork.android.test.bindview.domain.FaultySpecifiedIdView;
 import spork.android.test.bindview.domain.FaultyTargetTypeView;
 import spork.android.test.bindview.domain.Pojo;
 import spork.android.test.bindview.domain.TestActivity;
-import spork.exceptions.BindException;
+import spork.BindException;
 
 import static org.junit.Assert.assertNotNull;
 

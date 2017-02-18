@@ -1,4 +1,4 @@
-package spork.exceptions;
+package spork;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

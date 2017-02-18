@@ -1,4 +1,4 @@
-package spork.binders;
+package spork;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,8 +9,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import spork.Spork;
-import spork.exceptions.BindException;
-import spork.interfaces.TypeBinder;
+import spork.BindException;
+import spork.TypeBinder;
 
 import static org.junit.Assert.assertEquals;
 

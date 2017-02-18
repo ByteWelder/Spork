@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentActivity;
 
 import spork.android.annotations.BindFragment;
 import spork.android.interfaces.FragmentResolver;
-import spork.exceptions.BindException;
+import spork.BindException;
 
 import static spork.android.internal.utils.Reflection.tryCast;
 

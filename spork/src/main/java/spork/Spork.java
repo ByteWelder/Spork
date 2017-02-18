@@ -2,11 +2,6 @@ package spork;
 
 import javax.annotation.Nullable;
 
-import spork.interfaces.Binder;
-import spork.interfaces.BinderRegistry;
-import spork.interfaces.FieldBinder;
-import spork.interfaces.MethodBinder;
-import spork.interfaces.TypeBinder;
 import spork.internal.BinderCache;
 import spork.internal.BinderCacheImpl;
 import spork.internal.BinderImpl;
@@ -74,8 +69,8 @@ public class Spork {
 		try {
 			Class<?> extensionClass = Class.forName(extensionClassName);
 			Object extensionObject = extensionClass.newInstance();
-			if (extensionObject instanceof spork.interfaces.SporkExtension) {
-				spork.interfaces.SporkExtension extension = (spork.interfaces.SporkExtension) extensionObject;
+			if (extensionObject instanceof SporkExtension) {
+				SporkExtension extension = (SporkExtension) extensionObject;
 				extension.initialize(this);
 			}
 		} catch (ClassNotFoundException e) {

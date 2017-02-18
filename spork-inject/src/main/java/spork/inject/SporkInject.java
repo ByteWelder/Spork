@@ -8,8 +8,8 @@ import spork.inject.internal.InjectFieldBinder;
 import spork.inject.internal.InjectMethodBinder;
 import spork.inject.internal.annotationserializers.NamedSerializer;
 import spork.inject.internal.annotationserializers.SingletonSerializer;
-import spork.interfaces.BinderRegistry;
-import spork.interfaces.SporkExtension;
+import spork.BinderRegistry;
+import spork.SporkExtension;
 
 public class SporkInject implements SporkExtension {
 

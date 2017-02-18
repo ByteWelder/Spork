@@ -1,4 +1,4 @@
-package spork.binders;
+package spork;
 
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -11,8 +11,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import spork.Spork;
-import spork.interfaces.FieldBinder;
-import spork.interfaces.MethodBinder;
+import spork.FieldBinder;
+import spork.MethodBinder;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;

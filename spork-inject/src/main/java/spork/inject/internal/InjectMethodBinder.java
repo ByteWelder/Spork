@@ -4,10 +4,10 @@ import java.lang.reflect.Method;
 
 import javax.inject.Inject;
 
-import spork.exceptions.BindException;
+import spork.BindException;
 import spork.inject.internal.objectgraph.ObjectGraph;
 import spork.inject.internal.objectgraph.ObjectGraphs;
-import spork.interfaces.MethodBinder;
+import spork.MethodBinder;
 
 public class InjectMethodBinder implements MethodBinder<Inject> {
 

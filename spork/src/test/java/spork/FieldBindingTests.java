@@ -1,4 +1,4 @@
-package spork.binders;
+package spork;
 
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 
 import spork.Spork;
-import spork.interfaces.FieldBinder;
+import spork.FieldBinder;
 import spork.internal.Reflection;
 
 import static org.junit.Assert.assertEquals;

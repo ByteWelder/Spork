@@ -7,7 +7,7 @@ import java.lang.reflect.Method;
 
 import javax.annotation.Nullable;
 
-import spork.exceptions.BindException;
+import spork.BindException;
 
 public final class Reflection {
 

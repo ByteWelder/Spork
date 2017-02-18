@@ -5,8 +5,8 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import spork.android.annotations.BindLayout;
-import spork.exceptions.BindException;
-import spork.interfaces.TypeBinder;
+import spork.BindException;
+import spork.TypeBinder;
 
 public class BindLayoutBinder implements TypeBinder<BindLayout> {
 

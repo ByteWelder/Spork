@@ -12,7 +12,7 @@ import spork.android.test.bindresource.domain.TestDimensionPojo;
 import spork.android.test.bindresource.domain.TestDrawablePojo;
 import spork.android.test.bindresource.domain.TestStringPojo;
 import spork.android.test.R;
-import spork.exceptions.BindException;
+import spork.BindException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

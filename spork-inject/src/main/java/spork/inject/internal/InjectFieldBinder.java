@@ -6,10 +6,10 @@ import java.lang.reflect.ParameterizedType;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-import spork.exceptions.BindException;
+import spork.BindException;
 import spork.inject.internal.objectgraph.ObjectGraph;
 import spork.inject.internal.objectgraph.ObjectGraphs;
-import spork.interfaces.FieldBinder;
+import spork.FieldBinder;
 import spork.internal.Reflection;
 
 /**

@@ -2,9 +2,6 @@ package spork;
 
 import org.junit.Test;
 
-import spork.interfaces.FieldBinder;
-import spork.interfaces.MethodBinder;
-import spork.interfaces.TypeBinder;
 import spork.internal.BinderManager;
 import spork.internal.BinderManagerImpl;
 

@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Qualifier;
 
-import spork.exceptions.BindException;
+import spork.BindException;
 import spork.inject.internal.lang.Annotations;
 import spork.inject.internal.InjectSignature;
 import spork.inject.internal.lang.Nullability;

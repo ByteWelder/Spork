@@ -5,7 +5,7 @@ import android.view.View;
 
 import spork.android.annotations.BindView;
 import spork.android.interfaces.ViewResolver;
-import spork.exceptions.BindException;
+import spork.BindException;
 
 public final class Views {
 
