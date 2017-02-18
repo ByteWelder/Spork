@@ -1,6 +1,6 @@
--keep class io.github.sporklibrary.** { *; }
--keep interface io.github.sporklibrary.** { *; }
--keep enum io.github.sporklibrary.** {
+-keep class spork.** { *; }
+-keep interface spork.** { *; }
+-keep enum spork.** {
     **[] $VALUES;
     public *;
 }
