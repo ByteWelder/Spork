@@ -60,6 +60,16 @@ public class ResourceBindingTest {
         // Can't compare instances
         assertNotNull(message, drawableById);
         assertNotNull(message, drawableByName);
+
+        int testInt = provider.getIntByIdImplied();
+        Integer testInteger = provider.getIntegerByIdSpecified();
+        assertEquals(1, testInt);
+        assertEquals(Integer.valueOf(1), testInteger);
+
+        boolean testBoolean = provider.getBooleanByIdImplied();
+        Boolean testBooleanObject = provider.getBooleanByIdSpecified();
+        assertEquals(1, testInt);
+        assertEquals(Integer.valueOf(1), testInteger);
     }
 
     @Test(expected = BindException.class)

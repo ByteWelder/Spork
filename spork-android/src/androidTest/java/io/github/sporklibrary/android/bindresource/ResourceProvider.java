@@ -12,6 +12,12 @@ public interface ResourceProvider
 	@Nullable Drawable getDrawableByIdSpecified();
 	@Nullable Drawable getDrawableByIdImplied();
 
+	int getIntByIdImplied();
+	@Nullable Integer getIntegerByIdSpecified();
+
 	float getDimensionByIdSpecified();
 	float getDimensionByIdImplied();
+
+	boolean getBooleanByIdImplied();
+	@Nullable Boolean getBooleanByIdSpecified();
 }
