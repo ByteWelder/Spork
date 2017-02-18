@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 
 ext {
-    androidSupportVersion = '24.2.0'
+    androidSupportVersion = '25.1.1'
 }
 
 dependencies {
@@ -24,12 +24,12 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '24.0.2'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 1
         versionName VERSION_NAME
         testInstrumentationRunner 'io.github.sporklibrary.android.support.TestRunner'
