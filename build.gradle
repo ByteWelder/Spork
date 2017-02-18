@@ -20,11 +20,7 @@ subprojects {
 	}
 
 	repositories {
-		// Non-release builds get dependencies from local maven
-		if (!mavenConfig.isReleaseBuild()) {
-			mavenLocal()
-		}
-
+		mavenLocal()
 		mavenCentral()
 	}
 

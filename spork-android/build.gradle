@@ -39,7 +39,7 @@ android {
 
 dependencies {
 
-	if (SPORK_RELEASING == true) {
+	if (rootProject.hasProperty('sporkReleaseTarget') && rootProject.sporkReleaseTarget == 'spork-android') {
 		compile "io.github.sporklibrary:spork:$VERSION_NAME"
 	} else {
 		compile project(':spork')
