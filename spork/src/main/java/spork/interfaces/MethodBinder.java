@@ -1,4 +1,4 @@
-package spork;
+package spork.interfaces;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -13,7 +13,7 @@ public interface MethodBinder<AnnotationType extends Annotation> {
 	 * @param object     the annotated instance
 	 * @param annotation the annotation
 	 * @param method     the method that was annotated
-	 * @param parameters an array of non-null modules
+	 * @param parameters an array of arguments (might be empty)
 	 */
 	void bind(Object object, AnnotationType annotation, Method method, Object[] parameters);
 

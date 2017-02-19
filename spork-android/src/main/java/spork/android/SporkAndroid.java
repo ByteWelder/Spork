@@ -4,6 +4,7 @@ import spork.Spork;
 import spork.android.interfaces.ContextResolver;
 import spork.android.interfaces.FragmentResolver;
 import spork.android.interfaces.ResolverRegistry;
+import spork.android.interfaces.SporkAndroidExtension;
 import spork.android.interfaces.ViewResolver;
 import spork.android.internal.ContextResolverManager;
 import spork.android.internal.DefaultContextResolver;
@@ -16,9 +17,13 @@ import spork.android.internal.binders.BindFragmentBinder;
 import spork.android.internal.binders.BindLayoutBinder;
 import spork.android.internal.binders.BindResourceBinder;
 import spork.android.internal.binders.BindViewBinder;
-import spork.BinderRegistry;
-import spork.SporkExtension;
+import spork.interfaces.BinderRegistry;
+import spork.interfaces.SporkExtension;
 
+/**
+ * Extension that adds binders that provide Android-specific features.
+ * This extension is automatically resolved by the spork-android module.
+ */
 public final class SporkAndroid implements SporkExtension {
 	private final FragmentResolverManager fragmentResolverManager = new FragmentResolverManager();
 	private final ViewResolverManager viewResolverManager = new ViewResolverManager();
@@ -45,6 +50,7 @@ public final class SporkAndroid implements SporkExtension {
 
 	/**
 	 * Try to initialize a SporkAndroidExtension.
+	 * Fails without throwing an exception if the extension is not present.
 	 *
 	 * @param extensionClassName the SporkAndroidExtension class name
 	 */

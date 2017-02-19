@@ -9,8 +9,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import spork.Spork;
-import spork.android.annotations.BindClick;
-import spork.android.annotations.BindView;
+import spork.android.BindClick;
+import spork.android.BindView;
 import spork.android.interfaces.ViewProvider;
 import spork.android.support.test.R;
 

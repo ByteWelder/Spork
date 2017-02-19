@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import spork.BindException;
 import spork.inject.internal.objectgraph.ObjectGraph;
 import spork.inject.internal.objectgraph.ObjectGraphs;
-import spork.MethodBinder;
+import spork.interfaces.MethodBinder;
 
 public class InjectMethodBinder implements MethodBinder<Inject> {
 

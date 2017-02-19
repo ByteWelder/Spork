@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import spork.Spork;
-import spork.android.annotations.BindClick;
-import spork.android.annotations.BindFragment;
-import spork.android.annotations.BindView;
+import spork.android.BindClick;
+import spork.android.BindFragment;
+import spork.android.BindView;
 import spork.android.test.bindclick.ClickTestProvider;
 import spork.android.test.R;
 

@@ -6,10 +6,10 @@ import android.os.Bundle;
 import javax.annotation.Nullable;
 
 import spork.Spork;
-import spork.android.annotations.BindFragment;
-import spork.android.annotations.BindLayout;
-import spork.android.annotations.BindResource;
-import spork.android.annotations.BindView;
+import spork.android.BindFragment;
+import spork.android.BindLayout;
+import spork.android.BindResource;
+import spork.android.BindView;
 import spork.android.test.R;
 import spork.android.test.bindresource.ResourceProvider;
 

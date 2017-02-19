@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
 import spork.Spork;
-import spork.android.annotations.BindLayout;
+import spork.android.BindLayout;
 import spork.android.test.R;
 
 @BindLayout(R.layout.view_layout_binding)

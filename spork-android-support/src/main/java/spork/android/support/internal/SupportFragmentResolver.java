@@ -4,7 +4,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
-import spork.android.annotations.BindFragment;
+import spork.android.BindFragment;
 import spork.android.interfaces.FragmentResolver;
 import spork.BindException;
 

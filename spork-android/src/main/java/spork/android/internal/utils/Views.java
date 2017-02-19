@@ -3,7 +3,7 @@ package spork.android.internal.utils;
 import android.content.Context;
 import android.view.View;
 
-import spork.android.annotations.BindView;
+import spork.android.BindView;
 import spork.android.interfaces.ViewResolver;
 import spork.BindException;
 

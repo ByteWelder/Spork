@@ -10,7 +10,7 @@ import android.widget.FrameLayout;
 
 import spork.android.support.test.R;
 import spork.Spork;
-import spork.android.annotations.BindView;
+import spork.android.BindView;
 import spork.android.support.test.bindview.ViewProvider;
 
 public class TestView extends FrameLayout implements ViewProvider {

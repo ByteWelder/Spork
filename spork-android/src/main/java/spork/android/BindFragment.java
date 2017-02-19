@@ -1,4 +1,4 @@
-package spork.android.annotations;
+package spork.android;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

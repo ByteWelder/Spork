@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import spork.Spork;
-import spork.android.annotations.BindResource;
+import spork.android.BindResource;
 import spork.android.support.test.R;
 import spork.android.support.test.bindresource.ResourceProvider;
 

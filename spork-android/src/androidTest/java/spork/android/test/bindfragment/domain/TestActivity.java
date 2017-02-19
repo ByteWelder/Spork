@@ -5,8 +5,8 @@ import android.app.Fragment;
 import android.os.Bundle;
 
 import spork.Spork;
-import spork.android.annotations.BindFragment;
-import spork.android.annotations.BindLayout;
+import spork.android.BindFragment;
+import spork.android.BindLayout;
 import spork.android.test.R;
 
 @BindLayout(R.layout.activity_fragment_binding)

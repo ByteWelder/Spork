@@ -1,4 +1,6 @@
-package spork.android;
+package spork.android.interfaces;
+
+import spork.android.SporkAndroid;
 
 /**
  * Allows manipulation of a SporkAndroid instance with (for example) new context/view providers.

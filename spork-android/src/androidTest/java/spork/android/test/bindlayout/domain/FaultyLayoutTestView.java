@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.FrameLayout;
 
 import spork.Spork;
-import spork.android.annotations.BindLayout;
+import spork.android.BindLayout;
 
 @BindLayout(Integer.MIN_VALUE)
 public class FaultyLayoutTestView extends FrameLayout {

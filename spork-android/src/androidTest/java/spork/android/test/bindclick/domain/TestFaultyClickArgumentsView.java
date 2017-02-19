@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import spork.Spork;
-import spork.android.annotations.BindClick;
+import spork.android.BindClick;
 import spork.android.test.R;
 
 public class TestFaultyClickArgumentsView extends FrameLayout {

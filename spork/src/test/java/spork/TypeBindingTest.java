@@ -8,9 +8,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import spork.Spork;
-import spork.BindException;
-import spork.TypeBinder;
+import spork.interfaces.TypeBinder;
 
 import static org.junit.Assert.assertEquals;
 

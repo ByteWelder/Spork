@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import spork.Spork;
-import spork.android.annotations.BindView;
+import spork.android.BindView;
 import spork.android.test.R;
 import spork.android.test.bindview.ViewProvider;
 

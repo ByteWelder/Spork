@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import javax.annotation.Nullable;
 
 import spork.Spork;
-import spork.android.annotations.BindResource;
+import spork.android.BindResource;
 import spork.android.test.bindresource.ResourceProvider;
 import spork.android.test.R;
 

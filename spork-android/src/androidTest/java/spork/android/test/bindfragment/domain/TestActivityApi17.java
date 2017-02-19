@@ -7,8 +7,8 @@ import android.os.Build;
 import android.os.Bundle;
 
 import spork.Spork;
-import spork.android.annotations.BindFragment;
-import spork.android.annotations.BindLayout;
+import spork.android.BindFragment;
+import spork.android.BindLayout;
 import spork.android.test.R;
 
 /**

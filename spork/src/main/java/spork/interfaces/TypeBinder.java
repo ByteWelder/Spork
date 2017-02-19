@@ -1,4 +1,4 @@
-package spork;
+package spork.interfaces;
 
 import java.lang.annotation.Annotation;
 
@@ -12,7 +12,7 @@ public interface TypeBinder<AnnotationType extends Annotation> {
 	 * @param object        the annotated instance
 	 * @param annotation    the annotation
 	 * @param annotatedType the class level where this annotation was found
-	 * @param parameters    an array of non-null modules
+	 * @param parameters    an array of arguments (might be empty)
 	 */
 	void bind(Object object, AnnotationType annotation, Class<?> annotatedType, Object[] parameters);
 

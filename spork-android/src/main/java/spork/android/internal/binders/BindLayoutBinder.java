@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import spork.android.annotations.BindLayout;
+import spork.android.BindLayout;
 import spork.BindException;
-import spork.TypeBinder;
+import spork.interfaces.TypeBinder;
 
 public class BindLayoutBinder implements TypeBinder<BindLayout> {
 

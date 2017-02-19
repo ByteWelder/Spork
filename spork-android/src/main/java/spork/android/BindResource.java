@@ -1,4 +1,4 @@
-package spork.android.annotations;
+package spork.android;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -22,6 +22,16 @@ import spork.android.internal.utils.ResourceId;
  * <li>{@link ViewProvider}</li>
  * <li>{@link ContextProvider}</li>
  * </ul>
+ *
+ * Binds to the following field types:
+ * <ul>
+ * <li>Drawable</li>
+ * <li>String</li>
+ * <li>Float and float</li>
+ * <li>Integer and int</li>
+ * <li>Boolean and boolean</li>
+ * </ul>
+ *
  * The value specified is the resource id.
  * When not specified, the name of the field will be used to resolve the id's name.
  */

@@ -1,7 +1,7 @@
 package spork.android.test.bindclick.domain;
 
 import spork.Spork;
-import spork.android.annotations.BindClick;
+import spork.android.BindClick;
 import spork.android.test.R;
 
 public class TestPojo {

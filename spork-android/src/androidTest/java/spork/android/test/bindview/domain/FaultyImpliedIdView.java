@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import spork.Spork;
-import spork.android.annotations.BindView;
+import spork.android.BindView;
 
 public class FaultyImpliedIdView extends FrameLayout {
 

@@ -2,10 +2,10 @@ package spork.internal;
 
 import java.util.List;
 
-import spork.BinderRegistry;
-import spork.FieldBinder;
-import spork.MethodBinder;
-import spork.TypeBinder;
+import spork.interfaces.BinderRegistry;
+import spork.interfaces.FieldBinder;
+import spork.interfaces.MethodBinder;
+import spork.interfaces.TypeBinder;
 
 /**
  * The BinderManager is a BinderRegistry where all binders are stored.

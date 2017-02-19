@@ -6,9 +6,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import spork.Spork;
-import spork.android.annotations.BindFragment;
-import spork.android.annotations.BindLayout;
-import spork.android.annotations.BindView;
+import spork.android.BindFragment;
+import spork.android.BindLayout;
+import spork.android.BindView;
 import spork.android.support.test.R;
 
 import java.util.ArrayList;

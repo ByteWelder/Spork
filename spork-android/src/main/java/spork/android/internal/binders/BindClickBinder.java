@@ -4,11 +4,11 @@ import android.view.View;
 
 import java.lang.reflect.Method;
 
-import spork.android.annotations.BindClick;
+import spork.android.BindClick;
 import spork.android.interfaces.ViewResolver;
 import spork.android.internal.utils.Views;
 import spork.BindException;
-import spork.MethodBinder;
+import spork.interfaces.MethodBinder;
 import spork.internal.Reflection;
 
 public class BindClickBinder implements MethodBinder<BindClick> {

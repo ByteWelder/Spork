@@ -3,7 +3,7 @@ package spork.android.test.bindresource.domain;
 import android.graphics.drawable.Drawable;
 
 import spork.Spork;
-import spork.android.annotations.BindResource;
+import spork.android.BindResource;
 import spork.android.test.R;
 
 public class TestDrawablePojo {

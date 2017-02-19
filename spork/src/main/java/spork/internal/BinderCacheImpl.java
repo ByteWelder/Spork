@@ -10,10 +10,10 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-import spork.Binder;
-import spork.FieldBinder;
-import spork.MethodBinder;
-import spork.TypeBinder;
+import spork.interfaces.Binder;
+import spork.interfaces.FieldBinder;
+import spork.interfaces.MethodBinder;
+import spork.interfaces.TypeBinder;
 
 public class BinderCacheImpl implements BinderCache {
 	private final Map<Class<?>, List<Binder>> classBinderCacheMap = new HashMap<>();
@@ -23,9 +23,6 @@ public class BinderCacheImpl implements BinderCache {
 		this.binderManager = binderManager;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public List<Binder> getBinders(Class<?> type) {
 		List<Binder> binderList = classBinderCacheMap.get(type);
@@ -53,6 +50,7 @@ public class BinderCacheImpl implements BinderCache {
 			createCache(entry.getClass(), methodBinder, entry.getValue());
 		}
 	}
+
 
 	@Override
 	public void register(TypeBinder<?> typeBinder) {
@@ -97,7 +95,7 @@ public class BinderCacheImpl implements BinderCache {
 	 * @param binders          the list of cached Binders to add new cached Binders to
 	 * @param <AnnotationType> the annotation to search for in the annotated type
 	 */
-	public <AnnotationType extends Annotation> void createCache(Class<?> annotatedType, final FieldBinder<AnnotationType> fieldBinder, List<Binder> binders) {
+	private <AnnotationType extends Annotation> void createCache(Class<?> annotatedType, final FieldBinder<AnnotationType> fieldBinder, List<Binder> binders) {
 		for (final Field field : annotatedType.getDeclaredFields()) {
 			final AnnotationType annotation = field.getAnnotation(fieldBinder.getAnnotationClass());
 
@@ -122,7 +120,7 @@ public class BinderCacheImpl implements BinderCache {
 	 * @param binders          the list of cached Binders to add new cached Binders to
 	 * @param <AnnotationType> the annotation to search for in the annotated type
 	 */
-	public <AnnotationType extends Annotation> void createCache(Class<?> annotatedType, final MethodBinder<AnnotationType> methodBinder, List<Binder> binders) {
+	private <AnnotationType extends Annotation> void createCache(Class<?> annotatedType, final MethodBinder<AnnotationType> methodBinder, List<Binder> binders) {
 		for (final Method method : annotatedType.getDeclaredMethods()) {
 			final AnnotationType annotation = method.getAnnotation(methodBinder.getAnnotationClass());
 
@@ -147,7 +145,7 @@ public class BinderCacheImpl implements BinderCache {
 	 * @param binders          the list of cached Binders to add new cached Binders to
 	 * @param <AnnotationType> the annotation to search for in the annotated type
 	 */
-	public <AnnotationType extends Annotation> void createCache(final Class<?> annotatedType, final TypeBinder<AnnotationType> typeBinder, List<Binder> binders) {
+	private  <AnnotationType extends Annotation> void createCache(final Class<?> annotatedType, final TypeBinder<AnnotationType> typeBinder, List<Binder> binders) {
 		final @Nullable AnnotationType annotation = annotatedType.getAnnotation(typeBinder.getAnnotationClass());
 
 		if (annotation != null) {

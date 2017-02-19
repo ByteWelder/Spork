@@ -2,8 +2,11 @@ package spork.internal;
 
 import java.util.List;
 
-import spork.Binder;
+import spork.interfaces.Binder;
 
+/**
+ * This Binder implementation is the
+ */
 public class BinderImpl implements Binder {
 	private final BinderCache binderCache;
 
@@ -11,9 +14,6 @@ public class BinderImpl implements Binder {
 		this.binderCache = binderCache;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void bind(Object object, Object... parameters) {
 		Class<?> objectClass = object.getClass();

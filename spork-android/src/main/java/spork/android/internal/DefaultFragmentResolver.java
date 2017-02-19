@@ -6,7 +6,7 @@ import android.os.Build;
 
 import javax.annotation.Nullable;
 
-import spork.android.annotations.BindFragment;
+import spork.android.BindFragment;
 import spork.android.interfaces.FragmentResolver;
 import spork.android.internal.utils.Reflection;
 import spork.BindException;

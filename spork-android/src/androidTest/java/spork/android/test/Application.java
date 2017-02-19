@@ -1,7 +1,7 @@
 package spork.android.test;
 
 import spork.Spork;
-import spork.android.annotations.BindResource;
+import spork.android.BindResource;
 
 public class Application extends android.app.Application {
     private static Application sInstance = null;

@@ -2,8 +2,8 @@ package spork.internal;
 
 import java.util.List;
 
-import spork.Binder;
-import spork.BinderRegistry;
+import spork.interfaces.Binder;
+import spork.interfaces.BinderRegistry;
 
 /**
  * Holds the ClassBinderCache for all classes.
@@ -17,4 +17,4 @@ public interface BinderCache extends BinderRegistry {
 	 * @return the cache
 	 */
 	List<Binder> getBinders(Class<?> type);
-}
+}\

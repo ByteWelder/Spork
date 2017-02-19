@@ -4,11 +4,11 @@ import android.view.View;
 
 import java.lang.reflect.Field;
 
-import spork.android.annotations.BindView;
+import spork.android.BindView;
 import spork.android.interfaces.ViewResolver;
 import spork.android.internal.utils.Views;
 import spork.BindException;
-import spork.FieldBinder;
+import spork.interfaces.FieldBinder;
 import spork.internal.Reflection;
 
 public class BindViewBinder implements FieldBinder<BindView> {

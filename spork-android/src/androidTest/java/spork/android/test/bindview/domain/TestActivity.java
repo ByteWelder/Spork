@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import spork.Spork;
-import spork.android.annotations.BindFragment;
-import spork.android.annotations.BindLayout;
-import spork.android.annotations.BindView;
+import spork.android.BindFragment;
+import spork.android.BindLayout;
+import spork.android.BindView;
 import spork.android.test.R;
 import spork.android.test.bindview.ViewProvider;
 

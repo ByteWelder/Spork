@@ -9,7 +9,7 @@ import javax.inject.Provider;
 import spork.BindException;
 import spork.inject.internal.objectgraph.ObjectGraph;
 import spork.inject.internal.objectgraph.ObjectGraphs;
-import spork.FieldBinder;
+import spork.interfaces.FieldBinder;
 import spork.internal.Reflection;
 
 /**
