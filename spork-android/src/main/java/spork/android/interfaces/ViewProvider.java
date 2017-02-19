@@ -3,7 +3,8 @@ package spork.android.interfaces;
 import android.view.View;
 
 /**
- * Used by DefaultViewResolver and DefaultContextResolver to resolve views for unsupported objects.
+ * Used by {@link spork.android.internal.DefaultViewResolver} and {@link spork.android.internal.DefaultContextResolver}
+ * to resolve the root {@link View} of a non-standard object (e.g. POJO, support Fragment).
  */
 public interface ViewProvider {
 	View getView();

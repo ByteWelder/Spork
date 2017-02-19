@@ -10,7 +10,7 @@ import spork.inject.internal.lang.Nullability;
 /**
  * Class that defines compatibility of inject target/source
  */
-public class InjectSignature {
+public final class InjectSignature {
 	private static final String SEPARATOR = ":";
 	private final Class<?> targetType;
 	private final Nullability nullability;
@@ -41,7 +41,7 @@ public class InjectSignature {
 		int result = 17;
 		result = 31 * result + targetType.hashCode();
 		result = 31 * result + nullability.hashCode();
-		result = 31 * result + ( ( qualifier != null ) ? qualifier.hashCode() : 0 );
+		result = 31 * result + (qualifier != null ? qualifier.hashCode() : 0);
 		return result;
 	}
 
@@ -53,13 +53,11 @@ public class InjectSignature {
 
 		InjectSignature other = (InjectSignature) o;
 
-		if ( ( (this.qualifier == null) != (other.qualifier == null) ) ) {
-			return false;
-		}
-
-		return this.targetType.equals(other.targetType)
+		return (this.qualifier == null) == (other.qualifier == null) // nullability match
+				&& this.targetType.equals(other.targetType)
 				&& this.nullability.equals(other.nullability)
 				&& (this.qualifier == null || this.qualifier.equals(other.qualifier));
+
 	}
 
 	@Override

@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class InjectFieldTests {
 
-	public class Module {
+	public static class Module {
 		@Provides
 		public Integer integerValue() {
 			return 1;

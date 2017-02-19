@@ -20,7 +20,7 @@ public class NullabilityTests {
 		public Object nullableField;
 
 		@Nonnull
-		public Object nonnullField;
+		public Object nonnullField = new Object();
 
 		public Object nonspecifiedField;
 

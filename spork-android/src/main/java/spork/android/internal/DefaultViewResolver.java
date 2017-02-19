@@ -9,19 +9,21 @@ import javax.annotation.Nullable;
 import spork.android.interfaces.ViewProvider;
 import spork.android.interfaces.ViewResolver;
 
+/**
+ * Default {@link ViewResolver} implementation for all regular Android classes that
+ * could provide a {@link View} instance.
+ */
 public class DefaultViewResolver implements ViewResolver {
 	@Override
 	@Nullable
 	public View resolveView(Object object) {
-		Class<?> object_class = object.getClass();
-
-		if (View.class.isAssignableFrom(object_class)) {
+		if (object instanceof View) {
 			return (View) object;
-		} else if (Activity.class.isAssignableFrom(object_class)) {
+		} else if (object instanceof Activity) {
 			return ((Activity) object).getWindow().getDecorView();
-		} else if (Fragment.class.isAssignableFrom(object_class)) {
+		} else if (object instanceof Fragment) {
 			return ((Fragment) object).getView();
-		} else if (ViewProvider.class.isAssignableFrom(object_class)) {
+		} else if (object instanceof ViewProvider) {
 			return ((ViewProvider) object).getView();
 		} else {
 			return null;

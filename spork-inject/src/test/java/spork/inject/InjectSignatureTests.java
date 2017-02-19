@@ -38,7 +38,6 @@ public class InjectSignatureTests {
 	public void testEqualsTypeMismatch() {
 		InjectSignature signature = new InjectSignature(String.class, Nullability.NONNULL, null);
 		assertFalse(signature.equals(new Object()));
-		assertFalse(signature.equals(null));
 	}
 
 	@Test

@@ -6,11 +6,18 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import spork.android.interfaces.FragmentResolver;
-import spork.android.interfaces.ResolverRegistry;
+import spork.android.interfaces.Registry;
 
-public class FragmentResolverManager implements FragmentResolver, ResolverRegistry<FragmentResolver> {
+/**
+ * The main {@link FragmentResolver} implementation that holds child {@link FragmentResolver} instances
+ * and uses them one by one to resolve a Fragment.
+ * </p>
+ * It resolves to {@link Object} because the Fragment might be a regular Android one or a support library one.
+ */
+public class FragmentResolverManager implements FragmentResolver, Registry<FragmentResolver> {
 	private final List<FragmentResolver> fragmentResolvers = new ArrayList<>(2);
 
+	@Override
 	public void register(FragmentResolver fragmentResolver) {
 		fragmentResolvers.add(fragmentResolver);
 	}

@@ -4,36 +4,30 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
+import spork.BindException;
 import spork.android.BindFragment;
 import spork.android.interfaces.FragmentResolver;
-import spork.BindException;
 
-import static spork.android.internal.utils.Reflection.tryCast;
-
+/**
+ * Resolves Fragment instances from v4 support library types.
+ */
 public class SupportFragmentResolver implements FragmentResolver {
 
 	@Override
 	public @Nullable Object resolveFragment(Object object, int id) {
-		FragmentActivity activity = tryCast(FragmentActivity.class, object);
-
-		if (activity != null) {
-			return activity.getSupportFragmentManager().findFragmentById(id);
+		if (object instanceof FragmentActivity) {
+			return ((FragmentActivity) object).getSupportFragmentManager().findFragmentById(id);
+		} else if (object instanceof Fragment) {
+			return ((Fragment) object).getFragmentManager().findFragmentById(id);
+		} else {
+			return null;
 		}
-
-		Fragment fragment = tryCast(Fragment.class, object);
-
-		if (fragment != null) {
-			return fragment.getFragmentManager().findFragmentById(id);
-		}
-
-		return null;
 	}
 
 	@Override
 	public @Nullable Object resolveFragment(Object object, String idName) {
-		FragmentActivity activity = tryCast(FragmentActivity.class, object);
-
-		if (activity != null) {
+		if (object instanceof FragmentActivity) {
+			FragmentActivity activity = (FragmentActivity) object;
 			int id = activity.getResources().getIdentifier(idName, "id", activity.getPackageName());
 
 			if (id == 0) {
@@ -41,11 +35,8 @@ public class SupportFragmentResolver implements FragmentResolver {
 			}
 
 			return activity.getSupportFragmentManager().findFragmentById(id);
-		}
-
-		Fragment fragment = tryCast(Fragment.class, object);
-
-		if (fragment != null) {
+		} else if (object instanceof Fragment) {
+			Fragment fragment = (Fragment) object;
 			int id = fragment.getResources().getIdentifier(idName, "id", fragment.getActivity().getPackageName());
 
 			if (id == 0) {
@@ -53,8 +44,8 @@ public class SupportFragmentResolver implements FragmentResolver {
 			}
 
 			return fragment.getFragmentManager().findFragmentById(id);
+		} else {
+			return null;
 		}
-
-		return null;
 	}
 }

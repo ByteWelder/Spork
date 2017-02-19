@@ -12,14 +12,14 @@ import static org.junit.Assert.assertEquals;
 
 public class InjectTests {
 
-	public class StringModule {
+	public static class StringModule {
 		@Provides
 		public String stringValue() {
 			return "test";
 		}
 	}
 
-	public class IntegerModule {
+	public static class IntegerModule {
 		@Provides
 		public Integer integerValue() {
 			return 1;
