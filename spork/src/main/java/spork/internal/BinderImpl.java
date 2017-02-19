@@ -5,7 +5,7 @@ import java.util.List;
 import spork.interfaces.Binder;
 
 /**
- * This Binder implementation is the
+ * This {@link Binder} implementation is the main (public) entry point for binding instances.
  */
 public class BinderImpl implements Binder {
 	private final BinderCache binderCache;

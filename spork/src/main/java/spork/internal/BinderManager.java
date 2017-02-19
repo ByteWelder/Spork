@@ -8,7 +8,9 @@ import spork.interfaces.MethodBinder;
 import spork.interfaces.TypeBinder;
 
 /**
- * The BinderManager is a BinderRegistry where all binders are stored.
+ * The BinderManager is the main internal entry point for storing and retrieving
+ * instances of FieldBinder/MethodBinder/TypeBinder.
+ *
  * It also has a registration listener mechanism that allows (for example) a caching mechanism to observe new registrations.
  */
 public interface BinderManager extends BinderRegistry {
