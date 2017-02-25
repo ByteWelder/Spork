@@ -9,7 +9,7 @@ test { finalizedBy jacocoTestReport }
 dependencies {
 
 	if (rootProject.hasProperty('sporkReleaseTarget') && rootProject.sporkReleaseTarget == 'spork-inject') {
-		compile "io.github.sporklibrary:spork:$VERSION_NAME"
+		compile "$GROUP:spork:$VERSION_NAME"
 	} else {
 		compile project(':spork')
 	}

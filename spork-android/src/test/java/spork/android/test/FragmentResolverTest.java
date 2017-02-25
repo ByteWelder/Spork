@@ -1,4 +1,4 @@
-package io.github.sporklibrary.android.resolvers;
+package spork.android.test;
 
 import org.junit.Test;
 
