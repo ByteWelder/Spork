@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
+apply plugin: 'bintray-release'
 
 ext {
 	androidSupportVersion = '25.1.1'
@@ -12,7 +14,7 @@ android {
 		minSdkVersion 15
 		targetSdkVersion 25
 		versionCode 1
-		versionName VERSION_NAME
+		versionName sporkVersion
 		testInstrumentationRunner 'spork.android.support.test.TestRunner'
 		testHandleProfiling true
 		testFunctionalTest true
@@ -44,7 +46,13 @@ android {
 dependencies {
 
 	if (rootProject.hasProperty('sporkReleaseTarget') && rootProject.sporkReleaseTarget == 'spork-android-support') {
-		compile "$GROUP:spork-android:$VERSION_NAME"
+		compile "$sporkGroupId:spork:$sporkVersion"
+	} else {
+		compile project(':spork')
+	}
+
+	if (rootProject.hasProperty('sporkReleaseTarget') && rootProject.sporkReleaseTarget == 'spork-android-support') {
+		compile "$sporkGroupId:spork-android:$sporkVersion@aar"
 	} else {
 		compile project(':spork-android')
 	}
@@ -61,5 +69,15 @@ dependencies {
 	}
 }
 
-apply from: rootProject.file('gradle/maven-android.gradle')
+apply from: rootProject.file('gradle/android-release.gradle')
 apply plugin: 'com.getkeepsafe.dexcount'
+
+publish {
+	userOrg = sporkUserOrg
+	repoName = sporkRepoName
+	groupId = sporkGroupId
+	artifactId = project.name
+	version = sporkVersion
+	description = sporkName
+	website = sporkWebsite
+}

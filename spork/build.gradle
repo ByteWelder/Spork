@@ -1,5 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'jacoco'
+apply plugin: 'maven'
+apply plugin: 'bintray-release'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
@@ -22,4 +24,12 @@ jacocoTestReport {
 	}
 }
 
-apply from: rootProject.file('gradle/maven-java.gradle')
+publish {
+	userOrg = sporkUserOrg
+	repoName = sporkRepoName
+	groupId = sporkGroupId
+	artifactId = project.name
+	version = sporkVersion
+	description = sporkName
+	website = sporkWebsite
+}

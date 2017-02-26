@@ -1,6 +1,14 @@
-apply from: rootProject.file('gradle/maven-base.gradle')
-
 ext {
+	// Publishing
+	sporkVersion = '4.0.0'
+	sporkReleasing = false
+	sporkUserOrg = 'bytewelder'
+	sporkWebsite = 'https://github.com/ByteWelder/Spork'
+	sporkGroupId = 'com.bytewelder.spork'
+	sporkRepoName = sporkReleasing ? 'maven-release' : 'maven-snapshot'
+	sporkName = 'Poetry'
+
+	// Dependencies
 	junitVersion = '4.12'
 	mockitoVersion = '2.7.9'
 }
@@ -8,7 +16,6 @@ ext {
 subprojects {
 	buildscript {
 		repositories {
-			mavenCentral()
 			jcenter()
 		}
 
@@ -16,12 +23,13 @@ subprojects {
 			classpath 'com.android.tools.build:gradle:2.2.0'
 			classpath 'org.jacoco:org.jacoco.core:0.7.7.201606060606'
 			classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.1'
+			classpath 'com.novoda:bintray-release:0.4.0'
 		}
 	}
 
 	repositories {
 		mavenLocal()
-		mavenCentral()
+		jcenter()
 	}
 
 	apply plugin: 'jacoco'
@@ -32,8 +40,8 @@ subprojects {
 		configFile = new File(rootDir, 'checkstyle.xml')
 	}
 
-	group = GROUP
-	version = VERSION_NAME
+	group = sporkGroupId
+	version = sporkVersion
 
 	gradle.projectsEvaluated {
 		tasks.withType(JavaCompile) {

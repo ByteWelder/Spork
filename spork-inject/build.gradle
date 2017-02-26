@@ -1,5 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'jacoco'
+apply plugin: 'maven'
+apply plugin: 'bintray-release'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
@@ -9,7 +11,7 @@ test { finalizedBy jacocoTestReport }
 dependencies {
 
 	if (rootProject.hasProperty('sporkReleaseTarget') && rootProject.sporkReleaseTarget == 'spork-inject') {
-		compile "$GROUP:spork:$VERSION_NAME"
+		compile "$sporkGroupId:spork:$sporkVersion"
 	} else {
 		compile project(':spork')
 	}
@@ -29,4 +31,12 @@ jacocoTestReport {
 	}
 }
 
-apply from: rootProject.file('gradle/maven-java.gradle')
+publish {
+	userOrg = sporkUserOrg
+	repoName = sporkRepoName
+	groupId = sporkGroupId
+	artifactId = project.name
+	version = sporkVersion
+	description = sporkName
+	website = sporkWebsite
+}
