@@ -1,53 +1,56 @@
 apply plugin: 'com.android.library'
 
-dependencies {
-    compile (
-        project(':spork')
-    )
-
-    testCompile (
-        [group: 'junit', name: 'junit', version: '4.12']
-    )
-
-    androidTestCompile (
-        [group: 'com.android.support.test', name: 'runner', version: '0.5'],
-        [group: 'com.android.support.test.espresso', name: 'espresso-core', version: '2.2.2'],
-        [group: 'com.android.support.test.espresso', name: 'espresso-contrib', version: '2.2.2']
-    )
-}
-
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+	compileSdkVersion 25
+	buildToolsVersion '25.0.2'
 
-    defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 25
-        versionCode 1
-        versionName VERSION_NAME
-        testInstrumentationRunner 'io.github.sporklibrary.android.TestRunner'
-        testHandleProfiling true
-        testFunctionalTest true
-        consumerProguardFiles 'proguard.pro'
-    }
+	defaultConfig {
+		minSdkVersion 15
+		targetSdkVersion 25
+		versionCode 1
+		versionName VERSION_NAME
+		testInstrumentationRunner 'spork.android.test.TestRunner'
+		testHandleProfiling true
+		testFunctionalTest true
+		consumerProguardFiles 'proguard.pro'
+	}
 
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/ASL2.0'
-        exclude 'META-INF/ASL2.0.txt'
-        exclude 'LICENSE.txt'
-        exclude 'LICENSE'
-    }
+	packagingOptions {
+		exclude 'META-INF/DEPENDENCIES'
+		exclude 'META-INF/LICENSE'
+		exclude 'META-INF/LICENSE.txt'
+		exclude 'META-INF/NOTICE'
+		exclude 'META-INF/NOTICE.txt'
+		exclude 'META-INF/ASL2.0'
+		exclude 'META-INF/ASL2.0.txt'
+		exclude 'LICENSE.txt'
+		exclude 'LICENSE'
+	}
 
-    buildTypes {
-        debug {
-            testCoverageEnabled true
-        }
-    }
+	buildTypes {
+		release {
+			testCoverageEnabled false
+		}
+		debug {
+			testCoverageEnabled true
+		}
+	}
 }
 
-apply from: rootProject.file('gradle/gradle-mvn-push-android.gradle')
+dependencies {
+
+	if (rootProject.hasProperty('sporkReleaseTarget') && rootProject.sporkReleaseTarget == 'spork-android') {
+		compile "$GROUP:spork:$VERSION_NAME"
+	} else {
+		compile project(':spork')
+	}
+
+	testCompile "junit:junit:$junitVersion"
+
+	androidTestCompile "com.android.support.test:runner:0.5"
+	androidTestCompile "com.android.support.test.espresso:espresso-core:2.2.2"
+	androidTestCompile "com.android.support.test.espresso:espresso-contrib:2.2.2"
+}
+
+apply from: rootProject.file('gradle/maven-android.gradle')
+apply plugin: 'com.getkeepsafe.dexcount'

@@ -1,37 +1,51 @@
+apply from: rootProject.file('gradle/maven-base.gradle')
+
+ext {
+	junitVersion = '4.12'
+	mockitoVersion = '2.7.9'
+}
+
 subprojects {
-    buildscript {
-        repositories {
-            mavenCentral()
-        }
+	buildscript {
+		repositories {
+			mavenCentral()
+			jcenter()
+		}
 
-        dependencies {
-            classpath 'com.android.tools.build:gradle:2.1.3'
-            classpath 'org.jacoco:org.jacoco.core:0.7.7.201606060606'
-        }
-    }
+		dependencies {
+			classpath 'com.android.tools.build:gradle:2.2.0'
+			classpath 'org.jacoco:org.jacoco.core:0.7.7.201606060606'
+			classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.1'
+		}
+	}
 
-    repositories {
-        mavenCentral()
-    }
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
 
-    apply plugin: 'jacoco'
+	apply plugin: 'jacoco'
+	apply plugin: 'checkstyle'
+	apply plugin: 'findbugs'
 
-    jacoco {
-        toolVersion = '0.7.6.201602180812'
-    }
+	checkstyle {
+		configFile = new File(rootDir, 'checkstyle.xml')
+	}
 
-    apply plugin: 'checkstyle'
+	group = GROUP
+	version = VERSION_NAME
 
-    checkstyle {
-        configFile = new File(rootDir, 'checkstyle.xml')
-    }
+	gradle.projectsEvaluated {
+		tasks.withType(JavaCompile) {
+			options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
+		}
+	}
 
-    group = GROUP
-    version = VERSION_NAME
-
-    gradle.projectsEvaluated {
-        tasks.withType(JavaCompile) {
-            options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
-        }
-    }
+	// TODO: Implement for Android tasks
+	tasks.withType(FindBugs) {
+		reports {
+			xml.enabled false
+			html.enabled true
+		}
+	}
 }

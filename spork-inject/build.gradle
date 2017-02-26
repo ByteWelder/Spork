@@ -1,0 +1,32 @@
+apply plugin: 'java'
+apply plugin: 'jacoco'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+test { finalizedBy jacocoTestReport }
+
+dependencies {
+
+	if (rootProject.hasProperty('sporkReleaseTarget') && rootProject.sporkReleaseTarget == 'spork-inject') {
+		compile "$GROUP:spork:$VERSION_NAME"
+	} else {
+		compile project(':spork')
+	}
+
+	compile "javax.inject:javax.inject:1" // for enterprise annotations
+
+	testCompile "junit:junit:$junitVersion"
+	testCompile "org.mockito:mockito-core:$mockitoVersion"
+}
+
+jacocoTestReport {
+	group = 'Reporting'
+	reports {
+		xml.enabled true
+		csv.enabled false
+		html.destination "${buildDir}/reports/coverage"
+	}
+}
+
+apply from: rootProject.file('gradle/maven-java.gradle')
