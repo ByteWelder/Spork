@@ -11,7 +11,6 @@ import spork.android.interfaces.Registry;
 /**
  * The main {@link FragmentResolver} implementation that holds child {@link FragmentResolver} instances
  * and uses them one by one to resolve a Fragment.
- * </p>
  * It resolves to {@link Object} because the Fragment might be a regular Android one or a support library one.
  */
 public class FragmentResolverManager implements FragmentResolver, Registry<FragmentResolver> {

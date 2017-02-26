@@ -13,6 +13,7 @@ public final class Views {
 	}
 
 	/**
+	 * @param viewResolver resolves view from an unknown parent object
 	 * @param viewId       R.id.* value or ResourceId.sDefaultValue
 	 * @param nameFallback used when ResourceId.sDefaultValue is set, this name will be used to resolve R.id.namefallback
 	 * @param object       any Activity, Fragment or View (including support library types)

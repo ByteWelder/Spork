@@ -13,7 +13,6 @@ import spork.android.interfaces.FragmentResolver;
 /**
  * Default {@link FragmentResolver} implementation for all regular Android classes that
  * could provide a Fragment instance.
- * </p>
  * It resolves to {@link Object} because the Fragment might be a regular Android one or a support library one.
  */
 public class DefaultFragmentResolver implements FragmentResolver {
