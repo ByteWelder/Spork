@@ -2,7 +2,7 @@
 
 Spork is an extensible Java/Android library for annotation processing.
 
-Documentation is available on the [website](http://sporklibrary.github.io)
+Documentation is available on the [website](http://spork.bytewelder.com)
 
 ## License
 
