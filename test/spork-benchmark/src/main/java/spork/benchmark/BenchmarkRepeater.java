@@ -1,5 +1,7 @@
 package spork.benchmark;
 
+import java.util.Locale;
+
 public class BenchmarkRepeater implements Runnable {
 	private BenchmarkFactory benchmarkFactory;
 	private BenchmarkResult[] benchmarkResults;
@@ -39,15 +41,21 @@ public class BenchmarkRepeater implements Runnable {
 		return new BenchmarkResult(benchmarkResults[0].getBenchmarkClass(), (long)workDuration, (long)workCount);
 	}
 
-	public void printResults() {
+	public void printResultOverview() {
+		BenchmarkResult result = calculateAverageBenchmarkResult();
+		double workDurationMs = result.getWorkDuration() / 1000000d;
+		double average = workDurationMs / (double) result.getWorkCount();
+		System.out.println("Ran benchmark \"" + benchmarkFactory.createBenchmark().getClass().getSimpleName() + "\" "
+				+ Integer.toString(benchmarkResults.length) + " times with "
+				+ Long.toString(result.getWorkCount()) + " work items per benchmark and on average "
+				+ String.format(Locale.getDefault(), "%.3fms", average) + " per work item");
+	}
+
+	public void printResultDetails() {
 		System.out.println("Individual results:");
 		for (BenchmarkResult result : benchmarkResults) {
 			System.out.println("\t" + result.toString());
 		}
-		System.out.println();
-
-		System.out.println("Average results:");
-		System.out.println("\t" + calculateAverageBenchmarkResult().toString());
 		System.out.println();
 	}
 }

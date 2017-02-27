@@ -1,10 +1,11 @@
 package spork.benchmark;
 
-import spork.benchmark.benchmarks.FieldBinder1Benchmark;
-import spork.benchmark.benchmarks.FieldBinder2Benchmark;
-import spork.benchmark.binders.FieldBinder1;
-import spork.benchmark.binders.FieldBinder2;
 import spork.Spork;
+import spork.benchmark.core.CoreBenchmark;
+import spork.benchmark.core.FieldAnnotationBinder;
+import spork.benchmark.inject.InjectMultiFieldBenchmark;
+import spork.benchmark.inject.InjectSingleFieldBenchmark;
+import spork.inject.internal.InjectFieldBinder;
 
 public final class Application {
 
@@ -12,47 +13,114 @@ public final class Application {
 	}
 
 	public static void main(String[] args) {
-		Spork.sharedInstance().getBinderRegistry().register(new FieldBinder1());
-		Spork.sharedInstance().getBinderRegistry().register(new FieldBinder2());
+		runCoreBenchmarks();
+		runInjectSingleFieldBenchmarks();
+		runInjectMultiFieldBenchmarks();
+	}
 
-		BenchmarkRepeater repeater1 = new BenchmarkRepeater(new BenchmarkFactory() {
+	private static void runCoreBenchmarks() {
+		final Spork spork = new Spork();
+
+		spork.getBinderRegistry().register(new FieldAnnotationBinder());
+
+		BenchmarkRepeater injectFirst = new BenchmarkRepeater(new BenchmarkFactory() {
 			@Override
 			public Benchmark createBenchmark() {
-				return new FieldBinder1Benchmark(1);
+				return new CoreBenchmark(spork, 1);
+			}
+		}, 1);
+
+		injectFirst.run();
+		injectFirst.printResultOverview();
+
+		BenchmarkRepeater injectOne = new BenchmarkRepeater(new BenchmarkFactory() {
+			@Override
+			public Benchmark createBenchmark() {
+				return new CoreBenchmark(spork, 1);
+			}
+		}, 1000);
+
+		injectOne.run();
+		injectOne.printResultOverview();
+
+		BenchmarkRepeater injectMany = new BenchmarkRepeater(new BenchmarkFactory() {
+			@Override
+			public Benchmark createBenchmark() {
+				return new CoreBenchmark(spork, 1000);
 			}
 		}, 10);
 
-		repeater1.run();
-		repeater1.printResults();
+		injectMany.run();
+		injectMany.printResultOverview();
+	}
 
-		BenchmarkRepeater repeater2 = new BenchmarkRepeater(new BenchmarkFactory() {
+	private static void runInjectSingleFieldBenchmarks() {
+		final Spork spork = new Spork();
+		spork.getBinderRegistry().register(new InjectFieldBinder());
+
+		BenchmarkRepeater injectFirst = new BenchmarkRepeater(new BenchmarkFactory() {
 			@Override
 			public Benchmark createBenchmark() {
-				return new FieldBinder2Benchmark(1);
+				return new InjectSingleFieldBenchmark(spork, 1);
+			}
+		}, 1);
+
+		injectFirst.run();
+		injectFirst.printResultOverview();
+
+		BenchmarkRepeater injectOne = new BenchmarkRepeater(new BenchmarkFactory() {
+			@Override
+			public Benchmark createBenchmark() {
+				return new InjectSingleFieldBenchmark(spork, 1);
+			}
+		}, 1000);
+
+		injectOne.run();
+		injectOne.printResultOverview();
+
+		BenchmarkRepeater injectMany = new BenchmarkRepeater(new BenchmarkFactory() {
+			@Override
+			public Benchmark createBenchmark() {
+				return new InjectSingleFieldBenchmark(spork, 1000);
 			}
 		}, 10);
 
-		repeater2.run();
-		repeater2.printResults();
+		injectMany.run();
+		injectMany.printResultOverview();
+	}
 
-		BenchmarkRepeater repeater1Many = new BenchmarkRepeater(new BenchmarkFactory() {
+	private static void runInjectMultiFieldBenchmarks() {
+		final Spork spork = new Spork();
+		spork.getBinderRegistry().register(new InjectFieldBinder());
+
+		BenchmarkRepeater injectFirst = new BenchmarkRepeater(new BenchmarkFactory() {
 			@Override
 			public Benchmark createBenchmark() {
-				return new FieldBinder1Benchmark(1000);
+				return new InjectMultiFieldBenchmark(spork, 1);
+			}
+		}, 1);
+
+		injectFirst.run();
+		injectFirst.printResultOverview();
+
+		BenchmarkRepeater injectOne = new BenchmarkRepeater(new BenchmarkFactory() {
+			@Override
+			public Benchmark createBenchmark() {
+				return new InjectMultiFieldBenchmark(spork, 1);
+			}
+		}, 1000);
+
+		injectOne.run();
+		injectOne.printResultOverview();
+
+		BenchmarkRepeater injectMany = new BenchmarkRepeater(new BenchmarkFactory() {
+			@Override
+			public Benchmark createBenchmark() {
+				return new InjectMultiFieldBenchmark(spork, 1000);
 			}
 		}, 10);
 
-		repeater1Many.run();
-		repeater1Many.printResults();
-
-		BenchmarkRepeater repeater2Many = new BenchmarkRepeater(new BenchmarkFactory() {
-			@Override
-			public Benchmark createBenchmark() {
-				return new FieldBinder2Benchmark(1000);
-			}
-		}, 10);
-
-		repeater2Many.run();
-		repeater2Many.printResults();
+		injectMany.run();
+		injectMany.printResultOverview();
 	}
 }
