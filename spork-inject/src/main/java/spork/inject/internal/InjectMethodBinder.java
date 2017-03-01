@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import spork.BindException;
 import spork.inject.internal.objectgraph.ObjectGraph;
+import spork.inject.internal.objectgraph.ObjectGraphMethodInvoker;
 import spork.inject.internal.objectgraph.ObjectGraphs;
 import spork.interfaces.MethodBinder;
 
@@ -23,6 +24,7 @@ public class InjectMethodBinder implements MethodBinder<Inject> {
 			throw new BindException(Inject.class, object.getClass(), method, "no ObjectGraph specified in instance arguments of Spork.bind() when injecting " + object.getClass().getName());
 		}
 
-		// TODO: move code from ModuleMethodInvoker.collectMethodParameters() to shared spot and call method
+		ObjectGraphMethodInvoker methodInvoker = new ObjectGraphMethodInvoker(objectGraph);
+		methodInvoker.invoke(object, method);
 	}
 }

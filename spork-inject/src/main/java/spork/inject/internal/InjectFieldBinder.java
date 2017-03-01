@@ -7,8 +7,10 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 import spork.BindException;
+import spork.inject.Lazy;
 import spork.inject.internal.objectgraph.ObjectGraph;
 import spork.inject.internal.objectgraph.ObjectGraphs;
+import spork.inject.internal.objectgraph.modulenode.providers.CachedProvider;
 import spork.interfaces.FieldBinder;
 import spork.internal.Reflection;
 
@@ -30,7 +32,8 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 		}
 
 		Class<?> fieldType = field.getType();
-		boolean fieldIsProvider = (fieldType == Provider.class);
+		boolean fieldIsLazy = (fieldType == Lazy.class);
+		boolean fieldIsProvider = (fieldType == Provider.class) || fieldIsLazy;
 		// Determine the true type of the instance (so not Provider.class)
 		Class<?> targetType = fieldIsProvider ? (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0] : fieldType;
 		Provider<?> provider = objectGraph.findProvider(field, targetType);
@@ -41,7 +44,11 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 
 		// Either set the provider instance or the real instance
 		if (fieldIsProvider) {
-			Reflection.setFieldValue(annotation, field, instance, provider);
+			if (fieldIsLazy) {
+				Reflection.setFieldValue(annotation, field, instance, new CachedProvider<>(provider));
+			} else {
+				Reflection.setFieldValue(annotation, field, instance, provider);
+			}
 		} else {
 			Object bindInstance = provider.get();
 			Reflection.setFieldValue(annotation, field, instance, bindInstance);

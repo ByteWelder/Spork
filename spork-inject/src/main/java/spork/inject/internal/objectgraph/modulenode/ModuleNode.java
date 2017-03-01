@@ -16,8 +16,8 @@ import spork.inject.internal.lang.Annotations;
 import spork.inject.internal.lang.Nullability;
 import spork.inject.internal.objectgraph.ObjectGraph;
 import spork.inject.internal.objectgraph.ObjectGraphNode;
-import spork.inject.internal.objectgraph.modulenode.providers.CachedProvider;
 import spork.inject.internal.objectgraph.modulenode.providers.InstanceCacheProvider;
+import spork.inject.internal.objectgraph.modulenode.providers.SimpleProvider;
 
 public class ModuleNode implements ObjectGraphNode {
 	private final Object module;
@@ -59,8 +59,8 @@ public class ModuleNode implements ObjectGraphNode {
 		Annotation scopeAnnotation = Annotations.findAnnotationAnnotatedWith(Scope.class, method);
 
 		// No scope and no qualifier means a new instance per injection
-		if (scopeAnnotation == null && injectSignature.hasQualifier()) {
-			return new CachedProvider<>(moduleMethodInvoker);
+		if (scopeAnnotation == null && !injectSignature.hasQualifier()) {
+			return new SimpleProvider<>(moduleMethodInvoker);
 		} else {
 			return new InstanceCacheProvider<>(injectSignature, moduleMethodInvoker, instanceCache, scopeAnnotation);
 		}

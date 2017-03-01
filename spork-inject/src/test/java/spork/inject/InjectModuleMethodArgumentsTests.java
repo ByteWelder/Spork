@@ -10,7 +10,7 @@ import spork.inject.internal.objectgraph.ObjectGraph;
 
 import static org.junit.Assert.assertEquals;
 
-public class InjectMethodArgumentsTests {
+public class InjectModuleMethodArgumentsTests {
 
 	public static class Module {
 

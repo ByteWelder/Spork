@@ -3,14 +3,13 @@ package spork.inject;
 import org.junit.Test;
 
 import javax.inject.Inject;
-import javax.inject.Provider;
 
 import spork.Spork;
 import spork.inject.internal.objectgraph.ObjectGraph;
 
 import static org.junit.Assert.assertEquals;
 
-public class InjectProviderTests {
+public class InjectLazyTests {
 
 	/**
 	 * A module that increases a counter every time a method is called.
@@ -27,12 +26,12 @@ public class InjectProviderTests {
 
 	private static class Parent {
 		@Inject
-		Provider<Integer> provider;
+		Lazy<Integer> provider;
 	}
 
 	/**
 	 * Test that when Provider.get() is called multiple times,
-	 * a new instance is returned every time.
+	 * the same instance is returned every time.
 	 */
 	@Test
 	public void multipleGet() {
@@ -51,6 +50,6 @@ public class InjectProviderTests {
 
 		// then
 		assertEquals((Integer) 1, first);
-		assertEquals((Integer) 2, second);
+		assertEquals((Integer) 1, second);
 	}
 }

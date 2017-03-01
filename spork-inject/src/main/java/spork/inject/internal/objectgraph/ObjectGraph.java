@@ -15,7 +15,7 @@ import spork.inject.internal.lang.Nullability;
 import spork.inject.internal.objectgraph.modulenode.ModuleNode;
 import spork.inject.internal.objectgraph.modulenode.InstanceCache;
 
-public class ObjectGraph {
+public final class ObjectGraph {
 	@Nullable
 	private final ObjectGraph parentGraph;
 	private final ObjectGraphNode[] nodes;

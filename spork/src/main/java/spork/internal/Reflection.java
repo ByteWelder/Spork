@@ -23,22 +23,17 @@ public final class Reflection {
 	 * @param valueObject  the field value to bind
 	 */
 	public static void setFieldValue(Annotation annotation, Field field, Object parentObject, Object valueObject) {
-		boolean accessible = field.isAccessible();
-
 		try {
-			if (accessible) {
-				field.set(parentObject, valueObject);
-			} else {
-				field.setAccessible(true);
-				field.set(parentObject, valueObject);
-				field.setAccessible(false);
-			}
+			field.setAccessible(true);
+			field.set(parentObject, valueObject);
 		} catch (IllegalAccessException e) {
 			throw new BindException(annotation.getClass(), parentObject.getClass(), field, "field not accessible", e);
 		} finally {
 			// ensure the Field isn't accessible when it shouldn't be
-			if (!accessible && field.isAccessible()) {
+			try {
 				field.setAccessible(false);
+			} catch (SecurityException e) {
+				// no-op
 			}
 		}
 	}
@@ -54,25 +49,18 @@ public final class Reflection {
 	 */
 	@Nullable
 	public static Object invokeMethod(Annotation annotation, Method method, Object object, Object... args) {
-		boolean accessible = method.isAccessible();
-
 		try {
-			if (accessible) {
-				return method.invoke(object, args);
-			} else {
-				method.setAccessible(true);
-				Object result = method.invoke(object, args);
-				method.setAccessible(false);
-				return result;
-			}
+			method.setAccessible(true);
+			return method.invoke(object, args);
 		} catch (IllegalAccessException e) {
 			throw new BindException(annotation.getClass(), object.getClass(), method, "method not accessible", e);
 		} catch (InvocationTargetException e) {
 			throw new BindException(annotation.getClass(), object.getClass(), method, "method calling failed because of an invocation issue", e);
 		} finally {
-			// ensure the Field isn't accessible when it shouldn't be
-			if (!accessible && method.isAccessible()) {
+			try {
 				method.setAccessible(false);
+			} catch (SecurityException e) {
+				// no-op
 			}
 		}
 	}
