@@ -1,9 +1,9 @@
-package spork.inject.internal.objectgraph.providers;
+package spork.inject.internal.providers;
 
 import javax.inject.Provider;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import spork.inject.internal.objectgraph.ObjectGraphNode;
+import spork.inject.internal.ObjectGraphNode;
 
 public class InstanceProvider implements Provider<Object> {
 	private final ObjectGraphNode node;

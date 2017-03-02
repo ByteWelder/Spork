@@ -8,9 +8,7 @@ import javax.inject.Provider;
 
 import spork.BindException;
 import spork.inject.Lazy;
-import spork.inject.internal.objectgraph.ObjectGraph;
-import spork.inject.internal.objectgraph.ObjectGraphs;
-import spork.inject.internal.objectgraph.providers.LazyProvider;
+import spork.inject.internal.providers.LazyProvider;
 import spork.interfaces.FieldBinder;
 import spork.internal.Reflection;
 

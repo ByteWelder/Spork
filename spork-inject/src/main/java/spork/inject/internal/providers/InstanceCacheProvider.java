@@ -1,12 +1,12 @@
-package spork.inject.internal.objectgraph.providers;
+package spork.inject.internal.providers;
 
 import javax.annotation.Nullable;
 import javax.inject.Provider;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import spork.inject.internal.InjectSignature;
-import spork.inject.internal.objectgraph.ObjectGraphNode;
-import spork.inject.internal.objectgraph.InstanceCache;
+import spork.inject.internal.InstanceCache;
+import spork.inject.internal.ObjectGraphNode;
 
 public class InstanceCacheProvider implements Provider<Object> {
 	private final ObjectGraphNode node;

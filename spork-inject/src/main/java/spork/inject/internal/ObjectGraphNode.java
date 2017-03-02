@@ -1,4 +1,4 @@
-package spork.inject.internal.objectgraph;
+package spork.inject.internal;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
@@ -10,34 +10,30 @@ import javax.inject.Scope;
 
 import spork.BindException;
 import spork.inject.AnnotationSerializers;
-import spork.inject.internal.InjectSignature;
 import spork.inject.internal.lang.Annotations;
 
-class MethodGraphNode implements ObjectGraphNode {
+public class ObjectGraphNode {
 	private final InjectSignature injectSignature;
 	private final Object parent;
 	private final Method method;
 	@Nullable private final String scopeId;
 
-	MethodGraphNode(InjectSignature injectSignature, Object parent, Method method) {
+	ObjectGraphNode(InjectSignature injectSignature, Object parent, Method method) {
 		this.injectSignature = injectSignature;
 		this.parent = parent;
 		this.method = method;
 		this.scopeId = findScopeId(method);
 	}
 
-	@Override
 	public InjectSignature getInjectSignature() {
 		return injectSignature;
 	}
 
-	@Override
 	@Nullable
 	public String getScopeId() {
 		return scopeId;
 	}
 
-	@Override
 	public Object resolve(Object... arguments) {
 		method.setAccessible(true);
 		try {
@@ -56,17 +52,16 @@ class MethodGraphNode implements ObjectGraphNode {
 	}
 
 	@Nullable
-	@Override
-	public Object[] collectParameters(ObjectGraph objectGraph) {
+	Object[] collectParameters(ObjectGraph objectGraph) {
 		try {
-			return objectGraph.collectParameters(method.getParameterTypes(), method.getParameterAnnotations(), method.getGenericParameterTypes());
-		} catch (ObjectGraphException e) {
+			return objectGraph.getParameters(method.getParameterTypes(), method.getParameterAnnotations(), method.getGenericParameterTypes());
+		} catch (spork.inject.internal.ObjectGraphException e) {
 			String message = "failed to call " + method.getDeclaringClass().getName() + "." + method.getName() + "(): " + e.getMessage();
 			throw new BindException(Inject.class, method.getDeclaringClass(), injectSignature.getType(), message);
 		}
 	}
 
-	private String findScopeId(Method method) {
+	private static String findScopeId(Method method) {
 		Annotation annotation = Annotations.findAnnotationAnnotatedWith(Scope.class, method);
 		if (annotation != null) {
 			return AnnotationSerializers.serialize(annotation);

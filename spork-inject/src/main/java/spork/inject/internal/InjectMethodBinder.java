@@ -6,9 +6,6 @@ import java.lang.reflect.Method;
 import javax.inject.Inject;
 
 import spork.BindException;
-import spork.inject.internal.objectgraph.ObjectGraph;
-import spork.inject.internal.objectgraph.ObjectGraphException;
-import spork.inject.internal.objectgraph.ObjectGraphs;
 import spork.interfaces.MethodBinder;
 
 public class InjectMethodBinder implements MethodBinder<Inject> {
@@ -27,7 +24,7 @@ public class InjectMethodBinder implements MethodBinder<Inject> {
 
 		try {
 			method.setAccessible(true);
-			Object[] invocationParameters = objectGraph.collectParameters(method.getParameterTypes(), method.getParameterAnnotations(), method.getGenericParameterTypes());
+			Object[] invocationParameters = objectGraph.getParameters(method.getParameterTypes(), method.getParameterAnnotations(), method.getGenericParameterTypes());
 			if (invocationParameters != null) {
 				method.invoke(object, invocationParameters);
 			} else {

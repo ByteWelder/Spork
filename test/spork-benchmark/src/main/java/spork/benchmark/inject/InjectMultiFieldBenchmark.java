@@ -5,8 +5,8 @@ import javax.inject.Inject;
 import spork.Spork;
 import spork.benchmark.Benchmark;
 import spork.inject.Provides;
-import spork.inject.internal.objectgraph.ObjectGraph;
-import spork.inject.internal.objectgraph.ObjectGraphBuilder;
+import spork.inject.internal.ObjectGraph;
+import spork.inject.internal.ObjectGraphBuilder;
 
 public class InjectMultiFieldBenchmark extends Benchmark {
 	private final TestObject[] testObjects;

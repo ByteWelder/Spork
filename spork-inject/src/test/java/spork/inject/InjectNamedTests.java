@@ -5,7 +5,7 @@ import org.junit.Test;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import spork.inject.internal.objectgraph.ObjectGraphBuilder;
+import spork.inject.internal.ObjectGraphBuilder;
 
 import static org.junit.Assert.assertEquals;
 

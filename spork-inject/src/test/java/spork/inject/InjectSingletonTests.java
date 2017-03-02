@@ -5,8 +5,8 @@ import org.junit.Test;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import spork.inject.internal.objectgraph.ObjectGraph;
-import spork.inject.internal.objectgraph.ObjectGraphBuilder;
+import spork.inject.internal.ObjectGraph;
+import spork.inject.internal.ObjectGraphBuilder;
 
 import static org.junit.Assert.assertEquals;
 

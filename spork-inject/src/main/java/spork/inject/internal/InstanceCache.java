@@ -1,11 +1,9 @@
-package spork.inject.internal.objectgraph;
+package spork.inject.internal;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nullable;
-
-import spork.inject.internal.InjectSignature;
 
 /**
  * A 2-dimensional cache that maps as follows:

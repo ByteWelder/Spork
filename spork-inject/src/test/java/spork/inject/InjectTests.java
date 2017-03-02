@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 import spork.BindException;
 import spork.Spork;
-import spork.inject.internal.objectgraph.ObjectGraphBuilder;
+import spork.inject.internal.ObjectGraphBuilder;
 
 import static org.junit.Assert.assertEquals;
 

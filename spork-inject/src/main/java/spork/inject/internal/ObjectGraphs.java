@@ -1,4 +1,4 @@
-package spork.inject.internal.objectgraph;
+package spork.inject.internal;
 
 import javax.annotation.Nullable;
 
@@ -7,7 +7,7 @@ public final class ObjectGraphs {
 	}
 
 	@Nullable
-	public static ObjectGraph findObjectGraph(Object[] objects) {
+	static ObjectGraph findObjectGraph(Object[] objects) {
 		for (Object object : objects) {
 			if (object.getClass() == ObjectGraph.class) {
 				return (ObjectGraph) object;

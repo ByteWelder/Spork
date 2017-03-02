@@ -1,4 +1,4 @@
-package spork.inject.internal.objectgraph;
+package spork.inject.internal;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -10,7 +10,6 @@ import javax.annotation.Nullable;
 import javax.inject.Qualifier;
 
 import spork.inject.Provides;
-import spork.inject.internal.InjectSignature;
 import spork.inject.internal.lang.Annotations;
 import spork.inject.internal.lang.Nullability;
 
@@ -54,8 +53,7 @@ public class ObjectGraphBuilder {
 			Nullability nullability = Nullability.create(method);
 			Annotation qualifierAnnotation = Annotations.findAnnotationAnnotatedWith(Qualifier.class, method);
 			InjectSignature injectSignature = new InjectSignature(method.getReturnType(), nullability, qualifierAnnotation);
-
-			objectGraphNodes.add(new MethodGraphNode(injectSignature, module, method));
+			objectGraphNodes.add(new ObjectGraphNode(injectSignature, module, method));
 		}
 	}
 }

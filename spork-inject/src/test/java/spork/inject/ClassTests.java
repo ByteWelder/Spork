@@ -3,7 +3,7 @@ package spork.inject;
 import org.junit.Test;
 
 import spork.inject.internal.lang.Annotations;
-import spork.inject.internal.objectgraph.ObjectGraphs;
+import spork.inject.internal.ObjectGraphs;
 import spork.internal.Reflection;
 
 /**

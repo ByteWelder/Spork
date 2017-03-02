@@ -1,4 +1,4 @@
-package spork.inject.internal.objectgraph.providers;
+package spork.inject.internal.providers;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
