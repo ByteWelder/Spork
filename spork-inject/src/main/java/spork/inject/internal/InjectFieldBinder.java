@@ -10,7 +10,7 @@ import spork.BindException;
 import spork.inject.Lazy;
 import spork.inject.internal.objectgraph.ObjectGraph;
 import spork.inject.internal.objectgraph.ObjectGraphs;
-import spork.inject.internal.objectgraph.modulenode.providers.CachedProvider;
+import spork.inject.internal.objectgraph.providers.LazyProvider;
 import spork.interfaces.FieldBinder;
 import spork.internal.Reflection;
 
@@ -45,7 +45,7 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 		// Either set the provider instance or the real instance
 		if (fieldIsProvider) {
 			if (fieldIsLazy) {
-				Reflection.setFieldValue(annotation, field, instance, new CachedProvider<>(provider));
+				Reflection.setFieldValue(annotation, field, instance, new LazyProvider<>(provider));
 			} else {
 				Reflection.setFieldValue(annotation, field, instance, provider);
 			}

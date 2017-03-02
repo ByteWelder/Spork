@@ -1,4 +1,4 @@
-package spork.inject.internal.objectgraph.modulenode;
+package spork.inject.internal.objectgraph;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,18 +1,23 @@
 package spork.inject.internal.objectgraph;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.inject.Qualifier;
 
-import spork.inject.internal.objectgraph.modulenode.InstanceCache;
-import spork.inject.internal.objectgraph.modulenode.ModuleNode;
+import spork.inject.Provides;
+import spork.inject.internal.InjectSignature;
+import spork.inject.internal.lang.Annotations;
+import spork.inject.internal.lang.Nullability;
 
 public class ObjectGraphBuilder {
 	@Nullable
 	private final ObjectGraph parentGraph;
-	private final ArrayList<ObjectGraphNode> nodeList = new ArrayList<>(2);
-	private final InstanceCache instanceCache = new InstanceCache();
+	private final ArrayList<Object> modules = new ArrayList<>(2);
 
 	public ObjectGraphBuilder() {
 		this.parentGraph = null;
@@ -23,12 +28,34 @@ public class ObjectGraphBuilder {
 	}
 
 	public ObjectGraphBuilder module(Object module) {
-		nodeList.add(new ModuleNode(module, instanceCache));
+		modules.add(module);
 		return this;
 	}
 
 	public ObjectGraph build() {
-		ObjectGraphNode[] nodeArray = nodeList.toArray(new ObjectGraphNode[nodeList.size()]);
+		List<ObjectGraphNode> objectGraphNodes = new ArrayList<>();
+
+		// collect ObjectGraphNode instances for each module (method)
+		for (Object module : modules) {
+			 collectObjectGraphNodes(objectGraphNodes, module);
+		}
+
+		ObjectGraphNode[] nodeArray = objectGraphNodes.toArray(new ObjectGraphNode[objectGraphNodes.size()]);
 		return new ObjectGraph(parentGraph, nodeArray);
+	}
+
+	private static void collectObjectGraphNodes(List<ObjectGraphNode> objectGraphNodes, Object module) {
+		for (Method method : module.getClass().getMethods()) {
+			// find a matching method
+			if (!method.isAnnotationPresent(Provides.class)) {
+				continue;
+			}
+			// create key
+			Nullability nullability = Nullability.create(method);
+			Annotation qualifierAnnotation = Annotations.findAnnotationAnnotatedWith(Qualifier.class, method);
+			InjectSignature injectSignature = new InjectSignature(method.getReturnType(), nullability, qualifierAnnotation);
+
+			objectGraphNodes.add(new MethodGraphNode(injectSignature, module, method));
+		}
 	}
 }

@@ -1,4 +1,4 @@
-package spork.inject.internal.objectgraph.modulenode.providers;
+package spork.inject.internal.objectgraph.providers;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -6,18 +6,12 @@ import javax.inject.Provider;
 
 import spork.inject.Lazy;
 
-/**
- * Wrapper around ModuleMethodInvoker.
- * It only fetches the module dependency ones and returns the same (cached) value get()
- * is called consecutively.
- * @param <T> the return type
- */
-public class CachedProvider<T> implements Lazy<T> {
+public class LazyProvider<T> implements Lazy<T> {
 	@Nullable
 	private Provider<T> provider;
 	private T cachedInstance;
 
-	public CachedProvider(@Nonnull Provider<T> provider) {
+	public LazyProvider(@Nonnull Provider<T> provider) {
 		this.provider = provider;
 	}
 
