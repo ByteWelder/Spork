@@ -66,5 +66,6 @@ public class InjectMethodTests {
 		assertTrue(parent.argumentMethodCalled);
 		assertEquals(Integer.valueOf(1), parent.argumentMethodArgument);
 		assertTrue(parent.returnValueMethodCalled);
+		assertTrue(parent.noArgumentsCalled);
 	}
 }

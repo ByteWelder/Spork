@@ -35,10 +35,10 @@ public class BenchmarkRepeater implements Runnable {
 			workDuration += result.getWorkDuration();
 		}
 
-		workCount /= (double)benchmarkResults.length;
-		workDuration /= (double)benchmarkResults.length;
+		workCount /= (double) benchmarkResults.length;
+		workDuration /= (double) benchmarkResults.length;
 
-		return new BenchmarkResult(benchmarkResults[0].getBenchmarkClass(), (long)workDuration, (long)workCount);
+		return new BenchmarkResult(benchmarkResults[0].getBenchmarkClass(), (long) workDuration, (long) workCount);
 	}
 
 	public void printResultOverview() {

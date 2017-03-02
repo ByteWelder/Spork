@@ -39,6 +39,6 @@ public final class BenchmarkResult {
 				benchmarkClass.getSimpleName(),
 				duration,
 				workCount,
-				duration / (double)workCount);
+				duration / (double) workCount);
 	}
 }
