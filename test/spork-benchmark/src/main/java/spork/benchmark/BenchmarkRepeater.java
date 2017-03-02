@@ -2,9 +2,11 @@ package spork.benchmark;
 
 import java.util.Locale;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 public class BenchmarkRepeater implements Runnable {
-	private BenchmarkFactory benchmarkFactory;
-	private BenchmarkResult[] benchmarkResults;
+	private final BenchmarkFactory benchmarkFactory;
+	private final BenchmarkResult[] benchmarkResults;
 
 	public BenchmarkRepeater(BenchmarkFactory benchmarkFactory, int runCount) {
 		this.benchmarkFactory = benchmarkFactory;
@@ -22,6 +24,7 @@ public class BenchmarkRepeater implements Runnable {
 		}
 	}
 
+	@SuppressFBWarnings("EI_EXPOSE_REP")
 	public BenchmarkResult[] getBenchmarkResults() {
 		return benchmarkResults;
 	}

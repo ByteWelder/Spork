@@ -11,6 +11,7 @@ ext {
 	// Dependencies
 	junitVersion = '4.12'
 	mockitoVersion = '2.7.9'
+	findBugsVersion = '3.0.1'
 }
 
 subprojects {
