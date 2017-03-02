@@ -50,10 +50,19 @@ public final class ObjectGraph {
 
 	/**
 	 * A shortcut to Spork.bind(object, objectGraph).
-	 * This binds all known annotations for Spork including spork-inject.
+	 * This binds all known annotations for the shared Spork instance including spork-inject.
 	 * @param object the object to bind
 	 */
-	public void bind(Object object) {
+	public void inject(Object object) {
 		Spork.bind(object, this);
+	}
+
+	/**
+	 * A shortcut to spork.getBinder().bind(object, objectGraph)
+	 * This binds all known annotations for the given Spork instance including spork-inject.
+	 * @param object the object to bind
+	 */
+	public void inject(Object object, Spork spork) {
+		spork.getBinder().bind(object, this);
 	}
 }

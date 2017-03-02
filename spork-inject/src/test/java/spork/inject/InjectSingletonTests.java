@@ -5,7 +5,6 @@ import org.junit.Test;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import spork.Spork;
 import spork.inject.internal.objectgraph.ObjectGraph;
 import spork.inject.internal.objectgraph.ObjectGraphBuilder;
 
@@ -40,8 +39,8 @@ public class InjectSingletonTests {
 		parent.counter = -1;
 
 		// inject twice
-		Spork.bind(parent, graph);
-		Spork.bind(parent, graph);
+		graph.inject(parent);
+		graph.inject(parent);
 
 		// verify same value
 		assertEquals(Integer.valueOf(1), parent.counter);

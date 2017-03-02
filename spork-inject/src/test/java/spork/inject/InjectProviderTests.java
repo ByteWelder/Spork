@@ -5,8 +5,6 @@ import org.junit.Test;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-import spork.Spork;
-import spork.inject.internal.objectgraph.ObjectGraph;
 import spork.inject.internal.objectgraph.ObjectGraphBuilder;
 
 import static org.junit.Assert.assertEquals;
@@ -40,13 +38,12 @@ public class InjectProviderTests {
 		// given
 		Parent parent = new Parent();
 
-		ObjectGraph graph = new ObjectGraphBuilder()
-				.module(new Module())
-				.build();
-
-		Spork.bind(parent, graph);
-
 		// when
+		new ObjectGraphBuilder()
+				.module(new Module())
+				.build()
+				.inject(parent);
+
 		Integer first = parent.provider.get();
 		Integer second = parent.provider.get();
 

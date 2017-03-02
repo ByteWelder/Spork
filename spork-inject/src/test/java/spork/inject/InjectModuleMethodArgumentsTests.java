@@ -50,11 +50,10 @@ public class InjectModuleMethodArgumentsTests {
 	public void methodTest() {
 		Parent parent = new Parent();
 
-		ObjectGraph graph = new ObjectGraphBuilder()
+		new ObjectGraphBuilder()
 				.module(new Module())
-				.build();
-
-		Spork.bind(parent, graph);
+				.build()
+				.inject(parent);
 
 		assertEquals("12", parent.stringBuilder.toString());
 	}

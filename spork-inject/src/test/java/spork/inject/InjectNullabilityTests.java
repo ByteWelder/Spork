@@ -6,9 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
-import spork.Spork;
 import spork.BindException;
-import spork.inject.internal.objectgraph.ObjectGraph;
 import spork.inject.internal.objectgraph.ObjectGraphBuilder;
 
 import static org.junit.Assert.assertEquals;
@@ -48,11 +46,10 @@ public class InjectNullabilityTests {
 	public void injectNonnullWithNonnullParent() {
 		NonnullParent parent = new NonnullParent();
 
-		ObjectGraph graph = new ObjectGraphBuilder()
+		new ObjectGraphBuilder()
 				.module(new StringNonnullModule())
-				.build();
-
-		Spork.bind(parent, graph);
+				.build()
+				.inject(parent);
 
 		assertEquals("test", parent.string);
 	}
@@ -61,11 +58,10 @@ public class InjectNullabilityTests {
 	public void injectNonnullWithNullableParent() {
 		NullableParent parent = new NullableParent();
 
-		ObjectGraph graph = new ObjectGraphBuilder()
+		new ObjectGraphBuilder()
 				.module(new StringNonnullModule())
-				.build();
-
-		Spork.bind(parent, graph);
+				.build()
+				.inject(parent);
 
 		assertNull(parent.string);
 	}
@@ -74,11 +70,10 @@ public class InjectNullabilityTests {
 	public void injectNullWithNullableParent() {
 		NullableParent parent = new NullableParent();
 
-		ObjectGraph graph = new ObjectGraphBuilder()
+		new ObjectGraphBuilder()
 				.module(new StringNullableModule())
-				.build();
-
-		Spork.bind(parent, graph);
+				.build()
+				.inject(parent);
 
 		assertNull(parent.string);
 	}
@@ -87,10 +82,9 @@ public class InjectNullabilityTests {
 	public void injectNullWithNonnullParent() {
 		NonnullParent parent = new NonnullParent();
 
-		ObjectGraph graph = new ObjectGraphBuilder()
+		new ObjectGraphBuilder()
 				.module(new StringNullableModule())
-				.build();
-
-		Spork.bind(parent, graph);
+				.build()
+				.inject(parent);
 	}
 }

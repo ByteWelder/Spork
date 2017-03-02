@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 
-import spork.Spork;
 import spork.inject.Provides;
 import spork.inject.internal.objectgraph.ObjectGraph;
 import spork.inject.internal.objectgraph.ObjectGraphBuilder;
@@ -51,7 +50,7 @@ public class ObjectGraphParentTests {
 				.build();
 
 		Injectable injectable = new Injectable();
-		Spork.bind(injectable, childGraph);
+		childGraph.inject(injectable);
 
 		assertEquals("parent solely provides injection", "test", injectable.publicValue);
 		assertEquals("child provider should override parent", 2, injectable.overriddenInt);

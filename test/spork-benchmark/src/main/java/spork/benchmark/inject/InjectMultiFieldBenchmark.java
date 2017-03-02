@@ -57,15 +57,15 @@ public class InjectMultiFieldBenchmark extends Benchmark {
 		@Inject
 		Object e;
 
-		public void bind() {
-			spork.getBinder().bind(this, objectGraph);
+		public void inject() {
+			objectGraph.inject(this, spork);
 		}
 	}
 
 	@Override
 	protected long doWork() {
 		for (TestObject testObject : testObjects) {
-			testObject.bind();
+			testObject.inject();
 		}
 
 		return testObjects.length;

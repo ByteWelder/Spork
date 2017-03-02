@@ -45,15 +45,15 @@ public class InjectSingleFieldBenchmark extends Benchmark {
 		@Inject
 		Object a;
 
-		public void bind() {
-			spork.getBinder().bind(this, objectGraph);
+		public void inject() {
+			objectGraph.inject(this, spork);
 		}
 	}
 
 	@Override
 	protected long doWork() {
 		for (TestObject testObject : testObjects) {
-			testObject.bind();
+			testObject.inject();
 		}
 
 		return testObjects.length;

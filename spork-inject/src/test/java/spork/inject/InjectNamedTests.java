@@ -5,8 +5,6 @@ import org.junit.Test;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import spork.Spork;
-import spork.inject.internal.objectgraph.ObjectGraph;
 import spork.inject.internal.objectgraph.ObjectGraphBuilder;
 
 import static org.junit.Assert.assertEquals;
@@ -45,11 +43,10 @@ public class InjectNamedTests {
 	public void namedTest() {
 		Parent parent = new Parent();
 
-		ObjectGraph graph = new ObjectGraphBuilder()
+		new ObjectGraphBuilder()
 				.module(new Module())
-				.build();
-
-		Spork.bind(parent, graph);
+				.build()
+				.inject(parent);
 
 		assertEquals(1, parent.one);
 		assertEquals(2, parent.two);

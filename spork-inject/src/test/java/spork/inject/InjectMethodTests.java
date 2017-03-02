@@ -4,8 +4,6 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 
-import spork.Spork;
-import spork.inject.internal.objectgraph.ObjectGraph;
 import spork.inject.internal.objectgraph.ObjectGraphBuilder;
 
 import static org.junit.Assert.assertEquals;
@@ -54,12 +52,11 @@ public class InjectMethodTests {
 		// given
 		Parent parent = new Parent();
 
-		ObjectGraph graph = new ObjectGraphBuilder()
-				.module(new Module())
-				.build();
-
 		// when
-		Spork.bind(parent, graph);
+		new ObjectGraphBuilder()
+				.module(new Module())
+				.build()
+				.inject(parent);
 
 		// then
 		assertTrue(Parent.staticMethodCalled);
