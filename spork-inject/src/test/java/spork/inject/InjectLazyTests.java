@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import spork.Spork;
 import spork.inject.internal.objectgraph.ObjectGraph;
+import spork.inject.internal.objectgraph.ObjectGraphBuilder;
 
 import static org.junit.Assert.assertEquals;
 
@@ -38,7 +39,7 @@ public class InjectLazyTests {
 		// given
 		Parent parent = new Parent();
 
-		ObjectGraph graph = new ObjectGraph.Builder()
+		ObjectGraph graph = new ObjectGraphBuilder()
 				.module(new Module())
 				.build();
 

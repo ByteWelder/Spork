@@ -2,25 +2,22 @@ package spork.inject.internal.objectgraph;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Provider;
 import javax.inject.Qualifier;
 
+import spork.Spork;
 import spork.inject.internal.InjectSignature;
 import spork.inject.internal.lang.Annotations;
 import spork.inject.internal.lang.Nullability;
-import spork.inject.internal.objectgraph.modulenode.ModuleNode;
-import spork.inject.internal.objectgraph.modulenode.InstanceCache;
 
 public final class ObjectGraph {
 	@Nullable
 	private final ObjectGraph parentGraph;
 	private final ObjectGraphNode[] nodes;
 
-	private ObjectGraph(@Nullable ObjectGraph parentGraph, ObjectGraphNode[] nodes) {
+	ObjectGraph(@Nullable ObjectGraph parentGraph, ObjectGraphNode[] nodes) {
 		this.parentGraph = parentGraph;
 		this.nodes = nodes;
 	}
@@ -51,28 +48,12 @@ public final class ObjectGraph {
 		}
 	}
 
-	public static class Builder {
-		@Nullable
-		private final ObjectGraph parentGraph;
-		private final ArrayList<ObjectGraphNode> nodeList = new ArrayList<>(2);
-		private final InstanceCache instanceCache = new InstanceCache();
-
-		public Builder() {
-			this.parentGraph = null;
-		}
-
-		public Builder(@Nonnull ObjectGraph parentGraph) {
-			this.parentGraph = parentGraph;
-		}
-
-		public Builder module(Object module) {
-			nodeList.add(new ModuleNode(module, instanceCache));
-			return this;
-		}
-
-		public ObjectGraph build() {
-			ObjectGraphNode[] nodeArray = nodeList.toArray(new ObjectGraphNode[nodeList.size()]);
-			return new ObjectGraph(parentGraph, nodeArray);
-		}
+	/**
+	 * A shortcut to Spork.bind(object, objectGraph).
+	 * This binds all known annotations for Spork including spork-inject.
+	 * @param object the object to bind
+	 */
+	public void bind(Object object) {
+		Spork.bind(object, this);
 	}
 }

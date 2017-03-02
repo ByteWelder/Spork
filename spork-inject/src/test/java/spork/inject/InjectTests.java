@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import spork.Spork;
 import spork.BindException;
 import spork.inject.internal.objectgraph.ObjectGraph;
+import spork.inject.internal.objectgraph.ObjectGraphBuilder;
 
 import static org.junit.Assert.assertEquals;
 
@@ -38,7 +39,7 @@ public class InjectTests {
 		// normal case with a class-bound and interface-bound field
 		Parent parent = new Parent();
 
-		ObjectGraph graph = new ObjectGraph.Builder()
+		ObjectGraph graph = new ObjectGraphBuilder()
 				.module(new StringModule())
 				.module(new IntegerModule())
 				.build();

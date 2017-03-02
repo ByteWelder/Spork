@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import spork.Spork;
 import spork.inject.Provides;
 import spork.inject.internal.objectgraph.ObjectGraph;
+import spork.inject.internal.objectgraph.ObjectGraphBuilder;
 
 import static org.junit.Assert.assertEquals;
 
@@ -41,11 +42,11 @@ public class ObjectGraphParentTests {
 
 	@Test
 	public void testObjectGraphParent() {
-		ObjectGraph parentGraph = new ObjectGraph.Builder()
+		ObjectGraph parentGraph = new ObjectGraphBuilder()
 				.module(new ParentModule())
 				.build();
 
-		ObjectGraph childGraph = new ObjectGraph.Builder(parentGraph)
+		ObjectGraph childGraph = new ObjectGraphBuilder(parentGraph)
 				.module(new ChildModule())
 				.build();
 

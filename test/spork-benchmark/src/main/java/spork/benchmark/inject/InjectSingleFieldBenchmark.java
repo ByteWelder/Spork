@@ -6,12 +6,13 @@ import spork.benchmark.Benchmark;
 import spork.Spork;
 import spork.inject.Provides;
 import spork.inject.internal.objectgraph.ObjectGraph;
+import spork.inject.internal.objectgraph.ObjectGraphBuilder;
 
 public class InjectSingleFieldBenchmark extends Benchmark {
 	private final TestObject[] testObjects;
 
 	public InjectSingleFieldBenchmark(Spork spork, int iterationCount) {
-		ObjectGraph graph = new ObjectGraph.Builder()
+		ObjectGraph graph = new ObjectGraphBuilder()
 				.module(new Module())
 				.build();
 
