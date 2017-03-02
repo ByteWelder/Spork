@@ -1,5 +1,7 @@
 package spork.internal;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 import spork.interfaces.BinderRegistry;
@@ -8,46 +10,58 @@ import spork.interfaces.MethodBinder;
 import spork.interfaces.TypeBinder;
 
 /**
- * The BinderManager is the main internal entry point for storing and retrieving
- * instances of FieldBinder/MethodBinder/TypeBinder.
- *
- * It also has a registration listener mechanism that allows (for example) a caching mechanism to observe new registrations.
+ * Holds a reference of all field, method and type binder instances.
  */
-public interface BinderManager extends BinderRegistry {
+public class BinderManager implements BinderRegistry {
+	private final List<FieldBinder<?>> fieldBinders = new ArrayList<>();
+	private final List<MethodBinder<?>> methodBinders = new ArrayList<>();
+	private final List<TypeBinder<?>> typeBinders = new ArrayList<>();
+	private final BinderCache binderCache;
 
-	/**
-	 * Gets notified of new binder registrations.
-	 */
-	interface RegistrationListener {
-		void onRegisterFieldBinder(FieldBinder<?> fieldBinder);
-		void onRegisterMethodBinder(MethodBinder<?> methodBinder);
-		void onRegisterTypeBinder(TypeBinder<?> typeBinder);
+	public BinderManager() {
+		this.binderCache = new BinderCache(this);
+	}
+
+	@Override
+	public void register(FieldBinder<?> fieldBinder) {
+		fieldBinders.add(fieldBinder);
+		binderCache.register(fieldBinder);
+	}
+
+	@Override
+	public void register(MethodBinder<?> methodBinder) {
+		methodBinders.add(methodBinder);
+		binderCache.register(methodBinder);
+	}
+
+	@Override
+	public void register(TypeBinder<?> typeBinder) {
+		typeBinders.add(typeBinder);
+		binderCache.register(typeBinder);
 	}
 
 	/**
 	 * @return all registered FieldBinder instances
 	 */
-	List<FieldBinder<?>> getFieldBinders();
+	List<FieldBinder<?>> getFieldBinders() {
+		return fieldBinders;
+	}
 
 	/**
 	 * @return all registered MethodBinder instances
 	 */
-	List<MethodBinder<?>> getMethodBinders();
+	List<MethodBinder<?>> getMethodBinders() {
+		return methodBinders;
+	}
 
 	/**
 	 * @return all registered TypeBinder instances
 	 */
-	List<TypeBinder<?>> getTypeBinders();
+	List<TypeBinder<?>> getTypeBinders() {
+		return typeBinders;
+	}
 
-	/**
-	 * Add a registration listener
-	 * @param registrationListener the listener
-	 */
-	void addRegistrationListener(RegistrationListener registrationListener);
-
-	/**
-	 * Remove a registration listener
-	 * @param registrationListener the listener
-	 */
-	void removeRegistrationListener(RegistrationListener registrationListener);
+	public BinderCache getBinderCache() {
+		return binderCache;
+	}
 }

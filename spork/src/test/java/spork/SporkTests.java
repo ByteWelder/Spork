@@ -5,7 +5,7 @@ import org.junit.Test;
 import spork.interfaces.Binder;
 import spork.interfaces.BinderRegistry;
 import spork.internal.BinderImpl;
-import spork.internal.BinderManagerImpl;
+import spork.internal.BinderManager;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -16,7 +16,7 @@ public class SporkTests {
 	public void defaultConstructorTest() {
 		Spork spork = new Spork();
 
-		assertTrue(spork.getBinderRegistry() instanceof BinderManagerImpl);
+		assertTrue(spork.getBinderRegistry() instanceof BinderManager);
 		assertTrue(spork.getBinder() instanceof BinderImpl);
 	}
 
@@ -34,7 +34,7 @@ public class SporkTests {
 	public void sharedInstanceTest() {
 		Spork spork = Spork.shared();
 
-		assertTrue(spork.getBinderRegistry() instanceof BinderManagerImpl);
+		assertTrue(spork.getBinderRegistry() instanceof BinderManager);
 		assertTrue(spork.getBinder() instanceof BinderImpl);
 	}
 }

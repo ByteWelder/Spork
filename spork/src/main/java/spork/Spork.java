@@ -4,15 +4,9 @@ import javax.annotation.Nullable;
 
 import spork.interfaces.Binder;
 import spork.interfaces.BinderRegistry;
-import spork.interfaces.FieldBinder;
-import spork.interfaces.MethodBinder;
 import spork.interfaces.SporkExtension;
-import spork.interfaces.TypeBinder;
-import spork.internal.BinderCache;
-import spork.internal.BinderCacheImpl;
 import spork.internal.BinderImpl;
 import spork.internal.BinderManager;
-import spork.internal.BinderManagerImpl;
 
 /**
  * Main class to access Spork functionality.
@@ -25,6 +19,7 @@ public class Spork {
 	private static Spork shared;
 
 	/**
+	 * Main constructor.
 	 * Create a new instance of Spork with custom BinderRegistry and Binder implementations.
 	 *
 	 * @param binderRegistry .
@@ -40,30 +35,9 @@ public class Spork {
 	 * Spork.shared() should be used for normal usage.
 	 */
 	public Spork() {
-		// create all instances
-		BinderManager binderManager = new BinderManagerImpl();
-		final BinderCache binderCache = new BinderCacheImpl(binderManager);
-
+		BinderManager binderManager = new BinderManager();
 		binderRegistry = binderManager;
-		binder = new BinderImpl(binderCache);
-
-		// ensure the cache is updated when a new type is registered
-		binderManager.addRegistrationListener(new BinderManager.RegistrationListener() {
-			@Override
-			public void onRegisterFieldBinder(FieldBinder<?> fieldBinder) {
-				binderCache.register(fieldBinder);
-			}
-
-			@Override
-			public void onRegisterMethodBinder(MethodBinder<?> methodBinder) {
-				binderCache.register(methodBinder);
-			}
-
-			@Override
-			public void onRegisterTypeBinder(TypeBinder<?> typeBinder) {
-				binderCache.register(typeBinder);
-			}
-		});
+		binder = new BinderImpl(binderManager.getBinderCache());
 	}
 
 	/**
