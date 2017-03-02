@@ -22,7 +22,7 @@ public class Spork {
 	private final Binder binder;
 
 	@Nullable
-	private static Spork sharedInstance;
+	private static Spork shared;
 
 	/**
 	 * Create a new instance of Spork with custom BinderRegistry and Binder implementations.
@@ -37,7 +37,7 @@ public class Spork {
 
 	/**
 	 * Creates a new instances of Spork with the default BinderManager, Binder and BinderCache.
-	 * Spork.sharedInstance() should be used for normal usage.
+	 * Spork.shared() should be used for normal usage.
 	 */
 	public Spork() {
 		// create all instances
@@ -118,29 +118,29 @@ public class Spork {
 	 *
 	 * @return a shared instance of Spork (creates one if one hasn't been created yet)
 	 */
-	public static Spork sharedInstance() {
-		if (sharedInstance == null) {
+	public static Spork shared() {
+		if (shared == null) {
 			// Assign locally to avoid double initialization of the same instance
 			Spork spork = new Spork();
 			// Assign to shared instance to make the window smaller that another thread can also
 			// create a new instance and assign it at the same time
-			sharedInstance = spork;
+			shared = spork;
 			// Initialize through the local variable to avoid double initialization by another thread
 			spork.initializeExtension("spork.inject.SporkInject");
 			spork.initializeExtension("spork.android.SporkAndroid");
 		}
 
-		return sharedInstance;
+		return shared;
 	}
 
 	/**
-	 * A shortcut to Spork.sharedInstance().getBinder().bind(object, modules)
+	 * A shortcut to Spork.shared().getBinder().bind(object, modules)
 	 *
 	 * @param object the object to bind
 	 * @param parameters an optional array of non-null module instances
 	 */
 	public static void bind(Object object, Object... parameters) {
-		sharedInstance().getBinder().bind(object, parameters);
+		shared().getBinder().bind(object, parameters);
 	}
 
 	// endregion

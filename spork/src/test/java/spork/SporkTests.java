@@ -32,7 +32,7 @@ public class SporkTests {
 
 	@Test
 	public void sharedInstanceTest() {
-		Spork spork = Spork.sharedInstance();
+		Spork spork = Spork.shared();
 
 		assertTrue(spork.getBinderRegistry() instanceof BinderManagerImpl);
 		assertTrue(spork.getBinder() instanceof BinderImpl);
