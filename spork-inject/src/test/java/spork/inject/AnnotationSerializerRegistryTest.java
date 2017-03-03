@@ -7,12 +7,12 @@ import java.lang.annotation.Annotation;
 import javax.inject.Named;
 import javax.inject.Qualifier;
 
-public class AnnotationSerializersTest {
+public class AnnotationSerializerRegistryTest {
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void testUnregistered() {
 		Annotation annotation = unregisteredAnnotation();
-		AnnotationSerializers.serialize(annotation);
+		AnnotationSerializerRegistry.serialize(annotation);
 	}
 
 	private static Annotation unregisteredAnnotation() {

@@ -14,10 +14,10 @@ import java.util.Map;
  *  - Scope annotations are annotations annotated with {@link javax.inject.Scope}
  *    An example of a qualifier annotation is {@link javax.inject.Singleton}.
  */
-public final class AnnotationSerializers {
+public final class AnnotationSerializerRegistry {
 	private static final Map<Class<? extends Annotation>, AnnotationSerializer> serializerMap = new HashMap<>(1);
 
-	private AnnotationSerializers() {
+	private AnnotationSerializerRegistry() {
 	}
 
 	/**
@@ -42,7 +42,7 @@ public final class AnnotationSerializers {
 		AnnotationSerializer<T> serializer = (AnnotationSerializer<T>) serializerMap.get(annotation.annotationType());
 
 		if (serializer == null) {
-			throw new UnsupportedOperationException("Cannot serialize " + annotation.annotationType().getName() + ". Make sure to register a Serializer through AnnotationSerializers.register() first.");
+			throw new UnsupportedOperationException("Cannot serialize " + annotation.annotationType().getName() + ". Make sure to register a Serializer through AnnotationSerializerRegistry.register() first.");
 		}
 
 		return serializer.serialize(annotation);

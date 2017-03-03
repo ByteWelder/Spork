@@ -14,7 +14,7 @@ public class ClassTests {
 	@Test
 	public void test() throws Exception {
 		ClassAsserts.assertUtilityClassWellDefined(Reflection.class);
-		ClassAsserts.assertUtilityClassWellDefined(AnnotationSerializers.class);
+		ClassAsserts.assertUtilityClassWellDefined(AnnotationSerializerRegistry.class);
 		ClassAsserts.assertUtilityClassWellDefined(ObjectGraphs.class);
 		ClassAsserts.assertUtilityClassWellDefined(Annotations.class);
 	}

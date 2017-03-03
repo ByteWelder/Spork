@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 import javax.inject.Provider;
 import javax.inject.Qualifier;
 
-import spork.inject.AnnotationSerializers;
+import spork.inject.AnnotationSerializerRegistry;
 import spork.inject.internal.lang.Annotations;
 import spork.inject.internal.lang.Nullability;
 
@@ -32,12 +32,12 @@ public final class InjectSignature {
 	public InjectSignature(Class<?> targetType, Nullability nullability, @Nullable Annotation qualifierAnnotation) {
 		this.targetType = targetType;
 		this.nullability = nullability;
-		this.qualifier = (qualifierAnnotation != null) ? AnnotationSerializers.serialize(qualifierAnnotation) : null;
+		this.qualifier = (qualifierAnnotation != null) ? AnnotationSerializerRegistry.serialize(qualifierAnnotation) : null;
 	}
 
 	public InjectSignature(Class<?> targetTypeOrProvider, Annotation[] annotations, Type genericParameterType) {
 		Annotation qualifierAnnotation = Annotations.findAnnotationAnnotatedWith(Qualifier.class, annotations);
-		this.qualifier = (qualifierAnnotation != null) ? AnnotationSerializers.serialize(qualifierAnnotation) : null;
+		this.qualifier = (qualifierAnnotation != null) ? AnnotationSerializerRegistry.serialize(qualifierAnnotation) : null;
 		this.nullability = Nullability.create(annotations);
 		this.targetType = (targetTypeOrProvider == Provider.class) ? (Class<?>) ((ParameterizedType) genericParameterType).getActualTypeArguments()[0] : targetTypeOrProvider;
 	}

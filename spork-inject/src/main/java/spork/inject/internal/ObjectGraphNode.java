@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Scope;
 
 import spork.BindException;
-import spork.inject.AnnotationSerializers;
+import spork.inject.AnnotationSerializerRegistry;
 import spork.inject.internal.lang.Annotations;
 
 /**
@@ -67,7 +67,7 @@ public final class ObjectGraphNode {
 	private static String findScopeId(Method method) {
 		Annotation annotation = Annotations.findAnnotationAnnotatedWith(Scope.class, method);
 		if (annotation != null) {
-			return AnnotationSerializers.serialize(annotation);
+			return AnnotationSerializerRegistry.serialize(annotation);
 		} else {
 			return null;
 		}

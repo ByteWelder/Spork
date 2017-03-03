@@ -14,8 +14,8 @@ import spork.interfaces.SporkExtension;
 public class SporkInject implements SporkExtension {
 
 	static {
-		AnnotationSerializers.register(Named.class, new NamedSerializer());
-		AnnotationSerializers.register(Singleton.class, new SingletonSerializer());
+		AnnotationSerializerRegistry.register(Named.class, new NamedSerializer());
+		AnnotationSerializerRegistry.register(Singleton.class, new SingletonSerializer());
 	}
 
 	@Override
