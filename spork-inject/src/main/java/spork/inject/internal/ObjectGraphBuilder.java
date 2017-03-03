@@ -3,7 +3,9 @@ package spork.inject.internal;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -16,7 +18,7 @@ import spork.inject.internal.lang.Nullability;
 public class ObjectGraphBuilder {
 	@Nullable
 	private final ObjectGraph parentGraph;
-	private final ArrayList<Object> modules = new ArrayList<>(2);
+	private final ArrayList<Object> modules = new ArrayList<>(4);
 
 	public ObjectGraphBuilder() {
 		this.parentGraph = null;
@@ -32,15 +34,19 @@ public class ObjectGraphBuilder {
 	}
 
 	public ObjectGraph build() {
-		List<ObjectGraphNode> objectGraphNodes = new ArrayList<>();
+		List<ObjectGraphNode> nodes = new ArrayList<>();
 
 		// collect ObjectGraphNode instances for each module (method)
 		for (Object module : modules) {
-			 collectObjectGraphNodes(objectGraphNodes, module);
+			 collectObjectGraphNodes(nodes, module);
 		}
 
-		ObjectGraphNode[] nodeArray = objectGraphNodes.toArray(new ObjectGraphNode[objectGraphNodes.size()]);
-		return new ObjectGraph(parentGraph, nodeArray);
+		Map<InjectSignature, ObjectGraphNode> nodeMap = new HashMap<>(nodes.size());
+		for (ObjectGraphNode node : nodes) {
+			nodeMap.put(node.getInjectSignature(), node);
+		}
+
+		return new ObjectGraph(parentGraph, nodeMap);
 	}
 
 	private static void collectObjectGraphNodes(List<ObjectGraphNode> objectGraphNodes, Object module) {

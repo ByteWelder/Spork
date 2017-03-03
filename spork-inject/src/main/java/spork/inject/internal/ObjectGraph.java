@@ -2,7 +2,7 @@ package spork.inject.internal;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.reflect.Type;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 import javax.inject.Provider;
@@ -17,12 +17,12 @@ import spork.inject.internal.providers.InstanceProvider;
 public final class ObjectGraph {
 	@Nullable
 	private final ObjectGraph parentGraph;
-	private final ObjectGraphNode[] nodes;
+	private final Map<InjectSignature, ObjectGraphNode> nodeMap;
 	private final InstanceCache instanceCache = new InstanceCache();
 
-	ObjectGraph(@Nullable ObjectGraph parentGraph, ObjectGraphNode[] nodes) {
+	ObjectGraph(@Nullable ObjectGraph parentGraph, Map<InjectSignature, ObjectGraphNode> nodeMap) {
 		this.parentGraph = parentGraph;
-		this.nodes = nodes;
+		this.nodeMap = nodeMap;
 	}
 
 	@Nullable
@@ -36,7 +36,7 @@ public final class ObjectGraph {
 	@Nullable
 	@SuppressWarnings("unchecked")
 	<T> Provider<T> findProvider(InjectSignature injectSignature) {
-		spork.inject.internal.ObjectGraphNode node = findNode(injectSignature);
+		ObjectGraphNode node = findNode(injectSignature);
 
 		if (node == null) {
 			return null;
@@ -55,46 +55,11 @@ public final class ObjectGraph {
 	}
 
 	@Nullable
-	Object[] getParameters(Class<?>[] parameterTypes, Annotation[][] parameterAnnotations, Type[] genericParameterTypes) throws spork.inject.internal.ObjectGraphException {
-		int parameterCount = parameterTypes.length;
-		if (parameterCount == 0) {
-			return null;
-		}
-
-		Object[] parameterInstances = new Object[parameterCount];
-
-		for (int i = 0; i < parameterCount; ++i) {
-			// fetch all relevant argument data
-			Class<?> parameterClass = parameterTypes[i];
-			Annotation[] annotations = parameterAnnotations[i];
-			Type genericParameterType = genericParameterTypes[i];
-
-			// retrieve provider
-			InjectSignature injectSignature = new InjectSignature(parameterClass, annotations, genericParameterType);
-			Provider provider = findProvider(injectSignature);
-
-			if (provider == null) {
-				throw new spork.inject.internal.ObjectGraphException("invocation argument not found: " + injectSignature.toString()); // TODO: use different exception
-			}
-
-			boolean parameterIsProvider = (parameterClass == Provider.class);
-
-			// store provider or instance
-			parameterInstances[i] = parameterIsProvider ? provider : provider.get();
-		}
-
-		return parameterInstances;
-	}
-
-	@Nullable
-	private spork.inject.internal.ObjectGraphNode findNode(InjectSignature injectSignature) {
-		for (ObjectGraphNode node : nodes) {
-			if (node.getInjectSignature().equals(injectSignature)) {
-				return node;
-			}
-		}
-
-		if (parentGraph != null) {
+	private ObjectGraphNode findNode(InjectSignature injectSignature) {
+		ObjectGraphNode node = nodeMap.get(injectSignature);
+		if (node != null) {
+			return node;
+		} else if (parentGraph != null) {
 			return parentGraph.findNode(injectSignature);
 		} else {
 			return null;

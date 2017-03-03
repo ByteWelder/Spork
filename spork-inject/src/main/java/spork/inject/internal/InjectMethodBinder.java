@@ -24,7 +24,7 @@ public class InjectMethodBinder implements MethodBinder<Inject> {
 
 		try {
 			method.setAccessible(true);
-			Object[] invocationParameters = objectGraph.getParameters(method.getParameterTypes(), method.getParameterAnnotations(), method.getGenericParameterTypes());
+			Object[] invocationParameters = ObjectGraphs.getInjectableMethodParameters(objectGraph, method);
 			if (invocationParameters != null) {
 				method.invoke(object, invocationParameters);
 			} else {

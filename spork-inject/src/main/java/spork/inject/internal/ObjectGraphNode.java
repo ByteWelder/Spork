@@ -57,7 +57,7 @@ public final class ObjectGraphNode {
 	@Nullable
 	Object[] collectParameters(ObjectGraph objectGraph) {
 		try {
-			return objectGraph.getParameters(method.getParameterTypes(), method.getParameterAnnotations(), method.getGenericParameterTypes());
+			return ObjectGraphs.getInjectableMethodParameters(objectGraph, method);
 		} catch (spork.inject.internal.ObjectGraphException e) {
 			String message = "failed to call " + method.getDeclaringClass().getName() + "." + method.getName() + "(): " + e.getMessage();
 			throw new BindException(Inject.class, method.getDeclaringClass(), injectSignature.getType(), message);
