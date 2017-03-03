@@ -26,31 +26,31 @@ public final class InjectSignature {
 	/**
 	 *
 	 * @param targetType the real target type (not a Provider)
-	 * @param nullability
-	 * @param qualifierAnnotation
+	 * @param nullability .
+	 * @param qualifierAnnotation .
 	 */
-	public InjectSignature(Class<?> targetType, Nullability nullability, @Nullable Annotation qualifierAnnotation) {
+	InjectSignature(Class<?> targetType, Nullability nullability, @Nullable Annotation qualifierAnnotation) {
 		this.targetType = targetType;
 		this.nullability = nullability;
 		this.qualifier = (qualifierAnnotation != null) ? AnnotationSerializerRegistry.serialize(qualifierAnnotation) : null;
 	}
 
-	public InjectSignature(Class<?> targetTypeOrProvider, Annotation[] annotations, Type genericParameterType) {
+	InjectSignature(Class<?> targetTypeOrProvider, Annotation[] annotations, Type genericParameterType) {
 		Annotation qualifierAnnotation = Annotations.findAnnotationAnnotatedWith(Qualifier.class, annotations);
 		this.qualifier = (qualifierAnnotation != null) ? AnnotationSerializerRegistry.serialize(qualifierAnnotation) : null;
 		this.nullability = Nullability.create(annotations);
 		this.targetType = (targetTypeOrProvider == Provider.class) ? (Class<?>) ((ParameterizedType) genericParameterType).getActualTypeArguments()[0] : targetTypeOrProvider;
 	}
 
-	public Class<?> getType() {
+	Class<?> getType() {
 		return targetType;
 	}
 
-	public Nullability getNullability() {
+	Nullability getNullability() {
 		return nullability;
 	}
 
-	public boolean hasQualifier() {
+	boolean hasQualifier() {
 		return qualifier != null;
 	}
 
