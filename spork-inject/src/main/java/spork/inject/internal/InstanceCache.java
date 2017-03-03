@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
  *   scope identifier -&gt; injection signature -&gt; instance
  *
  */
-public class InstanceCache {
+public final class InstanceCache {
 	private final Map<String, Map<InjectSignature, Object>> scopeMap = new HashMap<>();
 
 	public void put(String scope, InjectSignature injectSignature, Object instance) {
