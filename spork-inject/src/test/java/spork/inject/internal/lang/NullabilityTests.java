@@ -1,4 +1,4 @@
-package spork.inject.lang;
+package spork.inject.internal.lang;
 
 import org.junit.Test;
 
@@ -8,8 +8,6 @@ import java.lang.reflect.Method;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import spork.inject.internal.lang.Nullability;
 
 import static org.junit.Assert.assertEquals;
 

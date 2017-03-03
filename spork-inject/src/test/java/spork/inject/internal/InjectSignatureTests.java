@@ -1,4 +1,4 @@
-package spork.inject;
+package spork.inject.internal;
 
 import org.junit.Test;
 

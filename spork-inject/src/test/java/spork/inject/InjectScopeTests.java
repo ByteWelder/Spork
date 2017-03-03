@@ -1,4 +1,4 @@
-package spork.inject.lang;
+package spork.inject;
 
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-public class AnnotationsTests {
+public class InjectScopeTests {
 	public static class Testable {
 		@Singleton
 		public Object scopedField;

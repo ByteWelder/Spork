@@ -1,4 +1,4 @@
-package spork.inject;
+package spork.inject.internal;
 
 import org.junit.Test;
 
@@ -6,6 +6,8 @@ import java.lang.annotation.Annotation;
 
 import javax.inject.Named;
 import javax.inject.Qualifier;
+
+import spork.inject.AnnotationSerializerRegistry;
 
 public class AnnotationSerializerRegistryTest {
 
