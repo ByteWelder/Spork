@@ -3,6 +3,7 @@ package spork.inject;
 import org.junit.Test;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 import spork.inject.internal.ObjectGraphBuilder;
 
@@ -25,7 +26,8 @@ public class InjectLazyTests {
 
 	private static class Parent {
 		@Inject
-		Lazy<Integer> provider;
+		@Lazy
+		Provider<Integer> provider;
 	}
 
 	/**

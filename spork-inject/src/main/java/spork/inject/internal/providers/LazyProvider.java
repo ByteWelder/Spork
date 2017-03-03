@@ -4,9 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Provider;
 
-import spork.inject.Lazy;
-
-public class LazyProvider<T> implements Lazy<T> {
+public class LazyProvider<T> implements Provider<T> {
 	@Nullable
 	private Provider<T> provider;
 	private T cachedInstance;

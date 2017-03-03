@@ -1,6 +1,15 @@
 package spork.inject;
 
-import javax.inject.Provider;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public interface Lazy<T> extends Provider<T> {
+/**
+ * Annotation for a Provider that is injected lazily.
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.FIELD})
+public @interface Lazy {
 }
+

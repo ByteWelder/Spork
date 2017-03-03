@@ -5,8 +5,6 @@ import java.lang.reflect.Method;
 import javax.annotation.Nullable;
 import javax.inject.Provider;
 
-import spork.inject.Lazy;
-
 public final class ObjectGraphs {
 	private ObjectGraphs() {
 	}
@@ -45,8 +43,7 @@ public final class ObjectGraphs {
 				throw new ObjectGraphException("invocation argument not found: " + injectSignature.toString());
 			}
 
-			boolean parameterIsProvider = (parameterClass == Provider.class)
-					|| (parameterClass == Lazy.class);
+			boolean parameterIsProvider = (parameterClass == Provider.class);
 
 			// store provider or instance
 			parameterInstances[i] = parameterIsProvider ? provider : provider.get();
