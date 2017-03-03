@@ -12,7 +12,10 @@ import spork.BindException;
 import spork.inject.AnnotationSerializers;
 import spork.inject.internal.lang.Annotations;
 
-public class ObjectGraphNode {
+/**
+ * A node represents an injection point (@Provides method) in a module.
+ */
+public final class ObjectGraphNode {
 	private final InjectSignature injectSignature;
 	private final Object parent;
 	private final Method method;
