@@ -15,15 +15,22 @@ import spork.inject.internal.lang.Annotations;
 import spork.inject.internal.lang.Nullability;
 
 class InjectSignatureCache {
+	/**
+	 * Map values may be null.
+	 */
 	private final Map<Field, InjectSignature> fieldInjectSignatureMap;
+
+	/**
+	 * Map values may be null.
+	 */
 	private final Map<Method, InjectSignature[]> methodInjectSignatureMap;
 
-	public InjectSignatureCache(Map<Field, InjectSignature> fieldInjectSignatureMap, Map<Method, InjectSignature[]> methodInjectSignatureMap) {
+	InjectSignatureCache(Map<Field, InjectSignature> fieldInjectSignatureMap, Map<Method, InjectSignature[]> methodInjectSignatureMap) {
 		this.fieldInjectSignatureMap = fieldInjectSignatureMap;
 		this.methodInjectSignatureMap = methodInjectSignatureMap;
 	}
 
-	public InjectSignatureCache() {
+	InjectSignatureCache() {
 		this(new HashMap<Field, InjectSignature>(), new HashMap<Method, InjectSignature[]>());
 	}
 
@@ -57,9 +64,12 @@ class InjectSignatureCache {
 	// region Methods
 
 	/**
-	 * Get the InjectSignature for a specific Method parameter.
+	 * Get the InjectSignature instanaces for the given Method's parameters.
 	 * It is either retrieved from cache or otherwise created, cached and returned.
+	 * @param method the method to analyze
+	 * @return an array of 1 or more InjectSignature instances or null (never an empty array!)
 	 */
+	@Nullable
 	InjectSignature[] getInjectSignatures(Method method) {
 		if (methodInjectSignatureMap.containsKey(method)) {
 			return methodInjectSignatureMap.get(method);
@@ -68,6 +78,11 @@ class InjectSignatureCache {
 		}
 	}
 
+	/**
+	 * Cache the InjectSignature instances for the given Method's parameters
+	 * @param method the method to analyze
+	 * @return an array of 1 or more InjectSignature instances or null (never an empty array!)
+	 */
 	@Nullable
 	private InjectSignature[] cacheInjectSignatures(Method method) {
 		if (method.getParameterTypes().length > 0) {

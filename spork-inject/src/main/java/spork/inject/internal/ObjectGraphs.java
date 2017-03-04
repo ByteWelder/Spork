@@ -28,9 +28,9 @@ public final class ObjectGraphs {
 			return null;
 		}
 
+		// The following never returns null as there is guaranteed at least 1 method parameter
 		InjectSignature[] injectSignatures = objectGraph.getInjectSignatureCache().getInjectSignatures(method);
-
-		if (injectSignatures.length == 0) {
+		if (injectSignatures == null) {
 			return null;
 		}
 
