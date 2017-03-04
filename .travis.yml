@@ -1,9 +1,12 @@
 language: android
+sudo: false
 android:
   components:
+    - tools
+    - platform-tools
+    - extra-android-m2repository
+    - extra-google-android-support
     - build-tools-25.0.2
     - android-25
-    - extra
-jdk:
-  - oraclejdk8
+jdk: oraclejdk8
 script: ./gradlew check
