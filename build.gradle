@@ -14,19 +14,21 @@ ext {
 	findBugsVersion = '3.0.1'
 }
 
-subprojects {
-	buildscript {
-		repositories {
-			jcenter()
-		}
-
-		dependencies {
-			classpath 'com.android.tools.build:gradle:2.3.0'
-			classpath 'org.jacoco:org.jacoco.core:0.7.7.201606060606'
-			classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.1'
-			classpath 'com.novoda:bintray-release:0.4.0'
-		}
+buildscript {
+	repositories {
+		jcenter()
 	}
+
+	dependencies {
+		classpath 'com.android.tools.build:gradle:2.3.0'
+		classpath 'org.jacoco:org.jacoco.core:0.7.7.201606060606'
+		classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.1'
+		classpath 'com.novoda:bintray-release:0.4.0'
+		classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.1'
+	}
+}
+
+subprojects {
 
 	repositories {
 		mavenLocal()
@@ -34,6 +36,7 @@ subprojects {
 	}
 
 	apply plugin: 'jacoco'
+	apply plugin: 'com.github.kt3k.coveralls'
 	apply plugin: 'checkstyle'
 	apply plugin: 'findbugs'
 	apply plugin: 'pmd'
@@ -61,5 +64,9 @@ subprojects {
 			xml.enabled false
 			html.enabled true
 		}
+	}
+
+	coveralls {
+		jacocoReportPath = "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
 	}
 }
