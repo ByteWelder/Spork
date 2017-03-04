@@ -5,6 +5,7 @@ import org.junit.Test;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
+import spork.BindException;
 import spork.inject.internal.ObjectGraphBuilder;
 
 import static org.junit.Assert.assertEquals;
@@ -30,16 +31,19 @@ public class InjectLazyTests {
 		Provider<Integer> provider;
 	}
 
+	private static class FaultyFieldParent {
+		@Lazy
+		Integer noProvider;
+	}
+
 	/**
 	 * Test that when Provider.get() is called multiple times,
 	 * the same instance is returned every time.
 	 */
 	@Test
 	public void multipleGet() {
-		// given
 		Parent parent = new Parent();
 
-		// when
 		new ObjectGraphBuilder()
 				.module(new Module())
 				.build()
@@ -48,8 +52,17 @@ public class InjectLazyTests {
 		Integer first = parent.provider.get();
 		Integer second = parent.provider.get();
 
-		// then
 		assertEquals((Integer) 1, first);
 		assertEquals((Integer) 1, second);
+	}
+
+	@Test(expected = BindException.class)
+	public void testNonProviderField() {
+		Parent parent = new Parent();
+
+		new ObjectGraphBuilder()
+				.module(new FaultyFieldParent())
+				.build()
+				.inject(parent);
 	}
 }
