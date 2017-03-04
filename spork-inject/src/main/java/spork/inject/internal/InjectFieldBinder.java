@@ -31,7 +31,12 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 
 		Class<?> fieldType = field.getType();
 		boolean fieldIsLazy = field.isAnnotationPresent(Lazy.class);
-		boolean fieldIsProvider = (fieldType == Provider.class) || fieldIsLazy;
+		boolean fieldIsProvider = (fieldType == Provider.class);
+
+		if (fieldIsLazy && !fieldIsProvider) {
+			throw new BindException(Inject.class, instance.getClass(), field, "Lazy annotation is not used with Provider field at " + fieldType.getName());
+		}
+
 		// Determine the true type of the instance (so not Provider.class)
 		Class<?> targetType = fieldIsProvider ? (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0] : fieldType;
 
