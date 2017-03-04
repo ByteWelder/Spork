@@ -1,16 +1,11 @@
 package spork.inject.internal;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import java.util.Map;
 
 import javax.annotation.Nullable;
 import javax.inject.Provider;
-import javax.inject.Qualifier;
 
 import spork.Spork;
-import spork.inject.internal.lang.Annotations;
-import spork.inject.internal.lang.Nullability;
 import spork.inject.internal.providers.InstanceCacheProvider;
 import spork.inject.internal.providers.InstanceProvider;
 
@@ -19,18 +14,11 @@ public final class ObjectGraph {
 	private final ObjectGraph parentGraph;
 	private final Map<InjectSignature, ObjectGraphNode> nodeMap;
 	private final InstanceCache instanceCache = new InstanceCache();
+	private final InjectSignatureCache injectSignatureCache = new InjectSignatureCache();
 
 	ObjectGraph(@Nullable ObjectGraph parentGraph, Map<InjectSignature, ObjectGraphNode> nodeMap) {
 		this.parentGraph = parentGraph;
 		this.nodeMap = nodeMap;
-	}
-
-	@Nullable
-	<T> Provider<T> findProvider(Field targetField, Class<T> targetType) {
-		Annotation qualifierAnnotation = Annotations.findAnnotationAnnotatedWith(Qualifier.class, targetField);
-		Nullability nullability = Nullability.create(targetField);
-		InjectSignature injectSignature = new InjectSignature(targetType, nullability, qualifierAnnotation);
-		return findProvider(injectSignature);
 	}
 
 	@Nullable
@@ -82,5 +70,9 @@ public final class ObjectGraph {
 	 */
 	public void inject(Object object, Spork spork) {
 		spork.getBinder().bind(object, this);
+	}
+
+	InjectSignatureCache getInjectSignatureCache() {
+		return injectSignatureCache;
 	}
 }

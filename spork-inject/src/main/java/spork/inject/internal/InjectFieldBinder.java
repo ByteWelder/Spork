@@ -34,7 +34,9 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 		boolean fieldIsProvider = (fieldType == Provider.class) || fieldIsLazy;
 		// Determine the true type of the instance (so not Provider.class)
 		Class<?> targetType = fieldIsProvider ? (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0] : fieldType;
-		Provider<?> provider = objectGraph.findProvider(field, targetType);
+
+		InjectSignature injectSignature = objectGraph.getInjectSignatureCache().getInjectSignature(field, targetType);
+		Provider<?> provider = objectGraph.findProvider(injectSignature);
 
 		if (provider == null) {
 			throw new BindException(Inject.class, instance.getClass(), field, "none of the modules provides an instance for " + fieldType.getName());

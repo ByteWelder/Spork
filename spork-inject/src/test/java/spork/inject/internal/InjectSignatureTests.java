@@ -7,7 +7,6 @@ import java.lang.annotation.Annotation;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import spork.inject.internal.InjectSignature;
 import spork.inject.internal.lang.Nullability;
 
 import static org.junit.Assert.assertEquals;

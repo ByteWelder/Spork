@@ -1,15 +1,10 @@
 package spork.inject.internal;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 
 import javax.annotation.Nullable;
-import javax.inject.Provider;
-import javax.inject.Qualifier;
 
 import spork.inject.AnnotationSerializerRegistry;
-import spork.inject.internal.lang.Annotations;
 import spork.inject.internal.lang.Nullability;
 
 /**
@@ -33,13 +28,6 @@ public final class InjectSignature {
 		this.targetType = targetType;
 		this.nullability = nullability;
 		this.qualifier = (qualifierAnnotation != null) ? AnnotationSerializerRegistry.serialize(qualifierAnnotation) : null;
-	}
-
-	InjectSignature(Class<?> targetTypeOrProvider, Annotation[] annotations, Type genericParameterType) {
-		Annotation qualifierAnnotation = Annotations.findAnnotationAnnotatedWith(Qualifier.class, annotations);
-		this.qualifier = (qualifierAnnotation != null) ? AnnotationSerializerRegistry.serialize(qualifierAnnotation) : null;
-		this.nullability = Nullability.create(annotations);
-		this.targetType = (targetTypeOrProvider == Provider.class) ? (Class<?>) ((ParameterizedType) genericParameterType).getActualTypeArguments()[0] : targetTypeOrProvider;
 	}
 
 	Class<?> getType() {
