@@ -3,7 +3,6 @@ package spork.inject.internal.providers;
 import javax.annotation.Nullable;
 import javax.inject.Provider;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import spork.inject.internal.InjectSignature;
 import spork.inject.internal.InstanceCache;
 import spork.inject.internal.ObjectGraphNode;
@@ -14,7 +13,6 @@ public class InstanceCacheProvider implements Provider<Object> {
 	private final Object[] arguments;
 	private final InstanceCache instanceCache;
 
-	@SuppressFBWarnings("EI_EXPOSE_REP2")
 	public InstanceCacheProvider(ObjectGraphNode node, @Nullable Object[] arguments, InstanceCache instanceCache) {
 		this.node = node;
 		this.arguments = arguments;

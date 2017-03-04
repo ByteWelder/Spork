@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+    <Match>
+        <Class name="spork.inject.internal.providers.InstanceCacheProvider" />
+        <Constructor name="InstanceCacheProvider" />
+        <Bug code="EI2" />
+    </Match>
+    <Match>
+        <Class name="spork.inject.internal.providers.InstanceProvider" />
+        <Constructor name="InstanceProvider" />
+        <Bug code="EI2" />
+    </Match>
+    <Match>
+        <Class name="spork.benchmark.BenchmarkRepeater" />
+        <Method name="getBenchmarkResults" />
+        <Bug code="EI" />
+    </Match>
+</FindBugsFilter>

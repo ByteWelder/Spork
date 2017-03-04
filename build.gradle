@@ -38,7 +38,11 @@ subprojects {
 	apply plugin: 'findbugs'
 
 	checkstyle {
-		configFile = new File(rootDir, 'checkstyle.xml')
+		configFile = new File(rootDir, 'config/checkstyle.xml')
+	}
+
+	findbugs {
+		excludeFilter = new File(rootDir, 'config/findbugs-excludes.xml')
 	}
 
 	group = sporkGroupId
