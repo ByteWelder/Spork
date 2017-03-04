@@ -16,24 +16,24 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 public class InjectScopeTests {
-	public static class Testable {
+	private static class Testable {
 		@Singleton
-		public Object scopedField;
+		Object scopedField;
 
 		@Singleton
-		public void scopedMethod() {
+		void scopedMethod() {
 		}
 
-		public void scopedMethodArguments(@Singleton Object object) {
+		void scopedMethodArguments(@Singleton Object object) {
 		}
 
-		public void scopedMethodArgumentsMissing(Object object) {
+		void scopedMethodArgumentsMissing(Object object) {
 		}
 	}
 
 	@Test
 	public void fieldScopeTest() throws NoSuchFieldException {
-		Field field = Testable.class.getField("scopedField");
+		Field field = Testable.class.getDeclaredField("scopedField");
 		Annotation namedAnnotation = Annotations.findAnnotationAnnotatedWith(Scope.class, field);
 
 		assertNotNull(namedAnnotation);
@@ -42,7 +42,7 @@ public class InjectScopeTests {
 
 	@Test
 	public void methodScopeTest() throws NoSuchMethodException {
-		Method method = Testable.class.getMethod("scopedMethod");
+		Method method = Testable.class.getDeclaredMethod("scopedMethod");
 		Annotation namedAnnotation = Annotations.findAnnotationAnnotatedWith(Scope.class, method);
 
 		assertNotNull(namedAnnotation);
@@ -51,7 +51,7 @@ public class InjectScopeTests {
 
 	@Test
 	public void methodArgumentScopeTest() throws NoSuchMethodException {
-		Method method = Testable.class.getMethod("scopedMethodArguments", Object.class);
+		Method method = Testable.class.getDeclaredMethod("scopedMethodArguments", Object.class);
 		Annotation[] annotations = method.getParameterAnnotations()[0];
 		Annotation namedAnnotation = Annotations.findAnnotationAnnotatedWith(Scope.class, annotations);
 
@@ -61,7 +61,7 @@ public class InjectScopeTests {
 
 	@Test
 	public void methodArgumentScopeMissingTest() throws NoSuchMethodException {
-		Method method = Testable.class.getMethod("scopedMethodArgumentsMissing", Object.class);
+		Method method = Testable.class.getDeclaredMethod("scopedMethodArgumentsMissing", Object.class);
 		Annotation[] annotations = method.getParameterAnnotations()[0];
 		Annotation namedAnnotation = Annotations.findAnnotationAnnotatedWith(Scope.class, annotations);
 

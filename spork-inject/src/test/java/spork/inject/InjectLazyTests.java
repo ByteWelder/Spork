@@ -20,7 +20,7 @@ public class InjectLazyTests {
 	/**
 	 * A module that increases a counter every time a method is called.
 	 */
-	public static class Module {
+	private static class Module {
 		private int counter = 0;
 
 		@Provides
@@ -28,7 +28,6 @@ public class InjectLazyTests {
 			return ++counter;
 		}
 	}
-
 
 	private static class Parent {
 		@Inject

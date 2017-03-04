@@ -10,7 +10,7 @@ import spork.inject.internal.ObjectGraphBuilder;
 import static org.junit.Assert.assertEquals;
 
 public class InjectNamedTests {
-	public static class Module {
+	private static class Module {
 
 		@Provides @Named("one")
 		public int one() {
@@ -30,13 +30,13 @@ public class InjectNamedTests {
 
 	private static class Parent {
 		@Inject @Named("one")
-		public int one;
+		int one;
 
 		@Inject @Named("two")
-		public int two;
+		int two;
 
 		@Inject
-		public int unnamed;
+		int unnamed;
 	}
 
 	@Test

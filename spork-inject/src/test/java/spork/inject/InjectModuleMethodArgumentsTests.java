@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 
 public class InjectModuleMethodArgumentsTests {
 
-	public static class Module {
+	private static class Module {
 
 		@Provides
 		public Integer one() {
@@ -33,7 +33,7 @@ public class InjectModuleMethodArgumentsTests {
 		}
 	}
 
-	public static class MissingDependencyModule {
+	private static class MissingDependencyModule {
 
 		@Provides
 		public StringBuilder stringBuilder(Integer first) {

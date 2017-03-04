@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class InjectFieldTests {
 
-	public static class Module {
+	private static class Module {
 		@Provides
 		public Integer integerValue() {
 			return 1;
@@ -22,10 +22,10 @@ public class InjectFieldTests {
 
 	private static class Parent {
 		@Inject
-		public static Integer staticValue = 0;
+		static Integer staticValue = 0;
 
 		@Inject
-		public Integer publicValue = 0;
+		private Integer publicValue = 0;
 
 		@Inject
 		private Integer protectedValue = 0;
@@ -33,11 +33,11 @@ public class InjectFieldTests {
 		@Inject
 		private Integer privateValue = 0;
 
-		public Integer getProtectedValue() {
+		Integer getProtectedValue() {
 			return protectedValue;
 		}
 
-		public Integer getPrivateValue() {
+		private Integer getPrivateValue() {
 			return privateValue;
 		}
 	}

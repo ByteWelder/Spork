@@ -14,7 +14,7 @@ import static org.junit.Assert.assertNull;
 
 public class InjectNullabilityTests {
 
-	public static class StringNullableModule {
+	private static class StringNullableModule {
 		@Provides
 		@Nullable
 		public String stringValue() {
@@ -22,7 +22,7 @@ public class InjectNullabilityTests {
 		}
 	}
 
-	public static class StringNonnullModule {
+	private static class StringNonnullModule {
 		@Provides
 		@Nonnull
 		public String stringValue() {

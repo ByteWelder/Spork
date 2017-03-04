@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class InjectMethodTests {
-	public static class Module {
+	private static class Module {
 		@Provides
 		public Integer integerValue() {
 			return 1;
@@ -20,11 +20,11 @@ public class InjectMethodTests {
 	}
 
 	private static class Parent {
-		public static boolean staticMethodCalled = false;
-		public boolean noArgumentsCalled = false;
-		public boolean argumentMethodCalled = false;
-		public Integer argumentMethodArgument = null;
-		public boolean returnValueMethodCalled = false;
+		static boolean staticMethodCalled = false;
+		boolean noArgumentsCalled = false;
+		boolean argumentMethodCalled = false;
+		Integer argumentMethodArgument = null;
+		boolean returnValueMethodCalled = false;
 
 		@Inject
 		public static void staticMethod() {

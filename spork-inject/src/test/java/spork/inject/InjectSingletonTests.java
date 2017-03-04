@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 
 public class InjectSingletonTests {
 
-	public static class Module {
+	private static class Module {
 		private Integer counter = 1;
 
 		@Provides
