@@ -36,6 +36,7 @@ subprojects {
 	apply plugin: 'jacoco'
 	apply plugin: 'checkstyle'
 	apply plugin: 'findbugs'
+	apply plugin: 'pmd'
 
 	checkstyle {
 		configFile = new File(rootDir, 'config/checkstyle.xml')
