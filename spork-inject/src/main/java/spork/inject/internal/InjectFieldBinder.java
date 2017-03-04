@@ -34,7 +34,7 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 		boolean fieldIsProvider = (fieldType == Provider.class);
 
 		if (fieldIsLazy && !fieldIsProvider) {
-			throw new BindException(Inject.class, instance.getClass(), field, "Lazy annotation is not used with Provider field at " + fieldType.getName());
+			throw new BindException(Inject.class, instance.getClass(), field, "Lazy annotation can only be used with Provider field");
 		}
 
 		// Determine the true type of the instance (so not Provider.class)

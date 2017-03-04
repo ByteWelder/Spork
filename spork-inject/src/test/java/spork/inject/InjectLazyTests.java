@@ -1,6 +1,8 @@
 package spork.inject;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -11,6 +13,9 @@ import spork.inject.internal.ObjectGraphBuilder;
 import static org.junit.Assert.assertEquals;
 
 public class InjectLazyTests {
+
+	@Rule
+	public ExpectedException excpectedException = ExpectedException.none();
 
 	/**
 	 * A module that increases a counter every time a method is called.
@@ -32,6 +37,7 @@ public class InjectLazyTests {
 	}
 
 	private static class FaultyFieldParent {
+		@Inject
 		@Lazy
 		Integer noProvider;
 	}
@@ -56,12 +62,15 @@ public class InjectLazyTests {
 		assertEquals((Integer) 1, second);
 	}
 
-	@Test(expected = BindException.class)
+	@Test
 	public void testNonProviderField() {
-		Parent parent = new Parent();
+		excpectedException.expect(BindException.class);
+		excpectedException.expectMessage("Inject failed for FaultyFieldParent at field 'noProvider': Lazy annotation can only be used with Provider field");
+
+		FaultyFieldParent parent = new FaultyFieldParent();
 
 		new ObjectGraphBuilder()
-				.module(new FaultyFieldParent())
+				.module(new Module())
 				.build()
 				.inject(parent);
 	}
