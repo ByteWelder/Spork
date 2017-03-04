@@ -18,9 +18,13 @@ class InjectSignatureCache {
 	private final Map<Field, InjectSignature> fieldInjectSignatureMap;
 	private final Map<Method, InjectSignature[]> methodInjectSignatureMap;
 
-	InjectSignatureCache() {
-		this.fieldInjectSignatureMap = new HashMap<>();
-		this.methodInjectSignatureMap = new HashMap<>();
+	public InjectSignatureCache(Map<Field, InjectSignature> fieldInjectSignatureMap, Map<Method, InjectSignature[]> methodInjectSignatureMap) {
+		this.fieldInjectSignatureMap = fieldInjectSignatureMap;
+		this.methodInjectSignatureMap = methodInjectSignatureMap;
+	}
+
+	public InjectSignatureCache() {
+		this(new HashMap<Field, InjectSignature>(), new HashMap<Method, InjectSignature[]>());
 	}
 
 	// region Fields

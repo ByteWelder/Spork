@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 
+import spork.BindException;
+import spork.Spork;
 import spork.inject.internal.ObjectGraphBuilder;
 
 import static org.junit.Assert.assertEquals;
@@ -64,5 +66,11 @@ public class InjectMethodTests {
 		assertEquals(Integer.valueOf(1), parent.argumentMethodArgument);
 		assertTrue(parent.returnValueMethodCalled);
 		assertTrue(parent.noArgumentsCalled);
+	}
+
+	@Test(expected = BindException.class)
+	public void injectWithoutGraph() {
+		Parent parent = new Parent();
+		Spork.bind(parent);
 	}
 }
