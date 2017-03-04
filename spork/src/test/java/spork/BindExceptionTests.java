@@ -18,42 +18,52 @@ public class BindExceptionTests {
         }
     }
 
-    @Test(expected = spork.BindException.class)
+    @Test(expected = BindException.class)
     public void testThrow1() {
-        throw new spork.BindException(Nullable.class, getClass(), "reason");
+        throw new BindException(Nullable.class, getClass(), "reason");
     }
 
-    @Test(expected = spork.BindException.class)
+    @Test(expected = BindException.class)
     public void testThrow2() {
-        throw new spork.BindException(Nullable.class, getClass(), "reason", new Exception());
+        throw new BindException(Nullable.class, getClass(), "reason", new Exception());
     }
 
-    @Test(expected = spork.BindException.class)
+    @Test(expected = BindException.class)
     public void testThrow3() {
         Field field = TestClass.class.getFields()[0];
-        throw new spork.BindException(Nullable.class, getClass(), field, "reason");
+        throw new BindException(Nullable.class, getClass(), field, "reason");
     }
 
-    @Test(expected = spork.BindException.class)
+    @Test(expected = BindException.class)
     public void testThrow4() {
         Field field = TestClass.class.getFields()[0];
-        throw new spork.BindException(Nullable.class, getClass(), field, "reason", new Exception());
+        throw new BindException(Nullable.class, getClass(), field, "reason", new Exception());
     }
 
-    @Test(expected = spork.BindException.class)
+    @Test(expected = BindException.class)
     public void testThrow5() {
         Method method = TestClass.class.getMethods()[0];
-        throw new spork.BindException(Nullable.class, getClass(), method, "reason");
+        throw new BindException(Nullable.class, getClass(), method, "reason");
     }
 
-    @Test(expected = spork.BindException.class)
+    @Test(expected = BindException.class)
     public void testThrow6() {
         Method method = TestClass.class.getMethods()[0];
-        throw new spork.BindException(Nullable.class, String.class, method, "reason", new Exception());
+        throw new BindException(Nullable.class, String.class, method, "reason", new Exception());
     }
 
-    @Test(expected = spork.BindException.class)
+    @Test(expected = BindException.class)
     public void testThrow7() {
-        throw new spork.BindException(Nullable.class, "reason");
+        throw new BindException(Nullable.class, "reason");
+    }
+
+    @Test(expected = BindException.class)
+    public void testThrow8() {
+        throw new BindException(Nullable.class, getClass(), String.class, "reason");
+    }
+
+    @Test(expected = BindException.class)
+    public void testThrow9() {
+        throw new BindException(Nullable.class, getClass(), String.class, "reason", new Exception());
     }
 }
