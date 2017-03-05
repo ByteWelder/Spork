@@ -34,11 +34,19 @@ public class ObjectGraphBuilder {
 	}
 
 	public ObjectGraph build() {
-		List<ObjectGraphNode> nodes = new ArrayList<>();
+		if (modules.isEmpty()) {
+			throw new IllegalStateException("no modules specified in ObjectGraphBuilder");
+		}
 
 		// collect ObjectGraphNode instances for each module (method)
+		List<ObjectGraphNode> nodes = new ArrayList<>();
 		for (Object module : modules) {
-			 collectObjectGraphNodes(nodes, module);
+			int oldSize = nodes.size();
+			collectObjectGraphNodes(nodes, module);
+
+			if (oldSize == nodes.size()) {
+				throw new IllegalArgumentException("Module " + module.getClass().getName() + " has no public methods annotated with @Provides");
+			}
 		}
 
 		Map<InjectSignature, ObjectGraphNode> nodeMap = new HashMap<>(nodes.size());
@@ -46,7 +54,9 @@ public class ObjectGraphBuilder {
 			nodeMap.put(node.getInjectSignature(), node);
 		}
 
-		return new ObjectGraph(parentGraph, nodeMap);
+		InjectSignatureCache injectSignatureCache = parentGraph != null ? parentGraph.getInjectSignatureCache() : new InjectSignatureCache();
+
+		return new ObjectGraph(parentGraph, nodeMap, injectSignatureCache);
 	}
 
 	private static void collectObjectGraphNodes(List<ObjectGraphNode> objectGraphNodes, Object module) {

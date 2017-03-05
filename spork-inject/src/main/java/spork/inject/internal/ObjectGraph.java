@@ -14,11 +14,12 @@ public final class ObjectGraph {
 	private final ObjectGraph parentGraph;
 	private final Map<InjectSignature, ObjectGraphNode> nodeMap;
 	private final InstanceCache instanceCache = new InstanceCache();
-	private final InjectSignatureCache injectSignatureCache = new InjectSignatureCache();
+	private final InjectSignatureCache injectSignatureCache;
 
-	ObjectGraph(@Nullable ObjectGraph parentGraph, Map<InjectSignature, ObjectGraphNode> nodeMap) {
+	ObjectGraph(@Nullable ObjectGraph parentGraph, Map<InjectSignature, ObjectGraphNode> nodeMap, InjectSignatureCache injectSignatureCache) {
 		this.parentGraph = parentGraph;
 		this.nodeMap = nodeMap;
+		this.injectSignatureCache = injectSignatureCache;
 	}
 
 	@Nullable
