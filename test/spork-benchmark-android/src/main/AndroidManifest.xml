@@ -1,7 +1,7 @@
 <manifest package="spork.benchmark.android"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <application>
+    <application android:label="Spork Benchmark">
         <activity android:name="spork.benchmark.android.BenchmarkActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
