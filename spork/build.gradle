@@ -3,9 +3,6 @@ apply plugin: 'jacoco'
 apply plugin: 'maven'
 apply plugin: 'bintray-release'
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
-
 dependencies {
 	compile "com.google.code.findbugs:jsr305:$findBugsVersion" // for Nullable/NonNull
 
