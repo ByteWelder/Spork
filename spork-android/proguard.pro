@@ -1,8 +1,11 @@
 -keep class spork.** { *; }
 -keep interface spork.** { *; }
--keep enum spork.** {
-    **[] $VALUES;
-    public *;
+-keep enum spork.** { *; }
+
+-keepclasseswithmembernames class * {
+    @spork.* <fields>;
 }
 
--keepattributes *RuntimeVisibleAnnotations*
+-keepclasseswithmembernames class * {
+    @spork.* <methods>;
+}
