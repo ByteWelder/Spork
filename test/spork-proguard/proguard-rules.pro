@@ -1,0 +1,4 @@
+-optimizationpasses 3
+-overloadaggressively
+-repackageclasses ''
+-allowaccessmodification
