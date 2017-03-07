@@ -2,6 +2,7 @@ apply plugin: 'java'
 apply plugin: 'jacoco'
 apply plugin: 'maven'
 apply plugin: 'bintray-release'
+apply from: rootProject.file('gradle/pmd-java.gradle')
 
 test { finalizedBy jacocoTestReport }
 

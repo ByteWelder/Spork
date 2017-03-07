@@ -23,7 +23,7 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 	}
 
 	@Override
-	public void bind(Object object, BindResource annotation, Field field, Object[] modules) {
+	public void bind(Object object, BindResource annotation, Field field, Object... parameters) {
 		Context context = contextResolver.resolveContext(object);
 
 		if (context == null) {
@@ -67,7 +67,7 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 	private String getStringObject(Context context, BindResource annotation, Field field) {
 		int resourceId = annotation.value();
 
-		if (resourceId == ResourceId.sDefaultValue) {
+		if (resourceId == ResourceId.NONE) {
 			resourceId = context.getResources().getIdentifier(field.getName(), "string", context.getPackageName());
 		}
 
@@ -77,7 +77,7 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 	private float getDimensionFieldObject(Context context, BindResource annotation, Field field) {
 		int resourceId = annotation.value();
 
-		if (resourceId == ResourceId.sDefaultValue) {
+		if (resourceId == ResourceId.NONE) {
 			resourceId = context.getResources().getIdentifier(field.getName(), "dimen", context.getPackageName());
 		}
 
@@ -89,11 +89,11 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 	private Drawable getDrawableFieldObject(Context context, BindResource annotation, Field field) {
 		int resourceId = annotation.value();
 
-		if (resourceId == ResourceId.sDefaultValue) {
+		if (resourceId == ResourceId.NONE) {
 			resourceId = context.getResources().getIdentifier(field.getName(), "drawable", context.getPackageName());
 		}
 
-		if (Build.VERSION.SDK_INT < 21) {
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
 			return context.getResources().getDrawable(resourceId);
 		} else {
 			return context.getDrawable(resourceId);
@@ -101,22 +101,22 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 	}
 
 	private int getIntegerFieldObject(Context context, BindResource annotation, Field field) {
-		int resource_id = annotation.value();
+		int resourceId = annotation.value();
 
-		if (resource_id == ResourceId.sDefaultValue) {
-			resource_id = context.getResources().getIdentifier(field.getName(), "integer", context.getPackageName());
+		if (resourceId == ResourceId.NONE) {
+			resourceId = context.getResources().getIdentifier(field.getName(), "integer", context.getPackageName());
 		}
 
-		return context.getResources().getInteger(resource_id);
+		return context.getResources().getInteger(resourceId);
 	}
 
 	private boolean getBooleanFieldObject(Context context, BindResource annotation, Field field) {
-		int resource_id = annotation.value();
+		int resourceId = annotation.value();
 
-		if (resource_id == ResourceId.sDefaultValue) {
-			resource_id = context.getResources().getIdentifier(field.getName(), "bool", context.getPackageName());
+		if (resourceId == ResourceId.NONE) {
+			resourceId = context.getResources().getIdentifier(field.getName(), "bool", context.getPackageName());
 		}
 
-		return context.getResources().getBoolean(resource_id);
+		return context.getResources().getBoolean(resourceId);
 	}
 }

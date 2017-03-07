@@ -26,6 +26,7 @@ public enum Nullability {
 		}
 	}
 
+	@SuppressWarnings("PMD.UseVarargs")
 	public static Nullability create(Annotation[] annotations) {
 		for (Annotation annotation : annotations) {
 			if (annotation.annotationType() == Nullable.class) {

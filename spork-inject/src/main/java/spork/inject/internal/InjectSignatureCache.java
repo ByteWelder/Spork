@@ -8,12 +8,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.ThreadSafe;
 import javax.inject.Provider;
 import javax.inject.Qualifier;
 
 import spork.inject.internal.lang.Annotations;
 import spork.inject.internal.lang.Nullability;
 
+@ThreadSafe
 class InjectSignatureCache {
 	/**
 	 * Map values may be null.
@@ -44,12 +46,14 @@ class InjectSignatureCache {
 	 * @return an InjectSignature
 	 */
 	InjectSignature getInjectSignature(Field field, Class<?> targetType) {
-		if (fieldInjectSignatureMap.containsKey(field)) {
-			return fieldInjectSignatureMap.get(field);
-		} else {
-			InjectSignature injectSignature = createInjectSignature(field, targetType);
-			fieldInjectSignatureMap.put(field, injectSignature);
-			return injectSignature;
+		synchronized (fieldInjectSignatureMap) {
+			if (fieldInjectSignatureMap.containsKey(field)) {
+				return fieldInjectSignatureMap.get(field);
+			} else {
+				InjectSignature injectSignature = createInjectSignature(field, targetType);
+				fieldInjectSignatureMap.put(field, injectSignature);
+				return injectSignature;
+			}
 		}
 	}
 
@@ -71,10 +75,14 @@ class InjectSignatureCache {
 	 */
 	@Nullable
 	InjectSignature[] getInjectSignatures(Method method) {
-		if (methodInjectSignatureMap.containsKey(method)) {
-			return methodInjectSignatureMap.get(method);
-		} else {
-			return cacheInjectSignatures(method);
+		synchronized (fieldInjectSignatureMap) {
+			if (methodInjectSignatureMap.containsKey(method)) {
+				return methodInjectSignatureMap.get(method);
+			} else {
+				InjectSignature[] signatures = createInjectSignatures(method);
+				methodInjectSignatureMap.put(method, signatures);
+				return signatures;
+			}
 		}
 	}
 
@@ -84,19 +92,17 @@ class InjectSignatureCache {
 	 * @return an array of 1 or more InjectSignature instances or null (never an empty array!)
 	 */
 	@Nullable
-	private InjectSignature[] cacheInjectSignatures(Method method) {
-		if (method.getParameterTypes().length > 0) {
-			int parameterCount = method.getParameterTypes().length;
-			InjectSignature[] injectSignatures = new InjectSignature[parameterCount];
-			for (int i = 0; i < parameterCount; ++i) {
-				injectSignatures[i] = createInjectSignature(method, i);
-			}
-			methodInjectSignatureMap.put(method, injectSignatures);
-			return injectSignatures;
-		} else {
-			methodInjectSignatureMap.put(method, null);
+	private InjectSignature[] createInjectSignatures(Method method) {
+		if (method.getParameterTypes().length == 0) {
 			return null;
 		}
+
+		int parameterCount = method.getParameterTypes().length;
+		InjectSignature[] injectSignatures = new InjectSignature[parameterCount];
+		for (int i = 0; i < parameterCount; ++i) {
+			injectSignatures[i] = createInjectSignature(method, i);
+		}
+		return injectSignatures;
 	}
 
 	/**

@@ -15,7 +15,15 @@ import spork.android.interfaces.Registry;
  * and uses them one by one to resolve a {@link Context}.
  */
 public class ContextResolverManager implements ContextResolver, Registry<ContextResolver> {
-	private final List<ContextResolver> contextResolvers = new ArrayList<>(2);
+	private final List<ContextResolver> contextResolvers;
+
+	public ContextResolverManager(List<ContextResolver> contextResolvers) {
+		this.contextResolvers = contextResolvers;
+	}
+
+	public ContextResolverManager() {
+		this(new ArrayList<ContextResolver>(2));
+	}
 
 	@Override
 	public void register(ContextResolver contextResolver) {

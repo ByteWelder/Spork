@@ -44,5 +44,5 @@ public @interface BindResource {
 	 *
 	 * @return resource id as defined in R.java
 	 */
-	int value() default ResourceId.sDefaultValue;
+	int value() default ResourceId.NONE;
 }

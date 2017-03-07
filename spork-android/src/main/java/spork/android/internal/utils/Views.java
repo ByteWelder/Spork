@@ -14,31 +14,32 @@ public final class Views {
 
 	/**
 	 * @param viewResolver resolves view from an unknown parent object
-	 * @param viewId       R.id.* value or ResourceId.sDefaultValue
-	 * @param nameFallback used when ResourceId.sDefaultValue is set, this name will be used to resolve R.id.namefallback
+	 * @param viewId       R.id.* value or ResourceId.NONE
+	 * @param nameFallback used when ResourceId.NONE is set, this name will be used to resolve R.id.namefallback
 	 * @param object       any Activity, Fragment or View (including support library types)
 	 * @return the found View
 	 */
 	public static View getView(ViewResolver viewResolver, int viewId, String nameFallback, Object object) {
-		View root_view = viewResolver.resolveView(object);
-
-		if (root_view == null) {
+		View rootView = viewResolver.resolveView(object);
+		if (rootView == null) {
 			throw new BindException(BindView.class, object.getClass(), "incompatible class to find views");
 		}
 
-		if (viewId == ResourceId.sDefaultValue) {
+		int searchViewId;
+		if (viewId == ResourceId.NONE) {
 			// find by name
-			Context context = root_view.getContext();
+			Context context = rootView.getContext();
 
-			viewId = context.getResources().getIdentifier(nameFallback, "id", context.getPackageName());
+			searchViewId = context.getResources().getIdentifier(nameFallback, "id", context.getPackageName());
 
-			if (viewId == 0) {
+			if (searchViewId == 0) {
 				throw new BindException(BindView.class, object.getClass(), "View not found with name '" + nameFallback + "'");
 			}
+		} else {
+			searchViewId = viewId;
 		}
 
-		View view = root_view.findViewById(viewId);
-
+		View view = rootView.findViewById(searchViewId);
 		if (view == null) {
 			throw new BindException(BindView.class, object.getClass(), "View not found");
 		}

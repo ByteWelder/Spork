@@ -2,6 +2,7 @@ apply plugin: 'java'
 apply plugin: 'jacoco'
 apply plugin: 'maven'
 apply plugin: 'bintray-release'
+apply from: rootProject.file('gradle/pmd-java.gradle')
 
 dependencies {
 	compile "com.google.code.findbugs:jsr305:$findBugsVersion" // for Nullable/NonNull

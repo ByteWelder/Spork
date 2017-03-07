@@ -21,6 +21,7 @@ public final class Annotations {
 	}
 
 	@Nullable
+	@SuppressWarnings("PMD.UseVarargs")
 	public static Annotation findAnnotationAnnotatedWith(Class<? extends Annotation> annotationClass, Annotation[] annotations) {
 		for (Annotation annotation : annotations) {
 			if (annotation.annotationType().isAnnotationPresent(annotationClass)) {

@@ -19,25 +19,25 @@ public class BindFragmentBinder implements FieldBinder<BindFragment> {
 	}
 
 	@Override
-	public void bind(Object object, BindFragment annotation, Field field, Object[] modules) {
+	public void bind(Object object, BindFragment annotation, Field field, Object... parameters) {
 		int id = annotation.value();
-		@Nullable Object fragment_object;
+		@Nullable Object fragmentObject;
 
-		if (id != ResourceId.sDefaultValue) {
-			fragment_object = fragmentResolver.resolveFragment(object, id);
+		if (id == ResourceId.NONE) {
+			fragmentObject = fragmentResolver.resolveFragment(object, field.getName());
 		} else {
-			fragment_object = fragmentResolver.resolveFragment(object, field.getName());
+			fragmentObject = fragmentResolver.resolveFragment(object, id);
 		}
 
-		if (fragment_object == null) {
+		if (fragmentObject == null) {
 			throw new BindException(BindFragment.class, object.getClass(), field, "Fragment not found");
 		}
 
-		if (!field.getType().isAssignableFrom(fragment_object.getClass())) {
+		if (!field.getType().isAssignableFrom(fragmentObject.getClass())) {
 			throw new BindException(BindFragment.class, object.getClass(), field, "field is not a Fragment");
 		}
 
-		Reflection.setFieldValue(annotation, field, object, fragment_object);
+		Reflection.setFieldValue(annotation, field, object, fragmentObject);
 	}
 
 	@Override

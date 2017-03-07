@@ -31,11 +31,11 @@ public class BindClickBinder implements MethodBinder<BindClick> {
 
 		@Override
 		public void onClick(View v) {
-			Class<?>[] parameter_types = method.getParameterTypes();
+			Class<?>[] parameterTypes = method.getParameterTypes();
 
-			if (parameter_types.length == 0) {
+			if (parameterTypes.length == 0) {
 				Reflection.invokeMethod(annotation, method, object);
-			} else if (parameter_types.length == 1 && View.class.isAssignableFrom(parameter_types[0])) {
+			} else if (parameterTypes.length == 1 && View.class.isAssignableFrom(parameterTypes[0])) {
 				Reflection.invokeMethod(annotation, method, object, v);
 			} else {
 				throw new BindException(BindClick.class, v.getClass(), method, "onClick failed because the method arguments must be either empty or accept a single View type");
@@ -44,7 +44,7 @@ public class BindClickBinder implements MethodBinder<BindClick> {
 	}
 
 	@Override
-	public void bind(Object object, BindClick annotation, Method method, Object[] modules) {
+	public void bind(Object object, BindClick annotation, Method method, Object... parameters) {
 		View view = Views.getView(viewResolver, annotation.value(), method.getName(), object);
 		view.setOnClickListener(new OnClickListener(annotation, method, object));
 	}

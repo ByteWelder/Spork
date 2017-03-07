@@ -1,8 +1,8 @@
 package spork.inject;
 
 import java.lang.annotation.Annotation;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Qualifier and scope annotations must resolve to a unique identifier.
@@ -15,7 +15,7 @@ import java.util.Map;
  *    An example of a qualifier annotation is {@link javax.inject.Singleton}.
  */
 public final class AnnotationSerializerRegistry {
-	private static final Map<Class<? extends Annotation>, AnnotationSerializer> serializerMap = new HashMap<>(1);
+	private static final Map<Class<? extends Annotation>, AnnotationSerializer> SERIALIZER_MAP = new ConcurrentHashMap<>(2);
 
 	private AnnotationSerializerRegistry() {
 	}
@@ -27,7 +27,7 @@ public final class AnnotationSerializerRegistry {
 	 * @param serializer .
 	 */
 	public static <T extends Annotation> void register(Class<T> annotationType, AnnotationSerializer<T> serializer) {
-		serializerMap.put(annotationType, serializer);
+		SERIALIZER_MAP.put(annotationType, serializer);
 	}
 
 	/**
@@ -39,7 +39,7 @@ public final class AnnotationSerializerRegistry {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Annotation> String serialize(T annotation) {
-		AnnotationSerializer<T> serializer = (AnnotationSerializer<T>) serializerMap.get(annotation.annotationType());
+		AnnotationSerializer<T> serializer = (AnnotationSerializer<T>) SERIALIZER_MAP.get(annotation.annotationType());
 
 		if (serializer == null) {
 			throw new UnsupportedOperationException("Cannot serialize " + annotation.annotationType().getName() + ". Make sure to register a Serializer through AnnotationSerializerRegistry.register() first.");

@@ -23,7 +23,7 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 	}
 
 	@Override
-	public void bind(Object instance, Inject annotation, Field field, Object[] parameters) {
+	public void bind(Object instance, Inject annotation, Field field, Object... parameters) {
 		ObjectGraph objectGraph = ObjectGraphs.findObjectGraph(parameters);
 		if (objectGraph == null) {
 			throw new BindException(Inject.class, instance.getClass(), field, "no ObjectGraph specified in instance arguments of Spork.bind() when injecting " + instance.getClass().getName());

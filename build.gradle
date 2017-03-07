@@ -10,7 +10,7 @@ ext {
 
 	// Dependencies
 	junitVersion = '4.12'
-	mockitoVersion = '2.7.9'
+	mockitoVersion = '2.7.14'
 	findBugsVersion = '3.0.1'
 }
 
@@ -36,7 +36,6 @@ subprojects {
 	apply plugin: 'jacoco'
 	apply plugin: 'checkstyle'
 	apply plugin: 'findbugs'
-	apply plugin: 'pmd'
 
 	checkstyle {
 		configFile = new File(rootDir, 'config/checkstyle.xml')

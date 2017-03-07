@@ -30,11 +30,11 @@ public class BinderImpl implements Binder {
 	 *
 	 * @param object  the instance to bind annotations for
 	 * @param binders the list of cached binders
-	 * @param modules either null or an array of non-null modules
+	 * @param parameters optional parameters
 	 */
-	private void bind(Object object, List<Binder> binders, Object[] modules) {
+	private void bind(Object object, List<Binder> binders, Object... parameters) {
 		for (Binder binder : binders) {
-			binder.bind(object, modules);
+			binder.bind(object, parameters);
 		}
 	}
 }

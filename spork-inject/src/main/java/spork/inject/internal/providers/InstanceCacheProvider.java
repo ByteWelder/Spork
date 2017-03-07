@@ -39,10 +39,10 @@ public class InstanceCacheProvider implements Provider<Object> {
 	}
 
 	private Object invoke() {
-		if (arguments != null) {
-			return node.resolve(arguments);
-		} else {
+		if (arguments == null) {
 			return node.resolve();
+		} else {
+			return node.resolve(arguments);
 		}
 	}
 }

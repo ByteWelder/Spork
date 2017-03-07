@@ -1,0 +1,37 @@
+apply plugin: 'pmd'
+
+afterEvaluate {
+	task('pmd', type: Pmd) {
+
+		description 'Run PMD with Java configuration'
+		group 'verification'
+		source = fileTree('src/main/java')
+
+		reports {
+			xml.enabled = false
+			html.enabled = true
+		}
+
+		ruleSetFiles = files("${rootProject.rootDir}/config/pmd.xml")
+
+		dependsOn 'assembleDebug'
+		project.tasks["check"].dependsOn(getName())
+	}
+
+	task('pmdAndroid', type: Pmd) {
+
+		description 'Run PMD with Android configuration'
+		group 'verification'
+		source = fileTree('src/main/java')
+
+		reports {
+			xml.enabled = false
+			html.enabled = true
+		}
+
+		ruleSetFiles = files("${rootProject.rootDir}/config/pmd-android.xml")
+
+		dependsOn 'assembleDebug'
+		project.tasks["check"].dependsOn(getName())
+	}
+}

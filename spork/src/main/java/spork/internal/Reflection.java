@@ -22,6 +22,7 @@ public final class Reflection {
 	 * @param parentObject the parent object that holds the Field
 	 * @param valueObject  the field value to bind
 	 */
+	@SuppressWarnings("PMD.EmptyCatchBlock")
 	public static void setFieldValue(Annotation annotation, Field field, Object parentObject, Object valueObject) {
 		try {
 			field.setAccessible(true);
@@ -48,6 +49,7 @@ public final class Reflection {
 	 * @return the result of the invoked method
 	 */
 	@Nullable
+	@SuppressWarnings("PMD.EmptyCatchBlock")
 	public static Object invokeMethod(Annotation annotation, Method method, Object object, Object... args) {
 		try {
 			method.setAccessible(true);

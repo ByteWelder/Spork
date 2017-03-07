@@ -54,6 +54,7 @@ public final class SporkAndroid implements SporkExtension {
 	 *
 	 * @param extensionClassName the SporkAndroidExtension class name
 	 */
+	@SuppressWarnings("PMD.EmptyCatchBlock")
 	private void initializeExtension(String extensionClassName) {
 		try {
 			Class<?> extensionClass = Class.forName(extensionClassName);

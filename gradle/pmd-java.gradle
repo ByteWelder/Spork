@@ -1,0 +1,5 @@
+apply plugin: 'pmd'
+
+pmd {
+	ruleSetFiles = files("${rootProject.rootDir}/config/pmd.xml")
+}

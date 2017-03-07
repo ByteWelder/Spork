@@ -8,17 +8,17 @@ public class InstanceProvider implements Provider<Object> {
 	private final ObjectGraphNode node;
 	private final Object[] parameters;
 
-	public InstanceProvider(ObjectGraphNode node, Object[] parameters) {
+	public InstanceProvider(ObjectGraphNode node, Object... parameters) {
 		this.node = node;
 		this.parameters = parameters;
 	}
 
 	@Override
 	public Object get() {
-		if (parameters != null) {
-			return node.resolve(parameters);
-		} else {
+		if (parameters == null) {
 			return node.resolve();
+		} else {
+			return node.resolve(parameters);
 		}
 	}
 }

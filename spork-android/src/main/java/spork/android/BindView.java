@@ -28,5 +28,5 @@ public @interface BindView {
 	 *
 	 * @return View resource id as defined in R.id.*
 	 */
-	int value() default ResourceId.sDefaultValue;
+	int value() default ResourceId.NONE;
 }

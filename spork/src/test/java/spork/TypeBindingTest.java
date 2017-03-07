@@ -28,7 +28,7 @@ public class TypeBindingTest {
 	private static class BindTypeBinder implements TypeBinder<BindValue> {
 
 		@Override
-		public void bind(Object instance, BindValue annotation, Class<?> annotatedType, Object[] modules) {
+		public void bind(Object instance, BindValue annotation, Class<?> annotatedType, Object... parameters) {
 			if (!IntSettable.class.isAssignableFrom(instance.getClass())) {
 				throw new BindException(BindValue.class, instance.getClass(), "can only be used with IntSettable target");
 			}

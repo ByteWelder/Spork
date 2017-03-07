@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.ThreadSafe;
 
 import spork.interfaces.Binder;
 import spork.interfaces.BinderRegistry;
@@ -22,11 +23,13 @@ import spork.interfaces.TypeBinder;
  * It extends {@link BinderRegistry} because newly registered binders (after initialization)
  * must be registered to the cache so the cache can be updated.
  */
-public class BinderCache implements BinderRegistry {
-	private final Map<Class<?>, List<Binder>> classBinderCacheMap = new HashMap<>();
+@ThreadSafe
+class BinderCache implements BinderRegistry {
+	@SuppressWarnings("PMD.UseConcurrentHashMap") // we need to synchronize on combined get & put
+	private final Map<Class<?>, List<Binder>> classBinderMap = new HashMap<>();
 	private final BinderManager binderManager;
 
-	public BinderCache(BinderManager binderManager) {
+	BinderCache(BinderManager binderManager) {
 		this.binderManager = binderManager;
 	}
 
@@ -37,39 +40,47 @@ public class BinderCache implements BinderRegistry {
 	 * @param type the class for the cached type
 	 * @return the cache
 	 */
-	public synchronized List<Binder> getBinders(Class<?> type) {
-		List<Binder> binderList = classBinderCacheMap.get(type);
+	List<Binder> getBinders(Class<?> type) {
+		synchronized (classBinderMap) {
+			List<Binder> binderList = classBinderMap.get(type);
 
-		if (binderList == null) {
-			binderList = getBindersInternal(type);
-			classBinderCacheMap.put(type, binderList);
-		}
+			if (binderList == null) {
+				binderList = getBindersInternal(type);
+				classBinderMap.put(type, binderList);
+			}
 
-		return binderList;
-	}
-
-	@Override
-	public synchronized void register(FieldBinder<?> fieldBinder) {
-		// Run through existing cached types and updated them
-		for (Map.Entry<Class<?>, List<Binder>> entry : classBinderCacheMap.entrySet()) {
-			gatherBinders(entry.getClass(), fieldBinder, entry.getValue());
+			return binderList;
 		}
 	}
 
 	@Override
-	public synchronized void register(MethodBinder<?> methodBinder) {
-		// Run through existing cached types and updated them
-		for (Map.Entry<Class<?>, List<Binder>> entry : classBinderCacheMap.entrySet()) {
-			gatherBinders(entry.getClass(), methodBinder, entry.getValue());
+	public void register(FieldBinder<?> fieldBinder) {
+		synchronized (classBinderMap) {
+			// Run through existing cached types and updated them
+			for (Map.Entry<Class<?>, List<Binder>> entry : classBinderMap.entrySet()) {
+				gatherBinders(entry.getClass(), fieldBinder, entry.getValue());
+			}
+		}
+	}
+
+	@Override
+	public void register(MethodBinder<?> methodBinder) {
+		synchronized (classBinderMap) {
+			// Run through existing cached types and updated them
+			for (Map.Entry<Class<?>, List<Binder>> entry : classBinderMap.entrySet()) {
+				gatherBinders(entry.getClass(), methodBinder, entry.getValue());
+			}
 		}
 	}
 
 
 	@Override
-	public synchronized void register(TypeBinder<?> typeBinder) {
-		// Run through existing cached types and updated them
-		for (Map.Entry<Class<?>, List<Binder>> entry : classBinderCacheMap.entrySet()) {
-			gatherBinders(entry.getClass(), typeBinder, entry.getValue());
+	public void register(TypeBinder<?> typeBinder) {
+		synchronized (classBinderMap) {
+			// Run through existing cached types and updated them
+			for (Map.Entry<Class<?>, List<Binder>> entry : classBinderMap.entrySet()) {
+				gatherBinders(entry.getClass(), typeBinder, entry.getValue());
+			}
 		}
 	}
 
@@ -160,7 +171,7 @@ public class BinderCache implements BinderRegistry {
 	 * @param binders          the list of cached Binders to add new cached Binders to
 	 * @param <AnnotationType> the annotation to search for in the annotated type
 	 */
-	private  <AnnotationType extends Annotation> void gatherBinders(final Class<?> annotatedType, final TypeBinder<AnnotationType> typeBinder, List<Binder> binders) {
+	private <AnnotationType extends Annotation> void gatherBinders(final Class<?> annotatedType, final TypeBinder<AnnotationType> typeBinder, List<Binder> binders) {
 		final @Nullable AnnotationType annotation = annotatedType.getAnnotation(typeBinder.getAnnotationClass());
 
 		if (annotation != null) {

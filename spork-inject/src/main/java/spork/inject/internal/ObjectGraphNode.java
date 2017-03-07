@@ -42,9 +42,9 @@ public final class ObjectGraphNode {
 		try {
 			return method.invoke(parent, arguments);
 		} catch (InvocationTargetException e) {
-			throw new BindException(Inject.class, "Failed to invoke method \"" + method.getName() + "\" on " + parent.getClass().getName());
+			throw new BindException(Inject.class, "Failed to invoke method \"" + method.getName() + "\" on " + parent.getClass().getName(), e);
 		} catch (IllegalAccessException e) {
-			throw new BindException(Inject.class, "Failed to invoke method \"" + method.getName() + "\" on " + parent.getClass().getName() + ": " + e.getMessage());
+			throw new BindException(Inject.class, "Failed to invoke method \"" + method.getName() + "\" on " + parent.getClass().getName() + ": " + e.getMessage(), e);
 		} finally {
 			try {
 				method.setAccessible(false);
@@ -58,18 +58,18 @@ public final class ObjectGraphNode {
 	Object[] collectParameters(ObjectGraph objectGraph) {
 		try {
 			return ObjectGraphs.getInjectableMethodParameters(objectGraph, method);
-		} catch (spork.inject.internal.ObjectGraphException e) {
+		} catch (ObjectGraphException e) {
 			String message = "failed to call " + method.getDeclaringClass().getName() + "." + method.getName() + "(): " + e.getMessage();
-			throw new BindException(Inject.class, method.getDeclaringClass(), injectSignature.getType(), message);
+			throw new BindException(Inject.class, method.getDeclaringClass(), injectSignature.getType(), message, e);
 		}
 	}
 
 	private static String findScopeId(Method method) {
 		Annotation annotation = Annotations.findAnnotationAnnotatedWith(Scope.class, method);
-		if (annotation != null) {
-			return AnnotationSerializerRegistry.serialize(annotation);
-		} else {
+		if (annotation == null) {
 			return null;
+		} else {
+			return AnnotationSerializerRegistry.serialize(annotation);
 		}
 	}
 }

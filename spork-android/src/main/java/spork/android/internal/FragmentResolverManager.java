@@ -14,7 +14,15 @@ import spork.android.interfaces.Registry;
  * It resolves to {@link Object} because the Fragment might be a regular Android one or a support library one.
  */
 public class FragmentResolverManager implements FragmentResolver, Registry<FragmentResolver> {
-	private final List<FragmentResolver> fragmentResolvers = new ArrayList<>(2);
+	private final List<FragmentResolver> fragmentResolvers;
+
+	public FragmentResolverManager(List<FragmentResolver> fragmentResolvers) {
+		this.fragmentResolvers = fragmentResolvers;
+	}
+
+	public FragmentResolverManager() {
+		this(new ArrayList<FragmentResolver>(2));
+	}
 
 	@Override
 	public void register(FragmentResolver fragmentResolver) {

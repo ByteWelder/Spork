@@ -19,7 +19,7 @@ public class BindViewBinder implements FieldBinder<BindView> {
 	}
 
 	@Override
-	public void bind(Object object, BindView annotation, Field field, Object[] modules) {
+	public void bind(Object object, BindView annotation, Field field, Object... parameters) {
 		if (!View.class.isAssignableFrom(field.getType())) {
 			throw new BindException(BindView.class, object.getClass(), field, "field is not a View");
 		}

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<ruleset name="sporkruleset"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+
+    <description>Spork PMD Ruleset</description>
+
+    <exclude-pattern>.*/src/test/.*</exclude-pattern>
+    <exclude-pattern>.*/src/androidTest/.*</exclude-pattern>
+
+    <rule ref="rulesets/java/basic.xml"/>
+    <rule ref="rulesets/java/braces.xml"/>
+    <rule ref="rulesets/java/clone.xml"/>
+    <rule ref="rulesets/java/codesize.xml"/>
+    <rule ref="rulesets/java/controversial.xml">
+        <exclude name="DefaultPackage"/>
+        <exclude name="DataflowAnomalyAnalysis"/>
+        <exclude name="OnlyOneReturn"/>
+        <exclude name="AtLeastOneConstructor"/>
+        <exclude name="NullAssignment"/>
+    </rule>
+    <!--<rule ref="rulesets/java/coupling.xml"/>-->
+    <rule ref="rulesets/java/design.xml">
+        <exclude name="ConfusingTernary"/>
+    </rule>
+    <rule ref="rulesets/java/empty.xml"/>
+    <rule ref="rulesets/java/finalizers.xml"/>
+    <rule ref="rulesets/java/imports.xml"/>
+    <rule ref="rulesets/java/migrating.xml"/>
+    <rule ref="rulesets/java/naming.xml">
+        <exclude name="AvoidFieldNameMatchingMethodName"/>
+        <exclude name="LongVariable"/>
+        <exclude name="ShortVariable"/>
+    </rule>
+    <rule ref="rulesets/java/strictexception.xml"/>
+    <rule ref="rulesets/java/strings.xml"/>
+    <rule ref="rulesets/java/unnecessary.xml">
+        <exclude name="UselessParentheses"/> <!-- falsely triggers on "a = (b == null) ? x : y" pattern -->
+    </rule>
+    <rule ref="rulesets/java/unusedcode.xml"/>
+
+    <rule ref="rulesets/java/typeresolution.xml"/>
+
+
+    <!--<rule ref="rulesets/java/android.xml"/>-->
+
+    <!--'java-comments',-->
+    <!--'java-j2ee',-->
+    <!--'java-javabeans',-->
+    <!--'java-junit',-->
+    <!--'java-logging-jakarta-commons',-->
+    <!--'java-logging-java',-->
+    <!--'java-optimizations',-->
+    <!--'java-sunsecure',-->
+
+</ruleset>

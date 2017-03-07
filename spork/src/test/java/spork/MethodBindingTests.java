@@ -29,7 +29,7 @@ public class MethodBindingTests {
 		private int methodCount = 0;
 
 		@Override
-		public void bind(Object instance, BindMethod annotation, Method method, Object[] modules) {
+		public void bind(Object instance, BindMethod annotation, Method method, Object... parameters) {
 			methodCount++;
 		}
 

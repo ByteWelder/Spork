@@ -18,7 +18,7 @@ import spork.inject.internal.lang.Nullability;
 public class ObjectGraphBuilder {
 	@Nullable
 	private final ObjectGraph parentGraph;
-	private final ArrayList<Object> modules = new ArrayList<>(4);
+	private final List<Object> modules = new ArrayList<>(4);
 
 	public ObjectGraphBuilder() {
 		this.parentGraph = null;
@@ -49,6 +49,8 @@ public class ObjectGraphBuilder {
 			}
 		}
 
+		// No need for concurrent writes: this HashMap is used as read-only after this point
+		@SuppressWarnings("PMD.UseConcurrentHashMap")
 		Map<InjectSignature, ObjectGraphNode> nodeMap = new HashMap<>(nodes.size());
 		for (ObjectGraphNode node : nodes) {
 			nodeMap.put(node.getInjectSignature(), node);

@@ -16,7 +16,13 @@ public class Spork {
 	private final Binder binder;
 
 	@Nullable
-	private static Spork shared;
+	private static final Spork SHARED;
+
+	static {
+		SHARED = new Spork();
+		SHARED.initializeExtension("spork.inject.SporkInject");
+		SHARED.initializeExtension("spork.android.SporkAndroid");
+	}
 
 	/**
 	 * Main constructor.
@@ -43,11 +49,12 @@ public class Spork {
 	/**
 	 * Try to initialize a SporkExtension.
 	 *
-	 * @param extensionClassName the SporkExtension class name
+	 * @param className the SporkExtension class name
 	 */
-	private void initializeExtension(String extensionClassName) {
+	@SuppressWarnings("PMD.EmptyCatchBlock")
+	private void initializeExtension(String className) {
 		try {
-			Class<?> extensionClass = Class.forName(extensionClassName);
+			Class<?> extensionClass = Class.forName(className);
 			Object extensionObject = extensionClass.newInstance();
 			if (extensionObject instanceof SporkExtension) {
 				SporkExtension extension = (SporkExtension) extensionObject;
@@ -56,9 +63,9 @@ public class Spork {
 		} catch (ClassNotFoundException e) {
 			// no-op
 		} catch (IllegalAccessException e) {
-			System.out.println("Spork: extension " + extensionClassName + "found, but initialization failed because of IllegalAccessException: " + e.getMessage());
+			System.out.println("Spork: extension " + className + "found, but initialization failed because of IllegalAccessException: " + e.getMessage());
 		} catch (InstantiationException e) {
-			System.out.println("Spork: extension " + extensionClassName + "found, but failed to create instance: " + e.getMessage());
+			System.out.println("Spork: extension " + className + "found, but failed to create instance: " + e.getMessage());
 		}
 	}
 
@@ -93,18 +100,7 @@ public class Spork {
 	 * @return a shared instance of Spork (creates one if one hasn't been created yet)
 	 */
 	public static Spork shared() {
-		if (shared == null) {
-			// Assign locally to avoid double initialization of the same instance
-			Spork spork = new Spork();
-			// Assign to shared instance to make the window smaller that another thread can also
-			// create a new instance and assign it at the same time
-			shared = spork;
-			// Initialize through the local variable to avoid double initialization by another thread
-			spork.initializeExtension("spork.inject.SporkInject");
-			spork.initializeExtension("spork.android.SporkAndroid");
-		}
-
-		return shared;
+		return SHARED;
 	}
 
 	/**

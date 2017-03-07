@@ -69,8 +69,6 @@ dependencies {
 	}
 }
 
-apply from: rootProject.file('gradle/android-release.gradle')
-
 publish {
 	userOrg = sporkUserOrg
 	repoName = sporkRepoName
@@ -80,3 +78,7 @@ publish {
 	description = sporkName
 	website = sporkWebsite
 }
+
+apply from: rootProject.file('gradle/release-android.gradle')
+apply from: rootProject.file('gradle/findbugs-android.gradle')
+apply from: rootProject.file('gradle/pmd-android.gradle')

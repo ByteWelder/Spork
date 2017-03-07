@@ -43,7 +43,7 @@ public class FieldBindingTests {
 
 	private class StringFieldBinder implements FieldBinder<BindField> {
 		@Override
-		public void bind(Object object, BindField annotation, Field field, Object[] modules) {
+		public void bind(Object object, BindField annotation, Field field, Object... parameters) {
 			if ("instanceField".equals(field.getName())) {
 				Reflection.setFieldValue(annotation, field, object, "1");
 			} else if ("staticField".equals(field.getName())) {

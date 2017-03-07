@@ -30,10 +30,12 @@ public class FieldAndMethodBindingTests {
 
 		@BindFieldOrMethod
 		public void test() {
+			// no-op
 		}
 
 		@BindFieldOrMethod
 		public static void testStatic() {
+			// no-op
 		}
 	}
 

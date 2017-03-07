@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<ruleset name="sporkruleset-android"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+
+    <description>Spork PMD Ruleset for Android</description>
+
+    <exclude-pattern>.*/src/test/.*</exclude-pattern>
+    <exclude-pattern>.*/src/androidTest/.*</exclude-pattern>
+
+    <rule ref="rulesets/java/android.xml"/>
+
+</ruleset>

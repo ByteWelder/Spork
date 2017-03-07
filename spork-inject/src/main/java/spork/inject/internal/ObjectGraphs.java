@@ -11,7 +11,7 @@ public final class ObjectGraphs {
 	}
 
 	@Nullable
-	static ObjectGraph findObjectGraph(Object[] objects) {
+	static ObjectGraph findObjectGraph(Object... objects) {
 		for (Object object : objects) {
 			if (object.getClass() == ObjectGraph.class) {
 				return (ObjectGraph) object;
@@ -22,7 +22,7 @@ public final class ObjectGraphs {
 	}
 
 	@Nullable
-	static Object[] getInjectableMethodParameters(ObjectGraph objectGraph, Method method) throws spork.inject.internal.ObjectGraphException {
+	static Object[] getInjectableMethodParameters(ObjectGraph objectGraph, Method method) throws ObjectGraphException {
 		int parameterCount = method.getParameterTypes().length;
 		if (parameterCount == 0) {
 			return null;

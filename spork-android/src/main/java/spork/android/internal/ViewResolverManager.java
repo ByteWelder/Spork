@@ -14,8 +14,16 @@ import spork.android.interfaces.ViewResolver;
  * The main {@link ViewResolver} implementation that holds child {@link ViewResolver} instances
  * and uses them one by one to resolve a {@link View}.
  */
-public final class ViewResolverManager implements ViewResolver, Registry<ViewResolver> {
-	private final List<ViewResolver> viewResolvers = new ArrayList<>(2);
+public class ViewResolverManager implements ViewResolver, Registry<ViewResolver> {
+	private final List<ViewResolver> viewResolvers;
+
+	public ViewResolverManager(List<ViewResolver> contextResolvers) {
+		this.viewResolvers = contextResolvers;
+	}
+
+	public ViewResolverManager() {
+		this(new ArrayList<ViewResolver>(2));
+	}
 
 	@Override
 	public void register(ViewResolver viewResolver) {

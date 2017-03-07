@@ -27,6 +27,6 @@ public @interface BindFragment {
 	 *
 	 * @return Fragment resource id as defined in R.id.*
 	 */
-	int value() default ResourceId.sDefaultValue;
+	int value() default ResourceId.NONE;
 }
 
