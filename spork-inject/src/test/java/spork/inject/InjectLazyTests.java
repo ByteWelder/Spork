@@ -1,8 +1,6 @@
 package spork.inject;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import javax.inject.Inject;
 
@@ -11,9 +9,6 @@ import spork.inject.internal.ObjectGraphBuilder;
 import static org.junit.Assert.assertEquals;
 
 public class InjectLazyTests {
-
-	@Rule
-	public ExpectedException excpectedException = ExpectedException.none();
 
 	/**
 	 * A module that increases a counter every time a method is called.

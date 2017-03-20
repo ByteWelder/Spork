@@ -32,6 +32,7 @@
         <exclude name="AvoidFieldNameMatchingMethodName"/>
         <exclude name="LongVariable"/>
         <exclude name="ShortVariable"/>
+        <exclude name="ShortClassName"/>
     </rule>
     <rule ref="rulesets/java/strictexception.xml"/>
     <rule ref="rulesets/java/strings.xml"/>
@@ -41,9 +42,6 @@
     <rule ref="rulesets/java/unusedcode.xml"/>
 
     <rule ref="rulesets/java/typeresolution.xml"/>
-
-
-    <!--<rule ref="rulesets/java/android.xml"/>-->
 
     <!--'java-comments',-->
     <!--'java-j2ee',-->
