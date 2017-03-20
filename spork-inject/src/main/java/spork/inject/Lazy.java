@@ -1,15 +1,10 @@
 package spork.inject;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
 /**
- * Annotation for a Provider that is injected lazily.
+ * A handle to a lazily-computed object instance.
+ * Each instance of Lazy computes its own object instance on the first call of get() and
+ * caches that value for any subsequent calls to get().
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD})
-public @interface Lazy {
+public interface Lazy<T> {
+	T get();
 }
-

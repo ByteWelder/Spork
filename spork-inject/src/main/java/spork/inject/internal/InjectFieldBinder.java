@@ -8,7 +8,7 @@ import javax.inject.Provider;
 
 import spork.BindException;
 import spork.inject.Lazy;
-import spork.inject.internal.providers.LazyProvider;
+import spork.inject.internal.providers.ProviderLazy;
 import spork.interfaces.FieldBinder;
 import spork.internal.Reflection;
 
@@ -30,15 +30,13 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 		}
 
 		Class<?> fieldType = field.getType();
-		boolean fieldIsLazy = field.isAnnotationPresent(Lazy.class);
+		boolean fieldIsLazy = (fieldType == Lazy.class);
 		boolean fieldIsProvider = (fieldType == Provider.class);
 
-		if (fieldIsLazy && !fieldIsProvider) {
-			throw new BindException(Inject.class, instance.getClass(), field, "Lazy annotation can only be used with Provider field");
-		}
-
 		// Determine the true type of the instance (so not Provider.class)
-		Class<?> targetType = fieldIsProvider ? (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0] : fieldType;
+		Class<?> targetType = fieldIsProvider || fieldIsLazy
+				? (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0]
+				: fieldType;
 
 		InjectSignature injectSignature = objectGraph.getInjectSignatureCache().getInjectSignature(field, targetType);
 		Provider<?> provider = objectGraph.findProvider(injectSignature);
@@ -49,11 +47,9 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 
 		// Either set the provider instance or the real instance
 		if (fieldIsProvider) {
-			if (fieldIsLazy) {
-				Reflection.setFieldValue(annotation, field, instance, new LazyProvider<>(provider));
-			} else {
-				Reflection.setFieldValue(annotation, field, instance, provider);
-			}
+			Reflection.setFieldValue(annotation, field, instance, provider);
+		} else if (fieldIsLazy) {
+			Reflection.setFieldValue(annotation, field, instance, new ProviderLazy<>(provider));
 		} else {
 			Object bindInstance = provider.get();
 			Reflection.setFieldValue(annotation, field, instance, bindInstance);
