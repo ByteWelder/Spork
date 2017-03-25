@@ -8,6 +8,7 @@
 
     <exclude-pattern>.*/src/test/.*</exclude-pattern>
     <exclude-pattern>.*/src/androidTest/.*</exclude-pattern>
+    <exclude-pattern>.*/R.java</exclude-pattern>
 
     <rule ref="rulesets/java/android.xml"/>
 
