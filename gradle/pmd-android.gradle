@@ -13,8 +13,6 @@ android.libraryVariants.all { variant ->
 		}
 
 		ruleSetFiles = files("${rootProject.rootDir}/config/pmd.xml")
-
-		dependsOn "assemble${variant.name.capitalize()}"
 	}
 
 	// Run Android checks
@@ -29,8 +27,6 @@ android.libraryVariants.all { variant ->
 		}
 
 		ruleSetFiles = files("${rootProject.rootDir}/config/pmd-android.xml")
-
-		dependsOn "assemble${variant.name.capitalize()}"
 	}
 
 	// Wrapper task for both Android and Java checks
