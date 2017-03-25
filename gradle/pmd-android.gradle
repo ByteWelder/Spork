@@ -1,8 +1,8 @@
 apply plugin: 'pmd'
 
 android.libraryVariants.all { variant ->
-	// Run Java checks
-	task("pmdJava${variant.name.capitalize()}", type: Pmd) {
+	// Run Android and Java checks
+	task("pmd${variant.name.capitalize()}", type: Pmd) {
 		description 'Run PMD with Java configuration'
 		group 'verification'
 		source = variant.javaCompile.source
@@ -12,30 +12,9 @@ android.libraryVariants.all { variant ->
 			html.enabled = true
 		}
 
-		ruleSetFiles = files("${rootProject.rootDir}/config/pmd.xml")
-	}
-
-	// Run Android checks
-	task("pmdAndroid${variant.name.capitalize()}", type: Pmd) {
-		description 'Run PMD with Android configuration'
-		group 'verification'
-		source = variant.javaCompile.source
-
-		reports {
-			xml.enabled = false
-			html.enabled = true
-		}
-
-		ruleSetFiles = files("${rootProject.rootDir}/config/pmd-android.xml")
-	}
-
-	// Wrapper task for both Android and Java checks
-	task("pmd${variant.name.capitalize()}", type: Pmd) {
-		description 'Run PMD with Java and Android configuration'
-		group 'verification'
-		dependsOn "pmdJava${variant.name.capitalize()}"
-		dependsOn "pmdAndroid${variant.name.capitalize()}"
-
-		project.tasks['check'].dependsOn(getName())
+		ruleSetFiles = files(
+				"${rootProject.rootDir}/config/pmd.xml",
+				"${rootProject.rootDir}/config/pmd-android.xml"
+		)
 	}
 }

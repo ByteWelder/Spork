@@ -7,8 +7,6 @@
     <description>Spork PMD Ruleset</description>
 
     <exclude-pattern>.*/src/test/.*</exclude-pattern>
-    <exclude-pattern>.*/src/androidTest/.*</exclude-pattern>
-    <exclude-pattern>.*/R.java</exclude-pattern>
 
     <rule ref="rulesets/java/basic.xml"/>
     <rule ref="rulesets/java/braces.xml"/>
