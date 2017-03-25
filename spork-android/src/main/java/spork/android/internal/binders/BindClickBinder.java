@@ -18,12 +18,12 @@ public class BindClickBinder implements MethodBinder<BindClick> {
 		this.viewResolver = viewResolver;
 	}
 
-	private static class OnClickListener implements View.OnClickListener {
+	private static class BindClickListener implements View.OnClickListener {
 		private final BindClick annotation;
 		private final Method method;
 		private final Object object;
 
-		OnClickListener(BindClick annotation, Method method, Object object) {
+		BindClickListener(BindClick annotation, Method method, Object object) {
 			this.annotation = annotation;
 			this.method = method;
 			this.object = object;
@@ -46,7 +46,7 @@ public class BindClickBinder implements MethodBinder<BindClick> {
 	@Override
 	public void bind(Object object, BindClick annotation, Method method, Object... parameters) {
 		View view = Views.getView(viewResolver, annotation.value(), method.getName(), object);
-		view.setOnClickListener(new OnClickListener(annotation, method, object));
+		view.setOnClickListener(new BindClickListener(annotation, method, object));
 	}
 
 	@Override
