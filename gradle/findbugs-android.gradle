@@ -5,7 +5,7 @@ android.libraryVariants.all { variant ->
 		description "Analyze ${variant.name} code with the FindBugs tool"
 		group 'Verification'
 
-		ignoreFailures = true
+		ignoreFailures = false
 		effort = 'default'
 		reportLevel = 'medium'
 

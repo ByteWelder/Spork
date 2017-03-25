@@ -18,7 +18,7 @@ public class BindClickBinder implements MethodBinder<BindClick> {
 		this.viewResolver = viewResolver;
 	}
 
-	private class OnClickListener implements View.OnClickListener {
+	private static class OnClickListener implements View.OnClickListener {
 		private final BindClick annotation;
 		private final Method method;
 		private final Object object;

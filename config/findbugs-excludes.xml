@@ -15,4 +15,12 @@
         <Method name="getBenchmarkResults" />
         <Bug code="EI" />
     </Match>
+
+    <!-- Android -->
+    <Match>
+        <Class name="~.*R\$.*"/>
+    </Match>
+    <Match>
+        <Class name="~.*Manifest\$.*"/>
+    </Match>
 </FindBugsFilter>
