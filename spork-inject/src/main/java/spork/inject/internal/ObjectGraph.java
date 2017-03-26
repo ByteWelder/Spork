@@ -54,8 +54,6 @@ public final class ObjectGraph {
 
 			return (Provider<T>) new InstanceMapProvider(scopedGraph.instanceMap, node, parameters);
 		}
-
-		// else convert to Provider
 	}
 
 	@Nullable

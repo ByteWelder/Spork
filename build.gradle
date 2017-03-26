@@ -56,7 +56,6 @@ subprojects {
 		}
 	}
 
-	// TODO: Implement for Android tasks
 	tasks.withType(FindBugs) {
 		reports {
 			xml.enabled false
