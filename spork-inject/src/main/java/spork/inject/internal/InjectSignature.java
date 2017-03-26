@@ -1,10 +1,7 @@
 package spork.inject.internal;
 
-import java.lang.annotation.Annotation;
-
 import javax.annotation.Nullable;
 
-import spork.inject.AnnotationSerializerRegistry;
 import spork.inject.internal.lang.Nullability;
 
 /**
@@ -18,14 +15,14 @@ public final class InjectSignature {
 	private final String qualifier;
 
 	/**
-	 * @param targetType          the real target type (not a Provider)
-	 * @param nullability         .
-	 * @param qualifierAnnotation .
+	 * @param targetType    the real target type (not a Provider)
+	 * @param nullability   .
+	 * @param qualifier     .
 	 */
-	InjectSignature(Class<?> targetType, Nullability nullability, @Nullable Annotation qualifierAnnotation) {
+	InjectSignature(Class<?> targetType, Nullability nullability, @Nullable String qualifier) {
 		this.targetType = targetType;
 		this.nullability = nullability;
-		this.qualifier = (qualifierAnnotation != null) ? AnnotationSerializerRegistry.serialize(qualifierAnnotation) : null;
+		this.qualifier = qualifier;
 	}
 
 	Class<?> getType() {

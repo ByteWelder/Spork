@@ -51,17 +51,17 @@ public class ObjectGraphBuilder {
 	public ObjectGraph build() {
 		validate();
 
+		// Inherit the InjectSignatureCache to improve performance
+		InjectSignatureCache injectSignatureCache = parentGraph != null ? parentGraph.getInjectSignatureCache() : new InjectSignatureCache();
+
 		// collect ObjectGraphNode instances for each module (method)
-		List<ObjectGraphNode> nodes = collectObjectGraphNodes(modules);
+		List<ObjectGraphNode> nodes = collectObjectGraphNodes(injectSignatureCache, modules);
 
 		// Index all ObjectGraphNode instances
 		Map<InjectSignature, ObjectGraphNode> nodeMap = createNodeMap(nodes);
 
 		// The root graph is always the Singleton-scoped one
 		Class<? extends Annotation> effectiveScope = parentGraph == null ? Singleton.class : scope;
-
-		// Inherit the InjectSignatureCache to improve performance
-		InjectSignatureCache injectSignatureCache = parentGraph != null ? parentGraph.getInjectSignatureCache() : new InjectSignatureCache();
 
 		return new ObjectGraph(parentGraph, nodeMap, injectSignatureCache, effectiveScope);
 	}
@@ -98,11 +98,11 @@ public class ObjectGraphBuilder {
 	/**
 	 * Collect the ObjectGraphNode instances for all specified modules
 	 */
-	private static List<ObjectGraphNode> collectObjectGraphNodes(List<Object> modules) {
+	private static List<ObjectGraphNode> collectObjectGraphNodes(InjectSignatureCache injectSignatureCache, List<Object> modules) {
 		List<ObjectGraphNode> nodes = new ArrayList<>();
 		for (Object module : modules) {
 			int oldSize = nodes.size();
-			collectObjectGraphNodes(nodes, module);
+			collectObjectGraphNodes(injectSignatureCache, nodes, module);
 
 			if (oldSize == nodes.size()) {
 				throw new IllegalArgumentException("Module " + module.getClass().getName() + " has no public methods annotated with @Provides");
@@ -114,7 +114,7 @@ public class ObjectGraphBuilder {
 	/**
 	 * Collect the ObjectGraphNode instances for a specific module.
 	 */
-	private static void collectObjectGraphNodes(List<ObjectGraphNode> objectGraphNodes, Object module) {
+	private static void collectObjectGraphNodes(InjectSignatureCache injectSignatureCache, List<ObjectGraphNode> objectGraphNodes, Object module) {
 		for (Method method : module.getClass().getMethods()) {
 			// find a matching method
 			if (!method.isAnnotationPresent(Provides.class)) {
@@ -123,7 +123,10 @@ public class ObjectGraphBuilder {
 			// create key
 			Nullability nullability = Nullability.create(method);
 			Annotation qualifierAnnotation = Annotations.findAnnotationAnnotatedWith(Qualifier.class, method);
-			InjectSignature injectSignature = new InjectSignature(method.getReturnType(), nullability, qualifierAnnotation);
+			String qualifier = qualifierAnnotation != null
+					? injectSignatureCache.getQualifier(qualifierAnnotation)
+					: null;
+			InjectSignature injectSignature = new InjectSignature(method.getReturnType(), nullability, qualifier);
 			objectGraphNodes.add(new ObjectGraphNode(injectSignature, module, method));
 		}
 	}

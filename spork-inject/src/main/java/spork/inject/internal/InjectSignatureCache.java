@@ -27,11 +27,27 @@ class InjectSignatureCache {
 	 */
 	private final Map<Method, InjectSignature[]> methodInjectSignatureMap;
 
-	InjectSignatureCache(Map<Field, InjectSignature> fieldInjectSignatureMap, Map<Method, InjectSignature[]> methodInjectSignatureMap) {
+	private final QualifierFactory qualifierFactory;
+
+	/**
+	 * Primary constructor.
+	 */
+	InjectSignatureCache(Map<Field, InjectSignature> fieldInjectSignatureMap, Map<Method, InjectSignature[]> methodInjectSignatureMap, QualifierFactory qualifierFactory) {
 		this.fieldInjectSignatureMap = fieldInjectSignatureMap;
 		this.methodInjectSignatureMap = methodInjectSignatureMap;
+		this.qualifierFactory = qualifierFactory;
 	}
 
+	/**
+	 * Secondary constructor.
+	 */
+	InjectSignatureCache(Map<Field, InjectSignature> fieldInjectSignatureMap, Map<Method, InjectSignature[]> methodInjectSignatureMap) {
+		this(fieldInjectSignatureMap, methodInjectSignatureMap, new QualifierFactory());
+	}
+
+	/**
+	 * Secondary constructor.
+	 */
 	InjectSignatureCache() {
 		this(new HashMap<Field, InjectSignature>(), new HashMap<Method, InjectSignature[]>());
 	}
@@ -60,7 +76,10 @@ class InjectSignatureCache {
 	private InjectSignature createInjectSignature(Field field, Class<?> targetType) {
 		Annotation qualifierAnnotation = Annotations.findAnnotationAnnotatedWith(Qualifier.class, field);
 		Nullability nullability = Nullability.create(field);
-		return new InjectSignature(targetType, nullability, qualifierAnnotation);
+		String qualifier = qualifierAnnotation != null
+				? getQualifier(qualifierAnnotation)
+				: null;
+		return new InjectSignature(targetType, nullability, qualifier);
 	}
 
 	// endregion
@@ -112,13 +131,25 @@ class InjectSignatureCache {
 		Class<?> parameterClass = method.getParameterTypes()[parameterIndex];
 
 		Annotation[] annotations = method.getParameterAnnotations()[parameterIndex];
-		Annotation qualifierAnnotation = Annotations.findAnnotationAnnotatedWith(Qualifier.class, annotations);
 		Nullability nullability = Nullability.create(annotations);
 		Class<?> targetType = (parameterClass == Provider.class)
 				? (Class<?>) ((ParameterizedType) method.getGenericParameterTypes()[parameterIndex]).getActualTypeArguments()[0]
 				: parameterClass;
 
-		return new InjectSignature(targetType, nullability, qualifierAnnotation);
+		Annotation qualifierAnnotation = Annotations.findAnnotationAnnotatedWith(Qualifier.class, annotations);
+		String qualifier = qualifierAnnotation != null
+				? getQualifier(qualifierAnnotation)
+				: null;
+
+		return new InjectSignature(targetType, nullability, qualifier);
+	}
+
+	// endregion
+
+	// region Qualifiers
+
+	String getQualifier(Annotation qualifierAnnotation) {
+		return qualifierFactory.create(qualifierAnnotation);
 	}
 
 	// endregion

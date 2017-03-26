@@ -5,7 +5,6 @@ import org.junit.Test;
 import java.lang.annotation.Annotation;
 
 import javax.inject.Named;
-import javax.inject.Singleton;
 
 import spork.inject.internal.lang.Nullability;
 
@@ -14,19 +13,21 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 
 public class InjectSignatureTests {
+	private final InjectSignatureCache injectSignatureCache = new InjectSignatureCache();
 
 	public static class AnnotationHolder {
 		@Named("first")
 		public String first;
 
-		@Singleton
+		@Named("second")
 		public String second;
 	}
 
 	@Test
 	public void testGetMethods() throws NoSuchFieldException {
 		Annotation annotation = getFirstAnnotation();
-		InjectSignature signature = new InjectSignature(String.class, Nullability.NONNULL, annotation);
+		String qualifier = injectSignatureCache.getQualifier(annotation);
+		InjectSignature signature = new InjectSignature(String.class, Nullability.NONNULL, qualifier);
 
 		assertEquals(String.class, signature.getType());
 		assertEquals(Nullability.NONNULL, signature.getNullability());
@@ -42,8 +43,9 @@ public class InjectSignatureTests {
 	@Test
 	public void matchAllTest() throws NoSuchFieldException {
 		Annotation annotation = getFirstAnnotation();
-		InjectSignature first = new InjectSignature(String.class, Nullability.NONNULL, annotation);
-		InjectSignature second = new InjectSignature(String.class, Nullability.NONNULL, annotation);
+		String qualifier = injectSignatureCache.getQualifier(annotation);
+		InjectSignature first = new InjectSignature(String.class, Nullability.NONNULL, qualifier);
+		InjectSignature second = new InjectSignature(String.class, Nullability.NONNULL, qualifier);
 
 		assertEquals(first, second);
 		assertEquals(second, first);
@@ -54,8 +56,9 @@ public class InjectSignatureTests {
 	@Test
 	public void matchClassAndAnnotationTest() throws NoSuchFieldException {
 		Annotation annotation = getFirstAnnotation();
-		InjectSignature first = new InjectSignature(String.class, Nullability.NONNULL, annotation);
-		InjectSignature second = new InjectSignature(String.class, Nullability.NULLABLE, annotation);
+		String qualifier = injectSignatureCache.getQualifier(annotation);
+		InjectSignature first = new InjectSignature(String.class, Nullability.NONNULL, qualifier);
+		InjectSignature second = new InjectSignature(String.class, Nullability.NULLABLE, qualifier);
 
 		assertNotEquals(first, second);
 		assertNotEquals(second, first);
@@ -67,8 +70,10 @@ public class InjectSignatureTests {
 	public void matchClassAndNullabilityTest() throws NoSuchFieldException {
 		Annotation firstAnnotation = getFirstAnnotation();
 		Annotation secondAnnotation = getSecondAnnotation();
-		InjectSignature first = new InjectSignature(String.class, Nullability.NONNULL, firstAnnotation);
-		InjectSignature second = new InjectSignature(String.class, Nullability.NONNULL, secondAnnotation);
+		String firstQualifier = injectSignatureCache.getQualifier(firstAnnotation);
+		String secondQualifier = injectSignatureCache.getQualifier(secondAnnotation);
+		InjectSignature first = new InjectSignature(String.class, Nullability.NONNULL, firstQualifier);
+		InjectSignature second = new InjectSignature(String.class, Nullability.NONNULL, secondQualifier);
 
 		assertNotEquals(first, second);
 		assertNotEquals(second, first);
@@ -79,7 +84,8 @@ public class InjectSignatureTests {
 	@Test
 	public void matchClassAndNullabilityWithSingleNullQualifierTest() throws NoSuchFieldException {
 		Annotation firstAnnotation = getFirstAnnotation();
-		InjectSignature first = new InjectSignature(String.class, Nullability.NONNULL, firstAnnotation);
+		String firstQualifier = injectSignatureCache.getQualifier(firstAnnotation);
+		InjectSignature first = new InjectSignature(String.class, Nullability.NONNULL, firstQualifier);
 		InjectSignature second = new InjectSignature(String.class, Nullability.NONNULL, null);
 
 		assertNotEquals(first, second);
@@ -102,8 +108,9 @@ public class InjectSignatureTests {
 	@Test
 	public void matchNullabilityAndAnnotationTest() throws NoSuchFieldException {
 		Annotation annotation = getFirstAnnotation();
-		InjectSignature first = new InjectSignature(String.class, Nullability.NONNULL, annotation);
-		InjectSignature second = new InjectSignature(Integer.class, Nullability.NONNULL, annotation);
+		String qualifier = injectSignatureCache.getQualifier(annotation);
+		InjectSignature first = new InjectSignature(String.class, Nullability.NONNULL, qualifier);
+		InjectSignature second = new InjectSignature(Integer.class, Nullability.NONNULL, qualifier);
 
 		assertNotEquals(first, second);
 		assertNotEquals(second, first);
@@ -116,6 +123,6 @@ public class InjectSignatureTests {
 	}
 
 	private static Annotation getSecondAnnotation() throws NoSuchFieldException {
-		return AnnotationHolder.class.getField("second").getAnnotation(Singleton.class);
+		return AnnotationHolder.class.getField("second").getAnnotation(Named.class);
 	}
 }
