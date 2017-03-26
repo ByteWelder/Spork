@@ -1,10 +1,14 @@
 package spork.inject.internal;
 
+import java.lang.annotation.Annotation;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nullable;
+import javax.inject.Inject;
 import javax.inject.Provider;
 
+import spork.BindException;
 import spork.Spork;
 import spork.inject.internal.providers.InstanceCacheProvider;
 import spork.inject.internal.providers.InstanceProvider;
@@ -13,13 +17,15 @@ public final class ObjectGraph {
 	@Nullable
 	private final ObjectGraph parentGraph;
 	private final Map<InjectSignature, ObjectGraphNode> nodeMap;
-	private final InstanceCache instanceCache = new InstanceCache();
+	private final Map<InjectSignature, Object> instanceMap = new ConcurrentHashMap<>();
 	private final InjectSignatureCache injectSignatureCache;
+	private final Class<? extends Annotation> scopeAnnotationClass;
 
-	ObjectGraph(@Nullable ObjectGraph parentGraph, Map<InjectSignature, ObjectGraphNode> nodeMap, InjectSignatureCache injectSignatureCache) {
+	ObjectGraph(@Nullable ObjectGraph parentGraph, Map<InjectSignature, ObjectGraphNode> nodeMap, InjectSignatureCache injectSignatureCache, Class<? extends Annotation> scopeAnnotationClass) {
 		this.parentGraph = parentGraph;
 		this.nodeMap = nodeMap;
 		this.injectSignatureCache = injectSignatureCache;
+		this.scopeAnnotationClass = scopeAnnotationClass;
 	}
 
 	@Nullable
@@ -34,10 +40,19 @@ public final class ObjectGraph {
 		Object[] parameters = node.collectParameters(this);
 
 		// No scope and no qualifier means a new instance per injection
-		if (node.getScopeId() == null && !injectSignature.hasQualifier()) {
+		if (node.getScope() == null && !injectSignature.hasQualifier()) {
 			return (Provider<T>) new InstanceProvider(node, parameters);
 		} else {
-			return (Provider<T>) new InstanceCacheProvider(node, parameters, instanceCache);
+			Annotation scope = node.getScope();
+			ObjectGraph scopedGraph = (scope != null)
+					? findObjectGraph(scope.annotationType())
+					: this;
+
+			if (scopedGraph == null) {
+				throw new BindException(Inject.class, "no ObjectGraph found that defines scope \"" + scope.annotationType().getName() + "\"");
+			}
+
+			return (Provider<T>) new InstanceCacheProvider(node, parameters, scopedGraph.instanceMap);
 		}
 
 		// else convert to Provider
@@ -75,5 +90,15 @@ public final class ObjectGraph {
 
 	InjectSignatureCache getInjectSignatureCache() {
 		return injectSignatureCache;
+	}
+
+	public @Nullable ObjectGraph findObjectGraph(Class<? extends Annotation> scopeAnnotationClass) {
+		if (this.scopeAnnotationClass == scopeAnnotationClass) {
+			return this;
+		} else if (parentGraph != null) {
+			return parentGraph.findObjectGraph(scopeAnnotationClass);
+		} else {
+			return null;
+		}
 	}
 }

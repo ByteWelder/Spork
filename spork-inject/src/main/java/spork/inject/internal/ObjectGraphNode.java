@@ -9,7 +9,6 @@ import javax.inject.Inject;
 import javax.inject.Scope;
 
 import spork.BindException;
-import spork.inject.AnnotationSerializerRegistry;
 import spork.inject.internal.lang.Annotations;
 
 /**
@@ -19,13 +18,13 @@ public final class ObjectGraphNode {
 	private final InjectSignature injectSignature;
 	private final Object parent;
 	private final Method method;
-	@Nullable private final String scopeId;
+	@Nullable private final Annotation scopeAnnotation;
 
 	ObjectGraphNode(InjectSignature injectSignature, Object parent, Method method) {
 		this.injectSignature = injectSignature;
 		this.parent = parent;
 		this.method = method;
-		this.scopeId = findScopeId(method);
+		this.scopeAnnotation = Annotations.findAnnotationAnnotatedWith(Scope.class, method); // todo: cache?
 	}
 
 	public InjectSignature getInjectSignature() {
@@ -33,8 +32,8 @@ public final class ObjectGraphNode {
 	}
 
 	@Nullable
-	public String getScopeId() {
-		return scopeId;
+	Annotation getScope() {
+		return scopeAnnotation;
 	}
 
 	public Object resolve(Object... arguments) {
@@ -61,15 +60,6 @@ public final class ObjectGraphNode {
 		} catch (ObjectGraphException e) {
 			String message = "failed to call " + method.getDeclaringClass().getName() + "." + method.getName() + "(): " + e.getMessage();
 			throw new BindException(Inject.class, method.getDeclaringClass(), injectSignature.getType(), message, e);
-		}
-	}
-
-	private static String findScopeId(Method method) {
-		Annotation annotation = Annotations.findAnnotationAnnotatedWith(Scope.class, method);
-		if (annotation == null) {
-			return null;
-		} else {
-			return AnnotationSerializerRegistry.serialize(annotation);
 		}
 	}
 }

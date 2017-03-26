@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-public class InjectScopeTests {
+public class AnnotationsTests {
 	private static class Testable {
 		@Singleton
 		Object scopedField;

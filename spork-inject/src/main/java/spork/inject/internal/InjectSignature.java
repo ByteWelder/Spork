@@ -14,14 +14,12 @@ public final class InjectSignature {
 	private static final String SEPARATOR = ":";
 	private final Class<?> targetType;
 	private final Nullability nullability;
-
 	@Nullable
 	private final String qualifier;
 
 	/**
-	 *
-	 * @param targetType the real target type (not a Provider)
-	 * @param nullability .
+	 * @param targetType          the real target type (not a Provider)
+	 * @param nullability         .
 	 * @param qualifierAnnotation .
 	 */
 	InjectSignature(Class<?> targetType, Nullability nullability, @Nullable Annotation qualifierAnnotation) {
