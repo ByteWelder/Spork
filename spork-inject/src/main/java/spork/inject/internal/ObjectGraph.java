@@ -10,7 +10,7 @@ import javax.inject.Provider;
 
 import spork.BindException;
 import spork.Spork;
-import spork.inject.internal.providers.InstanceCacheProvider;
+import spork.inject.internal.providers.InstanceMapProvider;
 import spork.inject.internal.providers.InstanceProvider;
 
 public final class ObjectGraph {
@@ -52,7 +52,7 @@ public final class ObjectGraph {
 				throw new BindException(Inject.class, "no ObjectGraph found that defines scope \"" + scope.annotationType().getName() + "\"");
 			}
 
-			return (Provider<T>) new InstanceCacheProvider(node, parameters, scopedGraph.instanceMap);
+			return (Provider<T>) new InstanceMapProvider(scopedGraph.instanceMap, node, parameters);
 		}
 
 		// else convert to Provider
@@ -92,7 +92,7 @@ public final class ObjectGraph {
 		return injectSignatureCache;
 	}
 
-	public @Nullable ObjectGraph findObjectGraph(Class<? extends Annotation> scopeAnnotationClass) {
+	private @Nullable ObjectGraph findObjectGraph(Class<? extends Annotation> scopeAnnotationClass) {
 		if (this.scopeAnnotationClass == scopeAnnotationClass) {
 			return this;
 		} else if (parentGraph != null) {

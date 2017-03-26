@@ -8,7 +8,11 @@ import javax.inject.Provider;
 import spork.inject.internal.InjectSignature;
 import spork.inject.internal.ObjectGraphNode;
 
-public class InstanceCacheProvider implements Provider<Object> {
+/**
+ * A provider that returns an instance from a map or otherwise creates it with
+ * the given ObjectGraphNode and its arguments.
+ */
+public class InstanceMapProvider implements Provider<Object> {
 	private final ObjectGraphNode node;
 	@Nullable
 	private final Object[] arguments;
@@ -19,7 +23,8 @@ public class InstanceCacheProvider implements Provider<Object> {
 	 * @param arguments the arguments needed to inject
 	 * @param instanceMap the instance map within the correct scope to store the instance in
 	 */
-	public InstanceCacheProvider(ObjectGraphNode node, @Nullable Object[] arguments, Map<InjectSignature, Object> instanceMap) {
+	@SuppressWarnings("PMD.UseVarargs")
+	public InstanceMapProvider(Map<InjectSignature, Object> instanceMap, ObjectGraphNode node, @Nullable Object[] arguments) {
 		this.node = node;
 		this.arguments = arguments;
 		this.instanceMap = instanceMap;

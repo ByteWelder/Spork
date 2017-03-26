@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FindBugsFilter>
     <Match>
-        <Class name="spork.inject.internal.providers.InstanceCacheProvider" />
-        <Constructor name="InstanceCacheProvider" />
+        <Class name="spork.inject.internal.providers.InstanceMapProvider" />
+        <Constructor name="InstanceMapProvider" />
         <Bug code="EI2" />
     </Match>
     <Match>
