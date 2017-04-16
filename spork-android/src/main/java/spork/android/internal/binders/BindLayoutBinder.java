@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import spork.android.BindLayout;
-import spork.interfaces.TypeBinder;
+import spork.TypeBinder;
 
 import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 

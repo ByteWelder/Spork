@@ -2,8 +2,6 @@ package spork;
 
 import org.junit.Test;
 
-import spork.interfaces.Binder;
-import spork.interfaces.BinderRegistry;
 import spork.internal.BinderImpl;
 import spork.internal.BinderManager;
 

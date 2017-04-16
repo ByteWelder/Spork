@@ -2,9 +2,6 @@ package spork;
 
 import javax.annotation.Nullable;
 
-import spork.interfaces.Binder;
-import spork.interfaces.BinderRegistry;
-import spork.interfaces.SporkExtension;
 import spork.internal.BinderImpl;
 import spork.internal.BinderManager;
 

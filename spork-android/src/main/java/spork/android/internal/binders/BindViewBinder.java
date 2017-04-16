@@ -7,7 +7,7 @@ import java.lang.reflect.Field;
 import spork.android.BindView;
 import spork.android.interfaces.ViewResolver;
 import spork.android.internal.utils.Views;
-import spork.interfaces.FieldBinder;
+import spork.FieldBinder;
 import spork.internal.Reflection;
 
 import static spork.internal.BindFailedBuilder.bindFailedBuilder;

@@ -2,7 +2,7 @@ package spork.benchmark.core;
 
 import java.lang.reflect.Field;
 
-import spork.interfaces.FieldBinder;
+import spork.FieldBinder;
 
 public class FieldAnnotationBinder implements FieldBinder<FieldAnnotation> {
 	private long bindCount = 0;

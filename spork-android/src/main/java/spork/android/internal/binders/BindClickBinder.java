@@ -7,7 +7,7 @@ import java.lang.reflect.Method;
 import spork.android.BindClick;
 import spork.android.interfaces.ViewResolver;
 import spork.android.internal.utils.Views;
-import spork.interfaces.MethodBinder;
+import spork.MethodBinder;
 import spork.internal.Reflection;
 
 import static spork.internal.BindFailedBuilder.bindFailedBuilder;

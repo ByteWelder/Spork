@@ -4,8 +4,8 @@ import org.junit.Test;
 
 import spork.Spork;
 import spork.inject.Provides;
-import spork.interfaces.Binder;
-import spork.interfaces.BinderRegistry;
+import spork.Binder;
+import spork.BinderRegistry;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;

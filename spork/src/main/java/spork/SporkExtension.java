@@ -1,6 +1,4 @@
-package spork.interfaces;
-
-import spork.Spork;
+package spork;
 
 /**
  * Allows manipulation of a Spork instance with (for example) new binders.

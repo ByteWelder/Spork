@@ -11,11 +11,11 @@ import java.util.Map;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
-import spork.interfaces.Binder;
-import spork.interfaces.BinderRegistry;
-import spork.interfaces.FieldBinder;
-import spork.interfaces.MethodBinder;
-import spork.interfaces.TypeBinder;
+import spork.Binder;
+import spork.BinderRegistry;
+import spork.FieldBinder;
+import spork.MethodBinder;
+import spork.TypeBinder;
 
 /**
  * Holds the {@link Binder} instances for all known types.

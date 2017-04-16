@@ -1,4 +1,4 @@
-package spork.interfaces;
+package spork;
 
 /**
  * Binds annotations for a specified instance.

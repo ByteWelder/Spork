@@ -8,7 +8,7 @@ import javax.inject.Provider;
 
 import spork.inject.Lazy;
 import spork.inject.internal.providers.ProviderLazy;
-import spork.interfaces.FieldBinder;
+import spork.FieldBinder;
 import spork.internal.Reflection;
 
 import static spork.internal.BindFailedBuilder.bindFailedBuilder;

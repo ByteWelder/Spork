@@ -2,7 +2,7 @@ package spork.internal;
 
 import java.util.List;
 
-import spork.interfaces.Binder;
+import spork.Binder;
 
 /**
  * This {@link Binder} implementation is the main (public) entry point for binding instances.

@@ -17,8 +17,8 @@ import spork.android.internal.binders.BindFragmentBinder;
 import spork.android.internal.binders.BindLayoutBinder;
 import spork.android.internal.binders.BindResourceBinder;
 import spork.android.internal.binders.BindViewBinder;
-import spork.interfaces.BinderRegistry;
-import spork.interfaces.SporkExtension;
+import spork.BinderRegistry;
+import spork.SporkExtension;
 
 /**
  * Extension that adds binders that provide Android-specific features.

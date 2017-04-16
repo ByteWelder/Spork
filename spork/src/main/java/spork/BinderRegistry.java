@@ -1,4 +1,4 @@
-package spork.interfaces;
+package spork;
 
 /**
  * BinderRegistry provides registration methods for FieldBinder, MethodBinder and TypeBinder instances.

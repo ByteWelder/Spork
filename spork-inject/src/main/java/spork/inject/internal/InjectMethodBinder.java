@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 
 import javax.inject.Inject;
 
-import spork.interfaces.MethodBinder;
+import spork.MethodBinder;
 import spork.internal.Reflection;
 
 import static spork.internal.BindFailedBuilder.bindFailedBuilder;

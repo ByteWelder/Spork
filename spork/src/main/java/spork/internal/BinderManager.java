@@ -4,10 +4,10 @@ package spork.internal;
 import java.util.ArrayList;
 import java.util.List;
 
-import spork.interfaces.BinderRegistry;
-import spork.interfaces.FieldBinder;
-import spork.interfaces.MethodBinder;
-import spork.interfaces.TypeBinder;
+import spork.BinderRegistry;
+import spork.FieldBinder;
+import spork.MethodBinder;
+import spork.TypeBinder;
 
 /**
  * Holds a reference of all field, method and type binder instances.
