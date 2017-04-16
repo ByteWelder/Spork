@@ -21,7 +21,7 @@ public final class Reflection {
 	 * @param parentObject      the parent object that holds the Field
 	 * @param valueObject       the field value to bind
 	 */
-	@SuppressWarnings("PMD.EmptyCatchBlock")
+	@SuppressWarnings({ "PMD.EmptyCatchBlock", "PMD.PreserveStackTrace" })
 	public static void setFieldValue(Class<? extends Annotation> annotationClass, Field field, Object parentObject, Object valueObject) {
 		try {
 			field.setAccessible(true);
@@ -52,7 +52,7 @@ public final class Reflection {
 	 * @return the result of the invoked method
 	 */
 	// remove PMD.AvoidCatchingGenericException when minSdk is Android 4.4+
-	@SuppressWarnings({ "PMD.EmptyCatchBlock", "PMD.AvoidCatchingGenericException"})
+	@SuppressWarnings({ "PMD.EmptyCatchBlock", "PMD.PreserveStackTrace", "PMD.AvoidCatchingGenericException" })
 	@Nullable
 	public static Object invokeMethod(Class<? extends Annotation> annotationClass, Method method, Object object, Object... args) {
 		try {

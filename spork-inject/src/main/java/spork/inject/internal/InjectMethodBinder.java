@@ -17,6 +17,7 @@ public class InjectMethodBinder implements MethodBinder<Inject> {
 	}
 
 	@Override
+	@SuppressWarnings("PMD.PreserveStackTrace")
 	public void bind(Object object, Inject annotation, Method method, Object... parameters) {
 		ObjectGraph objectGraph = ObjectGraphs.findObjectGraph(parameters);
 		if (objectGraph == null) {

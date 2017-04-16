@@ -42,6 +42,7 @@ public final class ObjectGraphNode {
 	}
 
 	@Nullable
+	@SuppressWarnings("PMD.PreserveStackTrace")
 	Object[] collectParameters(ObjectGraph objectGraph) {
 		try {
 			return ObjectGraphs.getInjectableMethodParameters(objectGraph, method);
