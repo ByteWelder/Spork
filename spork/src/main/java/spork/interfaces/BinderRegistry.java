@@ -1,7 +1,7 @@
 package spork.interfaces;
 
 /**
- * BinderRegistry keeps a record of FieldBinder, MethodBinder and TypeBinder instances.
+ * BinderRegistry provides registration methods for FieldBinder, MethodBinder and TypeBinder instances.
  */
 public interface BinderRegistry {
 	/**
