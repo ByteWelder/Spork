@@ -6,7 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
-import spork.BindException;
+import spork.BindFailed;
 import spork.inject.internal.ObjectGraphBuilder;
 
 import static org.junit.Assert.assertEquals;
@@ -54,7 +54,7 @@ public class InjectNullabilityTests {
 		assertEquals("test", parent.string);
 	}
 
-	@Test(expected = BindException.class)
+	@Test(expected = BindFailed.class)
 	public void injectNonnullWithNullableParent() {
 		NullableParent parent = new NullableParent();
 
@@ -78,7 +78,7 @@ public class InjectNullabilityTests {
 		assertNull(parent.string);
 	}
 
-	@Test(expected = BindException.class)
+	@Test(expected = BindFailed.class)
 	public void injectNullWithNonnullParent() {
 		NonnullParent parent = new NonnullParent();
 

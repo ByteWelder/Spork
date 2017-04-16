@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 
-import spork.BindException;
+import spork.BindFailed;
 import spork.Spork;
 import spork.inject.internal.ObjectGraphBuilder;
 
@@ -48,13 +48,13 @@ public class InjectTests {
 		assertEquals(Integer.valueOf(1), parent.integer);
 	}
 
-	@Test(expected = BindException.class)
+	@Test(expected = BindFailed.class)
 	public void oneMissingModuleInjection() {
 		Parent parent = new Parent();
 		Spork.bind(parent, new StringModule());
 	}
 
-	@Test(expected = BindException.class)
+	@Test(expected = BindFailed.class)
 	public void allMissingModuleInjection() {
 		Parent parent = new Parent();
 		Spork.bind(parent);

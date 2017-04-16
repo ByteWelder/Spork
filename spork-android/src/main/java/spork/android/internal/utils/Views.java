@@ -5,7 +5,8 @@ import android.view.View;
 
 import spork.android.BindView;
 import spork.android.interfaces.ViewResolver;
-import spork.BindException;
+
+import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 public final class Views {
 
@@ -22,7 +23,9 @@ public final class Views {
 	public static View getView(ViewResolver viewResolver, int viewId, String nameFallback, Object object) {
 		View rootView = viewResolver.resolveView(object);
 		if (rootView == null) {
-			throw new BindException(BindView.class, object.getClass(), "incompatible class to find views");
+			throw bindFailedBuilder(BindView.class, "cannot resolve View from specified class")
+					.into(object.getClass())
+					.build();
 		}
 
 		int searchViewId;
@@ -31,9 +34,10 @@ public final class Views {
 			Context context = rootView.getContext();
 
 			searchViewId = context.getResources().getIdentifier(nameFallback, "id", context.getPackageName());
-
 			if (searchViewId == 0) {
-				throw new BindException(BindView.class, object.getClass(), "View not found with name '" + nameFallback + "'");
+				throw bindFailedBuilder(BindView.class, "View not found for fallback R.id." + nameFallback)
+						.into(object.getClass())
+						.build();
 			}
 		} else {
 			searchViewId = viewId;
@@ -41,7 +45,9 @@ public final class Views {
 
 		View view = rootView.findViewById(searchViewId);
 		if (view == null) {
-			throw new BindException(BindView.class, object.getClass(), "View not found");
+			throw bindFailedBuilder(BindView.class, "View not found")
+					.into(object.getClass())
+					.build();
 		}
 
 		return view;

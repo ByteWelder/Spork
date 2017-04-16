@@ -4,9 +4,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
-import spork.BindException;
 import spork.android.BindFragment;
 import spork.android.interfaces.FragmentResolver;
+
+import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 /**
  * Resolves Fragment instances from v4 support library types.
@@ -31,7 +32,9 @@ public class SupportFragmentResolver implements FragmentResolver {
 			int id = activity.getResources().getIdentifier(idName, "id", activity.getPackageName());
 
 			if (id == 0) {
-				throw new BindException(BindFragment.class, activity.getClass(), "Fragment not found by name for id '" + idName + "'");
+				throw bindFailedBuilder(BindFragment.class, "Fragment not found for R.id." + idName)
+						.into(activity.getClass())
+						.build();
 			}
 
 			return activity.getSupportFragmentManager().findFragmentById(id);
@@ -40,7 +43,9 @@ public class SupportFragmentResolver implements FragmentResolver {
 			int id = fragment.getResources().getIdentifier(idName, "id", fragment.getActivity().getPackageName());
 
 			if (id == 0) {
-				throw new BindException(BindFragment.class, fragment.getClass(), "Fragment not found by name for id '" + idName + "'");
+				throw bindFailedBuilder(BindFragment.class, "Fragment not found for R.id." + idName)
+						.into(fragment.getClass())
+						.build();
 			}
 
 			return fragment.getFragmentManager().findFragmentById(id);

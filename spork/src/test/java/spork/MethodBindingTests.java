@@ -83,21 +83,17 @@ public class MethodBindingTests {
 		spork.getBinder().bind(object);
 
 		Method method = MethodBinderParent.class.getDeclaredMethod("privateCallCountMethod");
-		BindMethod annotation = method.getAnnotation(BindMethod.class);
-
 		assertEquals(0, object.getPrivateCallCount());
 
-		Object regularResult = Reflection.invokeMethod(annotation, method, object);
+		Object regularResult = Reflection.invokeMethod(BindMethod.class, method, object);
 		assertNull(regularResult);
 
 		assertEquals(1, object.getPrivateCallCount());
 
-		Method staticMethod = MethodBinderParent.class.getMethod("staticEchoMethod", int.class);
-		BindMethod staticMethodAnnotation = staticMethod.getAnnotation(BindMethod.class);
-
 		assertEquals(123, MethodBinderParent.staticEchoMethod(123));
 
-		Object staticResult = Reflection.invokeMethod(staticMethodAnnotation, staticMethod, null, 123);
+		Method staticMethod = MethodBinderParent.class.getMethod("staticEchoMethod", int.class);
+		Object staticResult = Reflection.invokeMethod(BindMethod.class, staticMethod, null, 123);
 		assertNotNull(staticResult);
 		assertEquals(123, staticResult);
 	}

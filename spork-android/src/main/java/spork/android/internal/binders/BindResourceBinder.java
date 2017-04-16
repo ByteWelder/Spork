@@ -11,9 +11,10 @@ import javax.annotation.Nullable;
 import spork.android.BindResource;
 import spork.android.interfaces.ContextResolver;
 import spork.android.internal.utils.ResourceId;
-import spork.BindException;
 import spork.interfaces.FieldBinder;
 import spork.internal.Reflection;
+
+import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 public class BindResourceBinder implements FieldBinder<BindResource> {
 	private final ContextResolver contextResolver;
@@ -27,16 +28,20 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 		Context context = contextResolver.resolveContext(object);
 
 		if (context == null) {
-			throw new BindException(BindResource.class, object.getClass(), field, "failed to find Context: make sure your parent class is a View, Fragment or Activity");
+			throw bindFailedBuilder(BindResource.class, "failed to retrieve Context from target object")
+					.into(field)
+					.build();
 		}
 
-		Object fieldObject = getFieldObject(context, annotation, field);
+		Object resource = getResource(context, annotation, field);
 
-		if (fieldObject == null) {
-			throw new BindException(BindResource.class, object.getClass(), field, "resource not found");
+		if (resource == null) {
+			throw bindFailedBuilder(BindResource.class, "resource not found")
+					.into(field)
+					.build();
 		}
 
-		Reflection.setFieldValue(annotation, field, object, fieldObject);
+		Reflection.setFieldValue(BindResource.class, field, object, resource);
 	}
 
 	@Override
@@ -44,27 +49,31 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 		return BindResource.class;
 	}
 
+	// region Resource get methods
+
 	@Nullable
-	private Object getFieldObject(Context context, BindResource annotation, Field field) {
+	private Object getResource(Context context, BindResource annotation, Field field) {
 		Class<?> fieldClass = field.getType();
 
 		if (fieldClass == String.class) {
-			return getStringObject(context, annotation, field);
+			return getString(context, annotation, field);
 		} else if (fieldClass == Float.class || fieldClass == float.class) {
-			return getDimensionFieldObject(context, annotation, field);
+			return getDimension(context, annotation, field);
 		} else if (fieldClass == Drawable.class) {
-			return getDrawableFieldObject(context, annotation, field);
+			return getDrawable(context, annotation, field);
 		} else if (fieldClass == Integer.class || fieldClass == int.class) {
-			return getIntegerFieldObject(context, annotation, field);
+			return getInteger(context, annotation, field);
 		} else if (fieldClass == Boolean.class || fieldClass == boolean.class) {
-			return getBooleanFieldObject(context, annotation, field);
+			return getBoolean(context, annotation, field);
 		} else {
-			throw new BindException(BindResource.class, field.getDeclaringClass(), field, "unsupported field type");
+			throw bindFailedBuilder(BindResource.class, "unsupported field type")
+					.into(field)
+					.build();
 		}
 	}
 
 	@Nullable
-	private String getStringObject(Context context, BindResource annotation, Field field) {
+	private String getString(Context context, BindResource annotation, Field field) {
 		int resourceId = annotation.value();
 
 		if (resourceId == ResourceId.NONE) {
@@ -74,7 +83,7 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 		return context.getResources().getString(resourceId);
 	}
 
-	private float getDimensionFieldObject(Context context, BindResource annotation, Field field) {
+	private float getDimension(Context context, BindResource annotation, Field field) {
 		int resourceId = annotation.value();
 
 		if (resourceId == ResourceId.NONE) {
@@ -86,7 +95,7 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 
 	@SuppressWarnings("deprecation")
 	@Nullable
-	private Drawable getDrawableFieldObject(Context context, BindResource annotation, Field field) {
+	private Drawable getDrawable(Context context, BindResource annotation, Field field) {
 		int resourceId = annotation.value();
 
 		if (resourceId == ResourceId.NONE) {
@@ -100,7 +109,7 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 		}
 	}
 
-	private int getIntegerFieldObject(Context context, BindResource annotation, Field field) {
+	private int getInteger(Context context, BindResource annotation, Field field) {
 		int resourceId = annotation.value();
 
 		if (resourceId == ResourceId.NONE) {
@@ -110,7 +119,7 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 		return context.getResources().getInteger(resourceId);
 	}
 
-	private boolean getBooleanFieldObject(Context context, BindResource annotation, Field field) {
+	private boolean getBoolean(Context context, BindResource annotation, Field field) {
 		int resourceId = annotation.value();
 
 		if (resourceId == ResourceId.NONE) {
@@ -119,4 +128,6 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 
 		return context.getResources().getBoolean(resourceId);
 	}
+
+	// endregion
 }

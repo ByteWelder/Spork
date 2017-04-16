@@ -7,9 +7,10 @@ import javax.annotation.Nullable;
 import spork.android.BindFragment;
 import spork.android.interfaces.FragmentResolver;
 import spork.android.internal.utils.ResourceId;
-import spork.BindException;
 import spork.interfaces.FieldBinder;
 import spork.internal.Reflection;
+
+import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 public class BindFragmentBinder implements FieldBinder<BindFragment> {
 	private final FragmentResolver fragmentResolver;
@@ -30,14 +31,12 @@ public class BindFragmentBinder implements FieldBinder<BindFragment> {
 		}
 
 		if (fragmentObject == null) {
-			throw new BindException(BindFragment.class, object.getClass(), field, "Fragment not found");
+			throw bindFailedBuilder(BindFragment.class, "Fragment not found")
+					.into(field)
+					.build();
 		}
 
-		if (!field.getType().isAssignableFrom(fragmentObject.getClass())) {
-			throw new BindException(BindFragment.class, object.getClass(), field, "field is not a Fragment");
-		}
-
-		Reflection.setFieldValue(annotation, field, object, fragmentObject);
+		Reflection.setFieldValue(BindFragment.class, field, object, fragmentObject);
 	}
 
 	@Override

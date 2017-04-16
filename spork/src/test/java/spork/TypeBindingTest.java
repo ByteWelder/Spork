@@ -30,7 +30,7 @@ public class TypeBindingTest {
 		@Override
 		public void bind(Object instance, BindValue annotation, Class<?> annotatedType, Object... parameters) {
 			if (!IntSettable.class.isAssignableFrom(instance.getClass())) {
-				throw new BindException(BindValue.class, instance.getClass(), "can only be used with IntSettable target");
+				throw new BindFailed("can only be used with IntSettable target");
 			}
 
 			IntSettable valueHolder = (IntSettable) instance;
@@ -74,7 +74,7 @@ public class TypeBindingTest {
 		assertEquals(123, holder.getValue());
 	}
 
-	@Test(expected = BindException.class)
+	@Test(expected = BindFailed.class)
 	public void testFaultyType() {
 		FaultyIntegerHolder holder = new FaultyIntegerHolder();
 		spork.getBinder().bind(holder);

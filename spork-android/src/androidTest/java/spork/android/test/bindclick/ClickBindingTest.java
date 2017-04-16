@@ -12,7 +12,7 @@ import spork.android.test.bindclick.domain.TestFaultyView;
 import spork.android.test.bindclick.domain.TestFragment;
 import spork.android.test.bindclick.domain.TestPojo;
 import spork.android.test.bindclick.domain.TestView;
-import spork.BindException;
+import spork.BindFailed;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -39,12 +39,12 @@ public class ClickBindingTest {
         testClick(activity.getTestView());
     }
 
-    @Test(expected = BindException.class)
+    @Test(expected = BindFailed.class)
     public void testPojo() {
         new TestPojo();
     }
 
-    @Test(expected = BindException.class)
+    @Test(expected = BindFailed.class)
     public void testFaultyView() {
         new TestFaultyView(activityRule.getActivity());
     }

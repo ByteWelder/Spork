@@ -5,8 +5,9 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import spork.android.BindLayout;
-import spork.BindException;
 import spork.interfaces.TypeBinder;
+
+import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 public class BindLayoutBinder implements TypeBinder<BindLayout> {
 
@@ -20,7 +21,9 @@ public class BindLayoutBinder implements TypeBinder<BindLayout> {
 			ViewGroup viewGroup = (ViewGroup) object;
 			LayoutInflater.from(viewGroup.getContext()).inflate(layoutResourceId, viewGroup);
 		} else {
-			throw new BindException(BindLayout.class, object.getClass(), "annotation can only be used with Activity or ViewGroup");
+			throw bindFailedBuilder(BindLayout.class, "annotation can only be used with Activity or ViewGroup")
+					.into(object.getClass())
+					.build();
 		}
 	}
 

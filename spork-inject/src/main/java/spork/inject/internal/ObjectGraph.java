@@ -8,10 +8,11 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-import spork.BindException;
 import spork.Spork;
 import spork.inject.internal.providers.InstanceMapProvider;
 import spork.inject.internal.providers.InstanceProvider;
+
+import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 public final class ObjectGraph {
 	@Nullable
@@ -49,7 +50,10 @@ public final class ObjectGraph {
 					: this;
 
 			if (scopedGraph == null) {
-				throw new BindException(Inject.class, "no ObjectGraph found that defines scope \"" + scope.annotationType().getName() + "\"");
+				String message = "no ObjectGraph found that defines scope " + scope.annotationType().getName();
+				throw bindFailedBuilder(Inject.class, message)
+						.into(injectSignature.getType())
+						.build();
 			}
 
 			return (Provider<T>) new InstanceMapProvider(scopedGraph.instanceMap, node, parameters);

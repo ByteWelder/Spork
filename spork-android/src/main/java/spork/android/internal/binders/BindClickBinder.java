@@ -7,9 +7,10 @@ import java.lang.reflect.Method;
 import spork.android.BindClick;
 import spork.android.interfaces.ViewResolver;
 import spork.android.internal.utils.Views;
-import spork.BindException;
 import spork.interfaces.MethodBinder;
 import spork.internal.Reflection;
+
+import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 public class BindClickBinder implements MethodBinder<BindClick> {
 	private final ViewResolver viewResolver;
@@ -34,11 +35,14 @@ public class BindClickBinder implements MethodBinder<BindClick> {
 			Class<?>[] parameterTypes = method.getParameterTypes();
 
 			if (parameterTypes.length == 0) {
-				Reflection.invokeMethod(annotation, method, object);
+				Reflection.invokeMethod(BindClick.class, method, object);
 			} else if (parameterTypes.length == 1 && View.class.isAssignableFrom(parameterTypes[0])) {
-				Reflection.invokeMethod(annotation, method, object, v);
+				Reflection.invokeMethod(BindClick.class, method, object, v);
 			} else {
-				throw new BindException(BindClick.class, v.getClass(), method, "onClick failed because the method arguments must be either empty or accept a single View type");
+				throw bindFailedBuilder(BindClick.class, "onClick failed because the method arguments must be either empty or accept a single View type")
+						.from(v.getClass())
+						.into(method)
+						.build();
 			}
 		}
 	}

@@ -7,9 +7,10 @@ import java.lang.reflect.Field;
 import spork.android.BindView;
 import spork.android.interfaces.ViewResolver;
 import spork.android.internal.utils.Views;
-import spork.BindException;
 import spork.interfaces.FieldBinder;
 import spork.internal.Reflection;
+
+import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 public class BindViewBinder implements FieldBinder<BindView> {
 	private final ViewResolver viewResolver;
@@ -21,12 +22,14 @@ public class BindViewBinder implements FieldBinder<BindView> {
 	@Override
 	public void bind(Object object, BindView annotation, Field field, Object... parameters) {
 		if (!View.class.isAssignableFrom(field.getType())) {
-			throw new BindException(BindView.class, object.getClass(), field, "field is not a View");
+			throw bindFailedBuilder(BindView.class, "field is not a View")
+					.into(field)
+					.build();
 		}
 
 		View view = Views.getView(viewResolver, annotation.value(), field.getName(), object);
 
-		Reflection.setFieldValue(annotation, field, object, view);
+		Reflection.setFieldValue(BindView.class, field, object, view);
 	}
 
 	@Override

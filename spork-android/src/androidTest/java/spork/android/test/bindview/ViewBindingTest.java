@@ -10,7 +10,7 @@ import spork.android.test.bindview.domain.FaultySpecifiedIdView;
 import spork.android.test.bindview.domain.FaultyTargetTypeView;
 import spork.android.test.bindview.domain.Pojo;
 import spork.android.test.bindview.domain.TestActivity;
-import spork.BindException;
+import spork.BindFailed;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -29,25 +29,25 @@ public class ViewBindingTest
 		testBinding(activity.getViewBindingView());
 	}
 
-	@Test(expected = BindException.class)
+	@Test(expected = BindFailed.class)
 	public void bindViewPojo()
 	{
 		new Pojo();
 	}
 
-	@Test(expected = BindException.class)
+	@Test(expected = BindFailed.class)
 	public void bindFaultyImpliedId()
 	{
 		new FaultyImpliedIdView(mActivityRule.getActivity());
 	}
 
-	@Test(expected = BindException.class)
+	@Test(expected = BindFailed.class)
 	public void bindFaultySpecifiedId()
 	{
 		new FaultySpecifiedIdView(mActivityRule.getActivity());
 	}
 
-	@Test(expected = BindException.class)
+	@Test(expected = BindFailed.class)
 	public void bindFaultyTargetType()
 	{
 		new FaultyTargetTypeView(mActivityRule.getActivity());

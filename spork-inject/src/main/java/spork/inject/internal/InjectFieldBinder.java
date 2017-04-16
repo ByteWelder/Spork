@@ -6,11 +6,12 @@ import java.lang.reflect.ParameterizedType;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-import spork.BindException;
 import spork.inject.Lazy;
 import spork.inject.internal.providers.ProviderLazy;
 import spork.interfaces.FieldBinder;
 import spork.internal.Reflection;
+
+import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 /**
  * The default FieldBinder that binds field annotated with the Inject annotation.
@@ -26,7 +27,9 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 	public void bind(Object instance, Inject annotation, Field field, Object... parameters) {
 		ObjectGraph objectGraph = ObjectGraphs.findObjectGraph(parameters);
 		if (objectGraph == null) {
-			throw new BindException(Inject.class, instance.getClass(), field, "no ObjectGraph specified in instance arguments of Spork.bind() when injecting " + instance.getClass().getName());
+			throw bindFailedBuilder(Inject.class, "no ObjectGraph specified in instance arguments of Spork.bind()")
+					.into(field)
+					.build();
 		}
 
 		Class<?> fieldType = field.getType();
@@ -42,17 +45,19 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 		Provider<?> provider = objectGraph.findProvider(injectSignature);
 
 		if (provider == null) {
-			throw new BindException(Inject.class, instance.getClass(), field, "none of the modules provides an instance for " + fieldType.getName());
+			throw bindFailedBuilder(Inject.class, "none of the modules provides an instance for " + fieldType.getName())
+					.into(field)
+					.build();
 		}
 
 		// Either set the provider instance or the real instance
 		if (fieldIsProvider) {
-			Reflection.setFieldValue(annotation, field, instance, provider);
+			Reflection.setFieldValue(Inject.class, field, instance, provider);
 		} else if (fieldIsLazy) {
-			Reflection.setFieldValue(annotation, field, instance, new ProviderLazy<>(provider));
+			Reflection.setFieldValue(Inject.class, field, instance, new ProviderLazy<>(provider));
 		} else {
 			Object bindInstance = provider.get();
-			Reflection.setFieldValue(annotation, field, instance, bindInstance);
+			Reflection.setFieldValue(Inject.class, field, instance, bindInstance);
 		}
 	}
 }

@@ -12,7 +12,7 @@ import spork.android.test.bindresource.domain.TestDimensionPojo;
 import spork.android.test.bindresource.domain.TestDrawablePojo;
 import spork.android.test.bindresource.domain.TestStringPojo;
 import spork.android.test.R;
-import spork.BindException;
+import spork.BindFailed;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -70,17 +70,17 @@ public class ResourceBindingTest {
         assertEquals(Integer.valueOf(1), testInteger);
     }
 
-    @Test(expected = BindException.class)
+    @Test(expected = BindFailed.class)
     public void testDimensionPojo() {
         new TestDimensionPojo();
     }
 
-    @Test(expected = BindException.class)
+    @Test(expected = BindFailed.class)
     public void testDrawablePojo() {
         new TestDrawablePojo();
     }
 
-    @Test(expected = BindException.class)
+    @Test(expected = BindFailed.class)
     public void testStringPojo() {
         new TestStringPojo();
     }

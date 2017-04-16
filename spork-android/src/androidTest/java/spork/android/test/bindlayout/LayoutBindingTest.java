@@ -12,7 +12,7 @@ import spork.android.test.bindlayout.domain.Pojo;
 import spork.android.test.bindlayout.domain.TestActivity;
 import spork.android.test.bindlayout.domain.TestView;
 import spork.android.test.R;
-import spork.BindException;
+import spork.BindFailed;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -41,7 +41,7 @@ public class LayoutBindingTest {
         new FaultyLayoutTestView(activityRule.getActivity());
     }
 
-    @Test(expected = BindException.class)
+    @Test(expected = BindFailed.class)
     public void pojo() {
         new Pojo();
     }

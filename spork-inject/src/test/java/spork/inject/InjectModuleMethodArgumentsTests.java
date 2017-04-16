@@ -5,7 +5,7 @@ import org.junit.Test;
 import javax.inject.Inject;
 
 import spork.Spork;
-import spork.BindException;
+import spork.BindFailed;
 import spork.inject.internal.ObjectGraph;
 import spork.inject.internal.ObjectGraphBuilder;
 
@@ -58,7 +58,7 @@ public class InjectModuleMethodArgumentsTests {
 		assertEquals("12", parent.stringBuilder.toString());
 	}
 
-	@Test(expected = BindException.class)
+	@Test(expected = BindFailed.class)
 	public void noDependencyFoundForArgumentTest() {
 		Parent parent = new Parent();
 
