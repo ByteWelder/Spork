@@ -1,11 +1,9 @@
 package spork.android;
 
 import spork.Spork;
-import spork.android.interfaces.ContextResolver;
-import spork.android.interfaces.FragmentResolver;
-import spork.android.interfaces.Registry;
-import spork.android.interfaces.SporkAndroidExtension;
-import spork.android.interfaces.ViewResolver;
+import spork.android.extension.ContextResolver;
+import spork.android.extension.FragmentResolver;
+import spork.android.extension.ViewResolver;
 import spork.android.internal.ContextResolverManager;
 import spork.android.internal.DefaultContextResolver;
 import spork.android.internal.DefaultFragmentResolver;
@@ -73,23 +71,23 @@ public final class SporkAndroid implements SporkExtension {
 	}
 
 	/**
-	 * @return the Registry to register new FragmentResolver instances
+	 * Extension registration method to add a custom FragmentResolver.
 	 */
-	public Registry<FragmentResolver> getFragmentResolverRegistry() {
-		return fragmentResolverManager;
+	public void register(FragmentResolver fragmentResolver) {
+		fragmentResolverManager.register(fragmentResolver);
 	}
 
 	/**
-	 * @return the Registry to register new ViewResolver instances
+	 * Extension registration method to add a custom ViewResolver.
 	 */
-	public Registry<ViewResolver> getViewResolverRegistry() {
-		return viewResolverManager;
+	public void register(ViewResolver viewResolver) {
+		viewResolverManager.register(viewResolver);
 	}
 
 	/**
-	 * @return the Registry to register new ContextResolver instances
+	 * Extension registration method to add a custom ContextResolver.
 	 */
-	public Registry<ContextResolver> getContextResolverRegistry() {
-		return contextResolverManager;
+	public void register(ContextResolver contextResolver) {
+		contextResolverManager.register(contextResolver);
 	}
 }

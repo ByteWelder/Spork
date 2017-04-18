@@ -9,7 +9,7 @@ import spork.BindFailed;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static spork.internal.BindFailedBuilder.bindFailedBuilder;
+import static spork.BindFailedBuilder.bindFailedBuilder;
 
 public class BindFailedBuilderTests {
 

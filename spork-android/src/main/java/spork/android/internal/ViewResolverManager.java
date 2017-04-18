@@ -7,14 +7,13 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import spork.android.interfaces.Registry;
-import spork.android.interfaces.ViewResolver;
+import spork.android.extension.ViewResolver;
 
 /**
  * The main {@link ViewResolver} implementation that holds child {@link ViewResolver} instances
  * and uses them one by one to resolve a {@link View}.
  */
-public class ViewResolverManager implements ViewResolver, Registry<ViewResolver> {
+public class ViewResolverManager implements ViewResolver {
 	private final List<ViewResolver> viewResolvers;
 
 	public ViewResolverManager(List<ViewResolver> contextResolvers) {
@@ -25,7 +24,6 @@ public class ViewResolverManager implements ViewResolver, Registry<ViewResolver>
 		this(new ArrayList<ViewResolver>(2));
 	}
 
-	@Override
 	public void register(ViewResolver viewResolver) {
 		viewResolvers.add(viewResolver);
 	}

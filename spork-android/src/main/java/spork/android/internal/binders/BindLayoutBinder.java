@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import spork.android.BindLayout;
 import spork.TypeBinder;
 
-import static spork.internal.BindFailedBuilder.bindFailedBuilder;
+import static spork.BindFailedBuilder.bindFailedBuilder;
 
 public class BindLayoutBinder implements TypeBinder<BindLayout> {
 

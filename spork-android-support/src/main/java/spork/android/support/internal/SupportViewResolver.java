@@ -5,7 +5,7 @@ import android.view.View;
 
 import javax.annotation.Nullable;
 
-import spork.android.interfaces.ViewResolver;
+import spork.android.extension.ViewResolver;
 
 /**
  * Resolves View instances from v4 support library types.

@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import spork.MethodBinder;
 import spork.internal.Reflection;
 
-import static spork.internal.BindFailedBuilder.bindFailedBuilder;
+import static spork.BindFailedBuilder.bindFailedBuilder;
 
 public class InjectMethodBinder implements MethodBinder<Inject> {
 

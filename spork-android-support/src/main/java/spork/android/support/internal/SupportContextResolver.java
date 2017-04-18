@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
-import spork.android.interfaces.ContextResolver;
+import spork.android.extension.ContextResolver;
 
 /**
  * Resolves Context from v4 support library types.

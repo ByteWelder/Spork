@@ -3,7 +3,7 @@ package spork.android.test;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import spork.android.interfaces.ViewResolver;
+import spork.android.extension.ViewResolver;
 import spork.android.internal.ViewResolverManager;
 
 import static org.mockito.Mockito.verify;

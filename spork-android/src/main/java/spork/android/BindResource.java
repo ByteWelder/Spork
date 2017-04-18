@@ -5,8 +5,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import spork.android.interfaces.ContextProvider;
-import spork.android.interfaces.ViewProvider;
 import spork.android.internal.utils.ResourceId;
 
 /**

@@ -1,4 +1,4 @@
-package spork.android.interfaces;
+package spork.android.extension;
 
 import javax.annotation.Nullable;
 

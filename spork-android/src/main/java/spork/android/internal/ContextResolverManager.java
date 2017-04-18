@@ -7,14 +7,13 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import spork.android.interfaces.ContextResolver;
-import spork.android.interfaces.Registry;
+import spork.android.extension.ContextResolver;
 
 /**
  * The main {@link ContextResolver} implementation that holds child {@link ContextResolver} instances
  * and uses them one by one to resolve a {@link Context}.
  */
-public class ContextResolverManager implements ContextResolver, Registry<ContextResolver> {
+public class ContextResolverManager implements ContextResolver {
 	private final List<ContextResolver> contextResolvers;
 
 	public ContextResolverManager(List<ContextResolver> contextResolvers) {
@@ -25,7 +24,6 @@ public class ContextResolverManager implements ContextResolver, Registry<Context
 		this(new ArrayList<ContextResolver>(2));
 	}
 
-	@Override
 	public void register(ContextResolver contextResolver) {
 		contextResolvers.add(contextResolver);
 	}

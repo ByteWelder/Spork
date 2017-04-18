@@ -3,7 +3,7 @@ package spork.android.test;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import spork.android.interfaces.ContextResolver;
+import spork.android.extension.ContextResolver;
 import spork.android.internal.ContextResolverManager;
 
 import static org.mockito.Mockito.verify;

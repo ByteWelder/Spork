@@ -12,7 +12,7 @@ import spork.Spork;
 import spork.inject.internal.providers.InstanceMapProvider;
 import spork.inject.internal.providers.InstanceProvider;
 
-import static spork.internal.BindFailedBuilder.bindFailedBuilder;
+import static spork.BindFailedBuilder.bindFailedBuilder;
 
 public final class ObjectGraph {
 	@Nullable

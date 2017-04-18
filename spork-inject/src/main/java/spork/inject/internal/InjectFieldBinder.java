@@ -11,7 +11,7 @@ import spork.inject.internal.providers.ProviderLazy;
 import spork.FieldBinder;
 import spork.internal.Reflection;
 
-import static spork.internal.BindFailedBuilder.bindFailedBuilder;
+import static spork.BindFailedBuilder.bindFailedBuilder;
 
 /**
  * The default FieldBinder that binds field annotated with the Inject annotation.

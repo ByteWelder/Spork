@@ -4,9 +4,9 @@ import android.content.Context;
 import android.view.View;
 
 import spork.android.BindView;
-import spork.android.interfaces.ViewResolver;
+import spork.android.extension.ViewResolver;
 
-import static spork.internal.BindFailedBuilder.bindFailedBuilder;
+import static spork.BindFailedBuilder.bindFailedBuilder;
 
 public final class Views {
 

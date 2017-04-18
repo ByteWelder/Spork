@@ -7,9 +7,9 @@ import android.view.View;
 
 import javax.annotation.Nullable;
 
-import spork.android.interfaces.ContextProvider;
-import spork.android.interfaces.ContextResolver;
-import spork.android.interfaces.ViewProvider;
+import spork.android.ContextProvider;
+import spork.android.extension.ContextResolver;
+import spork.android.ViewProvider;
 
 /**
  * Default {@link ContextResolver} implementation for all regular Android classes that

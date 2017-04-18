@@ -1,12 +1,10 @@
-package spork.internal;
+package spork;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import javax.annotation.Nullable;
-
-import spork.BindFailed;
 
 final public class BindFailedBuilder {
 	private final String message;

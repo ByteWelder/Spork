@@ -5,12 +5,12 @@ import android.view.View;
 import java.lang.reflect.Method;
 
 import spork.android.BindClick;
-import spork.android.interfaces.ViewResolver;
+import spork.android.extension.ViewResolver;
 import spork.android.internal.utils.Views;
 import spork.MethodBinder;
 import spork.internal.Reflection;
 
-import static spork.internal.BindFailedBuilder.bindFailedBuilder;
+import static spork.BindFailedBuilder.bindFailedBuilder;
 
 public class BindClickBinder implements MethodBinder<BindClick> {
 	private final ViewResolver viewResolver;

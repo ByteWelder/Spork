@@ -6,8 +6,8 @@ import android.view.View;
 
 import javax.annotation.Nullable;
 
-import spork.android.interfaces.ViewProvider;
-import spork.android.interfaces.ViewResolver;
+import spork.android.ViewProvider;
+import spork.android.extension.ViewResolver;
 
 /**
  * Default {@link ViewResolver} implementation for all regular Android classes that

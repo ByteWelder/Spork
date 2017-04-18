@@ -5,15 +5,14 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import spork.android.interfaces.FragmentResolver;
-import spork.android.interfaces.Registry;
+import spork.android.extension.FragmentResolver;
 
 /**
  * The main {@link FragmentResolver} implementation that holds child {@link FragmentResolver} instances
  * and uses them one by one to resolve a Fragment.
  * It resolves to {@link Object} because the Fragment might be a regular Android one or a support library one.
  */
-public class FragmentResolverManager implements FragmentResolver, Registry<FragmentResolver> {
+public class FragmentResolverManager implements FragmentResolver {
 	private final List<FragmentResolver> fragmentResolvers;
 
 	public FragmentResolverManager(List<FragmentResolver> fragmentResolvers) {
@@ -24,7 +23,6 @@ public class FragmentResolverManager implements FragmentResolver, Registry<Fragm
 		this(new ArrayList<FragmentResolver>(2));
 	}
 
-	@Override
 	public void register(FragmentResolver fragmentResolver) {
 		fragmentResolvers.add(fragmentResolver);
 	}

@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 
 import javax.annotation.Nullable;
 
-import static spork.internal.BindFailedBuilder.bindFailedBuilder;
+import static spork.BindFailedBuilder.bindFailedBuilder;
 
 public final class Reflection {
 

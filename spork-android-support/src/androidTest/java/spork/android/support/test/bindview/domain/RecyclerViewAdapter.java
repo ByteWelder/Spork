@@ -10,7 +10,7 @@ import java.util.List;
 
 import spork.Spork;
 import spork.android.BindView;
-import spork.android.interfaces.ViewProvider;
+import spork.android.ViewProvider;
 import spork.android.support.test.R;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.TestViewHolder> {
