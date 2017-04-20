@@ -21,7 +21,7 @@ public class InjectMethodBinder implements MethodBinder<Inject> {
 	public void bind(Object object, Inject annotation, Method method, Object... parameters) {
 		ObjectGraph objectGraph = ObjectGraphs.findObjectGraph(parameters);
 		if (objectGraph == null) {
-			throw bindFailedBuilder(Inject.class, "no ObjectGraph specified in instance arguments of Spork.bind()")
+			throw bindFailedBuilder(Inject.class, "no ObjectGraph specified in instance arguments of bind()")
 					.into(method)
 					.build();
 		}

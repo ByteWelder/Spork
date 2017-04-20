@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import spork.Spork;
+import spork.SporkInstance;
 import spork.android.BindClick;
 import spork.android.BindView;
 import spork.android.ViewProvider;
@@ -25,7 +25,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public TestViewHolder(View itemView) {
             super(itemView);
-            Spork.bind(this);
+            SporkInstance.bind(this);
         }
 
         public void update(String text) {

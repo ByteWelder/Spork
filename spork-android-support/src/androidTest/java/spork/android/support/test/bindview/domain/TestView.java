@@ -8,9 +8,9 @@ import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
-import spork.android.support.test.R;
-import spork.Spork;
+import spork.SporkInstance;
 import spork.android.BindView;
+import spork.android.support.test.R;
 import spork.android.support.test.bindview.ViewProvider;
 
 public class TestView extends FrameLayout implements ViewProvider {
@@ -45,7 +45,7 @@ public class TestView extends FrameLayout implements ViewProvider {
     private void init(Context context) {
         LayoutInflater.from(context).inflate(R.layout.view_view_binding, this);
 
-        Spork.bind(this);
+        SporkInstance.bind(this);
     }
 
     @Override

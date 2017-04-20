@@ -8,6 +8,9 @@ import javax.annotation.Nullable;
 
 import static spork.BindFailedBuilder.bindFailedBuilder;
 
+/**
+ * Reflection utilities that throw BindFailed exceptions with contextual information.
+ */
 public final class Reflection {
 
 	private Reflection() {

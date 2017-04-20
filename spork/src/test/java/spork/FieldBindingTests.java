@@ -60,14 +60,14 @@ public class FieldBindingTests {
 	public void testMethodCalls() throws NoSuchFieldException, NoSuchMethodException {
 		Spork spork = new Spork();
 		StringFieldBinder binder = Mockito.mock(StringFieldBinder.class);
-		spork.getBinderRegistry().register(binder);
+		spork.register(binder);
 
 		when(binder.getAnnotationClass()).thenReturn(BindField.class);
 
 		verifyZeroInteractions(binder);
 
 		Parent parent = new Parent();
-		spork.getBinder().bind(parent);
+		spork.bind(parent);
 
 		Field instanceField = Parent.class.getDeclaredField("instanceField");
 		BindField instanceAnnotation = instanceField.getAnnotation(BindField.class);
@@ -82,10 +82,10 @@ public class FieldBindingTests {
 	public void testValues() {
 		Spork spork = new Spork();
 		StringFieldBinder binder = new StringFieldBinder();
-		spork.getBinderRegistry().register(binder);
+		spork.register(binder);
 
 		Parent parent = new Parent();
-		spork.getBinder().bind(parent);
+		spork.bind(parent);
 
 		assertEquals("1", parent.getInstanceField());
 		assertEquals("2", Parent.getStaticField());

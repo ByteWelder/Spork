@@ -1,6 +1,7 @@
 package spork.android;
 
 import spork.Spork;
+import spork.SporkExtension;
 import spork.android.extension.ContextResolver;
 import spork.android.extension.FragmentResolver;
 import spork.android.extension.ViewResolver;
@@ -15,8 +16,6 @@ import spork.android.internal.binders.BindFragmentBinder;
 import spork.android.internal.binders.BindLayoutBinder;
 import spork.android.internal.binders.BindResourceBinder;
 import spork.android.internal.binders.BindViewBinder;
-import spork.BinderRegistry;
-import spork.SporkExtension;
 
 /**
  * Extension that adds binders that provide Android-specific features.
@@ -35,19 +34,17 @@ public final class SporkAndroid implements SporkExtension {
 
 	@Override
 	public void initialize(Spork spork) {
-		BinderRegistry binderRegistry = spork.getBinderRegistry();
-
-		binderRegistry.register(new BindLayoutBinder()); // layouts must be bound before views
-		binderRegistry.register(new BindViewBinder(viewResolverManager));
-		binderRegistry.register(new BindFragmentBinder(fragmentResolverManager));
-		binderRegistry.register(new BindClickBinder(viewResolverManager));
-		binderRegistry.register(new BindResourceBinder(contextResolverManager));
+		spork.register(new BindLayoutBinder()); // layouts must be bound before views
+		spork.register(new BindViewBinder(viewResolverManager));
+		spork.register(new BindFragmentBinder(fragmentResolverManager));
+		spork.register(new BindClickBinder(viewResolverManager));
+		spork.register(new BindResourceBinder(contextResolverManager));
 
 		initializeExtension("spork.android.support.SporkAndroidSupport");
 	}
 
 	/**
-	 * Try to initialize a SporkAndroidExtension.
+	 * Try to load a SporkAndroidExtension.
 	 * Fails without throwing an exception if the extension is not present.
 	 *
 	 * @param extensionClassName the SporkAndroidExtension class name

@@ -4,10 +4,10 @@ import android.view.View;
 
 import java.lang.reflect.Method;
 
+import spork.MethodBinder;
 import spork.android.BindClick;
 import spork.android.extension.ViewResolver;
 import spork.android.internal.utils.Views;
-import spork.MethodBinder;
 import spork.internal.Reflection;
 
 import static spork.BindFailedBuilder.bindFailedBuilder;

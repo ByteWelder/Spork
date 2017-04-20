@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 import spork.Spork;
+import spork.SporkInstance;
 import spork.inject.internal.providers.InstanceMapProvider;
 import spork.inject.internal.providers.InstanceProvider;
 
@@ -73,12 +74,12 @@ public final class ObjectGraph {
 	}
 
 	/**
-	 * A shortcut to Spork.bind(object, objectGraph).
+	 * A shortcut to SporkInstance.bind(object, objectGraph).
 	 * This binds all known annotations for the shared Spork instance including spork-inject.
 	 * @param object the object to bind
 	 */
 	public void inject(Object object) {
-		Spork.bind(object, this);
+		SporkInstance.bind(object, this);
 	}
 
 	/**
@@ -87,7 +88,7 @@ public final class ObjectGraph {
 	 * @param object the object to bind
 	 */
 	public void inject(Object object, Spork spork) {
-		spork.getBinder().bind(object, this);
+		spork.bind(object, this);
 	}
 
 	InjectSignatureCache getInjectSignatureCache() {

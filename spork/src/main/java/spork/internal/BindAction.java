@@ -1,9 +1,6 @@
-package spork;
+package spork.internal;
 
-/**
- * Binds annotations for a specified instance.
- */
-public interface Binder {
+interface BindAction {
 	/**
 	 * Bind all annotations for an object instance on all levels of inheritance.
 	 *

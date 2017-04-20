@@ -6,12 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 
 import javax.annotation.Nullable;
 
-import spork.Spork;
-import spork.android.support.test.bindresource.ResourceProvider;
-import spork.android.support.test.R;
+import spork.SporkInstance;
 import spork.android.BindFragment;
 import spork.android.BindLayout;
 import spork.android.BindResource;
+import spork.android.support.test.R;
+import spork.android.support.test.bindresource.ResourceProvider;
 
 @BindLayout(R.layout.activity_resource_binding_support)
 public class TestActivitySupport extends AppCompatActivity implements ResourceProvider {
@@ -52,7 +52,7 @@ public class TestActivitySupport extends AppCompatActivity implements ResourcePr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Spork.bind(this);
+        SporkInstance.bind(this);
     }
 
     @Nullable

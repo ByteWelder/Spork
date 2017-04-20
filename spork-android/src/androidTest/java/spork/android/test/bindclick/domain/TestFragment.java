@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import spork.Spork;
+import spork.SporkInstance;
 import spork.android.BindClick;
 import spork.android.test.R;
 import spork.android.test.bindclick.ClickTestProvider;
@@ -22,7 +22,7 @@ public class TestFragment extends Fragment implements ClickTestProvider {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        Spork.bind(this);
+        SporkInstance.bind(this);
     }
 
     // Keep this one public to have a different accessibily state on the Method (as opposed to TestView)

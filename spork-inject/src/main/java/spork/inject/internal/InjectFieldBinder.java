@@ -6,9 +6,9 @@ import java.lang.reflect.ParameterizedType;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
+import spork.FieldBinder;
 import spork.inject.Lazy;
 import spork.inject.internal.providers.ProviderLazy;
-import spork.FieldBinder;
 import spork.internal.Reflection;
 
 import static spork.BindFailedBuilder.bindFailedBuilder;
@@ -27,7 +27,7 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 	public void bind(Object instance, Inject annotation, Field field, Object... parameters) {
 		ObjectGraph objectGraph = ObjectGraphs.findObjectGraph(parameters);
 		if (objectGraph == null) {
-			throw bindFailedBuilder(Inject.class, "no ObjectGraph specified in instance arguments of Spork.bind()")
+			throw bindFailedBuilder(Inject.class, "no ObjectGraph specified in instance arguments of bind()")
 					.into(field)
 					.build();
 		}

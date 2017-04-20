@@ -8,10 +8,10 @@ import java.lang.reflect.Field;
 
 import javax.annotation.Nullable;
 
+import spork.FieldBinder;
 import spork.android.BindResource;
 import spork.android.extension.ContextResolver;
 import spork.android.internal.utils.ResourceId;
-import spork.FieldBinder;
 import spork.internal.Reflection;
 
 import static spork.BindFailedBuilder.bindFailedBuilder;

@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import javax.annotation.Nullable;
 
-import spork.Spork;
+import spork.SporkInstance;
 import spork.android.BindFragment;
 import spork.android.BindLayout;
 import spork.android.BindResource;
@@ -55,7 +55,7 @@ public class TestActivity extends android.app.Activity implements ResourceProvid
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Spork.bind(this);
+        SporkInstance.bind(this);
     }
 
     @Nullable

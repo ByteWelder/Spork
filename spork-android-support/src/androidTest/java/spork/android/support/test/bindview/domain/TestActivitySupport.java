@@ -5,13 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import spork.Spork;
+import java.util.ArrayList;
+
+import spork.SporkInstance;
 import spork.android.BindFragment;
 import spork.android.BindLayout;
 import spork.android.BindView;
 import spork.android.support.test.R;
-
-import java.util.ArrayList;
 
 @BindLayout(R.layout.activity_view_binding_support)
 public class TestActivitySupport extends AppCompatActivity {
@@ -25,7 +25,7 @@ public class TestActivitySupport extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Spork.bind(this);
+        SporkInstance.bind(this);
 
         ArrayList<String> items = new ArrayList<>();
         items.add("Alpha");

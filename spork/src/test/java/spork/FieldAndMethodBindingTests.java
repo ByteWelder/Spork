@@ -48,8 +48,8 @@ public class FieldAndMethodBindingTests {
 		BindFieldAndMethodBinder binder = Mockito.mock(BindFieldAndMethodBinder.class);
 		when(binder.getAnnotationClass()).thenReturn(BindFieldOrMethod.class);
 
-		spork.getBinderRegistry().register((FieldBinder<BindFieldOrMethod>) binder);
-		spork.getBinderRegistry().register((MethodBinder<BindFieldOrMethod>) binder);
+		spork.register((FieldBinder<BindFieldOrMethod>) binder);
+		spork.register((MethodBinder<BindFieldOrMethod>) binder);
 
 		return binder;
 	}
@@ -63,7 +63,7 @@ public class FieldAndMethodBindingTests {
 		verifyZeroInteractions(binder);
 
 		Parent parent = new Parent();
-		spork.getBinder().bind(parent);
+		spork.bind(parent);
 
 		Field field = Parent.class.getDeclaredField("field");
 		BindFieldOrMethod fieldAnnotation = field.getAnnotation(BindFieldOrMethod.class);

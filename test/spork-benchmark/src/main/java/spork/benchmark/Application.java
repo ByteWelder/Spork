@@ -2,7 +2,7 @@ package spork.benchmark;
 
 import spork.Spork;
 import spork.benchmark.core.CoreBenchmark;
-import spork.benchmark.core.FieldAnnotationBinder;
+import spork.benchmark.core.TestBinder;
 import spork.benchmark.inject.InjectMultiFieldBenchmark;
 import spork.benchmark.inject.InjectSingleFieldBenchmark;
 import spork.inject.internal.InjectFieldBinder;
@@ -21,7 +21,7 @@ public final class Application {
 	private static void runCoreBenchmarks() {
 		final Spork spork = new Spork();
 
-		spork.getBinderRegistry().register(new FieldAnnotationBinder());
+		spork.register(new TestBinder());
 
 		BenchmarkRepeater injectFirst = new BenchmarkRepeater(new BenchmarkFactory() {
 			@Override
@@ -56,7 +56,7 @@ public final class Application {
 
 	private static void runInjectSingleFieldBenchmarks() {
 		final Spork spork = new Spork();
-		spork.getBinderRegistry().register(new InjectFieldBinder());
+		spork.register(new InjectFieldBinder());
 
 		BenchmarkRepeater injectFirst = new BenchmarkRepeater(new BenchmarkFactory() {
 			@Override
@@ -91,7 +91,7 @@ public final class Application {
 
 	private static void runInjectMultiFieldBenchmarks() {
 		final Spork spork = new Spork();
-		spork.getBinderRegistry().register(new InjectFieldBinder());
+		spork.register(new InjectFieldBinder());
 
 		BenchmarkRepeater injectFirst = new BenchmarkRepeater(new BenchmarkFactory() {
 			@Override

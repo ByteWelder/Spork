@@ -24,23 +24,23 @@ public class CoreBenchmark extends Benchmark {
 			this.spork = spork;
 		}
 
-		@FieldAnnotation
+		@TestAnnotation
 		Object a;
 
-		@FieldAnnotation
+		@TestAnnotation
 		Object b;
 
-		@FieldAnnotation
+		@TestAnnotation
 		Object c;
 
-		@FieldAnnotation
+		@TestAnnotation
 		Object d;
 
-		@FieldAnnotation
+		@TestAnnotation
 		Object e;
 
 		public void bind() {
-			spork.getBinder().bind(this);
+			spork.bind(this);
 		}
 	}
 

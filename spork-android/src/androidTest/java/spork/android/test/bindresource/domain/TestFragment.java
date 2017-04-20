@@ -7,10 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import spork.Spork;
+import spork.SporkInstance;
 import spork.android.BindResource;
-import spork.android.test.bindresource.ResourceProvider;
 import spork.android.test.R;
+import spork.android.test.bindresource.ResourceProvider;
 
 public class TestFragment extends android.app.Fragment implements ResourceProvider {
 
@@ -51,7 +51,7 @@ public class TestFragment extends android.app.Fragment implements ResourceProvid
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        Spork.bind(this);
+        SporkInstance.bind(this);
     }
 
     @Nullable

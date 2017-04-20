@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import spork.android.BindLayout;
 import spork.TypeBinder;
+import spork.android.BindLayout;
 
 import static spork.BindFailedBuilder.bindFailedBuilder;
 

@@ -4,10 +4,10 @@ import java.lang.reflect.Field;
 
 import javax.annotation.Nullable;
 
+import spork.FieldBinder;
 import spork.android.BindFragment;
 import spork.android.extension.FragmentResolver;
 import spork.android.internal.utils.ResourceId;
-import spork.FieldBinder;
 import spork.internal.Reflection;
 
 import static spork.BindFailedBuilder.bindFailedBuilder;

@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
-import spork.Spork;
+import spork.SporkInstance;
 import spork.android.BindFragment;
-import spork.android.support.test.R;
 import spork.android.BindLayout;
+import spork.android.support.test.R;
 
 @BindLayout(R.layout.activity_fragment_binding_support)
 public class TestActivitySupport extends AppCompatActivity {
@@ -20,7 +20,7 @@ public class TestActivitySupport extends AppCompatActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Spork.bind(this);
+        SporkInstance.bind(this);
     }
 
     public Fragment getFragmentByIdSpecified() {

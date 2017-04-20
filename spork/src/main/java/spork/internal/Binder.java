@@ -1,0 +1,38 @@
+package spork.internal;
+
+import java.util.List;
+
+/**
+ * The main logic for binding instances.
+ * It uses a {@link BindActionCache} to bind objects.
+ */
+public class Binder {
+	private final BindActionCache bindActionCache;
+
+	public Binder(BindActionCache bindActionCache) {
+		this.bindActionCache = bindActionCache;
+	}
+
+	public void bind(Object object, Object... parameters) {
+		Class<?> objectClass = object.getClass();
+
+		while (objectClass != null && objectClass != Object.class) {
+			List<BindAction> bindActions = bindActionCache.getBindActions(objectClass);
+			bind(object, bindActions, parameters);
+			objectClass = objectClass.getSuperclass();
+		}
+	}
+
+	/**
+	 * Bind all annotations for an object instance for one specific class at a single level of inheritance.
+	 *
+	 * @param object  the instance to bind annotations for
+	 * @param bindActions a list of BindAction instances to call
+	 * @param parameters optional parameters
+	 */
+	private void bind(Object object, List<BindAction> bindActions, Object... parameters) {
+		for (BindAction bindAction : bindActions) {
+			bindAction.bind(object, parameters);
+		}
+	}
+}

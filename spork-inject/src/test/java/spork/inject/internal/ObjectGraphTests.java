@@ -4,8 +4,9 @@ import org.junit.Test;
 
 import spork.Spork;
 import spork.inject.Provides;
-import spork.Binder;
-import spork.BinderRegistry;
+import spork.internal.BindActionCache;
+import spork.internal.Binder;
+import spork.internal.Registry;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -23,9 +24,12 @@ public class ObjectGraphTests {
 		ObjectGraph graph = new ObjectGraphBuilder()
 				.module(new Module())
 				.build();
+
+		Registry registry = mock(Registry.class);
+		BindActionCache bindActionCache = mock(BindActionCache.class);
 		Binder binder = mock(Binder.class);
-		BinderRegistry binderRegistry = mock(BinderRegistry.class);
-		Spork spork = new Spork(binderRegistry, binder);
+
+		Spork spork = new Spork(registry, bindActionCache, binder);
 
 		Object injectable = new Object();
 		graph.inject(injectable, spork);

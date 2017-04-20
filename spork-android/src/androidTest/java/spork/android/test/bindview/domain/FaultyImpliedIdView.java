@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import spork.Spork;
+import spork.SporkInstance;
 import spork.android.BindView;
 
 public class FaultyImpliedIdView extends FrameLayout {
@@ -15,6 +15,6 @@ public class FaultyImpliedIdView extends FrameLayout {
     public FaultyImpliedIdView(Context context) {
         super(context);
 
-        Spork.bind(this);
+        SporkInstance.bind(this);
     }
 }

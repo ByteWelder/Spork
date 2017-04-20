@@ -2,7 +2,7 @@ package spork.android.test.bindresource.domain;
 
 import android.graphics.drawable.Drawable;
 
-import spork.Spork;
+import spork.SporkInstance;
 import spork.android.BindResource;
 import spork.android.test.R;
 
@@ -12,6 +12,6 @@ public class TestDrawablePojo {
     private Drawable test;
 
     public TestDrawablePojo() {
-        Spork.bind(this);
+        SporkInstance.bind(this);
     }
 }

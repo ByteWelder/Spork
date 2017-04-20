@@ -63,7 +63,7 @@ public class MethodBindingTests {
 	@Before
 	public void registerTestBinders() {
 		bindMethodBinder = new BindMethodBinder();
-		spork.getBinderRegistry().register(bindMethodBinder);
+		spork.register(bindMethodBinder);
 	}
 
 	@Test
@@ -71,7 +71,7 @@ public class MethodBindingTests {
 		assertEquals(bindMethodBinder.getMethodCount(), 0);
 
 		MethodBinderParent methodBinderParent = new MethodBinderParent();
-		spork.getBinder().bind(methodBinderParent);
+		spork.bind(methodBinderParent);
 
 		assertEquals(bindMethodBinder.getMethodCount(), 2);
 	}
@@ -79,7 +79,7 @@ public class MethodBindingTests {
 	@Test
 	public void invoke() throws NoSuchMethodException {
 		MethodBinderParent object = new MethodBinderParent();
-		spork.getBinder().bind(object);
+		spork.bind(object);
 
 		Method method = MethodBinderParent.class.getDeclaredMethod("privateCallCountMethod");
 		assertEquals(0, object.getPrivateCallCount());

@@ -2,7 +2,7 @@ package spork.android.test.bindview.domain;
 
 import android.widget.Button;
 
-import spork.Spork;
+import spork.SporkInstance;
 import spork.android.BindView;
 import spork.android.test.R;
 
@@ -15,6 +15,6 @@ public class Pojo {
     private Button button;
 
     public Pojo() {
-        Spork.bind(this);
+        SporkInstance.bind(this);
     }
 }

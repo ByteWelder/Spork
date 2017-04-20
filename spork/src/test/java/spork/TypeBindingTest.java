@@ -62,19 +62,19 @@ public class TypeBindingTest {
 
 	@Before
 	public void registerTestBinders() {
-		spork.getBinderRegistry().register(new BindTypeBinder());
+		spork.register(new BindTypeBinder());
 	}
 
 	@Test
 	public void test() {
 		IntegerHolder holder = new IntegerHolder();
-		spork.getBinder().bind(holder);
+		spork.bind(holder);
 		assertEquals(123, holder.getValue());
 	}
 
 	@Test(expected = BindFailed.class)
 	public void testFaultyType() {
 		FaultyIntegerHolder holder = new FaultyIntegerHolder();
-		spork.getBinder().bind(holder);
+		spork.bind(holder);
 	}
 }
