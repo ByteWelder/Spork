@@ -3,7 +3,7 @@ package spork;
 import spork.internal.SporkExtensionLoader;
 
 /**
- * Static (shared) instance of Spork.
+ * Holds a shared instance of Spork.
  */
 public final class SporkInstance {
 	private static final Spork INSTANCE;

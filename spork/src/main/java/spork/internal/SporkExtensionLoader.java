@@ -3,6 +3,9 @@ package spork.internal;
 import spork.Spork;
 import spork.SporkExtension;
 
+/**
+ * Utility class for {@link SporkExtension}
+ */
 public final class SporkExtensionLoader {
 
 	private SporkExtensionLoader() {

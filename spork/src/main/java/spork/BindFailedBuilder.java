@@ -6,6 +6,9 @@ import java.lang.reflect.Method;
 
 import javax.annotation.Nullable;
 
+/**
+ * Builder pattern for {@link BindFailed}
+ */
 final public class BindFailedBuilder {
 	private final String message;
 	private final Class<? extends Annotation> annotationClass;
