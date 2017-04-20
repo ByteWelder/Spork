@@ -13,22 +13,14 @@ public class Spork {
 	private final BindActionCache bindActionCache;
 
 	/**
-	 * Main constructor.
-	 * Create a new instance of Spork with custom Registry and Binder implementations.
-	 *
-	 * @param registry .
-	 * @param binder         .
+	 * Constructor that is used for testing.
 	 */
-	public Spork(Registry registry, BindActionCache bindActionCache, Binder binder) {
+	Spork(Registry registry, BindActionCache bindActionCache, Binder binder) {
 		this.registry = registry;
 		this.bindActionCache = bindActionCache;
 		this.binder = binder;
 	}
 
-	/**
-	 * Creates a new instances of Spork with the default AnnotationBinderManager, Binder and BindActionCache.
-	 * Spork.shared() should be used for normal usage.
-	 */
 	public Spork() {
 		registry = new Registry();
 		bindActionCache = new BindActionCache(registry);
