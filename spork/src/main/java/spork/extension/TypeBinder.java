@@ -1,4 +1,4 @@
-package spork;
+package spork.extension;
 
 import java.lang.annotation.Annotation;
 

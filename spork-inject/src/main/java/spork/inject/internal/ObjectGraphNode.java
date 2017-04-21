@@ -10,7 +10,7 @@ import javax.inject.Scope;
 import spork.inject.internal.lang.Annotations;
 import spork.internal.Reflection;
 
-import static spork.BindFailedBuilder.bindFailedBuilder;
+import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 /**
  * A node represents an injection point (@Provides method) in a module.

@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import spork.extension.MethodBinder;
+import spork.extension.TypeBinder;
 import spork.internal.BindActionCache;
 import spork.internal.Binder;
 import spork.internal.Registry;
@@ -33,7 +35,7 @@ public class SporkTests {
 
 	@Test
 	public void registerFieldBinder() {
-		FieldBinder binder = mock(FieldBinder.class);
+		spork.extension.FieldBinder binder = mock(spork.extension.FieldBinder.class);
 		spork.register(binder);
 		verify(registry).register(binder);
 		verify(bindActionCache).register(binder);
@@ -41,7 +43,7 @@ public class SporkTests {
 
 	@Test
 	public void registerMethodBinder() {
-		MethodBinder binder = mock(MethodBinder.class);
+		spork.extension.MethodBinder binder = mock(MethodBinder.class);
 		spork.register(binder);
 		verify(registry).register(binder);
 		verify(bindActionCache).register(binder);
@@ -49,7 +51,7 @@ public class SporkTests {
 
 	@Test
 	public void registerTypeBinder() {
-		TypeBinder binder = mock(TypeBinder.class);
+		spork.extension.TypeBinder binder = mock(TypeBinder.class);
 		spork.register(binder);
 		verify(registry).register(binder);
 		verify(bindActionCache).register(binder);

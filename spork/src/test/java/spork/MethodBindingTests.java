@@ -24,7 +24,7 @@ public class MethodBindingTests {
 	private @interface BindMethod {
 	}
 
-	private static class BindMethodBinder implements MethodBinder<BindMethod> {
+	private static class BindMethodBinder implements spork.extension.MethodBinder<BindMethod> {
 		private int methodCount = 0;
 
 		@Override

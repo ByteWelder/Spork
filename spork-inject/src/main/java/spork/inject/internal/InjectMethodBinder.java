@@ -4,10 +4,10 @@ import java.lang.reflect.Method;
 
 import javax.inject.Inject;
 
-import spork.MethodBinder;
+import spork.extension.MethodBinder;
 import spork.internal.Reflection;
 
-import static spork.BindFailedBuilder.bindFailedBuilder;
+import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 public class InjectMethodBinder implements MethodBinder<Inject> {
 

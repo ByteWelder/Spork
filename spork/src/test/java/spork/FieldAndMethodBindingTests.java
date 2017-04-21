@@ -10,6 +10,8 @@ import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import spork.extension.MethodBinder;
+
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -41,14 +43,14 @@ public class FieldAndMethodBindingTests {
 	@interface BindFieldOrMethod {
 	}
 
-	interface BindFieldAndMethodBinder extends FieldBinder<BindFieldOrMethod>, MethodBinder<BindFieldOrMethod> {
+	interface BindFieldAndMethodBinder extends spork.extension.FieldBinder<BindFieldOrMethod>, spork.extension.MethodBinder<BindFieldOrMethod> {
 	}
 
 	private static BindFieldAndMethodBinder createBinder(Spork spork) {
 		BindFieldAndMethodBinder binder = Mockito.mock(BindFieldAndMethodBinder.class);
 		when(binder.getAnnotationClass()).thenReturn(BindFieldOrMethod.class);
 
-		spork.register((FieldBinder<BindFieldOrMethod>) binder);
+		spork.register((spork.extension.FieldBinder<BindFieldOrMethod>) binder);
 		spork.register((MethodBinder<BindFieldOrMethod>) binder);
 
 		return binder;

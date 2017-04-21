@@ -6,12 +6,12 @@ import java.lang.reflect.ParameterizedType;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-import spork.FieldBinder;
+import spork.extension.FieldBinder;
 import spork.inject.Lazy;
 import spork.inject.internal.providers.ProviderLazy;
 import spork.internal.Reflection;
 
-import static spork.BindFailedBuilder.bindFailedBuilder;
+import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 /**
  * The default FieldBinder that binds field annotated with the Inject annotation.

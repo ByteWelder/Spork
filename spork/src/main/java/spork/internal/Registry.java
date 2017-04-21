@@ -4,9 +4,9 @@ package spork.internal;
 import java.util.ArrayList;
 import java.util.List;
 
-import spork.FieldBinder;
-import spork.MethodBinder;
-import spork.TypeBinder;
+import spork.extension.FieldBinder;
+import spork.extension.MethodBinder;
+import spork.extension.TypeBinder;
 
 /**
  * Keeps track of all annotation binder implementations.

@@ -4,13 +4,13 @@ import java.lang.reflect.Field;
 
 import javax.annotation.Nullable;
 
-import spork.FieldBinder;
+import spork.extension.FieldBinder;
 import spork.android.BindFragment;
 import spork.android.extension.FragmentResolver;
 import spork.android.internal.utils.ResourceId;
 import spork.internal.Reflection;
 
-import static spork.BindFailedBuilder.bindFailedBuilder;
+import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 public class BindFragmentBinder implements FieldBinder<BindFragment> {
 	private final FragmentResolver fragmentResolver;

@@ -23,7 +23,7 @@ public class TypeBindingTest {
 		void setValue(int value);
 	}
 
-	private static class BindTypeBinder implements TypeBinder<BindValue> {
+	private static class BindTypeBinder implements spork.extension.TypeBinder<BindValue> {
 
 		@Override
 		public void bind(Object instance, BindValue annotation, Class<?> annotatedType, Object... parameters) {

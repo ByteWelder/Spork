@@ -1,10 +1,12 @@
-package spork;
+package spork.internal;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import javax.annotation.Nullable;
+
+import spork.BindFailed;
 
 /**
  * Builder pattern for {@link BindFailed}

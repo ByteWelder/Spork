@@ -40,7 +40,7 @@ public class FieldBindingTests {
 	@interface BindField {
 	}
 
-	private class StringFieldBinder implements FieldBinder<BindField> {
+	private class StringFieldBinder implements spork.extension.FieldBinder<BindField> {
 		@Override
 		public void bind(Object object, BindField annotation, Field field, Object... parameters) {
 			if ("instanceField".equals(field.getName())) {

@@ -11,9 +11,9 @@ import java.util.Map;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
-import spork.FieldBinder;
-import spork.MethodBinder;
-import spork.TypeBinder;
+import spork.extension.FieldBinder;
+import spork.extension.MethodBinder;
+import spork.extension.TypeBinder;
 
 /**
  * Holds the {@link BindAction} instances for all known types.

@@ -8,13 +8,13 @@ import java.lang.reflect.Field;
 
 import javax.annotation.Nullable;
 
-import spork.FieldBinder;
+import spork.extension.FieldBinder;
 import spork.android.BindResource;
 import spork.android.extension.ContextResolver;
 import spork.android.internal.utils.ResourceId;
 import spork.internal.Reflection;
 
-import static spork.BindFailedBuilder.bindFailedBuilder;
+import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 public class BindResourceBinder implements FieldBinder<BindResource> {
 	private final ContextResolver contextResolver;

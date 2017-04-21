@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import spork.TypeBinder;
+import spork.extension.TypeBinder;
 import spork.android.BindLayout;
 
-import static spork.BindFailedBuilder.bindFailedBuilder;
+import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 public class BindLayoutBinder implements TypeBinder<BindLayout> {
 

@@ -6,7 +6,7 @@ import android.view.View;
 import spork.android.BindView;
 import spork.android.extension.ViewResolver;
 
-import static spork.BindFailedBuilder.bindFailedBuilder;
+import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 public final class Views {
 

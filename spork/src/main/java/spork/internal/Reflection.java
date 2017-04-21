@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 
 import javax.annotation.Nullable;
 
-import static spork.BindFailedBuilder.bindFailedBuilder;
+import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 /**
  * Reflection utilities that throw BindFailed exceptions with contextual information.

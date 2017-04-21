@@ -1,5 +1,7 @@
 package spork;
 
+import spork.extension.MethodBinder;
+import spork.extension.TypeBinder;
 import spork.internal.BindActionCache;
 import spork.internal.Binder;
 import spork.internal.Registry;
@@ -39,7 +41,7 @@ public class Spork {
 		binder.bind(object, parameters);
 	}
 
-	public void register(FieldBinder<?> binder) {
+	public void register(spork.extension.FieldBinder<?> binder) {
 		registry.register(binder);
 		bindActionCache.register(binder);
 	}

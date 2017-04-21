@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 import spork.android.BindFragment;
 import spork.android.extension.FragmentResolver;
 
-import static spork.BindFailedBuilder.bindFailedBuilder;
+import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 /**
  * Default {@link FragmentResolver} implementation for all regular Android classes that

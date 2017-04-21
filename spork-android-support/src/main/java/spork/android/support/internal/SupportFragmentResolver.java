@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import spork.android.BindFragment;
 import spork.android.extension.FragmentResolver;
 
-import static spork.BindFailedBuilder.bindFailedBuilder;
+import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 /**
  * Resolves Fragment instances from v4 support library types.
