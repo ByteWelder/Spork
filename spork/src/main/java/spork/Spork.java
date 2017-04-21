@@ -1,35 +1,38 @@
 package spork;
 
+import javax.annotation.Nullable;
+
+import spork.extension.FieldBinder;
 import spork.extension.MethodBinder;
 import spork.extension.TypeBinder;
-import spork.internal.BindActionCache;
+import spork.internal.BindActionProvider;
 import spork.internal.Binder;
-import spork.internal.Registry;
+import spork.internal.Catalog;
 
 /**
  * Main class to access Spork functionality.
  */
 public class Spork {
-	private final Registry registry;
-	private final Binder binder;
-	private final BindActionCache bindActionCache;
+	private final Catalog catalog;
+	@Nullable private Binder binder;
 
-	/**
-	 * Constructor that is used for testing.
-	 */
-	Spork(Registry registry, BindActionCache bindActionCache, Binder binder) {
-		this.registry = registry;
-		this.bindActionCache = bindActionCache;
-		this.binder = binder;
-	}
+	// region Constructors
 
 	public Spork() {
-		registry = new Registry();
-		bindActionCache = new BindActionCache(registry);
-		binder = new Binder(bindActionCache);
+		catalog = new Catalog();
 	}
 
-	// region static methods
+	/**
+	 * Constructor for testing.
+	 */
+	Spork(@Nullable Binder binder, Catalog catalog) {
+		this.binder = binder;
+		this.catalog = catalog;
+	}
+
+	// endregion
+
+	// region Bind methods
 
 	/**
 	 * Binds all annotations for a specific object.
@@ -38,22 +41,52 @@ public class Spork {
 	 * @param parameters an optional array of non-null module instances
 	 */
 	public void bind(Object object, Object... parameters) {
+		if (binder == null) {
+			BindActionProvider bindActionProvider = new BindActionProvider(catalog);
+			binder = new Binder(bindActionProvider);
+		}
+
 		binder.bind(object, parameters);
 	}
 
-	public void register(spork.extension.FieldBinder<?> binder) {
-		registry.register(binder);
-		bindActionCache.register(binder);
+	// endregion
+
+	// region Binder registration methods
+
+	/**
+	 * Register a new FieldBinder.
+	 * Must be called before the first bind() is called.
+	 */
+	public void register(FieldBinder<?> fieldBinder) {
+		if (binder != null) {
+			throw new IllegalStateException("binders must be registered before the first bind() is called");
+		}
+
+		catalog.add(fieldBinder);
 	}
 
-	public void register(MethodBinder<?> binder) {
-		registry.register(binder);
-		bindActionCache.register(binder);
+	/**
+	 * Register a new MethodBinder.
+	 * Must be called before the first bind() is called.
+	 */
+	public void register(MethodBinder<?> methodBinder) {
+		if (binder != null) {
+			throw new IllegalStateException("binders must be registered before the first bind() is called");
+		}
+
+		catalog.add(methodBinder);
 	}
 
-	public void register(TypeBinder<?> binder) {
-		registry.register(binder);
-		bindActionCache.register(binder);
+	/**
+	 * Register a new TypeBinder.
+	 * Must be called before the first bind() is called.
+	 */
+	public void register(TypeBinder<?> typeBinder) {
+		if (binder != null) {
+			throw new IllegalStateException("binders must be registered before the first bind() is called");
+		}
+
+		catalog.add(typeBinder);
 	}
 
 	// endregion

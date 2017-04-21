@@ -4,20 +4,20 @@ import java.util.List;
 
 /**
  * The main logic for binding instances.
- * It uses a {@link BindActionCache} to bind objects.
+ * It uses a {@link BindActionProvider} to bind objects.
  */
 public class Binder {
-	private final BindActionCache bindActionCache;
+	private final BindActionProvider bindActionProvider;
 
-	public Binder(BindActionCache bindActionCache) {
-		this.bindActionCache = bindActionCache;
+	public Binder(BindActionProvider bindActionProvider) {
+		this.bindActionProvider = bindActionProvider;
 	}
 
 	public void bind(Object object, Object... parameters) {
 		Class<?> objectClass = object.getClass();
 
 		while (objectClass != null && objectClass != Object.class) {
-			List<BindAction> bindActions = bindActionCache.getBindActions(objectClass);
+			List<BindAction> bindActions = bindActionProvider.getBindActions(objectClass);
 			bind(object, bindActions, parameters);
 			objectClass = objectClass.getSuperclass();
 		}

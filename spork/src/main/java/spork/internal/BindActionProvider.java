@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import spork.extension.FieldBinder;
@@ -21,21 +20,17 @@ import spork.extension.TypeBinder;
  * Calling the register() methods updates the cache.
  */
 @ThreadSafe
-public class BindActionCache {
+public class BindActionProvider {
 	@SuppressWarnings("PMD.UseConcurrentHashMap") // we need to synchronize on combined get & put
 	private final Map<Class<?>, List<BindAction>> bindActionMap = new HashMap<>();
-	private final Registry registry;
+	private final Catalog catalog;
 
-	public BindActionCache(Registry registry) {
-		this.registry = registry;
+	public BindActionProvider(Catalog catalog) {
+		this.catalog = catalog;
 	}
 
 	/**
-	 * Gets the ClassBinderCache for a given type.
-	 * If the ClassBinderCache isn't available yet, it will be created and returned.
-	 *
-	 * @param type the class for the cached type
-	 * @return the cache
+	 * Gets the {@link BindAction} instances for the specified type.
 	 */
 	List<BindAction> getBindActions(Class<?> type) {
 		synchronized (bindActionMap) {
@@ -43,7 +38,7 @@ public class BindActionCache {
 
 			// If no cache exists, create cache
 			if (binderList == null) {
-				binderList = collectBindActions(type);
+				binderList = createBindActions(type);
 				bindActionMap.put(type, binderList);
 			}
 
@@ -51,39 +46,7 @@ public class BindActionCache {
 		}
 	}
 
-	// region Registration
-
-	public void register(FieldBinder<?> binder) {
-		synchronized (bindActionMap) {
-			// Run through existing cached types and updated them
-			for (Map.Entry<Class<?>, List<BindAction>> entry : bindActionMap.entrySet()) {
-				collectBindActions(entry.getClass(), binder, entry.getValue());
-			}
-		}
-	}
-
-	public void register(MethodBinder<?> binder) {
-		synchronized (bindActionMap) {
-			// Run through existing cached types and updated them
-			for (Map.Entry<Class<?>, List<BindAction>> entry : bindActionMap.entrySet()) {
-				collectBindActions(entry.getClass(), binder, entry.getValue());
-			}
-		}
-	}
-
-
-	public void register(TypeBinder<?> binder) {
-		synchronized (bindActionMap) {
-			// Run through existing cached types and updated them
-			for (Map.Entry<Class<?>, List<BindAction>> entry : bindActionMap.entrySet()) {
-				collectBindActions(entry.getClass(), binder, entry.getValue());
-			}
-		}
-	}
-
-	// endregion
-
-	// region Collecting
+	// region Creating BindAction instances
 
 	/**
 	 * Find all Binder instances for the given type.
@@ -93,19 +56,19 @@ public class BindActionCache {
 	 * @param classObject the class to create a cache for
 	 * @return the list of cached binders
 	 */
-	private List<BindAction> collectBindActions(Class<?> classObject) {
+	private List<BindAction> createBindActions(Class<?> classObject) {
 		ArrayList<BindAction> bindActions = new ArrayList<>();
 
-		for (TypeBinder<?> typeBinder : registry.getTypeBinders()) {
-			collectBindActions(classObject, typeBinder, bindActions);
+		for (TypeBinder<?> typeBinder : catalog.getTypeBinders()) {
+			createBindActions(classObject, typeBinder, bindActions);
 		}
 
-		for (FieldBinder<?> fieldBinder : registry.getFieldBinders()) {
-			collectBindActions(classObject, fieldBinder, bindActions);
+		for (FieldBinder<?> fieldBinder : catalog.getFieldBinders()) {
+			createBindActions(classObject, fieldBinder, bindActions);
 		}
 
-		for (MethodBinder<?> methodBinder : registry.getMethodBinders()) {
-			collectBindActions(classObject, methodBinder, bindActions);
+		for (MethodBinder<?> methodBinder : catalog.getMethodBinders()) {
+			createBindActions(classObject, methodBinder, bindActions);
 		}
 
 		bindActions.trimToSize();
@@ -122,7 +85,7 @@ public class BindActionCache {
 	 * @param bindActions          the list of cached Binders to add new cached Binders to
 	 * @param <AnnotationType> the annotation to search for in the annotated type
 	 */
-	private <AnnotationType extends Annotation> void collectBindActions(Class<?> annotatedType, final FieldBinder<AnnotationType> fieldBinder, List<BindAction> bindActions) {
+	private <AnnotationType extends Annotation> void createBindActions(Class<?> annotatedType, final FieldBinder<AnnotationType> fieldBinder, List<BindAction> bindActions) {
 		for (final Field field : annotatedType.getDeclaredFields()) {
 			final AnnotationType annotation = field.getAnnotation(fieldBinder.getAnnotationClass());
 
@@ -147,7 +110,7 @@ public class BindActionCache {
 	 * @param bindActions          the list of cached Binders to add new cached Binders to
 	 * @param <AnnotationType> the annotation to search for in the annotated type
 	 */
-	private <AnnotationType extends Annotation> void collectBindActions(Class<?> annotatedType, final MethodBinder<AnnotationType> methodBinder, List<BindAction> bindActions) {
+	private <AnnotationType extends Annotation> void createBindActions(Class<?> annotatedType, final MethodBinder<AnnotationType> methodBinder, List<BindAction> bindActions) {
 		for (final Method method : annotatedType.getDeclaredMethods()) {
 			final AnnotationType annotation = method.getAnnotation(methodBinder.getAnnotationClass());
 
@@ -172,8 +135,8 @@ public class BindActionCache {
 	 * @param bindActions          the list of cached Binders to add new cached Binders to
 	 * @param <AnnotationType> the annotation to search for in the annotated type
 	 */
-	private <AnnotationType extends Annotation> void collectBindActions(final Class<?> annotatedType, final TypeBinder<AnnotationType> typeBinder, List<BindAction> bindActions) {
-		final @Nullable AnnotationType annotation = annotatedType.getAnnotation(typeBinder.getAnnotationClass());
+	private <AnnotationType extends Annotation> void createBindActions(final Class<?> annotatedType, final TypeBinder<AnnotationType> typeBinder, List<BindAction> bindActions) {
+		final AnnotationType annotation = annotatedType.getAnnotation(typeBinder.getAnnotationClass());
 
 		if (annotation != null) {
 			bindActions.add(new BindAction() {
