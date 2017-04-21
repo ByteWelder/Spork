@@ -3,7 +3,7 @@ package spork.android.test.bindclick.domain;
 import android.app.Activity;
 import android.os.Bundle;
 
-import spork.SporkInstance;
+import spork.Spork;
 import spork.android.BindClick;
 import spork.android.BindFragment;
 import spork.android.BindView;
@@ -26,7 +26,7 @@ public class TestActivity extends Activity implements ClickTestProvider {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_click_binding);
-        SporkInstance.bind(this);
+        Spork.bind(this);
     }
 
     @BindClick(R.id.click_binding_activity_button)

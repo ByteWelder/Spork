@@ -1,6 +1,6 @@
 package spork.benchmark;
 
-import spork.Spork;
+import spork.SporkInstance;
 import spork.benchmark.core.CoreBenchmark;
 import spork.benchmark.core.TestBinder;
 import spork.benchmark.inject.InjectMultiFieldBenchmark;
@@ -19,7 +19,7 @@ public final class Application {
 	}
 
 	private static void runCoreBenchmarks() {
-		final Spork spork = new Spork();
+		final SporkInstance spork = new SporkInstance();
 
 		spork.register(new TestBinder());
 
@@ -55,7 +55,7 @@ public final class Application {
 	}
 
 	private static void runInjectSingleFieldBenchmarks() {
-		final Spork spork = new Spork();
+		final SporkInstance spork = new SporkInstance();
 		spork.register(new InjectFieldBinder());
 
 		BenchmarkRepeater injectFirst = new BenchmarkRepeater(new BenchmarkFactory() {
@@ -90,7 +90,7 @@ public final class Application {
 	}
 
 	private static void runInjectMultiFieldBenchmarks() {
-		final Spork spork = new Spork();
+		final SporkInstance spork = new SporkInstance();
 		spork.register(new InjectFieldBinder());
 
 		BenchmarkRepeater injectFirst = new BenchmarkRepeater(new BenchmarkFactory() {

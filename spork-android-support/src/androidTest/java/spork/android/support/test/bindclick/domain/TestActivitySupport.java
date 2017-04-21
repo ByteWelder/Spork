@@ -8,7 +8,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-import spork.SporkInstance;
+import spork.Spork;
 import spork.android.BindClick;
 import spork.android.BindFragment;
 import spork.android.BindLayout;
@@ -33,7 +33,7 @@ public class TestActivitySupport extends AppCompatActivity implements ClickTestP
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SporkInstance.bind(this);
+        Spork.bind(this);
 
         ArrayList<String> items = new ArrayList<>();
         items.add("Alpha");

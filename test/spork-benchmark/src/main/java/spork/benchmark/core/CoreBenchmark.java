@@ -1,26 +1,26 @@
 package spork.benchmark.core;
 
-import spork.Spork;
+import spork.SporkInstance;
 import spork.benchmark.Benchmark;
 
 public class CoreBenchmark extends Benchmark {
 	private final TestObject[] testObjects;
 
-	public CoreBenchmark(Spork spork, int iterationCount) {
+	public CoreBenchmark(SporkInstance spork, int iterationCount) {
 		testObjects = new TestObject[iterationCount];
 		for (int i = 0; i < testObjects.length; ++i) {
 			testObjects[i] = new TestObject(spork);
 		}
 	}
 
-	public CoreBenchmark(Spork spork) {
+	public CoreBenchmark(SporkInstance spork) {
 		this(spork, 1000);
 	}
 
 	public static final class TestObject {
-		private final Spork spork;
+		private final SporkInstance spork;
 
-		public TestObject(Spork spork) {
+		public TestObject(SporkInstance spork) {
 			this.spork = spork;
 		}
 

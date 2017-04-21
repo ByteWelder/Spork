@@ -2,7 +2,7 @@ package spork.benchmark.inject;
 
 import javax.inject.Inject;
 
-import spork.Spork;
+import spork.SporkInstance;
 import spork.benchmark.Benchmark;
 import spork.inject.Provides;
 import spork.inject.internal.ObjectGraph;
@@ -11,7 +11,7 @@ import spork.inject.internal.ObjectGraphBuilder;
 public class InjectMultiFieldBenchmark extends Benchmark {
 	private final TestObject[] testObjects;
 
-	public InjectMultiFieldBenchmark(Spork spork, int iterationCount) {
+	public InjectMultiFieldBenchmark(SporkInstance spork, int iterationCount) {
 		ObjectGraph graph = new ObjectGraphBuilder()
 				.module(new Module())
 				.build();
@@ -22,7 +22,7 @@ public class InjectMultiFieldBenchmark extends Benchmark {
 		}
 	}
 
-	public InjectMultiFieldBenchmark(Spork spork) {
+	public InjectMultiFieldBenchmark(SporkInstance spork) {
 		this(spork, 1000);
 	}
 
@@ -34,10 +34,10 @@ public class InjectMultiFieldBenchmark extends Benchmark {
 	}
 
 	public static final class TestObject {
-		private final Spork spork;
+		private final SporkInstance spork;
 		private final ObjectGraph objectGraph;
 
-		public TestObject(Spork spork, ObjectGraph objectGraph) {
+		public TestObject(SporkInstance spork, ObjectGraph objectGraph) {
 			this.spork = spork;
 			this.objectGraph = objectGraph;
 		}

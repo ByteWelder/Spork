@@ -5,7 +5,7 @@ import org.junit.Test;
 import javax.inject.Inject;
 
 import spork.BindFailed;
-import spork.SporkInstance;
+import spork.Spork;
 import spork.inject.internal.ObjectGraphBuilder;
 
 import static org.junit.Assert.assertEquals;
@@ -71,6 +71,6 @@ public class InjectMethodTests {
 	@Test(expected = BindFailed.class)
 	public void injectWithoutGraph() {
 		Parent parent = new Parent();
-		SporkInstance.bind(parent);
+		Spork.bind(parent);
 	}
 }

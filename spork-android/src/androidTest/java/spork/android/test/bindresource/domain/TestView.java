@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 
 import javax.annotation.Nullable;
 
-import spork.SporkInstance;
+import spork.Spork;
 import spork.android.BindResource;
 import spork.android.test.R;
 import spork.android.test.bindresource.ResourceProvider;
@@ -67,7 +67,7 @@ public class TestView extends android.view.View implements ResourceProvider {
     }
 
     private void init() {
-        SporkInstance.bind(this);
+        Spork.bind(this);
     }
 
     @Nullable

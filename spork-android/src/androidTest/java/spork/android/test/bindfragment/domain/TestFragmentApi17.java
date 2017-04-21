@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import spork.SporkInstance;
+import spork.Spork;
 import spork.android.BindFragment;
 import spork.android.test.R;
 
@@ -29,7 +29,7 @@ public class TestFragmentApi17 extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        SporkInstance.bind(this);
+        Spork.bind(this);
     }
 
     public Fragment getFragmentByIdSpecified() {

@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import spork.SporkInstance;
+import spork.Spork;
 import spork.android.BindFragment;
 import spork.android.BindLayout;
 import spork.android.BindView;
@@ -25,7 +25,7 @@ public class TestActivitySupport extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SporkInstance.bind(this);
+        Spork.bind(this);
 
         ArrayList<String> items = new ArrayList<>();
         items.add("Alpha");

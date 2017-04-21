@@ -1,30 +1,38 @@
 package spork;
 
-import spork.internal.SporkExtensionLoader;
+import javax.annotation.Nullable;
+
+import spork.extension.FieldBinder;
+import spork.extension.MethodBinder;
+import spork.extension.TypeBinder;
+import spork.internal.BindActionProvider;
+import spork.internal.Binder;
+import spork.internal.Catalog;
 
 /**
- * Holds a shared instance of Spork.
+ * Main class to access SporkInstance functionality.
  */
-public final class SporkInstance {
-	private static final Spork INSTANCE;
+public class SporkInstance {
+	private final Catalog catalog;
+	@Nullable private Binder binder;
 
-	private SporkInstance() {
-	}
+	// region Constructors
 
-	static {
-		INSTANCE = new Spork();
-
-		// Try to load known extensions
-		SporkExtensionLoader.load(INSTANCE, "spork.inject.SporkInject");
-		SporkExtensionLoader.load(INSTANCE, "spork.android.SporkAndroid");
+	public SporkInstance() {
+		catalog = new Catalog();
 	}
 
 	/**
-	 * Get the shared instance of Spork.
+	 * Constructor for testing.
 	 */
-	public static Spork get() {
-		return INSTANCE;
+	SporkInstance(@Nullable Binder binder, Catalog catalog) {
+		this.binder = binder;
+		this.catalog = catalog;
 	}
+
+	// endregion
+
+	// region Bind methods
 
 	/**
 	 * Binds all annotations for a specific object.
@@ -32,7 +40,54 @@ public final class SporkInstance {
 	 * @param object the object to bind
 	 * @param parameters an optional array of non-null module instances
 	 */
-	public static void bind(Object object, Object... parameters) {
-		INSTANCE.bind(object, parameters);
+	public void bind(Object object, Object... parameters) {
+		if (binder == null) {
+			BindActionProvider bindActionProvider = new BindActionProvider(catalog);
+			binder = new Binder(bindActionProvider);
+		}
+
+		binder.bind(object, parameters);
 	}
+
+	// endregion
+
+	// region Binder registration methods
+
+	/**
+	 * Register a new FieldBinder.
+	 * Must be called before the first bind() is called.
+	 */
+	public void register(FieldBinder<?> fieldBinder) {
+		if (binder != null) {
+			throw new IllegalStateException("binders must be registered before the first bind() is called");
+		}
+
+		catalog.add(fieldBinder);
+	}
+
+	/**
+	 * Register a new MethodBinder.
+	 * Must be called before the first bind() is called.
+	 */
+	public void register(MethodBinder<?> methodBinder) {
+		if (binder != null) {
+			throw new IllegalStateException("binders must be registered before the first bind() is called");
+		}
+
+		catalog.add(methodBinder);
+	}
+
+	/**
+	 * Register a new TypeBinder.
+	 * Must be called before the first bind() is called.
+	 */
+	public void register(TypeBinder<?> typeBinder) {
+		if (binder != null) {
+			throw new IllegalStateException("binders must be registered before the first bind() is called");
+		}
+
+		catalog.add(typeBinder);
+	}
+
+	// endregion
 }

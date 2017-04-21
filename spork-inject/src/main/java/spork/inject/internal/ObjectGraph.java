@@ -8,8 +8,8 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-import spork.Spork;
 import spork.SporkInstance;
+import spork.Spork;
 import spork.inject.internal.providers.InstanceMapProvider;
 import spork.inject.internal.providers.InstanceProvider;
 
@@ -74,20 +74,20 @@ public final class ObjectGraph {
 	}
 
 	/**
-	 * A shortcut to SporkInstance.bind(object, objectGraph).
-	 * This binds all known annotations for the shared Spork instance including spork-inject.
+	 * A shortcut to Spork.bind(object, objectGraph).
+	 * This binds all known annotations for the shared SporkInstance instance including spork-inject.
 	 * @param object the object to bind
 	 */
 	public void inject(Object object) {
-		SporkInstance.bind(object, this);
+		Spork.bind(object, this);
 	}
 
 	/**
 	 * A shortcut to spork.getBinder().bind(object, objectGraph)
-	 * This binds all known annotations for the given Spork instance including spork-inject.
+	 * This binds all known annotations for the given SporkInstance instance including spork-inject.
 	 * @param object the object to bind
 	 */
-	public void inject(Object object, Spork spork) {
+	public void inject(Object object, SporkInstance spork) {
 		spork.bind(object, this);
 	}
 

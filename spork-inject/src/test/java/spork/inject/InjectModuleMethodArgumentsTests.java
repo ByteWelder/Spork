@@ -5,7 +5,7 @@ import org.junit.Test;
 import javax.inject.Inject;
 
 import spork.BindFailed;
-import spork.SporkInstance;
+import spork.Spork;
 import spork.inject.internal.ObjectGraph;
 import spork.inject.internal.ObjectGraphBuilder;
 
@@ -66,6 +66,6 @@ public class InjectModuleMethodArgumentsTests {
 				.module(new MissingDependencyModule())
 				.build();
 
-		SporkInstance.bind(parent, graph);
+		Spork.bind(parent, graph);
 	}
 }

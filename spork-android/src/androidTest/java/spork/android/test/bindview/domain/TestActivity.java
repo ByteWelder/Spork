@@ -3,7 +3,7 @@ package spork.android.test.bindview.domain;
 import android.os.Bundle;
 import android.view.View;
 
-import spork.SporkInstance;
+import spork.Spork;
 import spork.android.BindFragment;
 import spork.android.BindLayout;
 import spork.android.BindView;
@@ -25,7 +25,7 @@ public class TestActivity extends android.app.Activity implements ViewProvider {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SporkInstance.bind(this);
+        Spork.bind(this);
     }
 
     @Override

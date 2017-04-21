@@ -58,7 +58,7 @@ public class FieldBindingTests {
 
 	@Test
 	public void testMethodCalls() throws NoSuchFieldException, NoSuchMethodException {
-		Spork spork = new Spork();
+		SporkInstance spork = new SporkInstance();
 		StringFieldBinder binder = Mockito.mock(StringFieldBinder.class);
 		spork.register(binder);
 
@@ -80,7 +80,7 @@ public class FieldBindingTests {
 
 	@Test
 	public void testValues() {
-		Spork spork = new Spork();
+		SporkInstance spork = new SporkInstance();
 		StringFieldBinder binder = new StringFieldBinder();
 		spork.register(binder);
 

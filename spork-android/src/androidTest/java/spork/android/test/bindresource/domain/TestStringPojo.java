@@ -1,6 +1,6 @@
 package spork.android.test.bindresource.domain;
 
-import spork.SporkInstance;
+import spork.Spork;
 import spork.android.BindResource;
 import spork.android.test.R;
 
@@ -10,6 +10,6 @@ public class TestStringPojo {
     private String test;
 
     public TestStringPojo() {
-        SporkInstance.bind(this);
+        Spork.bind(this);
     }
 }

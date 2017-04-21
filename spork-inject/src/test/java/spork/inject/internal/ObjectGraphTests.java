@@ -2,7 +2,7 @@ package spork.inject.internal;
 
 import org.junit.Test;
 
-import spork.Spork;
+import spork.SporkInstance;
 import spork.inject.Provides;
 
 import static org.mockito.Mockito.spy;
@@ -22,7 +22,7 @@ public class ObjectGraphTests {
 				.module(new Module())
 				.build();
 
-		Spork spork = spy(new Spork());
+		SporkInstance spork = spy(new SporkInstance());
 
 		Object injectable = new Object();
 		graph.inject(injectable, spork);

@@ -16,7 +16,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 public class MethodBindingTests {
-	private final Spork spork = new Spork();
+	private final SporkInstance spork = new SporkInstance();
 	private BindMethodBinder bindMethodBinder;
 
 	@Retention(RetentionPolicy.RUNTIME)

@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import spork.SporkInstance;
+import spork.Spork;
 import spork.android.BindView;
 import spork.android.test.R;
 import spork.android.test.bindview.ViewProvider;
@@ -28,7 +28,7 @@ public class TestFragment extends android.app.Fragment implements ViewProvider {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        SporkInstance.bind(this);
+        Spork.bind(this);
     }
 
     @Override

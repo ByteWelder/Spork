@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
-import spork.SporkInstance;
+import spork.Spork;
 import spork.android.BindClick;
 import spork.android.test.R;
 
@@ -38,7 +38,7 @@ public class TestFaultyClickArgumentsView extends FrameLayout {
     private void init(Context context) {
         LayoutInflater.from(context).inflate(R.layout.view_click_binding_faulty_arguments, this);
 
-        SporkInstance.bind(this);
+        Spork.bind(this);
     }
 
     @BindClick(R.id.click_binding_view_faulty_arguments_button)

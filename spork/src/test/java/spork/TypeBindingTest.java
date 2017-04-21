@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 import static org.junit.Assert.assertEquals;
 
 public class TypeBindingTest {
-	private final Spork spork = new Spork();
+	private final SporkInstance spork = new SporkInstance();
 
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target({ElementType.TYPE})

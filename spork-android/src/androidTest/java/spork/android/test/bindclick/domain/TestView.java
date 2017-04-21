@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
-import spork.SporkInstance;
+import spork.Spork;
 import spork.android.BindClick;
 import spork.android.test.R;
 import spork.android.test.bindclick.ClickTestProvider;
@@ -40,7 +40,7 @@ public class TestView extends FrameLayout implements ClickTestProvider {
     private void init(Context context) {
         LayoutInflater.from(context).inflate(R.layout.view_click_binding, this);
 
-        SporkInstance.bind(this);
+        Spork.bind(this);
     }
 
     @BindClick(R.id.click_binding_view_button)

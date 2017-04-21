@@ -1,6 +1,6 @@
 package spork.android;
 
-import spork.Spork;
+import spork.SporkInstance;
 import spork.SporkExtension;
 import spork.android.extension.ContextResolver;
 import spork.android.extension.FragmentResolver;
@@ -33,7 +33,7 @@ public final class SporkAndroid implements SporkExtension {
 	}
 
 	@Override
-	public void initialize(Spork spork) {
+	public void initialize(SporkInstance spork) {
 		spork.register(new BindLayoutBinder()); // layouts must be bound before views
 		spork.register(new BindViewBinder(viewResolverManager));
 		spork.register(new BindFragmentBinder(fragmentResolverManager));

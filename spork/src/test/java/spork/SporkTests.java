@@ -15,7 +15,7 @@ public class SporkTests {
 	@Test
 	public void register() {
 		Catalog catalog = mock(Catalog.class);
-		Spork spork = spy(new Spork(null, catalog));
+		SporkInstance spork = spy(new SporkInstance(null, catalog));
 
 		FieldBinder fieldBinder = mock(FieldBinder.class);
 		spork.register(fieldBinder);
@@ -26,7 +26,7 @@ public class SporkTests {
 	@Test
 	public void bind() {
 		Binder binder = mock(Binder.class);
-		Spork spork = spy(new Spork(binder, null));
+		SporkInstance spork = spy(new SporkInstance(binder, null));
 		Object target = new Object();
 
 		spork.bind(target);
@@ -36,7 +36,7 @@ public class SporkTests {
 
 	@Test(expected = IllegalStateException.class)
 	public void registerAfterBind() {
-		Spork spork = new Spork();
+		SporkInstance spork = new SporkInstance();
 
 		spork.bind(this);
 		spork.register(mock(FieldBinder.class));

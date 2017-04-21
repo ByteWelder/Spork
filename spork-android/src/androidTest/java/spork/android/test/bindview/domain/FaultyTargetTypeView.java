@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 
-import spork.SporkInstance;
+import spork.Spork;
 import spork.android.BindView;
 import spork.android.test.R;
 
@@ -18,6 +18,6 @@ public class FaultyTargetTypeView extends FrameLayout {
 
         LayoutInflater.from(context).inflate(R.layout.view_test, this);
 
-        SporkInstance.bind(this);
+        Spork.bind(this);
     }
 }

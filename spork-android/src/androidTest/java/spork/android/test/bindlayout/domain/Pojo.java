@@ -1,6 +1,6 @@
 package spork.android.test.bindlayout.domain;
 
-import spork.SporkInstance;
+import spork.Spork;
 import spork.android.BindLayout;
 import spork.android.test.R;
 
@@ -8,6 +8,6 @@ import spork.android.test.R;
 public class Pojo {
 
     public Pojo() {
-        SporkInstance.bind(this);
+        Spork.bind(this);
     }
 }

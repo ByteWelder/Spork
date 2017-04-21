@@ -1,6 +1,6 @@
 package spork.android.test;
 
-import spork.SporkInstance;
+import spork.Spork;
 import spork.android.BindResource;
 
 public class Application extends android.app.Application {
@@ -15,7 +15,7 @@ public class Application extends android.app.Application {
 
         sInstance = this;
 
-        SporkInstance.bind(this);
+        Spork.bind(this);
     }
 
     public Float getTestDimension() {

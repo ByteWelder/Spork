@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import javax.annotation.Nullable;
 
-import spork.SporkInstance;
+import spork.Spork;
 import spork.android.BindFragment;
 import spork.android.BindLayout;
 import spork.android.BindResource;
@@ -52,7 +52,7 @@ public class TestActivitySupport extends AppCompatActivity implements ResourcePr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SporkInstance.bind(this);
+        Spork.bind(this);
     }
 
     @Nullable

@@ -1,13 +1,13 @@
 package spork;
 
 /**
- * Allows manipulation of a Spork instance with (for example) new binders.
+ * Allows manipulation of a SporkInstance instance with (for example) new binders.
  */
 public interface SporkExtension {
 
 	/**
-	 * Manipulate a Spork instance with (for example) new binders.
-	 * @param spork the Spork instance
+	 * Manipulate a SporkInstance instance with (for example) new binders.
+	 * @param spork the SporkInstance instance
 	 */
-	void initialize(Spork spork);
+	void initialize(SporkInstance spork);
 }

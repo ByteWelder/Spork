@@ -6,7 +6,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
-import spork.SporkInstance;
+import spork.Spork;
 import spork.android.BindLayout;
 import spork.android.test.R;
 
@@ -35,6 +35,6 @@ public class TestView extends FrameLayout {
     }
 
     private void init() {
-        SporkInstance.bind(this);
+        Spork.bind(this);
     }
 }

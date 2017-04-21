@@ -3,7 +3,7 @@ package spork.android.test.bindlayout.domain;
 import android.app.Activity;
 import android.os.Bundle;
 
-import spork.SporkInstance;
+import spork.Spork;
 import spork.android.BindLayout;
 import spork.android.test.R;
 
@@ -13,6 +13,6 @@ public class TestActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SporkInstance.bind(this);
+        Spork.bind(this);
     }
 }

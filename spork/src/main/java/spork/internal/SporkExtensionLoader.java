@@ -1,6 +1,6 @@
 package spork.internal;
 
-import spork.Spork;
+import spork.SporkInstance;
 import spork.SporkExtension;
 
 /**
@@ -17,7 +17,7 @@ public final class SporkExtensionLoader {
 	 * @param className the SporkExtension class name
 	 */
 	@SuppressWarnings("PMD.EmptyCatchBlock")
-	public static void load(Spork spork, String className) {
+	public static void load(SporkInstance spork, String className) {
 		try {
 			Class<?> extensionClass = Class.forName(className);
 			Object extensionObject = extensionClass.newInstance();
@@ -28,9 +28,9 @@ public final class SporkExtensionLoader {
 		} catch (ClassNotFoundException e) {
 			// no-op
 		} catch (IllegalAccessException e) {
-			System.out.println("Spork: extension " + className + "found, but initialization failed because of IllegalAccessException: " + e.getMessage());
+			System.out.println("SporkInstance: extension " + className + "found, but initialization failed because of IllegalAccessException: " + e.getMessage());
 		} catch (InstantiationException e) {
-			System.out.println("Spork: extension " + className + "found, but failed to create instance: " + e.getMessage());
+			System.out.println("SporkInstance: extension " + className + "found, but failed to create instance: " + e.getMessage());
 		}
 	}
 }

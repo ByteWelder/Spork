@@ -46,7 +46,7 @@ public class FieldAndMethodBindingTests {
 	interface BindFieldAndMethodBinder extends spork.extension.FieldBinder<BindFieldOrMethod>, spork.extension.MethodBinder<BindFieldOrMethod> {
 	}
 
-	private static BindFieldAndMethodBinder createBinder(Spork spork) {
+	private static BindFieldAndMethodBinder createBinder(SporkInstance spork) {
 		BindFieldAndMethodBinder binder = Mockito.mock(BindFieldAndMethodBinder.class);
 		when(binder.getAnnotationClass()).thenReturn(BindFieldOrMethod.class);
 
@@ -58,7 +58,7 @@ public class FieldAndMethodBindingTests {
 
 	@Test
 	public void methodBinding() throws NoSuchFieldException, NoSuchMethodException {
-		Spork spork = new Spork();
+		SporkInstance spork = new SporkInstance();
 
 		BindFieldAndMethodBinder binder = createBinder(spork);
 
