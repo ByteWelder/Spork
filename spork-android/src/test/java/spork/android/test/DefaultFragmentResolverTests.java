@@ -6,7 +6,7 @@ import spork.android.internal.DefaultFragmentResolver;
 
 import static org.junit.Assert.assertNull;
 
-public class FragmentResolverTests {
+public class DefaultFragmentResolverTests {
 
 	@Test
 	public void testFaulty() {

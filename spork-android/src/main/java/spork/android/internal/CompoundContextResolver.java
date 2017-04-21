@@ -10,21 +10,21 @@ import javax.annotation.Nullable;
 import spork.android.extension.ContextResolver;
 
 /**
- * The main {@link ContextResolver} implementation that holds child {@link ContextResolver} instances
- * and uses them one by one to resolve a {@link Context}.
+ * A {@link ContextResolver} implementation that can hold multiple {@link ContextResolver} instances
+ * and use them one by one to resolve a {@link Context}.
  */
-public class ContextResolverManager implements ContextResolver {
+public class CompoundContextResolver implements ContextResolver {
 	private final List<ContextResolver> contextResolvers;
 
-	public ContextResolverManager(List<ContextResolver> contextResolvers) {
+	public CompoundContextResolver(List<ContextResolver> contextResolvers) {
 		this.contextResolvers = contextResolvers;
 	}
 
-	public ContextResolverManager() {
+	public CompoundContextResolver() {
 		this(new ArrayList<ContextResolver>(2));
 	}
 
-	public void register(ContextResolver contextResolver) {
+	public void add(ContextResolver contextResolver) {
 		contextResolvers.add(contextResolver);
 	}
 

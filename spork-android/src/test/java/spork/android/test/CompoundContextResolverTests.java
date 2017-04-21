@@ -4,19 +4,19 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import spork.android.extension.ContextResolver;
-import spork.android.internal.ContextResolverManager;
+import spork.android.internal.CompoundContextResolver;
 
 import static org.mockito.Mockito.verify;
 
-public class ContextResolverTests {
+public class CompoundContextResolverTests {
 	@Test
 	public void resolve() {
-		ContextResolverManager manager = Mockito.spy(new ContextResolverManager());
+		CompoundContextResolver compoundResolver = Mockito.spy(new CompoundContextResolver());
 		ContextResolver resolver = Mockito.mock(ContextResolver.class);
-		manager.register(resolver);
+		compoundResolver.add(resolver);
 
 		Object object = new Object();
-		manager.resolveContext(object);
+		compoundResolver.resolveContext(object);
 		verify(resolver).resolveContext(object);
 	}
 }

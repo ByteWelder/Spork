@@ -4,19 +4,19 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import spork.android.extension.ViewResolver;
-import spork.android.internal.ViewResolverManager;
+import spork.android.internal.CompoundViewResolver;
 
 import static org.mockito.Mockito.verify;
 
-public class ViewResolverTests {
+public class CompoundViewResolverTests {
 	@Test
 	public void resolve() {
-		ViewResolverManager manager = Mockito.spy(new ViewResolverManager());
+		CompoundViewResolver compoundResolver = Mockito.spy(new CompoundViewResolver());
 		ViewResolver resolver = Mockito.mock(ViewResolver.class);
-		manager.register(resolver);
+		compoundResolver.add(resolver);
 
 		Object object = new Object();
-		manager.resolveView(object);
+		compoundResolver.resolveView(object);
 		verify(resolver).resolveView(object);
 	}
 }

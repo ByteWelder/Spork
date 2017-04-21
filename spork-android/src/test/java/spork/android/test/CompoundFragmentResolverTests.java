@@ -4,28 +4,28 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import spork.android.extension.FragmentResolver;
-import spork.android.internal.FragmentResolverManager;
+import spork.android.internal.CompoundFragmentResolver;
 
 import static org.mockito.Mockito.verify;
 
-public class FragmentResolverManagerTests {
+public class CompoundFragmentResolverTests {
 	@Test
 	public void resolveById() {
-		FragmentResolverManager manager = Mockito.spy(new FragmentResolverManager());
+		CompoundFragmentResolver compoundResolver = Mockito.spy(new CompoundFragmentResolver());
 		FragmentResolver resolver = Mockito.mock(FragmentResolver.class);
-		manager.register(resolver);
+		compoundResolver.add(resolver);
 
-		manager.resolveFragment(null, 1);
+		compoundResolver.resolveFragment(null, 1);
 		verify(resolver).resolveFragment(null, 1);
 	}
 
 	@Test
 	public void resolveByName() {
-		FragmentResolverManager manager = Mockito.spy(new FragmentResolverManager());
+		CompoundFragmentResolver compoundResolver = Mockito.spy(new CompoundFragmentResolver());
 		FragmentResolver resolver = Mockito.mock(FragmentResolver.class);
-		manager.register(resolver);
+		compoundResolver.add(resolver);
 
-		manager.resolveFragment(null, "name");
+		compoundResolver.resolveFragment(null, "name");
 		verify(resolver).resolveFragment(null, "name");
 	}
 }

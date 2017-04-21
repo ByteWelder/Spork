@@ -10,21 +10,21 @@ import javax.annotation.Nullable;
 import spork.android.extension.ViewResolver;
 
 /**
- * The main {@link ViewResolver} implementation that holds child {@link ViewResolver} instances
- * and uses them one by one to resolve a {@link View}.
+ * A {@link ViewResolver} implementation that can hold multiple child {@link ViewResolver} instances
+ * and use them one by one to resolve a {@link View}.
  */
-public class ViewResolverManager implements ViewResolver {
+public class CompoundViewResolver implements ViewResolver {
 	private final List<ViewResolver> viewResolvers;
 
-	public ViewResolverManager(List<ViewResolver> contextResolvers) {
+	public CompoundViewResolver(List<ViewResolver> contextResolvers) {
 		this.viewResolvers = contextResolvers;
 	}
 
-	public ViewResolverManager() {
+	public CompoundViewResolver() {
 		this(new ArrayList<ViewResolver>(2));
 	}
 
-	public void register(ViewResolver viewResolver) {
+	public void add(ViewResolver viewResolver) {
 		viewResolvers.add(viewResolver);
 	}
 
