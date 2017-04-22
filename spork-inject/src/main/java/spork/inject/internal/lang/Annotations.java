@@ -6,6 +6,9 @@ import java.lang.reflect.Method;
 
 import javax.annotation.Nullable;
 
+/**
+ * Utility class for Annotation instances.
+ */
 public final class Annotations {
 	private Annotations() {
 	}
