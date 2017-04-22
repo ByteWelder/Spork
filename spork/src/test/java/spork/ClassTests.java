@@ -12,6 +12,7 @@ public class ClassTests {
 
 	@Test
 	public void test() throws Exception {
+		ClassAsserts.assertUtilityClassWellDefined(Spork.class);
 		ClassAsserts.assertUtilityClassWellDefined(Reflection.class);
 		ClassAsserts.assertUtilityClassWellDefined(SporkExtensionLoader.class);
 	}
