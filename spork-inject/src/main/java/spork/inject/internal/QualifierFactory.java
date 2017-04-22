@@ -1,10 +1,13 @@
 package spork.inject.internal;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.annotation.Nullable;
+
+import spork.internal.Reflection;
 
 class QualifierFactory {
 	@SuppressWarnings("PMD.UseConcurrentHashMap") // because we want to be able to store null
@@ -13,10 +16,24 @@ class QualifierFactory {
 	String create(Annotation annotation) {
 		Class<? extends Annotation> annotationType = annotation.annotationType();
 
-		Method method;
+		Method method = getMethod(annotationType);
 
+		if (method == null) {
+			return annotationType.getName();
+		} else {
+			Object value = Reflection.invokeMethod(annotation.annotationType(), method, annotation);
+			return annotationType.getName() + ":" + value;
+		}
+	}
+
+	@Nullable
+	private Method getMethod(Class<? extends Annotation> annotationType) {
 		synchronized (cache) {
-			if (!cache.containsKey(annotationType)) {
+			if (cache.containsKey(annotationType)) {
+				return cache.get(annotationType);
+			} else {
+				Method method;
+
 				try {
 					method = annotationType.getMethod("value");
 				} catch (NoSuchMethodException e) {
@@ -24,30 +41,8 @@ class QualifierFactory {
 				}
 
 				cache.put(annotationType, method);
-			} else {
-				method = cache.get(annotationType);
+				return method;
 			}
-		}
-
-		if (method == null) {
-			return annotationType.getName();
-		} else {
-			return annotationType.getName() + invoke(annotation, method);
-		}
-	}
-
-	@SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes") // because these exceptions are never thrown
-	private String invoke(Annotation annotation, Method valueMethod) {
-		valueMethod.setAccessible(true);
-
-		try {
-			return valueMethod.invoke(annotation).toString();
-		} catch (InvocationTargetException e) {
-			throw new RuntimeException("Failed to invoke " + annotation.annotationType().getName() + ".value()", e);
-		} catch (IllegalAccessException e) {
-			throw new RuntimeException("No access to invoke " + annotation.annotationType().getName() + ".value()", e);
-		} finally {
-			valueMethod.setAccessible(false);
 		}
 	}
 }
