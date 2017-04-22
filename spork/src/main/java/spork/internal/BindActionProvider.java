@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.concurrent.ThreadSafe;
-
 import spork.extension.FieldBinder;
 import spork.extension.MethodBinder;
 import spork.extension.TypeBinder;
@@ -19,7 +17,6 @@ import spork.extension.TypeBinder;
  *
  * Calling the register() methods updates the cache.
  */
-@ThreadSafe
 public class BindActionProvider {
 	@SuppressWarnings("PMD.UseConcurrentHashMap") // we need to synchronize on combined get & put
 	private final Map<Class<?>, List<BindAction>> bindActionMap = new HashMap<>();

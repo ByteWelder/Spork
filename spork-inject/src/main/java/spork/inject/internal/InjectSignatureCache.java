@@ -8,14 +8,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.ThreadSafe;
 import javax.inject.Provider;
 import javax.inject.Qualifier;
 
 import spork.inject.internal.lang.Annotations;
 import spork.inject.internal.lang.Nullability;
 
-@ThreadSafe
 class InjectSignatureCache {
 	/**
 	 * Map values may be null.
