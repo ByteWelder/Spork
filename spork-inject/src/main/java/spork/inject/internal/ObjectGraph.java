@@ -32,7 +32,7 @@ public final class ObjectGraph {
 
 	@Nullable
 	@SuppressWarnings("unchecked")
-	<T> Provider<T> findProvider(InjectSignature injectSignature) {
+	Provider<?> findProvider(InjectSignature injectSignature) {
 		ObjectGraphNode node = findNode(injectSignature);
 
 		if (node == null) {
@@ -43,21 +43,24 @@ public final class ObjectGraph {
 
 		// No scope and no qualifier means a new instance per injection
 		if (node.getScope() == null && !injectSignature.hasQualifier()) {
-			return (Provider<T>) new InstanceProvider(node, parameters);
+			return new InstanceProvider(node, parameters);
 		} else {
+			// Retrieve the target ObjectGraph that holds the instances for the required Provider.
+			// The graph will either be the one belonging to specific a scope or otherwise it is "this" graph.
 			Annotation scope = node.getScope();
-			ObjectGraph scopedGraph = (scope != null)
+			ObjectGraph targetGraph = (scope != null)
 					? findObjectGraph(scope.annotationType())
 					: this;
 
-			if (scopedGraph == null) {
+			// We must have an ObjectGraph with an instanceMap to target
+			if (targetGraph == null) {
 				String message = "no ObjectGraph found that defines scope " + scope.annotationType().getName();
 				throw bindFailedBuilder(Inject.class, message)
 						.into(injectSignature.getType())
 						.build();
 			}
 
-			return (Provider<T>) new InstanceMapProvider(scopedGraph.instanceMap, node, parameters);
+			return new InstanceMapProvider(targetGraph.instanceMap, node, parameters);
 		}
 	}
 
