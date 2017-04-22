@@ -10,7 +10,7 @@ import spork.internal.Binder;
 import spork.internal.Catalog;
 
 /**
- * Main class to access SporkInstance functionality.
+ * Main Spork class that is used to bind objects and register new binders.
  */
 public class SporkInstance {
 	private final Catalog catalog;
