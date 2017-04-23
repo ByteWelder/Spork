@@ -63,14 +63,14 @@ public final class Application {
 
 		// Inject a single field once with a shared Spork instance
 		// This benchmark shows the average injection time with a warm-cache
-		BenchmarkFactory oneFieldSharedSporkBenchmark = FieldBenchmarkFactories.forOneFieldSharedSporkBenchmark(200);
+		BenchmarkFactory oneFieldSharedSporkBenchmark = FieldBenchmarkFactories.forOneFieldSharedSporkBenchmark(1000);
 		BenchmarkRepeater oneFieldSharedSporkRepeater = new BenchmarkRepeater(oneFieldSharedSporkBenchmark, 10);
 		oneFieldSharedSporkRepeater.run();
 		oneFieldSharedSporkRepeater.printResultOverview();
 
 		// Inject five fields with a sharked Spork instance
 		// This benchmark shows the average injection time of multiple fields with a warm-cache
-		BenchmarkFactory fiveFieldBenchmark = FieldBenchmarkFactories.forFiveFieldSharedSporkBenchmark(200);
+		BenchmarkFactory fiveFieldBenchmark = FieldBenchmarkFactories.forFiveFieldSharedSporkBenchmark(1000);
 		BenchmarkRepeater fiveFieldRepeater = new BenchmarkRepeater(fiveFieldBenchmark, 10);
 		fiveFieldRepeater.run();
 		fiveFieldRepeater.printResultOverview();
@@ -89,14 +89,14 @@ public final class Application {
 
 		// Inject a single method once with a shared Spork instance
 		// This benchmark shows the average injection time with a warm-cache
-		BenchmarkFactory oneMethodSharedSporkBenchmark = MethodBenchmarkFactories.forOneMethodSharedSporkBenchmark(200);
+		BenchmarkFactory oneMethodSharedSporkBenchmark = MethodBenchmarkFactories.forOneMethodSharedSporkBenchmark(1000);
 		BenchmarkRepeater oneMethodSharedSporkRepeater = new BenchmarkRepeater(oneMethodSharedSporkBenchmark, 10);
 		oneMethodSharedSporkRepeater.run();
 		oneMethodSharedSporkRepeater.printResultOverview();
 
 		// Inject five methods with a sharked Spork instance
 		// This benchmark shows the average injection time of multiple methods with a warm-cache
-		BenchmarkFactory fiveMethodBenchmark = MethodBenchmarkFactories.forFiveMethodSharedSporkBenchmark(200);
+		BenchmarkFactory fiveMethodBenchmark = MethodBenchmarkFactories.forFiveMethodSharedSporkBenchmark(1000);
 		BenchmarkRepeater fiveMethodRepeater = new BenchmarkRepeater(fiveMethodBenchmark, 10);
 		fiveMethodRepeater.run();
 		fiveMethodRepeater.printResultOverview();
@@ -107,7 +107,7 @@ public final class Application {
 	 * more realistic injection scenarios.
 	 */
 	private static void runInjectComplexBenchmarks() {
-		BenchmarkFactory complexBenchmark = ComplexBenchmarkFactories.forOneFieldNewSporkBenchmark(200);
+		BenchmarkFactory complexBenchmark = ComplexBenchmarkFactories.forOneFieldNewSporkBenchmark(1000);
 		BenchmarkRepeater complexBenchmarkRepeater = new BenchmarkRepeater(complexBenchmark, 10);
 		complexBenchmarkRepeater.run();
 		complexBenchmarkRepeater.printResultOverview();
