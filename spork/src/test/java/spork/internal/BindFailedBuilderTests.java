@@ -4,6 +4,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import spork.BindFailed;
 
@@ -24,7 +25,7 @@ public class BindFailedBuilderTests {
 	}
 
 	@Test
-	public void fromInto() {
+	public void fromClassIntoClass() {
 		String message = bindFailedBuilder(Rule.class, "reason")
 				.from(String.class)
 				.into(Field.class)
@@ -38,6 +39,23 @@ public class BindFailedBuilderTests {
 	}
 
 	@Test
+	public void fromMethodIntoMethod() throws NoSuchMethodException {
+		Method noArgumentsMethod = getClass().getDeclaredMethod("testMethodNoArguments");
+		Method oneArgumentMethod = getClass().getDeclaredMethod("testMethodOneArgument", int.class);
+
+		String message = bindFailedBuilder(Rule.class, "reason")
+				.from(noArgumentsMethod)
+				.into(oneArgumentMethod)
+				.build()
+				.getMessage();
+
+		assertThat(message, is("Failed to bind annotation Rule: reason\n"
+				+ "\t- annotation: org.junit.Rule\n"
+				+ "\t- binding from: spork.internal.BindFailedBuilderTests.testMethodNoArguments()\n"
+				+ "\t- binding into: spork.internal.BindFailedBuilderTests.testMethodOneArgument(...)"));
+	}
+
+	@Test
 	public void cause() {
 		Throwable cause = new Exception("cause");
 		BindFailed bindFailed = bindFailedBuilder(Rule.class, "reason")
@@ -45,5 +63,11 @@ public class BindFailedBuilderTests {
 				.build();
 
 		assertThat(bindFailed.getCause(), is(cause));
+	}
+
+	private void testMethodNoArguments() {
+	}
+
+	private void testMethodOneArgument(int value) {
 	}
 }

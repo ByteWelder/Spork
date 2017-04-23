@@ -40,8 +40,7 @@ final public class BindFailedBuilder {
 	 * Defines the source of the Exception (e.g. the Method that provides data to be bound to a target object)
 	 */
 	public BindFailedBuilder from(Method method) {
-		String parameters = method.getParameterTypes().length == 0 ? "" : "...";
-		this.target = method.getDeclaringClass().getName() + "." + method.getName() + "(" + parameters + ")";
+		this.source = getMethodSignature(method);
 		return this;
 	}
 
@@ -57,7 +56,7 @@ final public class BindFailedBuilder {
 	 * Defines the target Field to inject to.
 	 */
 	public BindFailedBuilder into(Field field) {
-		this.target = field.getDeclaringClass().getName() + "." + field.getName();
+		this.target = getFieldSignature(field);
 		return this;
 	}
 
@@ -67,8 +66,7 @@ final public class BindFailedBuilder {
 	 * Defines the target Method to inject to.
 	 */
 	public BindFailedBuilder into(Method method) {
-		String parameters = method.getParameterTypes().length == 0 ? "" : "...";
-		this.target = method.getDeclaringClass().getName() + "." + method.getName() + "(" + parameters + ")";
+		this.target = getMethodSignature(method);
 		return this;
 	}
 
@@ -107,6 +105,19 @@ final public class BindFailedBuilder {
 
 	public static BindFailedBuilder bindFailedBuilder(Class<? extends Annotation> annotationClass, String message) {
 		return new BindFailedBuilder(annotationClass, message);
+	}
+
+	// endregion
+
+	// region Reflection signature methods
+
+	private static String getMethodSignature(Method method) {
+		String parameters = method.getParameterTypes().length == 0 ? "" : "...";
+		return method.getDeclaringClass().getName() + "." + method.getName() + "(" + parameters + ")";
+	}
+
+	private static String getFieldSignature(Field field) {
+		return field.getDeclaringClass().getName() + "." + field.getName();
 	}
 
 	// endregion
