@@ -7,6 +7,9 @@ ext {
 	sporkGroupId = 'com.bytewelder.spork'
 	sporkRepoName = sporkReleasing ? 'maven-release' : 'maven-snapshot'
 	sporkName = 'Poetry'
+	sporkIssueTracker = 'https://github.com/ByteWelder/Spork/issues'
+	sporkRepository = 'https://github.com/ByteWelder/Spork.git'
+	sporkAutoPublish = !sporkReleasing
 
 	// Dependencies
 	junitVersion = '4.12'

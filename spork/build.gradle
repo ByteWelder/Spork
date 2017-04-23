@@ -30,4 +30,7 @@ publish {
 	version = sporkVersion
 	description = sporkName
 	website = sporkWebsite
+	issueTracker = sporkIssueTracker
+	repository = sporkRepository
+	autoPublish = sporkAutoPublish
 }
