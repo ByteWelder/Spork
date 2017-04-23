@@ -2,7 +2,6 @@ package spork.benchmark.inject.field;
 
 import spork.benchmark.Benchmark;
 import spork.benchmark.BenchmarkFactory;
-import spork.benchmark.core.OneFieldNewSporkBenchmark;
 
 public final class FieldBenchmarkFactories {
 
