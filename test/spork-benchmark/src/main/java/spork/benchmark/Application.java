@@ -1,6 +1,7 @@
 package spork.benchmark;
 
 import spork.benchmark.core.CoreBenchmarkFactories;
+import spork.benchmark.inject.complex.ComplexBenchmarkFactories;
 import spork.benchmark.inject.field.FieldBenchmarkFactories;
 import spork.benchmark.inject.method.MethodBenchmarkFactories;
 
@@ -10,9 +11,13 @@ public final class Application {
 	}
 
 	public static void main(String[] args) {
+		// spork-core
 		runCoreBenchmarks();
+
+		// spork-inject
 		runInjectFieldBenchmarks();
 		runInjectMethodBenchmarks();
+		runInjectComplexBenchmarks();
 	}
 
 	/**
@@ -95,5 +100,16 @@ public final class Application {
 		BenchmarkRepeater fiveMethodRepeater = new BenchmarkRepeater(fiveMethodBenchmark, 10);
 		fiveMethodRepeater.run();
 		fiveMethodRepeater.printResultOverview();
+	}
+
+	/**
+	 * This method runs complex mixed benchmarks that are supposed to represent
+	 * more realistic injection scenarios.
+	 */
+	private static void runInjectComplexBenchmarks() {
+		BenchmarkFactory complexBenchmark = ComplexBenchmarkFactories.forOneFieldNewSporkBenchmark(200);
+		BenchmarkRepeater complexBenchmarkRepeater = new BenchmarkRepeater(complexBenchmark, 10);
+		complexBenchmarkRepeater.run();
+		complexBenchmarkRepeater.printResultOverview();
 	}
 }
