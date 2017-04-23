@@ -9,10 +9,10 @@ import spork.inject.internal.InjectFieldBinder;
 import spork.inject.internal.ObjectGraph;
 import spork.inject.internal.ObjectGraphBuilder;
 
-public class OneFieldNewSporkBenchmark extends Benchmark {
+class OneFieldNewSporkBenchmark extends Benchmark {
 	private final TestObject testObject;
 
-	public OneFieldNewSporkBenchmark() {
+	OneFieldNewSporkBenchmark() {
 		ObjectGraph graph = new ObjectGraphBuilder()
 				.module(new Module())
 				.build();

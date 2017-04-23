@@ -12,10 +12,10 @@ import spork.inject.internal.InjectMethodBinder;
 import spork.inject.internal.ObjectGraph;
 import spork.inject.internal.ObjectGraphBuilder;
 
-public class ComplexInjectBenchmark extends Benchmark {
+class ComplexInjectBenchmark extends Benchmark {
 	private final TestObject[] testObjects;
 
-	public ComplexInjectBenchmark(int iterationCount) {
+	ComplexInjectBenchmark(int iterationCount) {
 		SporkInstance spork = new SporkInstance();
 		spork.register(new InjectFieldBinder());
 		spork.register(new InjectMethodBinder());
