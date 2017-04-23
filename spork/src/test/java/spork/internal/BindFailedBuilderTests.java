@@ -20,7 +20,7 @@ public class BindFailedBuilderTests {
 				.getMessage();
 
 		assertThat(message, is("Failed to bind annotation Rule: reason\n"
-				+ "\tannotation: org.junit.Rule"));
+				+ "\t- annotation: org.junit.Rule"));
 	}
 
 	@Test
@@ -32,9 +32,9 @@ public class BindFailedBuilderTests {
 				.getMessage();
 
 		assertThat(message, is("Failed to bind annotation Rule: reason\n"
-				+ "\tannotation: org.junit.Rule\n"
-				+ "\tbinding from: java.lang.String\n"
-				+ "\tbinding into: java.lang.reflect.Field"));
+				+ "\t- annotation: org.junit.Rule\n"
+				+ "\t- binding from: java.lang.String\n"
+				+ "\t- binding into: java.lang.reflect.Field"));
 	}
 
 	@Test

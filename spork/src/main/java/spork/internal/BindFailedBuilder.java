@@ -82,23 +82,20 @@ final public class BindFailedBuilder {
 	}
 
 	private String buildMessage() {
-		StringBuilder builder = new StringBuilder(
-				"Failed to bind annotation "
-				+ annotationClass.getSimpleName()
-				+ ": "
-				+ message);
-
-		builder.append("\n\tannotation: ")
+		StringBuilder builder = new StringBuilder(200)
+				.append("Failed to bind annotation ")
+				.append(annotationClass.getSimpleName())
+				.append(": ")
+				.append(message)
+				.append("\n\t- annotation: ")
 				.append(annotationClass.getName());
 
 		if (source != null) {
-			builder.append("\n\tbinding from: ")
-					.append(source);
+			builder.append("\n\t- binding from: ").append(source);
 		}
 
 		if (target != null) {
-			builder.append("\n\tbinding into: ")
-					.append(target);
+			builder.append("\n\t- binding into: ").append(target);
 		}
 
 		return builder.toString();
