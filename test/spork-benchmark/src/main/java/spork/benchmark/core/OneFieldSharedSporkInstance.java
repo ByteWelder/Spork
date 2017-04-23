@@ -3,18 +3,17 @@ package spork.benchmark.core;
 import spork.SporkInstance;
 import spork.benchmark.Benchmark;
 
-public class CoreBenchmark extends Benchmark {
+class OneFieldSharedSporkInstance extends Benchmark {
 	private final TestObject[] testObjects;
 
-	public CoreBenchmark(SporkInstance spork, int iterationCount) {
+	OneFieldSharedSporkInstance(int iterationCount) {
+		SporkInstance spork = new SporkInstance();
+		spork.register(new TestBinder());
+
 		testObjects = new TestObject[iterationCount];
 		for (int i = 0; i < testObjects.length; ++i) {
 			testObjects[i] = new TestObject(spork);
 		}
-	}
-
-	public CoreBenchmark(SporkInstance spork) {
-		this(spork, 1000);
 	}
 
 	public static final class TestObject {
@@ -26,18 +25,6 @@ public class CoreBenchmark extends Benchmark {
 
 		@TestAnnotation
 		Object a;
-
-		@TestAnnotation
-		Object b;
-
-		@TestAnnotation
-		Object c;
-
-		@TestAnnotation
-		Object d;
-
-		@TestAnnotation
-		Object e;
 
 		public void bind() {
 			spork.bind(this);

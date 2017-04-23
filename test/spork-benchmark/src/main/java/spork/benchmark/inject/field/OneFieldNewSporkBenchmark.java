@@ -1,29 +1,26 @@
-package spork.benchmark.inject;
+package spork.benchmark.inject.field;
 
 import javax.inject.Inject;
 
 import spork.SporkInstance;
 import spork.benchmark.Benchmark;
 import spork.inject.Provides;
+import spork.inject.internal.InjectFieldBinder;
 import spork.inject.internal.ObjectGraph;
 import spork.inject.internal.ObjectGraphBuilder;
 
-public class InjectSingleFieldBenchmark extends Benchmark {
-	private final TestObject[] testObjects;
+public class OneFieldNewSporkBenchmark extends Benchmark {
+	private final TestObject testObject;
 
-	public InjectSingleFieldBenchmark(SporkInstance spork, int iterationCount) {
+	public OneFieldNewSporkBenchmark() {
 		ObjectGraph graph = new ObjectGraphBuilder()
 				.module(new Module())
 				.build();
 
-		testObjects = new TestObject[iterationCount];
-		for (int i = 0; i < testObjects.length; ++i) {
-			testObjects[i] = new TestObject(spork, graph);
-		}
-	}
+		SporkInstance spork = new SporkInstance();
+		spork.register(new InjectFieldBinder());
 
-	public InjectSingleFieldBenchmark(SporkInstance spork) {
-		this(spork, 1000);
+		testObject = new TestObject(spork, graph);
 	}
 
 	public static final class Module {
@@ -52,10 +49,7 @@ public class InjectSingleFieldBenchmark extends Benchmark {
 
 	@Override
 	protected long doWork() {
-		for (TestObject testObject : testObjects) {
-			testObject.inject();
-		}
-
-		return testObjects.length;
+		testObject.inject();
+		return 1L;
 	}
 }

@@ -1,35 +1,32 @@
-package spork.benchmark.inject;
+package spork.benchmark.inject.method;
 
 import javax.inject.Inject;
 
 import spork.SporkInstance;
 import spork.benchmark.Benchmark;
 import spork.inject.Provides;
+import spork.inject.internal.InjectMethodBinder;
 import spork.inject.internal.ObjectGraph;
 import spork.inject.internal.ObjectGraphBuilder;
 
-public class InjectMultiFieldBenchmark extends Benchmark {
-	private final TestObject[] testObjects;
+class OneMethodNewSporkBenchmark extends Benchmark {
+	private final TestObject testObject;
 
-	public InjectMultiFieldBenchmark(SporkInstance spork, int iterationCount) {
+	OneMethodNewSporkBenchmark() {
 		ObjectGraph graph = new ObjectGraphBuilder()
 				.module(new Module())
 				.build();
 
-		testObjects = new TestObject[iterationCount];
-		for (int i = 0; i < testObjects.length; ++i) {
-			testObjects[i] = new TestObject(spork, graph);
-		}
-	}
-
-	public InjectMultiFieldBenchmark(SporkInstance spork) {
-		this(spork, 1000);
+		SporkInstance spork = new SporkInstance();
+		spork.register(new InjectMethodBinder());
+		testObject = new TestObject(spork, graph);
 	}
 
 	public static final class Module {
+
 		@Provides
 		public Object provideObject() {
-			return "Test";
+			return "test";
 		}
 	}
 
@@ -43,19 +40,8 @@ public class InjectMultiFieldBenchmark extends Benchmark {
 		}
 
 		@Inject
-		Object a;
-
-		@Inject
-		Object b;
-
-		@Inject
-		Object c;
-
-		@Inject
-		Object d;
-
-		@Inject
-		Object e;
+		private void onInject(Object input) {
+		}
 
 		public void inject() {
 			objectGraph.inject(this, spork);
@@ -64,10 +50,7 @@ public class InjectMultiFieldBenchmark extends Benchmark {
 
 	@Override
 	protected long doWork() {
-		for (TestObject testObject : testObjects) {
-			testObject.inject();
-		}
-
-		return testObjects.length;
+		testObject.inject();
+		return 1L;
 	}
 }

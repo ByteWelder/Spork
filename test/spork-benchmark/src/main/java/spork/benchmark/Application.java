@@ -1,11 +1,8 @@
 package spork.benchmark;
 
-import spork.SporkInstance;
-import spork.benchmark.core.CoreBenchmark;
-import spork.benchmark.core.TestBinder;
-import spork.benchmark.inject.InjectMultiFieldBenchmark;
-import spork.benchmark.inject.InjectSingleFieldBenchmark;
-import spork.inject.internal.InjectFieldBinder;
+import spork.benchmark.core.CoreBenchmarkFactories;
+import spork.benchmark.inject.field.FieldBenchmarkFactories;
+import spork.benchmark.inject.method.MethodBenchmarkFactories;
 
 public final class Application {
 
@@ -14,113 +11,89 @@ public final class Application {
 
 	public static void main(String[] args) {
 		runCoreBenchmarks();
-		runInjectSingleFieldBenchmarks();
-		runInjectMultiFieldBenchmarks();
+		runInjectFieldBenchmarks();
+		runInjectMethodBenchmarks();
 	}
 
+	/**
+	 * This Benchmark tests annotation binding speed.
+	 */
 	private static void runCoreBenchmarks() {
-		final SporkInstance spork = new SporkInstance();
+		// Inject a single instance once with a clean Spork instance.
+		// This benchmark shows the initial injection overhead of a cold-cache Spork instance.
+		BenchmarkFactory oneFieldNewSporkBenchmark = CoreBenchmarkFactories.forOneFieldNewSpork();
+		BenchmarkRepeater oneFieldNewSporkRepeater = new BenchmarkRepeater(oneFieldNewSporkBenchmark, 100);
+		oneFieldNewSporkRepeater.run();
+		oneFieldNewSporkRepeater.printResultOverview();
 
-		spork.register(new TestBinder());
+		// Do 1000 runs that inject 1 field with a shared spork instance
+		// Then repeat it 10 times.
+		// This tests how well injecting a single fields work in a situation where Spork has
+		// cached all the necessary data.
+		BenchmarkFactory oneFieldSharedSporkBenchmark = CoreBenchmarkFactories.forOneFieldSharedSpork(1000);
+		BenchmarkRepeater oneFieldSharedSporkRepeater = new BenchmarkRepeater(oneFieldSharedSporkBenchmark, 10);
+		oneFieldSharedSporkRepeater.run();
+		oneFieldSharedSporkRepeater.printResultOverview();
 
-		BenchmarkRepeater injectFirst = new BenchmarkRepeater(new BenchmarkFactory() {
-			@Override
-			public Benchmark createBenchmark() {
-				return new CoreBenchmark(spork, 1);
-			}
-		}, 1);
-
-		injectFirst.run();
-		injectFirst.printResultOverview();
-
-		BenchmarkRepeater injectOne = new BenchmarkRepeater(new BenchmarkFactory() {
-			@Override
-			public Benchmark createBenchmark() {
-				return new CoreBenchmark(spork, 1);
-			}
-		}, 1000);
-
-		injectOne.run();
-		injectOne.printResultOverview();
-
-		BenchmarkRepeater injectMany = new BenchmarkRepeater(new BenchmarkFactory() {
-			@Override
-			public Benchmark createBenchmark() {
-				return new CoreBenchmark(spork, 1000);
-			}
-		}, 10);
-
-		injectMany.run();
-		injectMany.printResultOverview();
+		// Do 1000 runs that inject 5 fields with a shared spork instance
+		// Then repeat it 10 times.
+		// This tests how well injecting multiple fields work in a situation where Spork has
+		// cached all the necessary data.
+		BenchmarkFactory fiveFieldSharedSporkBenchmark = CoreBenchmarkFactories.forFiveFieldSharedSpork(1000);
+		BenchmarkRepeater fiveFieldSharedSporkRepeater = new BenchmarkRepeater(fiveFieldSharedSporkBenchmark, 10);
+		fiveFieldSharedSporkRepeater.run();
+		fiveFieldSharedSporkRepeater.printResultOverview();
 	}
 
-	private static void runInjectSingleFieldBenchmarks() {
-		final SporkInstance spork = new SporkInstance();
-		spork.register(new InjectFieldBinder());
+	/**
+	 * This benchmarks tests injecting a single field.
+	 */
+	private static void runInjectFieldBenchmarks() {
+		// Inject a single field once with a clean Spork instance.
+		// This benchmark shows the initial injection overhead of a cold-cache Spork instance.
+		BenchmarkFactory oneFieldNewSporkBenchmark = FieldBenchmarkFactories.forOneFieldNewSporkBenchmark();
+		BenchmarkRepeater oneFieldNewSporkRepeater = new BenchmarkRepeater(oneFieldNewSporkBenchmark, 100);
+		oneFieldNewSporkRepeater.run();
+		oneFieldNewSporkRepeater.printResultOverview();
 
-		BenchmarkRepeater injectFirst = new BenchmarkRepeater(new BenchmarkFactory() {
-			@Override
-			public Benchmark createBenchmark() {
-				return new InjectSingleFieldBenchmark(spork, 1);
-			}
-		}, 1);
+		// Inject a single field once with a shared Spork instance
+		// This benchmark shows the average injection time with a warm-cache
+		BenchmarkFactory oneFieldSharedSporkBenchmark = FieldBenchmarkFactories.forOneFieldSharedSporkBenchmark(200);
+		BenchmarkRepeater oneFieldSharedSporkRepeater = new BenchmarkRepeater(oneFieldSharedSporkBenchmark, 10);
+		oneFieldSharedSporkRepeater.run();
+		oneFieldSharedSporkRepeater.printResultOverview();
 
-		injectFirst.run();
-		injectFirst.printResultOverview();
-
-		BenchmarkRepeater injectOne = new BenchmarkRepeater(new BenchmarkFactory() {
-			@Override
-			public Benchmark createBenchmark() {
-				return new InjectSingleFieldBenchmark(spork, 1);
-			}
-		}, 1000);
-
-		injectOne.run();
-		injectOne.printResultOverview();
-
-		BenchmarkRepeater injectMany = new BenchmarkRepeater(new BenchmarkFactory() {
-			@Override
-			public Benchmark createBenchmark() {
-				return new InjectSingleFieldBenchmark(spork, 1000);
-			}
-		}, 10);
-
-		injectMany.run();
-		injectMany.printResultOverview();
+		// Inject five fields with a sharked Spork instance
+		// This benchmark shows the average injection time of multiple fields with a warm-cache
+		BenchmarkFactory fiveFieldBenchmark = FieldBenchmarkFactories.forFiveFieldSharedSporkBenchmark(200);
+		BenchmarkRepeater fiveFieldRepeater = new BenchmarkRepeater(fiveFieldBenchmark, 10);
+		fiveFieldRepeater.run();
+		fiveFieldRepeater.printResultOverview();
 	}
 
-	private static void runInjectMultiFieldBenchmarks() {
-		final SporkInstance spork = new SporkInstance();
-		spork.register(new InjectFieldBinder());
+	/**
+	 * This benchmarks tests injecting a single method.
+	 */
+	private static void runInjectMethodBenchmarks() {
+		// Inject a single method once with a clean Spork instance.
+		// This benchmark shows the initial injection overhead of a cold-cache Spork instance.
+		BenchmarkFactory oneMethodNewSporkBenchmark = MethodBenchmarkFactories.forOneMethodNewSporkBenchmark();
+		BenchmarkRepeater oneMethodNewSporkRepeater = new BenchmarkRepeater(oneMethodNewSporkBenchmark, 100);
+		oneMethodNewSporkRepeater.run();
+		oneMethodNewSporkRepeater.printResultOverview();
 
-		BenchmarkRepeater injectFirst = new BenchmarkRepeater(new BenchmarkFactory() {
-			@Override
-			public Benchmark createBenchmark() {
-				return new InjectMultiFieldBenchmark(spork, 1);
-			}
-		}, 1);
+		// Inject a single method once with a shared Spork instance
+		// This benchmark shows the average injection time with a warm-cache
+		BenchmarkFactory oneMethodSharedSporkBenchmark = MethodBenchmarkFactories.forOneMethodSharedSporkBenchmark(200);
+		BenchmarkRepeater oneMethodSharedSporkRepeater = new BenchmarkRepeater(oneMethodSharedSporkBenchmark, 10);
+		oneMethodSharedSporkRepeater.run();
+		oneMethodSharedSporkRepeater.printResultOverview();
 
-		injectFirst.run();
-		injectFirst.printResultOverview();
-
-		BenchmarkRepeater injectOne = new BenchmarkRepeater(new BenchmarkFactory() {
-			@Override
-			public Benchmark createBenchmark() {
-				return new InjectMultiFieldBenchmark(spork, 1);
-			}
-		}, 1000);
-
-		injectOne.run();
-		injectOne.printResultOverview();
-
-		BenchmarkRepeater injectMany = new BenchmarkRepeater(new BenchmarkFactory() {
-			@Override
-			public Benchmark createBenchmark() {
-				return new InjectMultiFieldBenchmark(spork, 1000);
-			}
-		}, 10);
-
-		injectMany.run();
-		injectMany.printResultOverview();
+		// Inject five methods with a sharked Spork instance
+		// This benchmark shows the average injection time of multiple methods with a warm-cache
+		BenchmarkFactory fiveMethodBenchmark = MethodBenchmarkFactories.forFiveMethodSharedSporkBenchmark(200);
+		BenchmarkRepeater fiveMethodRepeater = new BenchmarkRepeater(fiveMethodBenchmark, 10);
+		fiveMethodRepeater.run();
+		fiveMethodRepeater.printResultOverview();
 	}
 }

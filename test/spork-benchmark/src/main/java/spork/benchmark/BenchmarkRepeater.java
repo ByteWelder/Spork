@@ -45,10 +45,10 @@ public class BenchmarkRepeater implements Runnable {
 		BenchmarkResult result = calculateAverageBenchmarkResult();
 		double workDurationMs = result.getWorkDuration() / 1000000d;
 		double average = workDurationMs / (double) result.getWorkCount();
-		System.out.println("Ran benchmark \"" + benchmarkFactory.createBenchmark().getClass().getSimpleName() + "\" "
-				+ Integer.toString(benchmarkResults.length) + " times with "
-				+ Long.toString(result.getWorkCount()) + " work items per benchmark and on average "
-				+ String.format(Locale.getDefault(), "%.3fms", average) + " per work item");
+		System.out.println("Ran benchmark " + benchmarkFactory.createBenchmark().getClass().getName() + ":\n"
+				+ "\t- benchmark repeat: " + Integer.toString(benchmarkResults.length) + " time(s)\n"
+				+ "\t- work items:       " + Long.toString(result.getWorkCount()) + " per benchmark\n"
+				+ "\t- work item time:   " + String.format(Locale.getDefault(), "%.3fms", average) + " average");
 	}
 
 	public void printResultDetails() {
