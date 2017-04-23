@@ -66,6 +66,7 @@ publish {
 	issueTracker = sporkIssueTracker
 	repository = sporkRepository
 	autoPublish = sporkAutoPublish
+	dryRun = sporkPublishIsDryRun
 }
 
 apply from: rootProject.file('gradle/release-android.gradle')

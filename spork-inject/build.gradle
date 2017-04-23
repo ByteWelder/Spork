@@ -40,4 +40,5 @@ publish {
 	issueTracker = sporkIssueTracker
 	repository = sporkRepository
 	autoPublish = sporkAutoPublish
+	dryRun = sporkPublishIsDryRun
 }

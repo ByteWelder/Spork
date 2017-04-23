@@ -10,6 +10,7 @@ ext {
 	sporkIssueTracker = 'https://github.com/ByteWelder/Spork/issues'
 	sporkRepository = 'https://github.com/ByteWelder/Spork.git'
 	sporkAutoPublish = !sporkReleasing
+	sporkPublishIsDryRun = false
 
 	// Dependencies
 	junitVersion = '4.12'
