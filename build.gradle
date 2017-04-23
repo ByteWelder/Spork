@@ -12,6 +12,15 @@ ext {
 	junitVersion = '4.12'
 	mockitoVersion = '2.7.14'
 	findBugsVersion = '3.0.1'
+
+	// Android settings and dependencies
+	androidBuildToolsVersion = '25.0.2'
+	androidCompileSdkVersion = 25
+	androidMinSdkVersion = 15
+	androidTargetSdkVersion = 25
+	androidSupportLibraryVersion = '25.3.1'
+	androidSupportEspressoVersion = '2.2.2'
+	androidSupportTestRunnerVersion = '0.5'
 }
 
 buildscript {
