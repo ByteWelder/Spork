@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FindBugsFilter>
     <Match>
-        <Class name="spork.inject.internal.providers.InstanceMapProvider" />
+        <Class name="spork.inject.internal.providers.CachedNodeProvider" />
         <Constructor name="InstanceMapProvider" />
         <Bug code="EI2" />
     </Match>
     <Match>
-        <Class name="spork.inject.internal.providers.InstanceProvider" />
+        <Class name="spork.inject.internal.providers.NodeProvider" />
         <Constructor name="InstanceProvider" />
         <Bug code="EI2" />
     </Match>

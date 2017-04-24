@@ -12,7 +12,7 @@ import spork.inject.internal.ObjectGraphNode;
  * A provider that returns an instance from a map or otherwise creates it with
  * the given ObjectGraphNode and its arguments.
  */
-public class InstanceMapProvider implements Provider<Object> {
+public class CachedNodeProvider implements Provider<Object> {
 	private final ObjectGraphNode node;
 	@Nullable
 	private final Object[] arguments;
@@ -24,7 +24,7 @@ public class InstanceMapProvider implements Provider<Object> {
 	 * @param instanceMap the instance map within the correct scope to store the instance in
 	 */
 	@SuppressWarnings("PMD.UseVarargs")
-	public InstanceMapProvider(Map<InjectSignature, Object> instanceMap, ObjectGraphNode node, @Nullable Object[] arguments) {
+	public CachedNodeProvider(Map<InjectSignature, Object> instanceMap, ObjectGraphNode node, @Nullable Object[] arguments) {
 		this.node = node;
 		this.arguments = arguments;
 		this.instanceMap = instanceMap;

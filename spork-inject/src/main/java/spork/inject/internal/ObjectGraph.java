@@ -10,8 +10,8 @@ import javax.inject.Provider;
 
 import spork.SporkInstance;
 import spork.Spork;
-import spork.inject.internal.providers.InstanceMapProvider;
-import spork.inject.internal.providers.InstanceProvider;
+import spork.inject.internal.providers.CachedNodeProvider;
+import spork.inject.internal.providers.NodeProvider;
 
 import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
@@ -43,7 +43,7 @@ public final class ObjectGraph {
 
 		// No scope and no qualifier means a new instance per injection
 		if (node.getScope() == null && !injectSignature.hasQualifier()) {
-			return new InstanceProvider(node, parameters);
+			return new NodeProvider(node, parameters);
 		} else {
 			// Retrieve the target ObjectGraph that holds the instances for the required Provider.
 			// The graph will either be the one belonging to specific a scope or otherwise it is "this" graph.
@@ -60,7 +60,7 @@ public final class ObjectGraph {
 						.build();
 			}
 
-			return new InstanceMapProvider(targetGraph.instanceMap, node, parameters);
+			return new CachedNodeProvider(targetGraph.instanceMap, node, parameters);
 		}
 	}
 
