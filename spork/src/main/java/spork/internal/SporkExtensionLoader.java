@@ -28,9 +28,9 @@ public final class SporkExtensionLoader {
 		} catch (ClassNotFoundException e) {
 			// no-op
 		} catch (IllegalAccessException e) {
-			System.out.println("SporkInstance: extension " + className + "found, but initialization failed because of IllegalAccessException: " + e.getMessage());
+			System.out.println("SporkInstance: extension " + className + " found, but initialization failed because of IllegalAccessException: " + e.getMessage());
 		} catch (InstantiationException e) {
-			System.out.println("SporkInstance: extension " + className + "found, but failed to create instance: " + e.getMessage());
+			System.out.println("SporkInstance: extension " + className + " found, but failed to create instance: " + e.getMessage());
 		}
 	}
 }

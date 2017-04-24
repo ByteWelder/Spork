@@ -36,7 +36,6 @@ public final class Reflection {
 					.cause(e)
 					.build();
 		} finally {
-			// ensure the Field isn't accessible when it shouldn't be
 			try {
 				field.setAccessible(false);
 			} catch (SecurityException e) {

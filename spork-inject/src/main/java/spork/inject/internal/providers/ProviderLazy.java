@@ -7,8 +7,7 @@ import javax.inject.Provider;
 import spork.inject.Lazy;
 
 /**
- * ProviderLazy is a Lazy implementation that wraps a Provider and caches its value
- * when get() is called.
+ * A {@link Lazy} implementation that wraps a Provider and caches its value when get() is called.
  *
  * @param <T> the lazily computed type
  */

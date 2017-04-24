@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * The main logic for binding instances.
+ *
  * It uses a {@link BindActionProvider} to bind objects.
  */
 public class Binder {
@@ -16,6 +17,7 @@ public class Binder {
 	public void bind(Object object, Object... parameters) {
 		Class<?> objectClass = object.getClass();
 
+		// Go through all levels of inheritance and find the BindAction for each class
 		while (objectClass != null && objectClass != Object.class) {
 			List<BindAction> bindActions = bindActionProvider.getBindActions(objectClass);
 			bind(object, bindActions, parameters);
