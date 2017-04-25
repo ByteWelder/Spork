@@ -1,44 +1,64 @@
 package spork;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import spork.extension.FieldBinder;
-import spork.internal.Binder;
-import spork.internal.Catalog;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
-import static org.mockito.Mockito.mock;
+import spork.stubs.TestAnnotation;
+import spork.stubs.TestBindTarget;
+import spork.stubs.TestFieldBinder;
+import spork.stubs.TestMethodBinder;
+import spork.stubs.TestTypeBinder;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 public class SporkTests {
+	private static TestFieldBinder fieldBinder;
+	private static TestMethodBinder methodBinder;
+	private static TestTypeBinder typeBinder;
 
-	@Test
-	public void register() {
-		Catalog catalog = mock(Catalog.class);
-		SporkInstance spork = spy(new SporkInstance(null, catalog));
+	@BeforeClass
+	public static void setup() {
+		// Binders need to be registered once before the first bind().
+		// The test binders will stay alive for the duration of all other tests, but that's not
+		// a problem because this class is the only one that is supposed to test the shared instance.
 
-		FieldBinder fieldBinder = mock(FieldBinder.class);
-		spork.register(fieldBinder);
+		fieldBinder = spy(new TestFieldBinder());
+		Spork.register(fieldBinder);
 
-		verify(catalog).add(fieldBinder);
+		methodBinder = spy(new TestMethodBinder());
+		Spork.register(methodBinder);
+
+		typeBinder = spy(new TestTypeBinder());
+		Spork.register(typeBinder);
 	}
 
 	@Test
-	public void bind() {
-		Binder binder = mock(Binder.class);
-		SporkInstance spork = spy(new SporkInstance(binder, null));
-		Object target = new Object();
+	public void bindField() {
+		TestBindTarget toBind = new TestBindTarget();
+		Spork.bind(toBind);
 
-		spork.bind(target);
-
-		verify(binder).bind(target);
+		verify(fieldBinder).bind(eq(toBind), any(TestAnnotation.class), any(Field.class), any(Object[].class));
 	}
 
-	@Test(expected = IllegalStateException.class)
-	public void registerAfterBind() {
-		SporkInstance spork = new SporkInstance();
+	@Test
+	public void bindMethod() {
+		TestBindTarget toBind = new TestBindTarget();
+		Spork.bind(toBind);
 
-		spork.bind(this);
-		spork.register(mock(FieldBinder.class));
+		verify(methodBinder).bind(eq(toBind), any(TestAnnotation.class), any(Method.class), any(Object[].class));
+	}
+
+	@Test
+	public void bindType() {
+		TestBindTarget toBind = new TestBindTarget();
+		Spork.bind(toBind);
+
+		verify(typeBinder).bind(eq(toBind), any(TestAnnotation.class), any(Class.class), any(Object[].class));
 	}
 }

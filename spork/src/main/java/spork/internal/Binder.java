@@ -18,7 +18,7 @@ public class Binder {
 		Class<?> objectClass = object.getClass();
 
 		// Go through all levels of inheritance and find the BindAction for each class
-		while (objectClass != null && objectClass != Object.class) {
+		while (objectClass != Object.class) {
 			List<BindAction> bindActions = bindActionProvider.getBindActions(objectClass);
 			bind(object, bindActions, parameters);
 			objectClass = objectClass.getSuperclass();
