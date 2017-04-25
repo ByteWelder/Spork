@@ -2,6 +2,7 @@ package spork.internal;
 
 import spork.SporkInstance;
 import spork.SporkExtension;
+import spork.extension.ExtensionLoadingFailed;
 
 /**
  * Utility class for {@link SporkExtension}
@@ -24,13 +25,15 @@ public final class SporkExtensionLoader {
 			if (extensionObject instanceof SporkExtension) {
 				SporkExtension extension = (SporkExtension) extensionObject;
 				extension.initialize(spork);
+			} else {
+				throw new ExtensionLoadingFailed("Extension " + className + " does not implement " + SporkExtension.class);
 			}
 		} catch (ClassNotFoundException e) {
 			// no-op
 		} catch (IllegalAccessException e) {
-			System.out.println("SporkInstance: extension " + className + " found, but initialization failed because of IllegalAccessException: " + e.getMessage());
+			throw new ExtensionLoadingFailed("Failed to initialize " + className + " because of an IllegalAccessException", e);
 		} catch (InstantiationException e) {
-			System.out.println("SporkInstance: extension " + className + " found, but failed to create instance: " + e.getMessage());
+			throw new ExtensionLoadingFailed("Failed to create an instance of " + className, e);
 		}
 	}
 }
