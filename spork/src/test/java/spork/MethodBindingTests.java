@@ -1,99 +1,82 @@
 package spork;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 import java.lang.reflect.Method;
 
-import spork.internal.Reflection;
+import spork.stubs.TestAnnotation;
+import spork.stubs.TestMethodBinder;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 public class MethodBindingTests {
+	@Rule
+	public final ExpectedException expectedException = ExpectedException.none();
 	private final SporkInstance spork = new SporkInstance();
-	private BindMethodBinder bindMethodBinder;
+	private TestMethodBinder bindMethodBinder;
 
-	@Retention(RetentionPolicy.RUNTIME)
-	@Target({ElementType.METHOD})
-	private @interface BindMethod {
-	}
-
-	private static class BindMethodBinder implements spork.extension.MethodBinder<BindMethod> {
-		private int methodCount = 0;
-
-		@Override
-		public void bind(Object instance, BindMethod annotation, Method method, Object... parameters) {
-			methodCount++;
-		}
-
-		@Override
-		public Class<BindMethod> getAnnotationClass() {
-			return BindMethod.class;
-		}
-
-		public int getMethodCount() {
-			return methodCount;
+	private static class PrivateMethodParent {
+		@TestAnnotation
+		private void method() {
 		}
 	}
 
-	private static class MethodBinderParent {
-		private int testCallCount = 0;
-
-		@BindMethod
-		private void privateCallCountMethod() {
-			testCallCount++;
+	private static class PublicMethodParent {
+		@TestAnnotation
+		public void method() {
 		}
+	}
 
-		@BindMethod
-		public static int staticEchoMethod(int a) {
-			return a;
+	private static class ProtectedMethodParent {
+		@TestAnnotation
+		private void method() {
 		}
+	}
 
-		public int getPrivateCallCount() {
-			return testCallCount;
+	private static class StaticMethodParent {
+		@TestAnnotation
+		private static void method() {
 		}
 	}
 
 	@Before
 	public void registerTestBinders() {
-		bindMethodBinder = new BindMethodBinder();
+		bindMethodBinder = spy(new TestMethodBinder());
 		spork.register(bindMethodBinder);
 	}
 
 	@Test
-	public void methodBinding() {
-		assertEquals(bindMethodBinder.getMethodCount(), 0);
-
-		MethodBinderParent methodBinderParent = new MethodBinderParent();
-		spork.bind(methodBinderParent);
-
-		assertEquals(bindMethodBinder.getMethodCount(), 2);
+	public void bindPrivateMethod() {
+		testMethodBindSuccess(new PrivateMethodParent());
 	}
 
 	@Test
-	public void invoke() throws NoSuchMethodException {
-		MethodBinderParent object = new MethodBinderParent();
-		spork.bind(object);
+	public void bindPublicMethod() {
+		testMethodBindSuccess(new PublicMethodParent());
+	}
 
-		Method method = MethodBinderParent.class.getDeclaredMethod("privateCallCountMethod");
-		assertEquals(0, object.getPrivateCallCount());
+	@Test
+	public void bindProtectedMethod() {
+		testMethodBindSuccess(new ProtectedMethodParent());
+	}
 
-		Object regularResult = Reflection.invokeMethod(BindMethod.class, method, object);
-		assertNull(regularResult);
+	@Test
+	public void bindStaticMethod() {
+		testMethodBindSuccess(new StaticMethodParent());
+	}
 
-		assertEquals(1, object.getPrivateCallCount());
-
-		assertEquals(123, MethodBinderParent.staticEchoMethod(123));
-
-		Method staticMethod = MethodBinderParent.class.getMethod("staticEchoMethod", int.class);
-		Object staticResult = Reflection.invokeMethod(BindMethod.class, staticMethod, null, 123);
-		assertNotNull(staticResult);
-		assertEquals(123, staticResult);
+	private void testMethodBindSuccess(Object toBind) {
+		spork.bind(toBind);
+		verify(bindMethodBinder).bind(
+				eq(toBind),
+				any(TestAnnotation.class),
+				any(Method.class),
+				any(Object[].class));
 	}
 }
