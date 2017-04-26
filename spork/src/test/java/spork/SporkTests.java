@@ -6,8 +6,10 @@ import org.junit.Test;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import spork.stubs.BindFieldTarget;
+import spork.stubs.BindMethodTarget;
+import spork.stubs.BindTypeTarget;
 import spork.stubs.TestAnnotation;
-import spork.stubs.TestBindTarget;
 import spork.stubs.TestFieldBinder;
 import spork.stubs.TestMethodBinder;
 import spork.stubs.TestTypeBinder;
@@ -40,7 +42,7 @@ public class SporkTests {
 
 	@Test
 	public void bindField() {
-		TestBindTarget toBind = new TestBindTarget();
+		BindFieldTarget toBind = new BindFieldTarget();
 		Spork.bind(toBind);
 
 		verify(fieldBinder).bind(eq(toBind), any(TestAnnotation.class), any(Field.class), any(Object[].class));
@@ -48,7 +50,7 @@ public class SporkTests {
 
 	@Test
 	public void bindMethod() {
-		TestBindTarget toBind = new TestBindTarget();
+		BindMethodTarget toBind = new BindMethodTarget();
 		Spork.bind(toBind);
 
 		verify(methodBinder).bind(eq(toBind), any(TestAnnotation.class), any(Method.class), any(Object[].class));
@@ -56,7 +58,7 @@ public class SporkTests {
 
 	@Test
 	public void bindType() {
-		TestBindTarget toBind = new TestBindTarget();
+		BindTypeTarget toBind = new BindTypeTarget();
 		Spork.bind(toBind);
 
 		verify(typeBinder).bind(eq(toBind), any(TestAnnotation.class), any(Class.class), any(Object[].class));
