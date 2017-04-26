@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 /**
- * Reflection utilities that throw BindFailed exceptions with contextual information.
+ * Reflection utilities that throw BindFailed exceptions with contextual information when something fails.
  */
 public final class Reflection {
 
@@ -30,17 +30,13 @@ public final class Reflection {
 			field.setAccessible(true);
 			field.set(parentObject, valueObject);
 		} catch (IllegalAccessException e) {
-			throw bindFailedBuilder(annotationClass, "failed to set field")
+			throw bindFailedBuilder(annotationClass, "field is not accessible")
 					.from(valueObject.getClass())
 					.into(field)
 					.cause(e)
 					.build();
 		} finally {
-			try {
-				field.setAccessible(false);
-			} catch (SecurityException e) {
-				// no-op
-			}
+			field.setAccessible(false);
 		}
 	}
 
@@ -66,11 +62,7 @@ public final class Reflection {
 					.cause(e)
 					.build();
 		} finally {
-			try {
-				method.setAccessible(false);
-			} catch (SecurityException e) {
-				// no-op
-			}
+			method.setAccessible(false);
 		}
 	}
 }
