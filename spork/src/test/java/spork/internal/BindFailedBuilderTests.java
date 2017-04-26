@@ -13,6 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 public class BindFailedBuilderTests {
+	private int reflectionField = 0;
 
 	@Test
 	public void defaultConstructor() {
@@ -53,6 +54,20 @@ public class BindFailedBuilderTests {
 				+ "\t- annotation: org.junit.Rule\n"
 				+ "\t- binding from: spork.internal.BindFailedBuilderTests.testMethodNoArguments()\n"
 				+ "\t- binding into: spork.internal.BindFailedBuilderTests.testMethodOneArgument(...)"));
+	}
+
+	@Test
+	public void intoField() throws NoSuchFieldException {
+		Field field = getClass().getDeclaredField("reflectionField");
+
+		String message = bindFailedBuilder(Rule.class, "reason")
+				.into(field)
+				.build()
+				.getMessage();
+
+		assertThat(message, is("Failed to bind annotation Rule: reason\n"
+				+ "\t- annotation: org.junit.Rule\n"
+				+ "\t- binding into: spork.internal.BindFailedBuilderTests.reflectionField"));
 	}
 
 	@Test

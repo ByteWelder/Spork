@@ -15,6 +15,11 @@
         <Method name="getBenchmarkResults" />
         <Bug code="EI" />
     </Match>
+    <Match>
+        <Class name="spork.internal.BindFailedBuilderTests" />
+        <Field name="reflectionField" />
+        <Bug code="UrF" />
+    </Match>
 
     <!-- Android -->
     <Match>
