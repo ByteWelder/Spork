@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    compile project(':test:spork-benchmark')
+    compile project(':support:spork-benchmark')
 }
 
 android {
