@@ -5,16 +5,16 @@ import java.lang.reflect.Method;
 import javax.annotation.Nullable;
 import javax.inject.Provider;
 
-public final class ObjectGraphs {
+public final class ObjectGraphImpls {
 
-	private ObjectGraphs() {
+	private ObjectGraphImpls() {
 	}
 
 	@Nullable
-	static ObjectGraph findObjectGraph(Object... objects) {
+	static ObjectGraphImpl findObjectGraph(Object... objects) {
 		for (Object object : objects) {
-			if (object.getClass() == ObjectGraph.class) {
-				return (ObjectGraph) object;
+			if (object.getClass() == ObjectGraphImpl.class) {
+				return (ObjectGraphImpl) object;
 			}
 		}
 
@@ -22,7 +22,7 @@ public final class ObjectGraphs {
 	}
 
 	@Nullable
-	static Object[] getInjectableMethodParameters(ObjectGraph objectGraph, Method method) throws ObjectGraphException {
+	static Object[] getInjectableMethodParameters(ObjectGraphImpl objectGraph, Method method) throws ObjectGraphException {
 		int parameterCount = method.getParameterTypes().length;
 		if (parameterCount == 0) {
 			return null;

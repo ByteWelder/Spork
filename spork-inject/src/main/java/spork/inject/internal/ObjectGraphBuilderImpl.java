@@ -12,27 +12,30 @@ import javax.annotation.Nullable;
 import javax.inject.Qualifier;
 import javax.inject.Singleton;
 
+import spork.inject.ObjectGraph;
+import spork.inject.ObjectGraphBuilder;
 import spork.inject.Provides;
 import spork.inject.internal.lang.Annotations;
 import spork.inject.internal.lang.Nullability;
 
-public class ObjectGraphBuilder {
+public class ObjectGraphBuilderImpl implements ObjectGraphBuilder {
 	@Nullable
-	private final ObjectGraph parentGraph;
+	private final ObjectGraphImpl parentGraph;
 	@Nullable
 	private Class<? extends Annotation> scope;
 	private final List<Object> modules = new ArrayList<>(4);
 
-	public ObjectGraphBuilder() {
+	public ObjectGraphBuilderImpl() {
 		this.parentGraph = null;
 	}
 
-	public ObjectGraphBuilder(@Nonnull ObjectGraph parentGraph) {
+	public ObjectGraphBuilderImpl(@Nonnull ObjectGraphImpl parentGraph) {
 		this.parentGraph = parentGraph;
 	}
 
 	// region builder methods
 
+	@Override
 	public ObjectGraphBuilder scope(Class<? extends Annotation> scope) {
 		if (this.scope != null) {
 			throw new IllegalStateException("scope was already set");
@@ -43,11 +46,13 @@ public class ObjectGraphBuilder {
 		return this;
 	}
 
+	@Override
 	public ObjectGraphBuilder module(Object module) {
 		modules.add(module);
 		return this;
 	}
 
+	@Override
 	public ObjectGraph build() {
 		validate();
 
@@ -63,7 +68,7 @@ public class ObjectGraphBuilder {
 		// The root graph is always the Singleton-scoped one
 		Class<? extends Annotation> effectiveScope = parentGraph == null ? Singleton.class : scope;
 
-		return new ObjectGraph(parentGraph, nodeMap, injectSignatureCache, effectiveScope);
+		return new ObjectGraphImpl(parentGraph, nodeMap, injectSignatureCache, effectiveScope);
 	}
 
 	// endregion

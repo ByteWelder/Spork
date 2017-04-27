@@ -25,7 +25,7 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 
 	@Override
 	public void bind(Object instance, Inject annotation, Field field, Object... parameters) {
-		ObjectGraph objectGraph = ObjectGraphs.findObjectGraph(parameters);
+		ObjectGraphImpl objectGraph = ObjectGraphImpls.findObjectGraph(parameters);
 		if (objectGraph == null) {
 			throw bindFailedBuilder(Inject.class, "no ObjectGraph specified in instance arguments of bind()")
 					.into(field)

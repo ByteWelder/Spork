@@ -4,10 +4,10 @@ import javax.inject.Inject;
 
 import spork.SporkInstance;
 import spork.benchmark.Benchmark;
+import spork.inject.ObjectGraphs;
 import spork.inject.Provides;
 import spork.inject.internal.InjectFieldBinder;
-import spork.inject.internal.ObjectGraph;
-import spork.inject.internal.ObjectGraphBuilder;
+import spork.inject.ObjectGraph;
 
 class FiveFieldSharedSporkBenchmark extends Benchmark {
 	private final TestObject[] testObjects;
@@ -16,7 +16,7 @@ class FiveFieldSharedSporkBenchmark extends Benchmark {
 		SporkInstance spork = new SporkInstance();
 		spork.register(new InjectFieldBinder());
 
-		ObjectGraph graph = new ObjectGraphBuilder()
+		ObjectGraph graph = ObjectGraphs.builder()
 				.module(new Module())
 				.build();
 

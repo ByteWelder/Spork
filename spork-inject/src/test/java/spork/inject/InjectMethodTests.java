@@ -8,7 +8,6 @@ import javax.inject.Inject;
 
 import spork.BindFailed;
 import spork.Spork;
-import spork.inject.internal.ObjectGraphBuilder;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -60,7 +59,7 @@ public class InjectMethodTests {
 		Parent parent = new Parent();
 
 		// when
-		new ObjectGraphBuilder()
+		ObjectGraphs.builder()
 				.module(new Module())
 				.build()
 				.inject(parent);

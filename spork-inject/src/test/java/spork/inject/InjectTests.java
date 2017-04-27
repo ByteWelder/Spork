@@ -9,8 +9,6 @@ import javax.inject.Inject;
 
 import spork.BindFailed;
 import spork.Spork;
-import spork.inject.internal.ObjectGraph;
-import spork.inject.internal.ObjectGraphBuilder;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -45,7 +43,7 @@ public class InjectTests {
 
 	@Before
 	public void setup() {
-		graph = new ObjectGraphBuilder()
+		graph = ObjectGraphs.builder()
 				.module(new StringModule())
 				.module(new IntegerModule())
 				.build();

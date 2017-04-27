@@ -3,6 +3,8 @@ package spork.inject.internal;
 import org.junit.Test;
 
 import spork.SporkInstance;
+import spork.inject.ObjectGraph;
+import spork.inject.ObjectGraphs;
 import spork.inject.Provides;
 
 import static org.mockito.Mockito.spy;
@@ -18,7 +20,7 @@ public class ObjectGraphTests {
 
 	@Test
 	public void bindWithCustomSpork() {
-		ObjectGraph graph = new ObjectGraphBuilder()
+		ObjectGraph graph = ObjectGraphs.builder()
 				.module(new Module())
 				.build();
 

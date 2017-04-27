@@ -9,6 +9,7 @@ import java.lang.annotation.RetentionPolicy;
 
 import javax.inject.Scope;
 
+import spork.inject.ObjectGraphs;
 import spork.inject.Provides;
 
 public class ObjectGraphBuilderTests {
@@ -41,14 +42,14 @@ public class ObjectGraphBuilderTests {
 	public void testNoModules() {
 		expectedException.expect(IllegalStateException.class);
 		expectedException.expectMessage("No modules specified in ObjectGraphBuilder");
-		new ObjectGraphBuilder().build();
+		ObjectGraphs.builder().build();
 	}
 
 	@Test
 	public void testModuleWithoutProvidesMethod() {
 		expectedException.expect(IllegalArgumentException.class);
 		expectedException.expectMessage("Module spork.inject.internal.ObjectGraphBuilderTests$ModuleWithoutProvidesMethod has no public methods annotated with @Provides");
-		new ObjectGraphBuilder()
+		ObjectGraphs.builder()
 				.module(new ModuleWithoutProvidesMethod())
 				.build();
 	}
@@ -57,7 +58,7 @@ public class ObjectGraphBuilderTests {
 	public void testModuleWithoutPublicProvidesMethod() {
 		expectedException.expect(IllegalArgumentException.class);
 		expectedException.expectMessage("Module spork.inject.internal.ObjectGraphBuilderTests$ModuleWithoutPublicProvidesMethod has no public methods annotated with @Provides");
-		new ObjectGraphBuilder()
+		ObjectGraphs.builder()
 				.module(new ModuleWithoutPublicProvidesMethod())
 				.build();
 	}
@@ -66,7 +67,7 @@ public class ObjectGraphBuilderTests {
 	public void testScopedRootGraph() {
 		expectedException.expect(IllegalStateException.class);
 		expectedException.expectMessage("Scope annotation can only be used when a parent ObjectGraph is specified");
-		new ObjectGraphBuilder()
+		ObjectGraphs.builder()
 				.scope(TestScope.class)
 				.module(new Module())
 				.build();

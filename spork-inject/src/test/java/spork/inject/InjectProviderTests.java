@@ -5,8 +5,6 @@ import org.junit.Test;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-import spork.inject.internal.ObjectGraphBuilder;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -40,7 +38,7 @@ public class InjectProviderTests {
 		Parent parent = new Parent();
 
 		// when
-		new ObjectGraphBuilder()
+		ObjectGraphs.builder()
 				.module(new Module())
 				.build()
 				.inject(parent);

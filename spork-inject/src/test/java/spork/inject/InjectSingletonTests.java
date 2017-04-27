@@ -5,9 +5,6 @@ import org.junit.Test;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import spork.inject.internal.ObjectGraph;
-import spork.inject.internal.ObjectGraphBuilder;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -32,7 +29,7 @@ public class InjectSingletonTests {
 	public void singleInstanceTest() {
 		Parent parent = new Parent();
 
-		ObjectGraph graph = new ObjectGraphBuilder()
+		ObjectGraph graph = ObjectGraphs.builder()
 				.module(new Module())
 				.build();
 

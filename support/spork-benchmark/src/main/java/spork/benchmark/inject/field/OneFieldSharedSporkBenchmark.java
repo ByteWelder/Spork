@@ -4,16 +4,16 @@ import javax.inject.Inject;
 
 import spork.SporkInstance;
 import spork.benchmark.Benchmark;
+import spork.inject.ObjectGraph;
+import spork.inject.ObjectGraphs;
 import spork.inject.Provides;
 import spork.inject.internal.InjectFieldBinder;
-import spork.inject.internal.ObjectGraph;
-import spork.inject.internal.ObjectGraphBuilder;
 
 class OneFieldSharedSporkBenchmark extends Benchmark {
 	private final TestObject[] testObjects;
 
 	OneFieldSharedSporkBenchmark(int iterationCount) {
-		ObjectGraph graph = new ObjectGraphBuilder()
+		ObjectGraph graph = ObjectGraphs.builder()
 				.module(new Module())
 				.build();
 

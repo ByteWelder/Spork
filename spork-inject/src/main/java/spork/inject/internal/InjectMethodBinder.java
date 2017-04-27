@@ -19,7 +19,7 @@ public class InjectMethodBinder implements MethodBinder<Inject> {
 	@Override
 	@SuppressWarnings("PMD.PreserveStackTrace")
 	public void bind(Object object, Inject annotation, Method method, Object... parameters) {
-		ObjectGraph objectGraph = ObjectGraphs.findObjectGraph(parameters);
+		ObjectGraphImpl objectGraph = ObjectGraphImpls.findObjectGraph(parameters);
 		if (objectGraph == null) {
 			throw bindFailedBuilder(Inject.class, "no ObjectGraph specified in instance arguments of bind()")
 					.into(method)
@@ -27,7 +27,7 @@ public class InjectMethodBinder implements MethodBinder<Inject> {
 		}
 
 		try {
-			Object[] invocationParameters = ObjectGraphs.getInjectableMethodParameters(objectGraph, method);
+			Object[] invocationParameters = ObjectGraphImpls.getInjectableMethodParameters(objectGraph, method);
 			Reflection.invokeMethod(Inject.class, method, object, invocationParameters);
 		} catch (ObjectGraphException e) {
 			String message = "failed to resolve object in ObjectGraph: " + e.getMessage();

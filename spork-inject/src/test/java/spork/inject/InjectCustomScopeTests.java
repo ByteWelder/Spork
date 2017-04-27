@@ -9,9 +9,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.inject.Inject;
 import javax.inject.Scope;
 
-import spork.inject.internal.ObjectGraph;
-import spork.inject.internal.ObjectGraphBuilder;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -71,26 +68,26 @@ public class InjectCustomScopeTests {
 	@Test
 	public void test() {
 		Application app = new Application();
-		ObjectGraph appGraph = new ObjectGraphBuilder()
+		ObjectGraph appGraph = ObjectGraphs.builder()
 				.module(new ApplicationModule())
 				.build();
 		appGraph.inject(app);
 
 		Session session = new Session();
-		ObjectGraph sessionGraph = new ObjectGraphBuilder(appGraph)
+		ObjectGraph sessionGraph = ObjectGraphs.builder(appGraph)
 				.scope(SessionScope.class)
 				.module(new SessionModule())
 				.build();
 		sessionGraph.inject(session);
 
 		Screen screenOne = new Screen();
-		ObjectGraph screenGraphOne = new ObjectGraphBuilder(sessionGraph)
+		ObjectGraph screenGraphOne = ObjectGraphs.builder(sessionGraph)
 				.module(new ScreenModule())
 				.build();
 		screenGraphOne.inject(screenOne);
 
 		Screen screenTwo = new Screen();
-		ObjectGraph screenGraphTwo = new ObjectGraphBuilder(sessionGraph)
+		ObjectGraph screenGraphTwo = ObjectGraphs.builder(sessionGraph)
 				.module(new ScreenModule())
 				.build();
 		screenGraphTwo.inject(screenTwo);

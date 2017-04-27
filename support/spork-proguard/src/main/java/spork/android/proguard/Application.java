@@ -1,7 +1,7 @@
 package spork.android.proguard;
 
-import spork.inject.internal.ObjectGraph;
-import spork.inject.internal.ObjectGraphBuilder;
+import spork.inject.ObjectGraph;
+import spork.inject.ObjectGraphs;
 
 public class Application extends android.app.Application {
 	private ObjectGraph objectGraph;
@@ -10,7 +10,7 @@ public class Application extends android.app.Application {
 	public void onCreate() {
 		super.onCreate();
 
-		objectGraph = new ObjectGraphBuilder()
+		objectGraph = ObjectGraphs.builder()
 				.module(new ApplicationModule())
 				.build();
 	}

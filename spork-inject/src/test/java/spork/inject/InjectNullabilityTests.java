@@ -9,7 +9,6 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import spork.BindFailed;
-import spork.inject.internal.ObjectGraphBuilder;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -51,7 +50,7 @@ public class InjectNullabilityTests {
 	public void injectNonnullWithNonnullParent() {
 		NonnullParent parent = new NonnullParent();
 
-		new ObjectGraphBuilder()
+		ObjectGraphs.builder()
 				.module(new StringNonnullModule())
 				.build()
 				.inject(parent);
@@ -66,7 +65,7 @@ public class InjectNullabilityTests {
 
 		NullableParent parent = new NullableParent();
 
-		new ObjectGraphBuilder()
+		ObjectGraphs.builder()
 				.module(new StringNonnullModule())
 				.build()
 				.inject(parent);
@@ -78,7 +77,7 @@ public class InjectNullabilityTests {
 	public void injectNullWithNullableParent() {
 		NullableParent parent = new NullableParent();
 
-		new ObjectGraphBuilder()
+		ObjectGraphs.builder()
 				.module(new StringNullableModule())
 				.build()
 				.inject(parent);
@@ -93,7 +92,7 @@ public class InjectNullabilityTests {
 
 		NonnullParent parent = new NonnullParent();
 
-		new ObjectGraphBuilder()
+		ObjectGraphs.builder()
 				.module(new StringNullableModule())
 				.build()
 				.inject(parent);

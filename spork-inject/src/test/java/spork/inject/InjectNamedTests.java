@@ -5,8 +5,6 @@ import org.junit.Test;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import spork.inject.internal.ObjectGraphBuilder;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -44,7 +42,7 @@ public class InjectNamedTests {
 	public void namedTest() {
 		Parent parent = new Parent();
 
-		new ObjectGraphBuilder()
+		ObjectGraphs.builder()
 				.module(new Module())
 				.build()
 				.inject(parent);

@@ -3,7 +3,7 @@ package spork.inject;
 import org.junit.Test;
 
 import spork.inject.internal.lang.Annotations;
-import spork.inject.internal.ObjectGraphs;
+import spork.inject.internal.ObjectGraphImpls;
 import spork.internal.Reflection;
 
 import static org.junit.Assert.assertThat;
@@ -16,8 +16,9 @@ public class ClassTests {
 
 	@Test
 	public void test() throws Exception {
-		assertThat(Reflection.class, utilityClass());
 		assertThat(ObjectGraphs.class, utilityClass());
 		assertThat(Annotations.class, utilityClass());
+		assertThat(ObjectGraphImpls.class, utilityClass());
+		assertThat(Reflection.class, utilityClass());
 	}
 }

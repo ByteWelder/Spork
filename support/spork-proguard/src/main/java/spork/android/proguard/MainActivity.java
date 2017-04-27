@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import spork.android.BindView;
 import spork.android.proguard.services.RestService;
 import spork.android.proguard.services.Test;
-import spork.inject.internal.ObjectGraph;
+import spork.inject.ObjectGraph;
 
 public class MainActivity extends Activity {
 

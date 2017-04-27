@@ -6,11 +6,11 @@ import javax.inject.Singleton;
 
 import spork.SporkInstance;
 import spork.benchmark.Benchmark;
+import spork.inject.ObjectGraph;
+import spork.inject.ObjectGraphs;
 import spork.inject.Provides;
 import spork.inject.internal.InjectFieldBinder;
 import spork.inject.internal.InjectMethodBinder;
-import spork.inject.internal.ObjectGraph;
-import spork.inject.internal.ObjectGraphBuilder;
 
 class ComplexInjectBenchmark extends Benchmark {
 	private final TestObject[] testObjects;
@@ -21,12 +21,12 @@ class ComplexInjectBenchmark extends Benchmark {
 		spork.register(new InjectMethodBinder());
 
 		// Root graph with RootModule
-		ObjectGraph rootGraph = new ObjectGraphBuilder()
+		ObjectGraph rootGraph = ObjectGraphs.builder()
 				.module(new RootModule())
 				.build();
 
 		// Child graph with Root graph as parent and ChildModule
-		ObjectGraph childGraph = new ObjectGraphBuilder(rootGraph)
+		ObjectGraph childGraph = ObjectGraphs.builder(rootGraph)
 				.module(new ChildModule())
 				.build();
 

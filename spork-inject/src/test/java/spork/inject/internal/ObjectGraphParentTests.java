@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 
+import spork.inject.ObjectGraph;
+import spork.inject.ObjectGraphs;
 import spork.inject.Provides;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -40,11 +42,11 @@ public class ObjectGraphParentTests {
 
 	@Test
 	public void testObjectGraphParent() {
-		ObjectGraph parentGraph = new ObjectGraphBuilder()
+		ObjectGraph parentGraph = ObjectGraphs.builder()
 				.module(new ParentModule())
 				.build();
 
-		ObjectGraph childGraph = new ObjectGraphBuilder(parentGraph)
+		ObjectGraph childGraph = ObjectGraphs.builder(parentGraph)
 				.module(new ChildModule())
 				.build();
 

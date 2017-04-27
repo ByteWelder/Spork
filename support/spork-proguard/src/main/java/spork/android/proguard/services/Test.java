@@ -3,7 +3,7 @@ package spork.android.proguard.services;
 import javax.inject.Inject;
 
 import spork.android.proguard.ApplicationModule;
-import spork.inject.internal.ObjectGraphBuilder;
+import spork.inject.ObjectGraphs;
 
 public class Test {
 
@@ -11,7 +11,7 @@ public class Test {
 	private RestService restService;
 
 	public Test() {
-		new ObjectGraphBuilder()
+		ObjectGraphs.builder()
 				.module(new ApplicationModule())
 				.build()
 				.inject(this);
