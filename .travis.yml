@@ -10,7 +10,7 @@ jdk: oraclejdk8
 env:
   global:
     - API=21 # Android API level 25 by default
-    - TAG=google_apis # Google APIs by default, alternatively use default
+    - TAG=default # Google APIs by default, alternatively use default
     - ABI=armeabi-v7a # ARM ABI v7a by default
     - ADB_INSTALL_TIMEOUT=8 # override 2 minute default
     - QEMU_AUDIO_DRV=none # disable emulator audio to avoid warning
