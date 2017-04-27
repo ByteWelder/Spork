@@ -9,6 +9,9 @@ jdk: oraclejdk8
 
 env:
   global:
+    - API=25 # Android API level 25 by default
+    - TAG=google_apis # Google APIs by default, alternatively use default
+    - ABI=armeabi-v7a # ARM ABI v7a by default
     - ADB_INSTALL_TIMEOUT=8 # override 2 minute default
     - QEMU_AUDIO_DRV=none # disable emulator audio to avoid warning
     - GRADLE_USER_HOME="${TRAVIS_BUILD_DIR}/gradle" # change location for Gradle Wrapper and cache
@@ -23,6 +26,10 @@ android:
     - platform-tools
     - tools # Update tools from revision 24.4.1 to 25.2.5
 
+before_install:
+  - export EMULATOR="system-images;android-${API};${TAG};${ABI}" # used to install/create emulator
+  - echo 'count=0' > /home/travis/.android/repositories.cfg # avoid warning
+
 install:
   - sdkmanager --list || true
   - echo yes | sdkmanager "tools"
@@ -32,13 +39,18 @@ install:
   - echo yes | sdkmanager "extras;google;m2repository"
   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
+  - echo no | avdmanager create avd -n acib -k "$EMULATOR" -f --abi "$ABI" --tag "$TAG"
+  - emulator -avd acib -engine classic -no-window -camera-back none -camera-front none -verbose -qemu -m 512 &
+  - adb wait-for-device get-serialno
 
 # Pipeline
 
 before_script:
-  - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a --skin 480x800
-  - emulator -avd test -no-skin -no-audio -no-window -gpu off &
   - android-wait-for-emulator
+  - adb shell settings put global window_animation_scale 0 &
+  - adb shell settings put global transition_animation_scale 0 &
+  - adb shell settings put global animator_duration_scale 0 &
+  - sleep 30
   - adb shell input keyevent 82 &
 
 script: ./gradlew check connectedCheck
