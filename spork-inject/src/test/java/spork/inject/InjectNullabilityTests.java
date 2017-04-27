@@ -1,6 +1,8 @@
 package spork.inject;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -14,11 +16,13 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class InjectNullabilityTests {
+	@Rule
+	public ExpectedException expectedException = ExpectedException.none();
 
 	private static class StringNullableModule {
 		@Provides
 		@Nullable
-		public String stringValue() {
+		public String provideStringValue() {
 			return null;
 		}
 	}
@@ -26,7 +30,7 @@ public class InjectNullabilityTests {
 	private static class StringNonnullModule {
 		@Provides
 		@Nonnull
-		public String stringValue() {
+		public String provideStringValue() {
 			return "test";
 		}
 	}
@@ -55,8 +59,11 @@ public class InjectNullabilityTests {
 		assertThat(parent.string, is("test"));
 	}
 
-	@Test(expected = BindFailed.class)
+	@Test
 	public void injectNonnullWithNullableParent() {
+		expectedException.expect(BindFailed.class);
+		expectedException.expectMessage("none of the modules provides an instance for java.lang.String:NULLABLE");
+
 		NullableParent parent = new NullableParent();
 
 		new ObjectGraphBuilder()
@@ -79,8 +86,11 @@ public class InjectNullabilityTests {
 		assertThat(parent.string, is(nullValue()));
 	}
 
-	@Test(expected = BindFailed.class)
+	@Test
 	public void injectNullWithNonnullParent() {
+		expectedException.expect(BindFailed.class);
+		expectedException.expectMessage("none of the modules provides an instance for java.lang.String:NONNULL");
+
 		NonnullParent parent = new NonnullParent();
 
 		new ObjectGraphBuilder()

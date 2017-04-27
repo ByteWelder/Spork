@@ -1,6 +1,8 @@
 package spork.inject;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import javax.inject.Inject;
 
@@ -13,6 +15,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class InjectModuleMethodArgumentsTests {
+	@Rule
+	public ExpectedException expectedException = ExpectedException.none();
 
 	private static class Module {
 
@@ -37,7 +41,7 @@ public class InjectModuleMethodArgumentsTests {
 	private static class MissingDependencyModule {
 
 		@Provides
-		public StringBuilder stringBuilder(Integer first) {
+		public StringBuilder provideStringBuilder(Integer first) {
 			return new StringBuilder().append(first);
 		}
 	}
@@ -59,8 +63,11 @@ public class InjectModuleMethodArgumentsTests {
 		assertThat(parent.stringBuilder.toString(), is("12"));
 	}
 
-	@Test(expected = BindFailed.class)
-	public void noDependencyFoundForArgumentTest() {
+	@Test
+	public void missingArgumentForProvidesMethod() {
+		expectedException.expect(BindFailed.class);
+		expectedException.expectMessage("Failed to bind annotation Inject: failed to call spork.inject.InjectModuleMethodArgumentsTests$MissingDependencyModule.provideStringBuilder(): invocation argument not found: java.lang.Integer:NONNULL");
+
 		Parent parent = new Parent();
 
 		ObjectGraph graph = new ObjectGraphBuilder()

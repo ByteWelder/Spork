@@ -60,6 +60,14 @@ final public class BindFailedBuilder {
 		return this;
 	}
 
+	/**
+	 * Defines the description of the injection target.
+	 */
+	public BindFailedBuilder into(String description) {
+		this.target = description;
+		return this;
+	}
+
 	// region Finalization methods
 
 	/**

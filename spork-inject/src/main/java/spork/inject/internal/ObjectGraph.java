@@ -56,7 +56,7 @@ public final class ObjectGraph {
 			if (targetGraph == null) {
 				String message = "no ObjectGraph found that defines scope " + scope.annotationType().getName();
 				throw bindFailedBuilder(Inject.class, message)
-						.into(injectSignature.getType())
+						.into(injectSignature.toString())
 						.build();
 			}
 

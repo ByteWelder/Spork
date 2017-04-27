@@ -45,7 +45,7 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 		Provider<?> provider = objectGraph.findProvider(injectSignature);
 
 		if (provider == null) {
-			throw bindFailedBuilder(Inject.class, "none of the modules provides an instance for " + fieldType.getName())
+			throw bindFailedBuilder(Inject.class, "none of the modules provides an instance for " + injectSignature.toString())
 					.into(field)
 					.build();
 		}

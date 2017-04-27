@@ -1,6 +1,8 @@
 package spork.inject;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import javax.inject.Inject;
 
@@ -12,6 +14,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class InjectMethodTests {
+	@Rule
+	public ExpectedException expectedException = ExpectedException.none();
+
 	private static class Module {
 		@Provides
 		public Integer integerValue() {
@@ -68,8 +73,11 @@ public class InjectMethodTests {
 		assertThat(parent.noArgumentsCalled, is(true));
 	}
 
-	@Test(expected = BindFailed.class)
+	@Test
 	public void injectWithoutGraph() {
+		expectedException.expect(BindFailed.class);
+		expectedException.expectMessage("no ObjectGraph specified in instance arguments of bind()");
+
 		Parent parent = new Parent();
 		Spork.bind(parent);
 	}

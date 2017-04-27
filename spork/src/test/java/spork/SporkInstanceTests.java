@@ -1,6 +1,8 @@
 package spork;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import spork.extension.FieldBinder;
 import spork.extension.MethodBinder;
@@ -13,6 +15,8 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 public class SporkInstanceTests {
+	@Rule
+	public ExpectedException expectedException = ExpectedException.none();
 
 	@Test
 	public void registerFieldBinder() {
@@ -47,24 +51,33 @@ public class SporkInstanceTests {
 		verify(catalog).add(typeBinder);
 	}
 
-	@Test(expected = IllegalStateException.class)
+	@Test
 	public void registerFieldBinderAfterBind() {
+		expectedException.expect(IllegalStateException.class);
+		expectedException.expectMessage("binders must be registered before the first bind() is called");
+
 		SporkInstance spork = new SporkInstance();
 
 		spork.bind(this);
 		spork.register(mock(FieldBinder.class));
 	}
 
-	@Test(expected = IllegalStateException.class)
+	@Test
 	public void registerMethodBinderAfterBind() {
+		expectedException.expect(IllegalStateException.class);
+		expectedException.expectMessage("binders must be registered before the first bind() is called");
+
 		SporkInstance spork = new SporkInstance();
 
 		spork.bind(this);
 		spork.register(mock(MethodBinder.class));
 	}
 
-	@Test(expected = IllegalStateException.class)
+	@Test
 	public void registerTypeBinderAfterBind() {
+		expectedException.expect(IllegalStateException.class);
+		expectedException.expectMessage("binders must be registered before the first bind() is called");
+
 		SporkInstance spork = new SporkInstance();
 
 		spork.bind(this);

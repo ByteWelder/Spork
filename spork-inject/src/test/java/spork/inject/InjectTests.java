@@ -1,17 +1,24 @@
 package spork.inject;
 
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import javax.inject.Inject;
 
 import spork.BindFailed;
 import spork.Spork;
+import spork.inject.internal.ObjectGraph;
 import spork.inject.internal.ObjectGraphBuilder;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class InjectTests {
+	@Rule
+	public ExpectedException expectedException = ExpectedException.none();
+	private ObjectGraph graph;
 
 	private static class StringModule {
 		@Provides
@@ -27,37 +34,71 @@ public class InjectTests {
 		}
 	}
 
-	// todo: add test with inheritance
-
-	private static class Parent {
+	private static class InjectTarget {
 		@Inject String string;
 		@Inject Integer integer;
 	}
 
-	@Test
-	public void regularTest() {
-		// normal case with a class-bound and interface-bound field
-		Parent parent = new Parent();
+	private static class InjectInheritanceTarget extends InjectTarget {
+		@Inject String extensionString;
+	}
 
-		new ObjectGraphBuilder()
+	@Before
+	public void setup() {
+		graph = new ObjectGraphBuilder()
 				.module(new StringModule())
 				.module(new IntegerModule())
-				.build()
-				.inject(parent);
-
-		assertThat(parent.string, is("test"));
-		assertThat(parent.integer, is(1));
+				.build();
 	}
 
-	@Test(expected = BindFailed.class)
-	public void oneMissingModuleInjection() {
-		Parent parent = new Parent();
-		Spork.bind(parent, new StringModule());
+	@Test
+	public void injectByObjectGraph() {
+		// normal case with a class-bound and interface-bound field
+		InjectTarget injectTarget = new InjectTarget();
+
+		graph.inject(injectTarget);
+
+		assertThat(injectTarget.string, is("test"));
+		assertThat(injectTarget.integer, is(1));
 	}
 
-	@Test(expected = BindFailed.class)
-	public void allMissingModuleInjection() {
-		Parent parent = new Parent();
-		Spork.bind(parent);
+	@Test
+	public void injectInheritance() {
+		InjectInheritanceTarget injectTarget = new InjectInheritanceTarget();
+
+		graph.inject(injectTarget);
+
+		assertThat(injectTarget.string, is("test"));
+		assertThat(injectTarget.integer, is(1));
+		assertThat(injectTarget.extensionString, is("test"));
+	}
+
+	@Test
+	public void injectWithForeignAndGraphObjectArgument() {
+		// normal case with a class-bound and interface-bound field
+		InjectTarget injectTarget = new InjectTarget();
+
+		Spork.bind(injectTarget, graph, "shouldBeIgnoredBySporkInject");
+
+		assertThat(injectTarget.string, is("test"));
+		assertThat(injectTarget.integer, is(1));
+	}
+
+	@Test
+	public void injectWithForeignArgument() {
+		expectedException.expect(BindFailed.class);
+		expectedException.expectMessage("no ObjectGraph specified in instance arguments of bind()");
+
+		InjectTarget injectTarget = new InjectTarget();
+		Spork.bind(injectTarget, new StringModule());
+	}
+
+	@Test
+	public void injectWithoutGraphArgument() {
+		expectedException.expect(BindFailed.class);
+		expectedException.expectMessage("no ObjectGraph specified in instance arguments of bind()");
+
+		InjectTarget injectTarget = new InjectTarget();
+		Spork.bind(injectTarget);
 	}
 }

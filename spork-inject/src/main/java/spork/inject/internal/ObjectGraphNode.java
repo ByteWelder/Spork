@@ -50,7 +50,7 @@ public final class ObjectGraphNode {
 			String message = "failed to call " + method.getDeclaringClass().getName() + "." + method.getName() + "(): " + e.getMessage();
 			throw bindFailedBuilder(Inject.class, message)
 					.from(method)
-					.into(injectSignature.getType())
+					.into(injectSignature.toString())
 					.build();
 		}
 	}
