@@ -4,24 +4,27 @@ import android.support.test.rule.ActivityTestRule;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
+import spork.BindFailed;
 import spork.android.test.bindview.domain.FaultyImpliedIdView;
 import spork.android.test.bindview.domain.FaultySpecifiedIdView;
 import spork.android.test.bindview.domain.FaultyTargetTypeView;
 import spork.android.test.bindview.domain.Pojo;
 import spork.android.test.bindview.domain.TestActivity;
-import spork.BindFailed;
 
 import static org.junit.Assert.assertNotNull;
 
-public class ViewBindingTest
-{
+public class ViewBindingTest {
+
+	@Rule
+	public ExpectedException expectedException = ExpectedException.none();
+
 	@Rule
 	public ActivityTestRule<TestActivity> mActivityRule = new ActivityTestRule<>(TestActivity.class);
 
 	@Test
-	public void run()
-	{
+	public void run() {
 		TestActivity activity = mActivityRule.getActivity();
 
 		testBinding(activity);
@@ -29,32 +32,39 @@ public class ViewBindingTest
 		testBinding(activity.getViewBindingView());
 	}
 
-	@Test(expected = BindFailed.class)
-	public void bindViewPojo()
-	{
+	@Test
+	public void bindViewPojo() {
+		expectedException.expect(BindFailed.class);
+		expectedException.expectMessage("cannot resolve View from " + Pojo.class.getName());
+
 		new Pojo();
 	}
 
-	@Test(expected = BindFailed.class)
-	public void bindFaultyImpliedId()
-	{
+	@Test
+	public void bindFaultyImpliedId() {
+		expectedException.expect(BindFailed.class);
+		expectedException.expectMessage("View not found for fallback R.id.faultyView");
+
 		new FaultyImpliedIdView(mActivityRule.getActivity());
 	}
 
-	@Test(expected = BindFailed.class)
-	public void bindFaultySpecifiedId()
-	{
+	@Test
+	public void bindFaultySpecifiedId() {
+		expectedException.expect(BindFailed.class);
+		expectedException.expectMessage("View not found");
+
 		new FaultySpecifiedIdView(mActivityRule.getActivity());
 	}
 
-	@Test(expected = BindFailed.class)
-	public void bindFaultyTargetType()
-	{
+	@Test
+	public void bindFaultyTargetType() {
+		expectedException.expect(BindFailed.class);
+		expectedException.expectMessage("field is not a View");
+
 		new FaultyTargetTypeView(mActivityRule.getActivity());
 	}
 
-	private void testBinding(ViewProvider provider)
-	{
+	private void testBinding(ViewProvider provider) {
 		String message = "binding " + provider.getClass().getSimpleName();
 
 		assertNotNull(message, provider.getViewByIdSpecified());

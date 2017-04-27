@@ -1,7 +1,9 @@
 package spork;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -11,6 +13,8 @@ import java.lang.annotation.Target;
 import static org.junit.Assert.assertEquals;
 
 public class TypeBindingTest {
+	@Rule
+	public ExpectedException expectedException = ExpectedException.none();
 	private final SporkInstance spork = new SporkInstance();
 
 	@Retention(RetentionPolicy.RUNTIME)
@@ -72,8 +76,11 @@ public class TypeBindingTest {
 		assertEquals(123, holder.getValue());
 	}
 
-	@Test(expected = BindFailed.class)
+	@Test
 	public void testFaultyType() {
+		expectedException.expect(BindFailed.class);
+		expectedException.expectMessage("can only be used with IntSettable target");
+
 		FaultyIntegerHolder holder = new FaultyIntegerHolder();
 		spork.bind(holder);
 	}

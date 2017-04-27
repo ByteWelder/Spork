@@ -8,6 +8,7 @@ import java.lang.reflect.Field;
 
 import javax.annotation.Nullable;
 
+import spork.android.ContextProvider;
 import spork.extension.FieldBinder;
 import spork.android.BindResource;
 import spork.android.extension.ContextResolver;
@@ -29,6 +30,8 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 
 		if (context == null) {
 			throw bindFailedBuilder(BindResource.class, "failed to retrieve Context from target object")
+					.suggest("make sure you're binding a supported Android object or that it implements " + ContextProvider.class.getName())
+					.suggest("if you're binding a support library class, ensure you added the 'android-support' dependency")
 					.into(field)
 					.build();
 		}

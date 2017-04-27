@@ -39,7 +39,8 @@ public class BindClickBinder implements MethodBinder<BindClick> {
 			} else if (parameterTypes.length == 1 && View.class.isAssignableFrom(parameterTypes[0])) {
 				Reflection.invokeMethod(BindClick.class, method, object, v);
 			} else {
-				throw bindFailedBuilder(BindClick.class, "onClick failed because the method arguments must be either empty or accept a single View type")
+				throw bindFailedBuilder(BindClick.class, "onClick() failed because the method arguments are invalid")
+						.suggest("method arguments must be a View type (e.g. View, Button, etc.)")
 						.from(v.getClass())
 						.into(method)
 						.build();

@@ -6,18 +6,22 @@ import android.support.test.rule.ActivityTestRule;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
+import spork.BindFailed;
+import spork.android.test.R;
 import spork.android.test.bindresource.domain.TestActivity;
 import spork.android.test.bindresource.domain.TestDimensionPojo;
 import spork.android.test.bindresource.domain.TestDrawablePojo;
 import spork.android.test.bindresource.domain.TestStringPojo;
-import spork.android.test.R;
-import spork.BindFailed;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class ResourceBindingTest {
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Rule
     public ActivityTestRule<TestActivity> activityRule = new ActivityTestRule<>(TestActivity.class);
@@ -32,6 +36,32 @@ public class ResourceBindingTest {
         testBinding(activity.getResourceBindingFragment());
         testBinding(activity.getResourceBindingView());
     }
+
+    @Test
+    public void dimensionPojoFailure() {
+        expectedException.expect(BindFailed.class);
+        expectedException.expectMessage("failed to retrieve Context from target object");
+
+        new TestDimensionPojo();
+    }
+
+    @Test
+    public void drawablePojoFailure() {
+        expectedException.expect(BindFailed.class);
+        expectedException.expectMessage("failed to retrieve Context from target object");
+
+        new TestDrawablePojo();
+    }
+
+    @Test
+    public void stringPojoFailure() {
+        expectedException.expect(BindFailed.class);
+        expectedException.expectMessage("failed to retrieve Context from target object");
+
+        new TestStringPojo();
+    }
+
+    // region private methods
 
     private void testBinding(ResourceProvider provider) {
         Resources resource = activityRule.getActivity().getResources();
@@ -66,22 +96,9 @@ public class ResourceBindingTest {
 
         boolean testBoolean = provider.getBooleanByIdImplied();
         Boolean testBooleanObject = provider.getBooleanByIdSpecified();
-        assertEquals(1, testInt);
-        assertEquals(Integer.valueOf(1), testInteger);
+        assertEquals(true, testBoolean);
+        assertEquals(true, testBooleanObject);
     }
 
-    @Test(expected = BindFailed.class)
-    public void testDimensionPojo() {
-        new TestDimensionPojo();
-    }
-
-    @Test(expected = BindFailed.class)
-    public void testDrawablePojo() {
-        new TestDrawablePojo();
-    }
-
-    @Test(expected = BindFailed.class)
-    public void testStringPojo() {
-        new TestStringPojo();
-    }
+    // endregion
 }
