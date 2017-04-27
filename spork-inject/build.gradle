@@ -16,7 +16,7 @@ dependencies {
 
 	compile "javax.inject:javax.inject:1" // for enterprise annotations
 
-	testCompile "junit:junit:$junitVersion"
+	testCompile project(':test:spork-matchers')
 	testCompile "org.mockito:mockito-core:$mockitoVersion"
 }
 

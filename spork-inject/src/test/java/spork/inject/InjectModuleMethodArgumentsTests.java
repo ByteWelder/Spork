@@ -9,7 +9,8 @@ import spork.Spork;
 import spork.inject.internal.ObjectGraph;
 import spork.inject.internal.ObjectGraphBuilder;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class InjectModuleMethodArgumentsTests {
 
@@ -55,7 +56,7 @@ public class InjectModuleMethodArgumentsTests {
 				.build()
 				.inject(parent);
 
-		assertEquals("12", parent.stringBuilder.toString());
+		assertThat(parent.stringBuilder.toString(), is("12"));
 	}
 
 	@Test(expected = BindFailed.class)

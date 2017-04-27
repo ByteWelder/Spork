@@ -9,8 +9,9 @@ import javax.inject.Inject;
 import spork.BindFailed;
 import spork.inject.internal.ObjectGraphBuilder;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class InjectNullabilityTests {
 
@@ -51,7 +52,7 @@ public class InjectNullabilityTests {
 				.build()
 				.inject(parent);
 
-		assertEquals("test", parent.string);
+		assertThat(parent.string, is("test"));
 	}
 
 	@Test(expected = BindFailed.class)
@@ -63,7 +64,7 @@ public class InjectNullabilityTests {
 				.build()
 				.inject(parent);
 
-		assertNull(parent.string);
+		assertThat(parent.string, is(nullValue()));
 	}
 
 	@Test
@@ -75,7 +76,7 @@ public class InjectNullabilityTests {
 				.build()
 				.inject(parent);
 
-		assertNull(parent.string);
+		assertThat(parent.string, is(nullValue()));
 	}
 
 	@Test(expected = BindFailed.class)

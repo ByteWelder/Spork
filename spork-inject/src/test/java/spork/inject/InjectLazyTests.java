@@ -6,7 +6,8 @@ import javax.inject.Inject;
 
 import spork.inject.internal.ObjectGraphBuilder;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class InjectLazyTests {
 
@@ -43,7 +44,7 @@ public class InjectLazyTests {
 		Integer first = parent.provider.get();
 		Integer second = parent.provider.get();
 
-		assertEquals((Integer) 1, first);
-		assertEquals((Integer) 1, second);
+		assertThat(first, is(1));
+		assertThat(second, is(1));
 	}
 }

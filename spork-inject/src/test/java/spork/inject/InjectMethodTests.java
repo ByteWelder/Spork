@@ -8,8 +8,8 @@ import spork.BindFailed;
 import spork.Spork;
 import spork.inject.internal.ObjectGraphBuilder;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class InjectMethodTests {
 	private static class Module {
@@ -61,11 +61,11 @@ public class InjectMethodTests {
 				.inject(parent);
 
 		// then
-		assertTrue(Parent.staticMethodCalled);
-		assertTrue(parent.argumentMethodCalled);
-		assertEquals(Integer.valueOf(1), parent.argumentMethodArgument);
-		assertTrue(parent.returnValueMethodCalled);
-		assertTrue(parent.noArgumentsCalled);
+		assertThat(Parent.staticMethodCalled, is(true));
+		assertThat(parent.argumentMethodCalled, is(true));
+		assertThat(parent.argumentMethodArgument, is(1));
+		assertThat(parent.returnValueMethodCalled, is(true));
+		assertThat(parent.noArgumentsCalled, is(true));
 	}
 
 	@Test(expected = BindFailed.class)

@@ -7,7 +7,8 @@ import javax.inject.Provider;
 
 import spork.inject.internal.ObjectGraphBuilder;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class InjectProviderTests {
 
@@ -48,7 +49,7 @@ public class InjectProviderTests {
 		Integer second = parent.provider.get();
 
 		// then
-		assertEquals((Integer) 1, first);
-		assertEquals((Integer) 2, second);
+		assertThat(first, is(1));
+		assertThat(second, is(2));
 	}
 }

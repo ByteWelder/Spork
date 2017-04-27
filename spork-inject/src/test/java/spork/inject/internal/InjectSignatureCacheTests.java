@@ -10,9 +10,10 @@ import java.util.Map;
 
 import spork.inject.internal.lang.Nullability;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 public class InjectSignatureCacheTests {
 	private InjectSignatureCache cache;
@@ -37,8 +38,8 @@ public class InjectSignatureCacheTests {
 
 	@Test
 	public void testDefaultState() {
-		assertTrue(fieldInjectSignatureMap.isEmpty());
-		assertTrue(methodInjectSignatureMap.isEmpty());
+		assertThat(fieldInjectSignatureMap.isEmpty(), is(true));
+		assertThat(methodInjectSignatureMap.isEmpty(), is(true));
 	}
 
 	@Test
@@ -54,15 +55,16 @@ public class InjectSignatureCacheTests {
 		cache.getInjectSignature(field, Object.class);
 		cache.getInjectSignature(field, Object.class);
 
-		assertEquals(1, fieldInjectSignatureMap.size());
+		assertThat(fieldInjectSignatureMap.size(), is(1));
 	}
 
 	@Test
 	public void testMethodSignature() throws NoSuchMethodException {
 		Method method = MethodTestable.class.getMethod("method");
 		InjectSignature[] signatures = cache.getInjectSignatures(method);
-		assertNull(signatures);
-		assertEquals(1, methodInjectSignatureMap.size());
+
+		assertThat(signatures, is(nullValue()));
+		assertThat(methodInjectSignatureMap.size(), is(1));
 	}
 
 	@Test
@@ -71,6 +73,6 @@ public class InjectSignatureCacheTests {
 		cache.getInjectSignatures(method);
 		cache.getInjectSignatures(method);
 
-		assertEquals(1, methodInjectSignatureMap.size());
+		assertThat(methodInjectSignatureMap.size(), is(1));
 	}
 }

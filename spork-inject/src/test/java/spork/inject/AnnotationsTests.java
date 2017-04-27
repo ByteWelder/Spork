@@ -11,9 +11,12 @@ import javax.inject.Singleton;
 
 import spork.inject.internal.lang.Annotations;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static spork.matchers.Matchers.annotationOfType;
 
 public class AnnotationsTests {
 	private static class Testable {
@@ -36,8 +39,7 @@ public class AnnotationsTests {
 		Field field = Testable.class.getDeclaredField("scopedField");
 		Annotation namedAnnotation = Annotations.findAnnotationAnnotatedWith(Scope.class, field);
 
-		assertNotNull(namedAnnotation);
-		assertEquals(Singleton.class, namedAnnotation.annotationType());
+		assertThat(namedAnnotation, allOf(notNullValue(), annotationOfType(Singleton.class)));
 	}
 
 	@Test
@@ -45,8 +47,7 @@ public class AnnotationsTests {
 		Method method = Testable.class.getDeclaredMethod("scopedMethod");
 		Annotation namedAnnotation = Annotations.findAnnotationAnnotatedWith(Scope.class, method);
 
-		assertNotNull(namedAnnotation);
-		assertEquals(Singleton.class, namedAnnotation.annotationType());
+		assertThat(namedAnnotation, allOf(notNullValue(), annotationOfType(Singleton.class)));
 	}
 
 	@Test
@@ -55,8 +56,7 @@ public class AnnotationsTests {
 		Annotation[] annotations = method.getParameterAnnotations()[0];
 		Annotation namedAnnotation = Annotations.findAnnotationAnnotatedWith(Scope.class, annotations);
 
-		assertNotNull(namedAnnotation);
-		assertEquals(Singleton.class, namedAnnotation.annotationType());
+		assertThat(namedAnnotation, allOf(notNullValue(), annotationOfType(Singleton.class)));
 	}
 
 	@Test
@@ -65,6 +65,6 @@ public class AnnotationsTests {
 		Annotation[] annotations = method.getParameterAnnotations()[0];
 		Annotation namedAnnotation = Annotations.findAnnotationAnnotatedWith(Scope.class, annotations);
 
-		assertNull(namedAnnotation);
+		assertThat(namedAnnotation, is(nullValue()));
 	}
 }

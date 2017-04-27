@@ -6,7 +6,8 @@ import javax.inject.Inject;
 
 import spork.inject.Provides;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ObjectGraphParentTests {
 
@@ -50,7 +51,7 @@ public class ObjectGraphParentTests {
 		Injectable injectable = new Injectable();
 		childGraph.inject(injectable);
 
-		assertEquals("parent solely provides injection", "test", injectable.publicValue);
-		assertEquals("child provider should override parent", 2, injectable.overriddenInt);
+		assertThat(injectable.publicValue, is("test")); // parent solely provides injection
+		assertThat(injectable.overriddenInt, is(2)); // child provider should override paren
 	}
 }

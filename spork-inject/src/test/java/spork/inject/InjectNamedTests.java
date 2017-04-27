@@ -7,7 +7,8 @@ import javax.inject.Named;
 
 import spork.inject.internal.ObjectGraphBuilder;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class InjectNamedTests {
 	private static class Module {
@@ -48,8 +49,8 @@ public class InjectNamedTests {
 				.build()
 				.inject(parent);
 
-		assertEquals(1, parent.one);
-		assertEquals(2, parent.two);
-		assertEquals(3, parent.unnamed);
+		assertThat(parent.one, is(1));
+		assertThat(parent.two, is(2));
+		assertThat(parent.unnamed, is(3));
 	}
 }

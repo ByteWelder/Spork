@@ -8,7 +8,8 @@ import javax.inject.Singleton;
 import spork.inject.internal.ObjectGraph;
 import spork.inject.internal.ObjectGraphBuilder;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class InjectSingletonTests {
 
@@ -43,6 +44,6 @@ public class InjectSingletonTests {
 		graph.inject(parent);
 
 		// verify same value
-		assertEquals(Integer.valueOf(1), parent.counter);
+		assertThat(parent.counter, is(1));
 	}
 }

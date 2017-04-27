@@ -7,7 +7,7 @@ apply from: rootProject.file('gradle/pmd-java.gradle')
 dependencies {
 	compile "com.google.code.findbugs:jsr305:$findBugsVersion" // for Nullable/NonNull
 
-	testCompile "junit:junit:$junitVersion"
+	testCompile project(':test:spork-matchers')
 	testCompile "org.mockito:mockito-core:$mockitoVersion"
 }
 

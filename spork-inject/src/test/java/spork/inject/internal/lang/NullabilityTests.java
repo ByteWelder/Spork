@@ -9,7 +9,9 @@ import java.lang.reflect.Method;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class NullabilityTests {
 
@@ -48,45 +50,51 @@ public class NullabilityTests {
 
 	@Test
 	public void fieldNullableTest() throws NoSuchFieldException, NoSuchMethodException {
-		Field nullableField = Testable.class.getDeclaredField("nullableField");
-		assertEquals(Nullability.NULLABLE, Nullability.create(nullableField));
+		Field field = Testable.class.getDeclaredField("nullableField");
+		Nullability nullability = Nullability.create(field);
+		assertThat(nullability, is(Nullability.NULLABLE));
 	}
 
 	@Test
 	public void fieldNonnullTest() throws NoSuchFieldException, NoSuchMethodException {
-		Field nonnullField = Testable.class.getDeclaredField("nonnullField");
-		assertEquals(Nullability.NONNULL, Nullability.create(nonnullField));
+		Field field = Testable.class.getDeclaredField("nonnullField");
+		Nullability nullability = Nullability.create(field);
+		assertThat(nullability, is(Nullability.NONNULL));
 	}
 
 	@Test
 	public void fieldNonspecifiedTest() throws NoSuchFieldException, NoSuchMethodException {
-		Field nonspecifiedField = Testable.class.getDeclaredField("nonspecifiedField");
-		assertEquals(Nullability.NONNULL, Nullability.create(nonspecifiedField));
+		Field field = Testable.class.getDeclaredField("nonspecifiedField");
+		Nullability nullability = Nullability.create(field);
+		assertThat(nullability, is(Nullability.NONNULL));
 	}
 
 	@Test
 	public void methodNullableTest() throws NoSuchFieldException, NoSuchMethodException {
 		Method nullableMethod = Testable.class.getDeclaredMethod("nullableMethod");
-		assertEquals(Nullability.NULLABLE, Nullability.create(nullableMethod));
+		Nullability nullability = Nullability.create(nullableMethod);
+		assertThat(nullability, is(Nullability.NULLABLE));
 	}
 
 	@Test
 	public void methodNonnullTest() throws NoSuchFieldException, NoSuchMethodException {
-		Method nonnullMethod = Testable.class.getDeclaredMethod("nonnullMethod");
-		assertEquals(Nullability.NONNULL, Nullability.create(nonnullMethod));
+		Method method = Testable.class.getDeclaredMethod("nonnullMethod");
+		Nullability nullability = Nullability.create(method);
+		assertThat(nullability, is(Nullability.NONNULL));
 	}
 
 	@Test
 	public void methodNonspecifiedTest() throws NoSuchFieldException, NoSuchMethodException {
-		Method nonspecifiedMethod = Testable.class.getDeclaredMethod("nonspecifiedMethod");
-		assertEquals(Nullability.NONNULL, Nullability.create(nonspecifiedMethod));
+		Method method = Testable.class.getDeclaredMethod("nonspecifiedMethod");
+		Nullability nullability = Nullability.create(method);
+		assertThat(nullability, is(Nullability.NONNULL));
 	}
 
 	@Test
 	public void methodArgumentNullableTest() throws NoSuchMethodException {
-		Annotation[] methodArgumentAnnotations = getFirstMethodArgumentAnnotations("nullableMethodArgument");
-		Nullability nullability = Nullability.create(methodArgumentAnnotations);
-		assertEquals(Nullability.NULLABLE, nullability);
+		Annotation[] method = getFirstMethodArgumentAnnotations("nullableMethodArgument");
+		Nullability nullability = Nullability.create(method);
+		assertThat(nullability, is(Nullability.NULLABLE));
 	}
 
 	@Test
@@ -104,8 +112,8 @@ public class NullabilityTests {
 	}
 
 	private static Annotation[] getFirstMethodArgumentAnnotations(String methodName) throws NoSuchMethodException {
-		Method methodArgumentsMethod = Testable.class.getDeclaredMethod(methodName, String.class);
-		assertEquals(1, methodArgumentsMethod.getParameterAnnotations().length);
-		 return methodArgumentsMethod.getParameterAnnotations()[0];
+		Method method = Testable.class.getDeclaredMethod(methodName, String.class);
+		assertThat(method.getParameterAnnotations().length, is(1));
+		return method.getParameterAnnotations()[0];
 	}
 }

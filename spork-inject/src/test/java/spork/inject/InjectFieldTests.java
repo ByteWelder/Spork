@@ -6,7 +6,8 @@ import javax.inject.Inject;
 
 import spork.inject.internal.ObjectGraphBuilder;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Tests related to injecting fields.
@@ -58,9 +59,9 @@ public class InjectFieldTests {
 				.inject(parent);
 
 		// then
-		assertEquals(Integer.valueOf(1), Parent.staticValue);
-		assertEquals(Integer.valueOf(1), parent.publicValue);
-		assertEquals(Integer.valueOf(1), parent.getProtectedValue());
-		assertEquals(Integer.valueOf(1), parent.getPrivateValue());
+		assertThat(Parent.staticValue, is(1));
+		assertThat(parent.publicValue, is(1));
+		assertThat(parent.getProtectedValue(), is(1));
+		assertThat(parent.getPrivateValue(), is(1));
 	}
 }

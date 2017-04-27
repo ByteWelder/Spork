@@ -8,6 +8,8 @@ import javax.inject.Named;
 
 import spork.inject.internal.lang.Nullability;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -29,9 +31,9 @@ public class InjectSignatureTests {
 		String qualifier = injectSignatureCache.getQualifier(annotation);
 		InjectSignature signature = new InjectSignature(String.class, Nullability.NONNULL, qualifier);
 
-		assertEquals(String.class, signature.getType());
-		assertEquals(Nullability.NONNULL, signature.getNullability());
-		assertEquals(true, signature.hasQualifier());
+		assertThat(signature.getType(), is((Object) String.class));
+		assertThat(signature.getNullability(), is(Nullability.NONNULL));
+		assertThat(signature.hasQualifier(), is(true));
 	}
 
 	@Test
