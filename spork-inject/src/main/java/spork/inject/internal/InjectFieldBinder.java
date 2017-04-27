@@ -8,6 +8,7 @@ import javax.inject.Provider;
 
 import spork.extension.FieldBinder;
 import spork.inject.Lazy;
+import spork.inject.internal.reflection.Classes;
 import spork.inject.internal.providers.ProviderLazy;
 import spork.internal.Reflection;
 
@@ -25,7 +26,7 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 
 	@Override
 	public void bind(Object instance, Inject annotation, Field field, Object... parameters) {
-		ObjectGraphImpl objectGraph = ObjectGraphImpls.findObjectGraph(parameters);
+		ObjectGraphImpl objectGraph = Classes.findFirstInstanceOfType(ObjectGraphImpl.class, parameters);
 		if (objectGraph == null) {
 			throw bindFailedBuilder(Inject.class, "no ObjectGraph specified in instance arguments of bind()")
 					.into(field)

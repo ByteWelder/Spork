@@ -45,7 +45,7 @@ public final class ObjectGraphNode {
 	@SuppressWarnings("PMD.PreserveStackTrace")
 	Object[] collectParameters(ObjectGraphImpl objectGraph) {
 		try {
-			return ObjectGraphImpls.getInjectableMethodParameters(objectGraph, method);
+			return objectGraph.getInjectableMethodParameters(method);
 		} catch (ObjectGraphException e) {
 			String message = "failed to call " + method.getDeclaringClass().getName() + "." + method.getName() + "(): " + e.getMessage();
 			throw bindFailedBuilder(Inject.class, message)

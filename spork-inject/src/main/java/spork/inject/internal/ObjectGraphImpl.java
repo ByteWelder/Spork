@@ -1,6 +1,7 @@
 package spork.inject.internal;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -91,7 +92,35 @@ public final class ObjectGraphImpl implements ObjectGraph {
 		return injectSignatureCache;
 	}
 
-	private @Nullable ObjectGraphImpl findObjectGraph(Class<? extends Annotation> scopeAnnotationClass) {
+	@Nullable
+	Object[] getInjectableMethodParameters(Method method) throws ObjectGraphException {
+		int parameterCount = method.getParameterTypes().length;
+		if (parameterCount == 0) {
+			return null;
+		}
+
+		// The following never returns null as there is guaranteed at least 1 method parameter
+		InjectSignature[] injectSignatures = getInjectSignatureCache().getInjectSignatures(method);
+		if (injectSignatures == null) {
+			return null;
+		}
+
+		Object[] parameterInstances = new Object[parameterCount];
+
+		for (int i = 0; i < parameterCount; ++i) {
+			Provider provider = findProvider(injectSignatures[i]);
+			if (provider == null) {
+				throw new ObjectGraphException("invocation argument not found: " + injectSignatures[i].toString());
+			}
+			boolean isProviderParameter = (method.getParameterTypes()[i] == Provider.class);
+			parameterInstances[i] = isProviderParameter ? provider : provider.get();
+		}
+
+		return parameterInstances;
+	}
+
+	@Nullable
+	private ObjectGraphImpl findObjectGraph(Class<? extends Annotation> scopeAnnotationClass) {
 		if (this.scopeAnnotationClass == scopeAnnotationClass) {
 			return this;
 		} else if (parentGraph != null) {
