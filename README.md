@@ -2,7 +2,12 @@
 
 [![travis][travis-logo]][travis-link]
 
-Spork is an extensible Java/Android library for annotation processing.
+Spork is a fast runtime annotation processing library.
+
+Spork contains the following libraries:
+- `spork` is the annotation processing core
+- `spork-inject` for dependency injection (javax.inject compatible)
+- `spork-android` and `spork-android-support` for Android bindings
 
 Documentation is available on the [website](http://spork.bytewelder.com)
 
