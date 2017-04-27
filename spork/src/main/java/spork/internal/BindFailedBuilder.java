@@ -101,7 +101,7 @@ final public class BindFailedBuilder {
 
 	private String buildMessage() {
 		StringBuilder builder = new StringBuilder(200)
-				.append("Failed to bind annotation ")
+				.append("Failed to bind @")
 				.append(annotationClass.getSimpleName())
 				.append(": ")
 				.append(message);

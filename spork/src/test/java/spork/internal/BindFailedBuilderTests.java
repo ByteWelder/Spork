@@ -23,7 +23,7 @@ public class BindFailedBuilderTests {
 				.build()
 				.getMessage();
 
-		assertThat(message, is("Failed to bind annotation Rule: reason\n"
+		assertThat(message, is("Failed to bind @Rule: reason\n"
 				+ "\t- annotation: org.junit.Rule"));
 	}
 
@@ -35,7 +35,7 @@ public class BindFailedBuilderTests {
 				.build()
 				.getMessage();
 
-		assertThat(message, is("Failed to bind annotation Rule: reason\n"
+		assertThat(message, is("Failed to bind @Rule: reason\n"
 				+ "\t- annotation: org.junit.Rule\n"
 				+ "\t- binding from: java.lang.String\n"
 				+ "\t- binding into: java.lang.reflect.Field"));
@@ -52,7 +52,7 @@ public class BindFailedBuilderTests {
 				.build()
 				.getMessage();
 
-		assertThat(message, is("Failed to bind annotation Rule: reason\n"
+		assertThat(message, is("Failed to bind @Rule: reason\n"
 				+ "\t- annotation: org.junit.Rule\n"
 				+ "\t- binding from: spork.internal.BindFailedBuilderTests.testMethodNoArguments()\n"
 				+ "\t- binding into: spork.internal.BindFailedBuilderTests.testMethodOneArgument(...)"));
@@ -67,7 +67,7 @@ public class BindFailedBuilderTests {
 				.build()
 				.getMessage();
 
-		assertThat(message, is("Failed to bind annotation Rule: reason\n"
+		assertThat(message, is("Failed to bind @Rule: reason\n"
 				+ "\t- annotation: org.junit.Rule\n"
 				+ "\t- binding into: spork.internal.BindFailedBuilderTests.reflectionField"));
 	}

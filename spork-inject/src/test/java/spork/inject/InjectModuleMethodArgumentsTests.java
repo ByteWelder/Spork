@@ -66,7 +66,7 @@ public class InjectModuleMethodArgumentsTests {
 	@Test
 	public void missingArgumentForProvidesMethod() {
 		expectedException.expect(BindFailed.class);
-		expectedException.expectMessage("Failed to bind annotation Inject: failed to call spork.inject.InjectModuleMethodArgumentsTests$MissingDependencyModule.provideStringBuilder(): invocation argument not found: java.lang.Integer:NONNULL");
+		expectedException.expectMessage("failed to call spork.inject.InjectModuleMethodArgumentsTests$MissingDependencyModule.provideStringBuilder(): invocation argument not found: java.lang.Integer:NONNULL");
 
 		Parent parent = new Parent();
 
