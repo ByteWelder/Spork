@@ -9,7 +9,7 @@ jdk: oraclejdk8
 
 env:
   global:
-    - API=25 # Android API level 25 by default
+    - API=21 # Android API level 25 by default
     - TAG=google_apis # Google APIs by default, alternatively use default
     - ABI=armeabi-v7a # ARM ABI v7a by default
     - ADB_INSTALL_TIMEOUT=8 # override 2 minute default
@@ -33,8 +33,8 @@ before_install:
 install:
   - sdkmanager --list || true
   - echo yes | sdkmanager "tools"
-  - echo yes | sdkmanager "system-images;android-21;default;armeabi-v7a"
   - echo yes | sdkmanager "platforms;android-25"
+  - echo yes | sdkmanager "platforms;android-${API}"
   - echo yes | sdkmanager "extras;android;m2repository"
   - echo yes | sdkmanager "extras;google;m2repository"
   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
