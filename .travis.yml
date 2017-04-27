@@ -14,7 +14,7 @@ env:
     - GRADLE_USER_HOME="${TRAVIS_BUILD_DIR}/gradle" # change location for Gradle Wrapper and cache
     - ANDROID_HOME=/usr/local/android-sdk-24.0.2 # depends on the cookbooks version used in the VM
     - TOOLS=${ANDROID_HOME}/tools
-    - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools
+    - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
 
 android:
   components:
