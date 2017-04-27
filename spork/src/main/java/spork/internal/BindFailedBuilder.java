@@ -3,6 +3,8 @@ package spork.internal;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Nullable;
 
@@ -11,12 +13,14 @@ import spork.BindFailed;
 /**
  * Builder pattern for {@link BindFailed}
  */
+@SuppressWarnings("PMD.TooManyMethods")
 final public class BindFailedBuilder {
 	private final String message;
 	private final Class<? extends Annotation> annotationClass;
 	@Nullable private Throwable cause;
 	@Nullable private String source;
 	@Nullable private String target;
+	private final List<String> suggestions = new ArrayList<>();
 
 	private BindFailedBuilder(Class<? extends Annotation> annotationClass, String message) {
 		this.annotationClass = annotationClass;
@@ -68,8 +72,6 @@ final public class BindFailedBuilder {
 		return this;
 	}
 
-	// region Finalization methods
-
 	/**
 	 * Defines the target Method to inject to.
 	 */
@@ -77,6 +79,16 @@ final public class BindFailedBuilder {
 		this.target = getMethodSignature(method);
 		return this;
 	}
+
+	/**
+	 * Add a suggestion that could solve the problem.
+	 */
+	public BindFailedBuilder suggest(String suggestion) {
+		this.suggestions.add(suggestion);
+		return this;
+	}
+
+	// region Finalization methods
 
 	public BindFailed build() {
 		String compoundMessage = buildMessage();
@@ -92,8 +104,15 @@ final public class BindFailedBuilder {
 				.append("Failed to bind annotation ")
 				.append(annotationClass.getSimpleName())
 				.append(": ")
-				.append(message)
-				.append("\n\t- annotation: ")
+				.append(message);
+
+		if (!suggestions.isEmpty()) {
+			for (String suggestion : suggestions) {
+				builder.append("\n\t- suggestion: ").append(suggestion);
+			}
+		}
+
+		builder.append("\n\t- annotation: ")
 				.append(annotationClass.getName());
 
 		if (source != null) {

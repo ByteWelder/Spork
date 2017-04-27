@@ -8,6 +8,8 @@ import java.lang.reflect.Method;
 
 import spork.BindFailed;
 
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static spork.internal.BindFailedBuilder.bindFailedBuilder;
@@ -78,6 +80,30 @@ public class BindFailedBuilderTests {
 				.build();
 
 		assertThat(bindFailed.getCause(), is(cause));
+	}
+
+	@Test
+	public void suggestOne() {
+		String message = bindFailedBuilder(Rule.class, "reason")
+				.suggest("suggested")
+				.build()
+				.getMessage();
+
+		assertThat(message, containsString("- suggestion: suggested"));
+	}
+
+	@Test
+	public void suggestMultiple() {
+		String message = bindFailedBuilder(Rule.class, "reason")
+				.suggest("suggested1")
+				.suggest("suggested2")
+				.build()
+				.getMessage();
+
+		assertThat(message, allOf(
+				containsString("- suggestion: suggested1"),
+				containsString("- suggestion: suggested2")
+		));
 	}
 
 	private void testMethodNoArguments() {
