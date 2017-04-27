@@ -4,7 +4,7 @@ dependencies {
     compile project(':spork-inject')
     compile project(':spork-android-support')
 
-    compile 'com.android.support.constraint:constraint-layout:1.0.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile "com.android.support:appcompat-v7:$androidSupportLibraryVersion"
     compile "com.android.support:support-compat:$androidSupportLibraryVersion"
 	compile "com.android.support:support-v4:$androidSupportLibraryVersion"

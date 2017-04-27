@@ -14,14 +14,21 @@ env:
 
 android:
   components:
-    - tools
+    - tools # Update preinstalled tools from revision 24.0.2 to 24.4.1
     - build-tools-25.0.3
     - platform-tools
-    - extra-android-m2repository
-    - extra-android-support
-    - extra-google-android-support
-    - sys-img-armeabi-v7a-android-21
-    - android-25
+    - tools # Update tools from revision 24.4.1 to 25.2.5
+
+install:
+  - sdkmanager --list || true
+  - echo yes | sdkmanager "tools"
+  - echo yes | sdkmanager "system-images;android-21;default;armeabi-v7a"
+  - echo yes | sdkmanager "platforms;android-25"
+  - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
+  - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
+  - echo yes | sdkmanager "extras;android;m2repository"
+  - echo yes | sdkmanager "extras;google;m2repository"
+  - echo yes | sdkmanager "extras;android;support"
 
 # Pipeline
 
