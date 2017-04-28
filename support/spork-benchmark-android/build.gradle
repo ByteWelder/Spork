@@ -14,18 +14,6 @@ android {
         versionCode 1
         versionName '1.0.0'
     }
-
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/ASL2.0'
-        exclude 'META-INF/ASL2.0.txt'
-        exclude 'LICENSE.txt'
-        exclude 'LICENSE'
-    }
 }
 
 apply from: rootProject.file('gradle/findbugs-android.gradle')
