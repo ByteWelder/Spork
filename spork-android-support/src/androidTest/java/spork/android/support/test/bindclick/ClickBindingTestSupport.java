@@ -20,11 +20,11 @@ import static org.junit.Assert.assertNotNull;
 
 public class ClickBindingTestSupport {
 	@Rule
-	public ActivityTestRule<TestActivitySupport> mActivityRule = new ActivityTestRule<>(TestActivitySupport.class);
+	public ActivityTestRule<TestActivitySupport> activityRule = new ActivityTestRule<>(TestActivitySupport.class);
 
 	@Test
 	public void testMain() {
-		TestActivitySupport activity = mActivityRule.getActivity();
+		TestActivitySupport activity = activityRule.getActivity();
 		TestFragmentSupport test_fragment = activity.getTestFragment();
 
 		assertNotNull(test_fragment);
@@ -36,7 +36,7 @@ public class ClickBindingTestSupport {
 
 	@Test
 	public void testRecyclerView() {
-		RecyclerView recycler_view = mActivityRule.getActivity().getRecyclerView();
+		RecyclerView recycler_view = activityRule.getActivity().getRecyclerView();
 
 		assertNotNull(recycler_view);
 		assertNotNull(recycler_view.getAdapter());

@@ -21,11 +21,11 @@ public class ViewBindingTest {
 	public ExpectedException expectedException = ExpectedException.none();
 
 	@Rule
-	public ActivityTestRule<TestActivity> mActivityRule = new ActivityTestRule<>(TestActivity.class);
+	public ActivityTestRule<TestActivity> activityRule = new ActivityTestRule<>(TestActivity.class);
 
 	@Test
 	public void run() {
-		TestActivity activity = mActivityRule.getActivity();
+		TestActivity activity = activityRule.getActivity();
 
 		testBinding(activity);
 		testBinding(activity.getViewBindingFragment());
@@ -45,7 +45,7 @@ public class ViewBindingTest {
 		expectedException.expect(BindFailed.class);
 		expectedException.expectMessage("View not found for fallback R.id.faultyView");
 
-		new FaultyImpliedIdView(mActivityRule.getActivity());
+		new FaultyImpliedIdView(activityRule.getActivity());
 	}
 
 	@Test
@@ -53,7 +53,7 @@ public class ViewBindingTest {
 		expectedException.expect(BindFailed.class);
 		expectedException.expectMessage("View not found");
 
-		new FaultySpecifiedIdView(mActivityRule.getActivity());
+		new FaultySpecifiedIdView(activityRule.getActivity());
 	}
 
 	@Test
@@ -61,7 +61,7 @@ public class ViewBindingTest {
 		expectedException.expect(BindFailed.class);
 		expectedException.expectMessage("field is not a View");
 
-		new FaultyTargetTypeView(mActivityRule.getActivity());
+		new FaultyTargetTypeView(activityRule.getActivity());
 	}
 
 	private void testBinding(ViewProvider provider) {
