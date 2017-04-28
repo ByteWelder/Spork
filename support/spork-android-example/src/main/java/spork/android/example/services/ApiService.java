@@ -3,7 +3,7 @@ package spork.android.example.services;
 import spork.android.example.concurrent.Callback;
 
 /**
- * Dummy ApiService that uses {@link HttpService} to execute requests to a backend.
+ * Dummy ApiService that uses {@link HttpServiceImpl} to execute requests to a backend.
  */
 public class ApiService {
 	private static final String BASE_URL = "http://localhost";

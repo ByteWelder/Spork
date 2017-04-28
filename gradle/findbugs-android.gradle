@@ -1,6 +1,6 @@
 apply plugin: 'findbugs'
 
-android.libraryVariants.all { variant ->
+def createFindbugsAndroidTask(variant) {
 	task("findbugs${variant.name.capitalize()}", type: FindBugs) {
 		description "Analyze ${variant.name} code with the FindBugs tool"
 		group 'Verification'
@@ -27,4 +27,12 @@ android.libraryVariants.all { variant ->
 
 		project.tasks["check"].dependsOn(getName())
 	}
+}
+
+if (android.hasProperty('libraryVariants')) {
+	android.libraryVariants.all { variant -> createFindbugsAndroidTask(variant) }
+}
+
+if (android.hasProperty('applicationVariants')) {
+	android.applicationVariants.all { variant -> createFindbugsAndroidTask(variant) }
 }

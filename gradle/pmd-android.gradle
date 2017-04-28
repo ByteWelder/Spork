@@ -1,9 +1,8 @@
 apply plugin: 'pmd'
 
-android.libraryVariants.all { variant ->
-	// Run Android and Java checks
+def createPmdAndroidTask(variant) {
 	task("pmd${variant.name.capitalize()}", type: Pmd) {
-		description 'Run PMD with Java configuration'
+		description 'Run PMD with Java and Android configuration'
 		group 'verification'
 		source = variant.javaCompile.source
 
@@ -17,4 +16,12 @@ android.libraryVariants.all { variant ->
 				"${rootProject.rootDir}/config/pmd-android.xml"
 		)
 	}
+}
+
+if (android.hasProperty('libraryVariants')) {
+	android.libraryVariants.all { variant -> createPmdAndroidTask(variant) }
+}
+
+if (android.hasProperty('applicationVariants')) {
+	android.applicationVariants.all { variant -> createPmdAndroidTask(variant) }
 }

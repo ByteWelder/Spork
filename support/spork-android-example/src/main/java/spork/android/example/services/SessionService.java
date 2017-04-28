@@ -25,9 +25,9 @@ public class SessionService {
 	 * @return the new active session
 	 */
 	public void startNewSession(final Callback<Session> sessionCallback) {
-		apiService.execute(currentSession, "/session/create", new Callback<HttpService.Response>() {
+		apiService.execute(currentSession, "/session/create", new Callback<HttpServiceImpl.Response>() {
 			@Override
-			public void onSuccess(HttpService.Response object) {
+			public void onSuccess(HttpServiceImpl.Response object) {
 				if (currentSession.isActive()) {
 					currentSession.deactivate();
 				}
@@ -48,9 +48,9 @@ public class SessionService {
 	 * Deactivate a session.
 	 */
 	private void deactivate(final Session session) {
-		apiService.execute(session, "/session/deactivate", new Callback<HttpService.Response>() {
+		apiService.execute(session, "/session/deactivate", new Callback<HttpServiceImpl.Response>() {
 			@Override
-			public void onSuccess(HttpService.Response object) {
+			public void onSuccess(HttpServiceImpl.Response object) {
 				// do nothing
 			}
 
@@ -86,7 +86,7 @@ public class SessionService {
 		}
 	}
 
-	private class InactiveSession implements Session {
+	private static class InactiveSession implements Session {
 		private final UUID uuid = UUID.randomUUID();
 
 		@Override

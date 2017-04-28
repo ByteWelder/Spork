@@ -17,7 +17,7 @@ import spork.android.example.concurrent.Callback;
 import spork.android.example.services.Session;
 import spork.android.example.services.SessionService;
 
-import static spork.android.example.ObjectGraphs.objectGraphOf;
+import static spork.inject.ObjectGraphs.objectGraphOf;
 
 @BindLayout(R.layout.activity_login)
 public class LoginActivity extends AppCompatActivity {

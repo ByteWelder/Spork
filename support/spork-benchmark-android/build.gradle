@@ -27,3 +27,6 @@ android {
         exclude 'LICENSE'
     }
 }
+
+apply from: rootProject.file('gradle/findbugs-android.gradle')
+apply from: rootProject.file('gradle/pmd-android.gradle')

@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import spork.android.example.services.Session;
 import spork.android.example.services.SessionService;
 
-import static spork.android.example.ObjectGraphs.objectGraphOf;
+import static spork.inject.ObjectGraphs.objectGraphOf;
 
 public class LaunchActivity extends AppCompatActivity {
 

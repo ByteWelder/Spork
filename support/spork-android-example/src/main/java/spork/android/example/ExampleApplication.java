@@ -1,8 +1,10 @@
 package spork.android.example;
 
 import android.app.Application;
+import android.support.annotation.VisibleForTesting;
 
 import spork.inject.ObjectGraph;
+import spork.inject.ObjectGraphProvider;
 import spork.inject.ObjectGraphs;
 
 public class ExampleApplication extends Application implements ObjectGraphProvider {
@@ -20,5 +22,10 @@ public class ExampleApplication extends Application implements ObjectGraphProvid
 	@Override
 	public ObjectGraph getObjectGraph() {
 		return objectGraph;
+	}
+
+	@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+	public void setObjectGraph(ObjectGraph objectGraph) {
+		this.objectGraph = objectGraph;
 	}
 }

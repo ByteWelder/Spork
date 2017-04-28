@@ -2,15 +2,16 @@ package spork.android.example;
 
 import javax.inject.Singleton;
 
-import spork.android.example.services.SessionService;
 import spork.android.example.services.ApiService;
 import spork.android.example.services.HttpService;
+import spork.android.example.services.HttpServiceImpl;
+import spork.android.example.services.SessionService;
 import spork.inject.Provides;
 
-class ExampleApplicationModule {
+public class ExampleApplicationModule {
 	@Provides
 	public HttpService provideHttpService() {
-		return new HttpService();
+		return new HttpServiceImpl();
 	}
 
 	@Provides

@@ -1,15 +1,5 @@
 apply plugin: 'com.android.application'
 
-dependencies {
-    compile project(':spork-inject')
-    compile project(':spork-android-support')
-
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile "com.android.support:appcompat-v7:$androidSupportLibraryVersion"
-    compile "com.android.support:support-compat:$androidSupportLibraryVersion"
-	compile "com.android.support:support-v4:$androidSupportLibraryVersion"
-}
-
 android {
     compileSdkVersion androidCompileSdkVersion
     buildToolsVersion androidBuildToolsVersion
@@ -19,5 +9,46 @@ android {
         targetSdkVersion androidTargetSdkVersion
         versionCode 1
         versionName '1.0.0'
+        testInstrumentationRunner 'spork.android.example.test.TestRunner'
+        testHandleProfiling true
+        testFunctionalTest true
+    }
+
+    buildTypes {
+        release {
+            testCoverageEnabled false
+        }
+        debug {
+            testCoverageEnabled true
+        }
     }
 }
+
+dependencies {
+    compile project(':spork-inject')
+    compile project(':spork-android-support')
+
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile "com.android.support:appcompat-v7:$androidSupportLibraryVersion"
+    compile "com.android.support:support-compat:$androidSupportLibraryVersion"
+    compile "com.android.support:support-v4:$androidSupportLibraryVersion"
+
+	androidTestCompile ("com.android.support.test:runner:$androidSupportTestRunnerVersion") {
+        exclude group: 'com.android.support'
+    }
+	androidTestCompile ("com.android.support.test.espresso:espresso-core:$androidSupportEspressoVersion") {
+		exclude group: 'com.android.support'
+        exclude module: 'jsr305'
+    }
+	androidTestCompile ("com.android.support.test.espresso:espresso-contrib:$androidSupportEspressoVersion") {
+		exclude group: 'com.android.support'
+		exclude module: 'jsr305'
+	}
+    androidTestCompile("com.android.support.test.espresso:espresso-intents:$androidSupportEspressoVersion") {
+        exclude group: 'com.android.support'
+	    exclude module: 'jsr305'
+    }
+}
+
+apply from: rootProject.file('gradle/findbugs-android.gradle')
+apply from: rootProject.file('gradle/pmd-android.gradle')
