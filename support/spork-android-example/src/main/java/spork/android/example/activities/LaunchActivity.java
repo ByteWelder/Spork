@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import spork.android.example.services.Session;
 import spork.android.example.services.SessionService;
 
-import static spork.inject.ObjectGraphs.objectGraphOf;
+import static spork.inject.ObjectGraphs.objectGraphFrom;
 
 public class LaunchActivity extends AppCompatActivity {
 
@@ -21,7 +21,7 @@ public class LaunchActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 
 		// Get the Application's ObjectGraph
-		objectGraphOf(getApplication())
+		objectGraphFrom(getApplication())
 				.inject(this);
 
 		// Forward to the right Activity (LoginActivity or WelcomeActivity)

@@ -17,7 +17,7 @@ import spork.android.example.concurrent.Callback;
 import spork.android.example.services.Session;
 import spork.android.example.services.SessionService;
 
-import static spork.inject.ObjectGraphs.objectGraphOf;
+import static spork.inject.ObjectGraphs.objectGraphFrom;
 
 @BindLayout(R.layout.activity_login)
 public class LoginActivity extends AppCompatActivity {
@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		objectGraphOf(getApplication()).inject(this);
+		objectGraphFrom(getApplication()).inject(this);
 
 		loginProgressDialog = new ProgressDialog(this);
 		loginProgressDialog.setMessage(getString(R.string.login_progress));

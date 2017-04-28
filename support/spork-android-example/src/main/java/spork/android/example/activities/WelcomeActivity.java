@@ -14,7 +14,7 @@ import spork.android.BindView;
 import spork.android.example.R;
 import spork.android.example.services.SessionService;
 
-import static spork.inject.ObjectGraphs.objectGraphOf;
+import static spork.inject.ObjectGraphs.objectGraphFrom;
 
 @BindLayout(R.layout.activity_welcome)
 public class WelcomeActivity extends AppCompatActivity {
@@ -29,7 +29,7 @@ public class WelcomeActivity extends AppCompatActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		objectGraphOf(getApplication()).inject(this);
+		objectGraphFrom(getApplication()).inject(this);
 
 		if (sessionService.getCurentSession().isActive()) {
 			// Show the session ID in a TextView
