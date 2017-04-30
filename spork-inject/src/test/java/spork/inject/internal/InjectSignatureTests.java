@@ -17,7 +17,7 @@ import static org.junit.Assert.assertNotEquals;
 public class InjectSignatureTests {
 	private final InjectSignatureCache injectSignatureCache = new InjectSignatureCache();
 
-	public static class AnnotationHolder {
+	private static class AnnotationHolder {
 		@Named("first")
 		public String first;
 

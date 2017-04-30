@@ -58,6 +58,7 @@ public final class Reflection {
 			return method.invoke(object, args);
 		} catch (Exception e) { // TODO: multi-catch IllegalAccessException, InvocationTargetException when supporting Android 4.4+
 			throw bindFailedBuilder(annotationClass, "failed to invoke method")
+					.suggest("The method might not be accessible or threw an Exception. Check the cause below.")
 					.into(method)
 					.cause(e)
 					.build();

@@ -21,7 +21,8 @@ public class BindLayoutBinder implements TypeBinder<BindLayout> {
 			ViewGroup viewGroup = (ViewGroup) object;
 			LayoutInflater.from(viewGroup.getContext()).inflate(layoutResourceId, viewGroup);
 		} else {
-			throw bindFailedBuilder(BindLayout.class, "annotation can only be used with Activity or ViewGroup")
+			throw bindFailedBuilder(BindLayout.class, "BindLayout is not compatible with " + object.getClass().getName())
+					.suggest("BindLayout only works with Activity or ViewGroup")
 					.into(object.getClass())
 					.build();
 		}

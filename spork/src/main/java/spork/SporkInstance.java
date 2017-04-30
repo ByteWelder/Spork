@@ -46,7 +46,12 @@ public class SporkInstance {
 			binder = new Binder(bindActionProvider);
 		}
 
-		binder.bind(object, parameters);
+		try {
+			binder.bind(object, parameters);
+		} catch (BindFailed caught) {
+			// re-throw Exception to improve stacktrace readability
+			throw new BindFailed(caught.getMessage(), caught);
+		}
 	}
 
 	// endregion

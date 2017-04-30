@@ -49,7 +49,7 @@ public class LayoutBindingTest {
     @Test
     public void pojo() {
         expectedException.expect(BindFailed.class);
-        expectedException.expectMessage("annotation can only be used with Activity or ViewGroup");
+        expectedException.expectMessage("BindLayout is not compatible with " + Pojo.class.getName());
 
         new Pojo();
     }

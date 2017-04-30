@@ -20,11 +20,11 @@ public class InjectSignatureCacheTests {
 	private Map<Field, InjectSignature> fieldInjectSignatureMap;
 	private Map<Method, InjectSignature[]> methodInjectSignatureMap;
 
-	public static class FieldTestable {
+	private static class FieldTestable {
 		public Object field;
 	}
 
-	public static class MethodTestable {
+	private static class MethodTestable {
 		public void method() {
 		}
 	}

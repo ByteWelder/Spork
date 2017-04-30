@@ -49,6 +49,7 @@ public final class ObjectGraphNode {
 		} catch (ObjectGraphException e) {
 			String message = "failed to call " + method.getDeclaringClass().getName() + "." + method.getName() + "(): " + e.getMessage();
 			throw bindFailedBuilder(Inject.class, message)
+					.cause(e)
 					.from(method)
 					.into(injectSignature.toString())
 					.build();

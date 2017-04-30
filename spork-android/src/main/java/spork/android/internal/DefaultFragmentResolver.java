@@ -60,7 +60,7 @@ public class DefaultFragmentResolver implements FragmentResolver {
 			int id = fragment.getResources().getIdentifier(idName, "id", fragment.getActivity().getPackageName());
 
 			if (id == 0) {
-				throw bindFailedBuilder(BindFragment.class, "Fragment not found by for Rid." + idName)
+				throw bindFailedBuilder(BindFragment.class, "Fragment not found by for R.id." + idName)
 						.from(fragment.getClass())
 						.build();
 			}

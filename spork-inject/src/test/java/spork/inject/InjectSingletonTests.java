@@ -15,7 +15,7 @@ public class InjectSingletonTests {
 
 		@Provides
 		@Singleton
-		public Integer counter() {
+		public Integer provideCounter() {
 			return counter++;
 		}
 	}

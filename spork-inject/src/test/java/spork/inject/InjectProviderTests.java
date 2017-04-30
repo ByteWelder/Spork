@@ -17,7 +17,7 @@ public class InjectProviderTests {
 		private int counter = 0;
 
 		@Provides
-		public Integer integerValue() {
+		public Integer provideInteger() {
 			return ++counter;
 		}
 	}

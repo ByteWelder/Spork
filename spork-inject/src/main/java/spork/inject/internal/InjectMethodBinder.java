@@ -23,6 +23,7 @@ public class InjectMethodBinder implements MethodBinder<Inject> {
 		ObjectGraphImpl objectGraph = Classes.findFirstInstanceOfType(ObjectGraphImpl.class, parameters);
 		if (objectGraph == null) {
 			throw bindFailedBuilder(Inject.class, "no ObjectGraph specified in instance arguments of bind()")
+					.suggest("call Spork.bind(target, objectGraph")
 					.into(method)
 					.build();
 		}

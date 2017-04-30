@@ -58,6 +58,7 @@ public final class ObjectGraphImpl implements ObjectGraph {
 			if (targetGraph == null) {
 				String message = "no ObjectGraph found that defines scope " + scope.annotationType().getName();
 				throw bindFailedBuilder(Inject.class, message)
+						.suggest("When creating your ObjectGraphs, ensure that one has the required scope")
 						.into(injectSignature.toString())
 						.build();
 			}
