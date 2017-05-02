@@ -5,7 +5,9 @@ import java.util.Map;
 import javax.annotation.Nullable;
 import javax.inject.Provider;
 
+import spork.exceptions.SporkRuntimeException;
 import spork.inject.internal.InjectSignature;
+import spork.inject.internal.ObjectGraphException;
 import spork.inject.internal.ObjectGraphNode;
 
 /**
@@ -49,10 +51,14 @@ public class CachedNodeProvider implements Provider<Object> {
 	}
 
 	private Object invoke() {
-		if (arguments == null) {
-			return node.resolve();
-		} else {
-			return node.resolve(arguments);
+		try {
+			if (arguments == null) {
+				return node.resolve();
+			} else {
+				return node.resolve(arguments);
+			}
+		} catch (ObjectGraphException caught) {
+			throw new SporkRuntimeException("failed to resolve provider", caught, caught.getBindContext());
 		}
 	}
 }

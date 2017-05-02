@@ -1,6 +1,5 @@
 package spork.android.test.bindlayout;
 
-import android.content.res.Resources;
 import android.support.test.rule.ActivityTestRule;
 import android.view.View;
 
@@ -8,12 +7,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import spork.BindFailed;
 import spork.android.test.R;
 import spork.android.test.bindlayout.domain.FaultyLayoutTestView;
 import spork.android.test.bindlayout.domain.Pojo;
 import spork.android.test.bindlayout.domain.TestActivity;
 import spork.android.test.bindlayout.domain.TestView;
+import spork.exceptions.SporkRuntimeException;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -41,14 +40,14 @@ public class LayoutBindingTest {
 
     @Test
     public void faultyLayoutTestView() {
-        expectedException.expect(Resources.NotFoundException.class);
+        expectedException.expect(SporkRuntimeException.class);
 
         new FaultyLayoutTestView(activityRule.getActivity());
     }
 
     @Test
     public void pojo() {
-        expectedException.expect(BindFailed.class);
+        expectedException.expect(SporkRuntimeException.class);
         expectedException.expectMessage("BindLayout is not compatible with " + Pojo.class.getName());
 
         new Pojo();

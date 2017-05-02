@@ -44,9 +44,9 @@ public class FieldBindingTests {
 		@Override
 		public void bind(Object object, BindField annotation, Field field, Object... parameters) {
 			if ("instanceField".equals(field.getName())) {
-				Reflection.setFieldValue(BindField.class, field, object, "1");
+				Reflection.setFieldValue(field, object, "1");
 			} else if ("staticField".equals(field.getName())) {
-				Reflection.setFieldValue(BindField.class, field, object, "2");
+				Reflection.setFieldValue(field, object, "2");
 			}
 		}
 

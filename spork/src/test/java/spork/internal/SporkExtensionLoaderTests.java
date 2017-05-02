@@ -6,7 +6,7 @@ import org.junit.rules.ExpectedException;
 
 import spork.SporkExtension;
 import spork.SporkInstance;
-import spork.extension.ExtensionLoadingFailed;
+import spork.exceptions.ExtensionLoadingFailed;
 
 import static org.hamcrest.CoreMatchers.any;
 import static org.hamcrest.CoreMatchers.is;

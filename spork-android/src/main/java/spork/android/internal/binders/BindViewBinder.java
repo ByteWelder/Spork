@@ -4,13 +4,14 @@ import android.view.View;
 
 import java.lang.reflect.Field;
 
+import spork.exceptions.BindContext;
+import spork.exceptions.BindContextBuilder;
+import spork.exceptions.BindFailed;
 import spork.extension.FieldBinder;
 import spork.android.BindView;
 import spork.android.extension.ViewResolver;
 import spork.android.internal.utils.Views;
 import spork.internal.Reflection;
-
-import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 public class BindViewBinder implements FieldBinder<BindView> {
 	private final ViewResolver viewResolver;
@@ -20,16 +21,25 @@ public class BindViewBinder implements FieldBinder<BindView> {
 	}
 
 	@Override
-	public void bind(Object object, BindView annotation, Field field, Object... parameters) {
+	public void bind(Object object, BindView annotation, Field field, Object... parameters) throws BindFailed {
 		if (!View.class.isAssignableFrom(field.getType())) {
-			throw bindFailedBuilder(BindView.class, "field is not a View")
-					.into(field)
-					.build();
+			BindContext bindContext = getBindContext(field);
+			throw new BindFailed("field is not a View", bindContext);
 		}
 
-		View view = Views.getView(viewResolver, annotation.value(), field.getName(), object);
+		try {
+			View view = Views.getView(viewResolver, annotation.value(), field.getName(), object);
+			Reflection.setFieldValue(field, object, view);
+		} catch (Exception caught) {
+			BindContext bindContext = getBindContext(field);
+			throw new BindFailed("failed to resolve View", caught, bindContext);
+		}
+	}
 
-		Reflection.setFieldValue(BindView.class, field, object, view);
+	private BindContext getBindContext(Field field) {
+		return new BindContextBuilder(BindView.class)
+				.bindingInto(field)
+				.build();
 	}
 
 	@Override

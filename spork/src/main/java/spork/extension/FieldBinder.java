@@ -3,6 +3,8 @@ package spork.extension;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
+import spork.exceptions.BindFailed;
+
 /**
  * A FieldBinder provides binding for a specific Field annotation on an object instance.
  */
@@ -15,7 +17,7 @@ public interface FieldBinder<T extends Annotation> {
 	 * @param field      the field that was annotated
 	 * @param parameters optional parameters
 	 */
-	void bind(Object object, T annotation, Field field, Object... parameters);
+	void bind(Object object, T annotation, Field field, Object... parameters) throws BindFailed;
 
 	/**
 	 * @return the annotation to provide bindings for

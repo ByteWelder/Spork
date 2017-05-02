@@ -10,7 +10,7 @@ import static org.mockito.Mockito.verify;
 
 public class CompoundFragmentResolverTests {
 	@Test
-	public void resolveById() {
+	public void resolveById() throws Exception {
 		CompoundFragmentResolver compoundResolver = Mockito.spy(new CompoundFragmentResolver());
 		FragmentResolver resolver = Mockito.mock(FragmentResolver.class);
 		compoundResolver.add(resolver);
@@ -20,7 +20,7 @@ public class CompoundFragmentResolverTests {
 	}
 
 	@Test
-	public void resolveByName() {
+	public void resolveByName() throws Exception {
 		CompoundFragmentResolver compoundResolver = Mockito.spy(new CompoundFragmentResolver());
 		FragmentResolver resolver = Mockito.mock(FragmentResolver.class);
 		compoundResolver.add(resolver);

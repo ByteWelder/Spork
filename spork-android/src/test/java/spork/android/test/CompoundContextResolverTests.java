@@ -10,7 +10,7 @@ import static org.mockito.Mockito.verify;
 
 public class CompoundContextResolverTests {
 	@Test
-	public void resolve() {
+	public void resolve() throws Exception {
 		CompoundContextResolver compoundResolver = Mockito.spy(new CompoundContextResolver());
 		ContextResolver resolver = Mockito.mock(ContextResolver.class);
 		compoundResolver.add(resolver);

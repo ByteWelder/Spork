@@ -7,13 +7,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import spork.BindFailed;
 import spork.android.test.bindclick.domain.TestActivity;
 import spork.android.test.bindclick.domain.TestFaultyClickArgumentsView;
 import spork.android.test.bindclick.domain.TestFaultyView;
 import spork.android.test.bindclick.domain.TestFragment;
 import spork.android.test.bindclick.domain.TestPojo;
 import spork.android.test.bindclick.domain.TestView;
+import spork.exceptions.SporkRuntimeException;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -48,16 +48,16 @@ public class ClickBindingTest {
 
     @Test
     public void testPojo() {
-        expectedException.expect(BindFailed.class);
-        expectedException.expectMessage("cannot resolve View from spork.android.test.bindclick.domain.TestPojo");
+        expectedException.expect(SporkRuntimeException.class);
+        expectedException.expectMessage("failed to resolve View for method");
 
         new TestPojo();
     }
 
     @Test
     public void testFaultyView() {
-        expectedException.expect(BindFailed.class);
-        expectedException.expectMessage("View not found");
+        expectedException.expect(SporkRuntimeException.class);
+        expectedException.expectMessage("failed to resolve View for method");
 
         new TestFaultyView(activityRule.getActivity());
     }
@@ -66,7 +66,7 @@ public class ClickBindingTest {
     public void testFaultyClickArgumentsView() {
         expectedException.expect(PerformException.class);
         expectedException.expectCause(allOf(
-                isA(BindFailed.class),
+                isA(SporkRuntimeException.class),
                 hasMessage(containsString("onClick() failed because the method arguments are invalid"))
         ));
 

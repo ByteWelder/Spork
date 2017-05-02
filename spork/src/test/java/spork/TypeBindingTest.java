@@ -10,6 +10,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import spork.exceptions.BindContext;
+import spork.exceptions.BindContextBuilder;
+import spork.exceptions.BindFailed;
+import spork.exceptions.SporkRuntimeException;
+
 import static org.junit.Assert.assertEquals;
 
 public class TypeBindingTest {
@@ -30,9 +35,10 @@ public class TypeBindingTest {
 	private static class BindTypeBinder implements spork.extension.TypeBinder<BindValue> {
 
 		@Override
-		public void bind(Object instance, BindValue annotation, Class<?> annotatedType, Object... parameters) {
+		public void bind(Object instance, BindValue annotation, Class<?> annotatedType, Object... parameters) throws BindFailed {
 			if (!IntSettable.class.isAssignableFrom(instance.getClass())) {
-				throw new BindFailed("can only be used with IntSettable target");
+				BindContext bindContext = new BindContextBuilder(BindValue.class).build();
+				throw new BindFailed("can only be used with IntSettable target", bindContext);
 			}
 
 			IntSettable valueHolder = (IntSettable) instance;
@@ -78,7 +84,7 @@ public class TypeBindingTest {
 
 	@Test
 	public void testFaultyType() {
-		expectedException.expect(BindFailed.class);
+		expectedException.expect(SporkRuntimeException.class);
 		expectedException.expectMessage("can only be used with IntSettable target");
 
 		FaultyIntegerHolder holder = new FaultyIntegerHolder();

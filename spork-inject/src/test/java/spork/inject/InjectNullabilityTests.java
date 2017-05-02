@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
-import spork.BindFailed;
+import spork.exceptions.SporkRuntimeException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -60,7 +60,7 @@ public class InjectNullabilityTests {
 
 	@Test
 	public void injectNonnullWithNullableParent() {
-		expectedException.expect(BindFailed.class);
+		expectedException.expect(SporkRuntimeException.class);
 		expectedException.expectMessage("none of the modules provides an instance for java.lang.String:NULLABLE");
 
 		NullableParent parent = new NullableParent();
@@ -87,7 +87,7 @@ public class InjectNullabilityTests {
 
 	@Test
 	public void injectNullWithNonnullParent() {
-		expectedException.expect(BindFailed.class);
+		expectedException.expect(SporkRuntimeException.class);
 		expectedException.expectMessage("none of the modules provides an instance for java.lang.String:NONNULL");
 
 		NonnullParent parent = new NonnullParent();

@@ -6,10 +6,7 @@ import android.os.Build;
 
 import javax.annotation.Nullable;
 
-import spork.android.BindFragment;
 import spork.android.extension.FragmentResolver;
-
-import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 /**
  * Default {@link FragmentResolver} implementation for all regular Android classes that
@@ -20,7 +17,7 @@ public class DefaultFragmentResolver implements FragmentResolver {
 
 	@Override
 	@Nullable
-	public Object resolveFragment(Object object, int id) {
+	public Object resolveFragment(Object object, int id) throws Exception {
 
 		if (object instanceof Activity) {
 			return ((Activity) object).getFragmentManager().findFragmentById(id);
@@ -41,16 +38,14 @@ public class DefaultFragmentResolver implements FragmentResolver {
 
 	@Override
 	@Nullable
-	public Object resolveFragment(Object object, String idName) {
+	public Object resolveFragment(Object object, String idName) throws Exception {
 
 		if (object instanceof Activity) {
 			Activity activity = (Activity) object;
 			int id = activity.getResources().getIdentifier(idName, "id", activity.getPackageName());
 
 			if (id == 0) {
-				throw bindFailedBuilder(BindFragment.class, "Fragment not found for R.id." + idName)
-						.from(activity.getClass())
-						.build();
+				throw new Exception("Fragment not found for R.id." + idName);
 			}
 
 			return activity.getFragmentManager().findFragmentById(id);
@@ -60,9 +55,7 @@ public class DefaultFragmentResolver implements FragmentResolver {
 			int id = fragment.getResources().getIdentifier(idName, "id", fragment.getActivity().getPackageName());
 
 			if (id == 0) {
-				throw bindFailedBuilder(BindFragment.class, "Fragment not found by for R.id." + idName)
-						.from(fragment.getClass())
-						.build();
+				throw new Exception("Fragment not found by for R.id." + idName);
 			}
 
 			Fragment childFragment = fragment.getFragmentManager().findFragmentById(id);

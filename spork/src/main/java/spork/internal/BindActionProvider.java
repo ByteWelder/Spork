@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import spork.exceptions.BindFailed;
 import spork.extension.FieldBinder;
 import spork.extension.MethodBinder;
 import spork.extension.TypeBinder;
@@ -92,7 +93,7 @@ public class BindActionProvider {
 
 			bindActions.add(new BindAction() {
 				@Override
-				public void bind(Object object, Object... parameters) {
+				public void bind(Object object, Object... parameters) throws BindFailed {
 					fieldBinder.bind(object, annotation, field, parameters);
 				}
 			});
@@ -117,7 +118,7 @@ public class BindActionProvider {
 
 			bindActions.add(new BindAction() {
 				@Override
-				public void bind(Object object, Object... parameters) {
+				public void bind(Object object, Object... parameters) throws BindFailed {
 					methodBinder.bind(object, annotation, method, parameters);
 				}
 			});
@@ -138,7 +139,7 @@ public class BindActionProvider {
 		if (annotation != null) {
 			bindActions.add(new BindAction() {
 				@Override
-				public void bind(Object object, Object... parameters) {
+				public void bind(Object object, Object... parameters) throws BindFailed {
 					typeBinder.bind(object, annotation, annotatedType, parameters);
 				}
 			});

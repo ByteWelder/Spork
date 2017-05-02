@@ -2,7 +2,7 @@ package spork.internal;
 
 import spork.SporkInstance;
 import spork.SporkExtension;
-import spork.extension.ExtensionLoadingFailed;
+import spork.exceptions.ExtensionLoadingFailed;
 
 /**
  * Utility class for {@link SporkExtension}

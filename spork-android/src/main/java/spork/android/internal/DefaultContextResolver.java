@@ -18,7 +18,7 @@ import spork.android.ViewProvider;
 public class DefaultContextResolver implements ContextResolver {
 	@Override
 	@Nullable
-	public Context resolveContext(Object object) {
+	public Context resolveContext(Object object) throws Exception {
 		if (object instanceof View) {
 			return ((View) object).getContext();
 		} else if (object instanceof Fragment) {

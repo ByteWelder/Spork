@@ -4,6 +4,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import spork.exceptions.BindFailed;
 import spork.extension.FieldBinder;
 import spork.extension.MethodBinder;
 import spork.extension.TypeBinder;
@@ -85,7 +86,7 @@ public class SporkInstanceTests {
 	}
 
 	@Test
-	public void bind() {
+	public void bind() throws BindFailed {
 		Binder binder = mock(Binder.class);
 		SporkInstance spork = spy(new SporkInstance(binder, null));
 		Object target = new Object();

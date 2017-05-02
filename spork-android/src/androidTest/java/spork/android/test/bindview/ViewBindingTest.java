@@ -6,12 +6,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import spork.BindFailed;
 import spork.android.test.bindview.domain.FaultyImpliedIdView;
 import spork.android.test.bindview.domain.FaultySpecifiedIdView;
 import spork.android.test.bindview.domain.FaultyTargetTypeView;
 import spork.android.test.bindview.domain.Pojo;
 import spork.android.test.bindview.domain.TestActivity;
+import spork.exceptions.SporkRuntimeException;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -34,31 +34,31 @@ public class ViewBindingTest {
 
 	@Test
 	public void bindViewPojo() {
-		expectedException.expect(BindFailed.class);
-		expectedException.expectMessage("cannot resolve View from " + Pojo.class.getName());
+		expectedException.expect(SporkRuntimeException.class);
+		expectedException.expectMessage("failed to resolve View");
 
 		new Pojo();
 	}
 
 	@Test
 	public void bindFaultyImpliedId() {
-		expectedException.expect(BindFailed.class);
-		expectedException.expectMessage("View not found for fallback R.id.faultyView");
+		expectedException.expect(SporkRuntimeException.class);
+		expectedException.expectMessage("failed to resolve View");
 
 		new FaultyImpliedIdView(activityRule.getActivity());
 	}
 
 	@Test
 	public void bindFaultySpecifiedId() {
-		expectedException.expect(BindFailed.class);
-		expectedException.expectMessage("View not found");
+		expectedException.expect(SporkRuntimeException.class);
+		expectedException.expectMessage("failed to resolve View");
 
 		new FaultySpecifiedIdView(activityRule.getActivity());
 	}
 
 	@Test
 	public void bindFaultyTargetType() {
-		expectedException.expect(BindFailed.class);
+		expectedException.expect(SporkRuntimeException.class);
 		expectedException.expectMessage("field is not a View");
 
 		new FaultyTargetTypeView(activityRule.getActivity());

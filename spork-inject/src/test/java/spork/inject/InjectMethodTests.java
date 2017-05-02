@@ -6,8 +6,8 @@ import org.junit.rules.ExpectedException;
 
 import javax.inject.Inject;
 
-import spork.BindFailed;
 import spork.Spork;
+import spork.exceptions.SporkRuntimeException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -74,7 +74,7 @@ public class InjectMethodTests {
 
 	@Test
 	public void injectWithoutGraph() {
-		expectedException.expect(BindFailed.class);
+		expectedException.expect(SporkRuntimeException.class);
 		expectedException.expectMessage("no ObjectGraph specified in instance arguments of bind()");
 
 		Parent parent = new Parent();

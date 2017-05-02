@@ -5,13 +5,10 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import spork.BindFailed;
-import spork.stubs.TestAnnotation;
-
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.isA;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
@@ -44,42 +41,39 @@ public class ReflectionTests {
 		FieldHolder fieldHolder = new FieldHolder();
 		Field field = FieldHolder.class.getDeclaredField("field");
 
-		Reflection.setFieldValue(TestAnnotation.class, field, fieldHolder, 1);
+		Reflection.setFieldValue(field, fieldHolder, 1);
 
 		assertThat(fieldHolder.field, is(1));
 	}
 
 	@Test
 	public void setFieldValueOnFinalStaticField() throws NoSuchFieldException {
-		expectedException.expect(BindFailed.class);
-		expectedException.expectCause(isA(IllegalAccessException.class));
-		expectedException.expectMessage("field is not accessible");
+		expectedException.expect(UnexpectedException.class);
+		expectedException.expectMessage("Failed to access spork.internal.ReflectionTests$FinalStaticFieldHolder.field");
 		FinalStaticFieldHolder fieldHolder = new FinalStaticFieldHolder();
 		Field field = FinalStaticFieldHolder.class.getDeclaredField("field");
 
-		Reflection.setFieldValue(TestAnnotation.class, field, fieldHolder, 1);
+		Reflection.setFieldValue(field, fieldHolder, 1);
 		assertThat(fieldHolder.field, is(1));
 	}
 
 	@Test
-	public void invokeMethod() throws NoSuchMethodException {
+	public void invokeMethod() throws NoSuchMethodException, InvocationTargetException {
 		MethodHolder methodHolder = spy(new MethodHolder());
 		Method method = MethodHolder.class.getDeclaredMethod("method");
 
-		Reflection.invokeMethod(TestAnnotation.class, method, methodHolder);
+		Reflection.invokeMethod(method, methodHolder);
 
 		verify(methodHolder).method();
 	}
 
 	@Test
-	public void invokeMethodThrowingException() throws NoSuchMethodException {
-		expectedException.expect(BindFailed.class);
-		expectedException.expectCause(isA(RuntimeException.class));
-		expectedException.expectMessage("failed to invoke method");
+	public void invokeMethodThrowingException() throws NoSuchMethodException, InvocationTargetException {
+		expectedException.expect(InvocationTargetException.class);
 
 		ExceptionMethodHolder methodHolder = spy(new ExceptionMethodHolder());
-		Method method = MethodHolder.class.getDeclaredMethod("method");
+		Method method = ExceptionMethodHolder.class.getDeclaredMethod("method");
 
-		Reflection.invokeMethod(TestAnnotation.class, method, methodHolder);
+		Reflection.invokeMethod(method, methodHolder);
 	}
 }

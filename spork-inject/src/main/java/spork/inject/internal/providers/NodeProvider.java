@@ -2,6 +2,8 @@ package spork.inject.internal.providers;
 
 import javax.inject.Provider;
 
+import spork.exceptions.SporkRuntimeException;
+import spork.inject.internal.ObjectGraphException;
 import spork.inject.internal.ObjectGraphNode;
 
 public class NodeProvider implements Provider<Object> {
@@ -15,10 +17,14 @@ public class NodeProvider implements Provider<Object> {
 
 	@Override
 	public Object get() {
-		if (parameters == null) {
-			return node.resolve();
-		} else {
-			return node.resolve(parameters);
+		try {
+			if (parameters == null) {
+				return node.resolve();
+			} else {
+				return node.resolve(parameters);
+			}
+		} catch (ObjectGraphException caught) {
+			throw new SporkRuntimeException("failed to resolve provider", caught, caught.getBindContext());
 		}
 	}
 }

@@ -9,7 +9,7 @@ import static org.junit.Assert.assertNull;
 public class DefaultFragmentResolverTests {
 
 	@Test
-	public void testFaulty() {
+	public void testFaulty() throws Exception {
 		DefaultFragmentResolver resolver = new DefaultFragmentResolver();
 		assertNull(resolver.resolveFragment("Nothing", 1));
 		assertNull(resolver.resolveFragment("Nothing", "anything"));

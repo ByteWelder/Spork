@@ -4,10 +4,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
-import spork.android.BindFragment;
 import spork.android.extension.FragmentResolver;
-
-import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 /**
  * Resolves Fragment instances from v4 support library types.
@@ -26,15 +23,13 @@ public class SupportFragmentResolver implements FragmentResolver {
 	}
 
 	@Override
-	public @Nullable Object resolveFragment(Object object, String idName) {
+	public @Nullable Object resolveFragment(Object object, String idName) throws Exception {
 		if (object instanceof FragmentActivity) {
 			FragmentActivity activity = (FragmentActivity) object;
 			int id = activity.getResources().getIdentifier(idName, "id", activity.getPackageName());
 
 			if (id == 0) {
-				throw bindFailedBuilder(BindFragment.class, "Fragment not found for R.id." + idName)
-						.into(activity.getClass())
-						.build();
+				throw new Exception("Fragment not found for R.id." + idName);
 			}
 
 			return activity.getSupportFragmentManager().findFragmentById(id);
@@ -43,9 +38,7 @@ public class SupportFragmentResolver implements FragmentResolver {
 			int id = fragment.getResources().getIdentifier(idName, "id", fragment.getActivity().getPackageName());
 
 			if (id == 0) {
-				throw bindFailedBuilder(BindFragment.class, "Fragment not found for R.id." + idName)
-						.into(fragment.getClass())
-						.build();
+				throw new Exception("Fragment not found for R.id." + idName);
 			}
 
 			return fragment.getFragmentManager().findFragmentById(id);

@@ -10,6 +10,7 @@ import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import spork.exceptions.BindFailed;
 import spork.extension.MethodBinder;
 
 import static org.mockito.Mockito.times;
@@ -57,7 +58,7 @@ public class FieldAndMethodBindingTests {
 	}
 
 	@Test
-	public void methodBinding() throws NoSuchFieldException, NoSuchMethodException {
+	public void methodBinding() throws NoSuchFieldException, NoSuchMethodException, BindFailed {
 		SporkInstance spork = new SporkInstance();
 
 		BindFieldAndMethodBinder binder = createBinder(spork);
@@ -74,8 +75,8 @@ public class FieldAndMethodBindingTests {
 		Method staticMethod = Parent.class.getDeclaredMethod("testStatic");
 		BindFieldOrMethod staticMethodAnnotation = staticMethod.getAnnotation(BindFieldOrMethod.class);
 
-		verify(binder, times(1)).bind(parent, fieldAnnotation, field, new Object[] {});
-		verify(binder, times(1)).bind(parent, instanceMethodAnnotation, instanceMethod, new Object[] {});
-		verify(binder, times(1)).bind(parent, staticMethodAnnotation, staticMethod, new Object[] {});
+		verify(binder, times(1)).bind(parent, fieldAnnotation, field);
+		verify(binder, times(1)).bind(parent, instanceMethodAnnotation, instanceMethod);
+		verify(binder, times(1)).bind(parent, staticMethodAnnotation, staticMethod);
 	}
 }

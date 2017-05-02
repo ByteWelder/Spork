@@ -3,6 +3,8 @@ package spork.internal;
 import org.junit.Before;
 import org.junit.Test;
 
+import spork.exceptions.BindFailed;
+
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -26,14 +28,14 @@ public class BinderTests {
 	}
 
 	@Test
-	public void bindObject() {
+	public void bindObject() throws BindFailed {
 		binder.bind(new Object());
 
 		verifyZeroInteractions(actionProvider);
 	}
 
 	@Test
-	public void bindNoInheritance() {
+	public void bindNoInheritance() throws BindFailed {
 		binder.bind(new NoInheritanceTarget());
 
 		verify(actionProvider).getBindActions(NoInheritanceTarget.class);
@@ -41,7 +43,7 @@ public class BinderTests {
 	}
 
 	@Test
-	public void bindWithInheritance() {
+	public void bindWithInheritance() throws BindFailed {
 		binder.bind(new InheritanceTarget());
 
 		verify(actionProvider).getBindActions(InheritanceTarget.class);

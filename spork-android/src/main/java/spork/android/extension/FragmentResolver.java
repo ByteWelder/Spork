@@ -9,10 +9,11 @@ public interface FragmentResolver {
 	 *
 	 * @param object either a regular or a support fragment instance
 	 * @param id the Fragment id
+	 * @throws Exception when something unexpected happens
 	 * @return a Fragment or null
 	 */
 	@Nullable
-	Object resolveFragment(Object object, int id);
+	Object resolveFragment(Object object, int id) throws Exception;
 
 	/**
 	 * Resolve a fragment by an id field name.
@@ -20,8 +21,9 @@ public interface FragmentResolver {
 	 *
 	 * @param object either a regular or a support fragment instance
 	 * @param idName the Fragment id name (the "fragment_name" part in R.id.fragment_name)
+	 * @throws Exception when something unexpected happens
 	 * @return a Fragment or null
 	 */
 	@Nullable
-	Object resolveFragment(Object object, String idName);
+	Object resolveFragment(Object object, String idName) throws Exception;
 }

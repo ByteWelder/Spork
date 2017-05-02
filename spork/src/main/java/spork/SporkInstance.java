@@ -2,6 +2,7 @@ package spork;
 
 import javax.annotation.Nullable;
 
+import spork.exceptions.SporkRuntimeException;
 import spork.extension.FieldBinder;
 import spork.extension.MethodBinder;
 import spork.extension.TypeBinder;
@@ -40,6 +41,7 @@ public class SporkInstance {
 	 * @param object the object to bind
 	 * @param parameters an optional array of non-null module instances
 	 */
+	@SuppressWarnings("PMD.AvoidCatchingGenericException")
 	public void bind(Object object, Object... parameters) {
 		if (binder == null) {
 			BindActionProvider bindActionProvider = new BindActionProvider(catalog);
@@ -48,9 +50,9 @@ public class SporkInstance {
 
 		try {
 			binder.bind(object, parameters);
-		} catch (BindFailed caught) {
-			// re-throw Exception to improve stacktrace readability
-			throw new BindFailed(caught.getMessage(), caught);
+		} catch (Exception caught) {
+			// wrap into RuntimeException to clean up the stacktrace and for easy use of this method
+			throw new SporkRuntimeException(caught);
 		}
 	}
 

@@ -16,7 +16,7 @@ import spork.android.extension.ViewResolver;
 public class DefaultViewResolver implements ViewResolver {
 	@Override
 	@Nullable
-	public View resolveView(Object object) {
+	public View resolveView(Object object) throws Exception {
 		if (object instanceof View) {
 			return (View) object;
 		} else if (object instanceof Activity) {

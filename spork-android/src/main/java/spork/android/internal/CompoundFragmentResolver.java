@@ -29,7 +29,7 @@ public class CompoundFragmentResolver implements FragmentResolver {
 
 	@Override
 	@Nullable
-	public Object resolveFragment(Object parent, int id) {
+	public Object resolveFragment(Object parent, int id) throws Exception {
 		for (FragmentResolver fragmentResolver : fragmentResolvers) {
 			Object fragment = fragmentResolver.resolveFragment(parent, id);
 
@@ -43,7 +43,7 @@ public class CompoundFragmentResolver implements FragmentResolver {
 
 	@Override
 	@Nullable
-	public Object resolveFragment(Object parent, String idName) {
+	public Object resolveFragment(Object parent, String idName) throws Exception {
 		for (FragmentResolver fragmentResolver : fragmentResolvers) {
 			Object fragment = fragmentResolver.resolveFragment(parent, idName);
 

@@ -3,6 +3,8 @@ package spork.extension;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import spork.exceptions.BindFailed;
+
 /**
  * A MethodBinder provides binding for a specific Method annotation.
  */
@@ -15,7 +17,7 @@ public interface MethodBinder<T extends Annotation> {
 	 * @param method     the method that was annotated
 	 * @param parameters optional parameters
 	 */
-	void bind(Object object, T annotation, Method method, Object... parameters);
+	void bind(Object object, T annotation, Method method, Object... parameters) throws BindFailed;
 
 	/**
 	 * @return the annotation to provide bindings for

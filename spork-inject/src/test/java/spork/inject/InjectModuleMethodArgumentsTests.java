@@ -6,8 +6,8 @@ import org.junit.rules.ExpectedException;
 
 import javax.inject.Inject;
 
-import spork.BindFailed;
 import spork.Spork;
+import spork.exceptions.SporkRuntimeException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -63,8 +63,8 @@ public class InjectModuleMethodArgumentsTests {
 
 	@Test
 	public void missingArgumentForProvidesMethod() {
-		expectedException.expect(BindFailed.class);
-		expectedException.expectMessage("failed to call spork.inject.InjectModuleMethodArgumentsTests$MissingDependencyModule.provideStringBuilder(): invocation argument not found: java.lang.Integer:NONNULL");
+		expectedException.expect(SporkRuntimeException.class);
+		expectedException.expectMessage("failed to resolve provider for java.lang.StringBuilder:NONNULL");
 
 		Parent parent = new Parent();
 

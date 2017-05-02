@@ -3,11 +3,7 @@ package spork.android.internal.utils;
 import android.content.Context;
 import android.view.View;
 
-import spork.android.BindView;
-import spork.android.ViewProvider;
 import spork.android.extension.ViewResolver;
-
-import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 public final class Views {
 
@@ -21,13 +17,10 @@ public final class Views {
 	 * @param object       any Activity, Fragment or View (including support library types)
 	 * @return the found View
 	 */
-	public static View getView(ViewResolver viewResolver, int viewId, String nameFallback, Object object) {
+	public static View getView(ViewResolver viewResolver, int viewId, String nameFallback, Object object) throws Exception {
 		View rootView = viewResolver.resolveView(object);
 		if (rootView == null) {
-			throw bindFailedBuilder(BindView.class, "cannot resolve View from " + object.getClass().getName())
-					.suggest("if your class isn't a View/Fragment/Activity, you can make it implement " + ViewProvider.class.getName())
-					.into(object.getClass())
-					.build();
+			throw new Exception("cannot resolve View from " + object.getClass().getName());
 		}
 
 		int searchViewId;
@@ -37,9 +30,7 @@ public final class Views {
 
 			searchViewId = context.getResources().getIdentifier(nameFallback, "id", context.getPackageName());
 			if (searchViewId == 0) {
-				throw bindFailedBuilder(BindView.class, "View not found for fallback R.id." + nameFallback)
-						.into(object.getClass())
-						.build();
+				throw new Exception("View not found for fallback R.id." + nameFallback);
 			}
 		} else {
 			searchViewId = viewId;
@@ -47,9 +38,7 @@ public final class Views {
 
 		View view = rootView.findViewById(searchViewId);
 		if (view == null) {
-			throw bindFailedBuilder(BindView.class, "View not found")
-					.into(object.getClass())
-					.build();
+			throw new Exception("View not found");
 		}
 
 		return view;

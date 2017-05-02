@@ -7,8 +7,8 @@ import org.junit.rules.ExpectedException;
 
 import javax.inject.Inject;
 
-import spork.BindFailed;
 import spork.Spork;
+import spork.exceptions.SporkRuntimeException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -84,7 +84,7 @@ public class InjectTests {
 
 	@Test
 	public void injectWithForeignArgument() {
-		expectedException.expect(BindFailed.class);
+		expectedException.expect(SporkRuntimeException.class);
 		expectedException.expectMessage("no ObjectGraph specified in instance arguments of bind()");
 
 		InjectTarget injectTarget = new InjectTarget();
@@ -93,7 +93,7 @@ public class InjectTests {
 
 	@Test
 	public void injectWithoutGraphArgument() {
-		expectedException.expect(BindFailed.class);
+		expectedException.expect(SporkRuntimeException.class);
 		expectedException.expectMessage("no ObjectGraph specified in instance arguments of bind()");
 
 		InjectTarget injectTarget = new InjectTarget();

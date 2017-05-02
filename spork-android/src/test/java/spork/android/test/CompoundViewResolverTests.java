@@ -10,7 +10,7 @@ import static org.mockito.Mockito.verify;
 
 public class CompoundViewResolverTests {
 	@Test
-	public void resolve() {
+	public void resolve() throws Exception {
 		CompoundViewResolver compoundResolver = Mockito.spy(new CompoundViewResolver());
 		ViewResolver resolver = Mockito.mock(ViewResolver.class);
 		compoundResolver.add(resolver);

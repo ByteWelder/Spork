@@ -1,14 +1,16 @@
 package spork.inject.internal;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.inject.Inject;
 
+import spork.exceptions.BindContext;
+import spork.exceptions.BindContextBuilder;
+import spork.exceptions.BindFailed;
 import spork.extension.MethodBinder;
 import spork.inject.internal.reflection.Classes;
 import spork.internal.Reflection;
-
-import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 public class InjectMethodBinder implements MethodBinder<Inject> {
 
@@ -18,25 +20,30 @@ public class InjectMethodBinder implements MethodBinder<Inject> {
 	}
 
 	@Override
-	@SuppressWarnings("PMD.PreserveStackTrace")
-	public void bind(Object object, Inject annotation, Method method, Object... parameters) {
+	public void bind(Object object, Inject annotation, Method method, Object... parameters) throws BindFailed {
 		ObjectGraphImpl objectGraph = Classes.findFirstInstanceOfType(ObjectGraphImpl.class, parameters);
 		if (objectGraph == null) {
-			throw bindFailedBuilder(Inject.class, "no ObjectGraph specified in instance arguments of bind()")
+			BindContext bindContext = new BindContextBuilder(Inject.class)
 					.suggest("call Spork.bind(target, objectGraph")
-					.into(method)
+					.bindingInto(method)
 					.build();
+
+			throw new BindFailed("no ObjectGraph specified in instance arguments of bind()", bindContext);
 		}
 
 		try {
 			Object[] invocationParameters = objectGraph.getInjectableMethodParameters(method);
-			Reflection.invokeMethod(Inject.class, method, object, invocationParameters);
-		} catch (ObjectGraphException e) {
-			String message = "failed to resolve object in ObjectGraph: " + e.getMessage();
-			throw bindFailedBuilder(Inject.class, message)
-					.into(method)
-					.cause(e)
+			Reflection.invokeMethod(method, object, invocationParameters);
+		} catch (ObjectGraphException caught) {
+			BindContext bindContext = new BindContextBuilder(Inject.class)
+					.bindingInto(method)
 					.build();
+			throw new BindFailed("failed to resolve object in ObjectGraph: " + caught.getMessage(), caught, bindContext);
+		} catch (InvocationTargetException caught) {
+			BindContext bindContext = new BindContextBuilder(Inject.class)
+					.bindingInto(method)
+					.build();
+			throw new BindFailed("failed to invoke injection method", caught, bindContext);
 		}
 	}
 }

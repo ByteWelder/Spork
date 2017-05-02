@@ -2,6 +2,8 @@ package spork.internal;
 
 import java.util.List;
 
+import spork.exceptions.BindFailed;
+
 /**
  * The main logic for binding instances.
  *
@@ -14,7 +16,7 @@ public class Binder {
 		this.bindActionProvider = bindActionProvider;
 	}
 
-	public void bind(Object object, Object... parameters) {
+	public void bind(Object object, Object... parameters) throws BindFailed {
 		Class<?> objectClass = object.getClass();
 
 		// Go through all levels of inheritance and find the BindAction for each class
@@ -32,7 +34,7 @@ public class Binder {
 	 * @param bindActions a list of BindAction instances to call
 	 * @param parameters optional parameters
 	 */
-	private void bind(Object object, List<BindAction> bindActions, Object... parameters) {
+	private void bind(Object object, List<BindAction> bindActions, Object... parameters) throws BindFailed {
 		for (BindAction bindAction : bindActions) {
 			bindAction.bind(object, parameters);
 		}

@@ -6,13 +6,14 @@ import java.lang.reflect.ParameterizedType;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
+import spork.exceptions.BindContext;
+import spork.exceptions.BindContextBuilder;
+import spork.exceptions.BindFailed;
 import spork.extension.FieldBinder;
 import spork.inject.Lazy;
 import spork.inject.internal.reflection.Classes;
 import spork.inject.internal.providers.ProviderLazy;
 import spork.internal.Reflection;
-
-import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 /**
  * The default FieldBinder that binds field annotated with the Inject annotation.
@@ -25,13 +26,15 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 	}
 
 	@Override
-	public void bind(Object instance, Inject annotation, Field field, Object... parameters) {
+	public void bind(Object instance, Inject annotation, Field field, Object... parameters) throws BindFailed {
 		ObjectGraphImpl objectGraph = Classes.findFirstInstanceOfType(ObjectGraphImpl.class, parameters);
 		if (objectGraph == null) {
-			throw bindFailedBuilder(Inject.class, "no ObjectGraph specified in instance arguments of bind()")
+			BindContext bindContext = new BindContextBuilder(Inject.class)
 					.suggest("call Spork.bind(target, objectGraph")
-					.into(field)
+					.bindingInto(field)
 					.build();
+
+			throw new BindFailed("no ObjectGraph specified in instance arguments of bind()", bindContext);
 		}
 
 		Class<?> fieldType = field.getType();
@@ -44,22 +47,34 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 				: fieldType;
 
 		InjectSignature injectSignature = objectGraph.getInjectSignatureCache().getInjectSignature(field, targetType);
-		Provider<?> provider = objectGraph.findProvider(injectSignature);
+		Provider<?> provider;
+
+		try {
+			provider = objectGraph.findProvider(injectSignature);
+		} catch (ObjectGraphException caught) {
+			BindContext bindContext = new BindContextBuilder(Inject.class)
+					.bindingInto(field)
+					.build();
+
+			throw new BindFailed("failed to resolve provider for " + injectSignature.toString(), caught, bindContext);
+		}
 
 		if (provider == null) {
-			throw bindFailedBuilder(Inject.class, "none of the modules provides an instance for " + injectSignature.toString())
-					.into(field)
+			BindContext bindContext = new BindContextBuilder(Inject.class)
+					.bindingInto(field)
 					.build();
+
+			throw new BindFailed("none of the modules provides an instance for " + injectSignature.toString(), bindContext);
 		}
 
 		// Either set the provider instance or the real instance
 		if (fieldIsProvider) {
-			Reflection.setFieldValue(Inject.class, field, instance, provider);
+			Reflection.setFieldValue(field, instance, provider);
 		} else if (fieldIsLazy) {
-			Reflection.setFieldValue(Inject.class, field, instance, new ProviderLazy<>(provider));
+			Reflection.setFieldValue(field, instance, new ProviderLazy<>(provider));
 		} else {
 			Object bindInstance = provider.get();
-			Reflection.setFieldValue(Inject.class, field, instance, bindInstance);
+			Reflection.setFieldValue(field, instance, bindInstance);
 		}
 	}
 }

@@ -1,16 +1,17 @@
 package spork.inject.internal;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Scope;
 
+import spork.exceptions.BindContext;
+import spork.exceptions.BindContextBuilder;
 import spork.inject.internal.lang.Annotations;
 import spork.internal.Reflection;
-
-import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 /**
  * A node represents an injection point (@Provides method) in a module.
@@ -37,22 +38,34 @@ public final class ObjectGraphNode {
 		return scopeAnnotation;
 	}
 
-	public Object resolve(Object... arguments) {
-		return Reflection.invokeMethod(Inject.class, method, parent, arguments);
+	public Object resolve(Object... arguments) throws ObjectGraphException {
+		try {
+			return Reflection.invokeMethod(method, parent, arguments);
+		} catch (InvocationTargetException e) {
+			BindContext bindContext = new BindContextBuilder(Inject.class)
+					.bindingFrom(method)
+					.bindingInto(injectSignature.toString())
+					.build();
+
+			String message = "failed to invoke " + method.getDeclaringClass().getName() + "." + method.getName() + "(): " + e.getMessage();
+
+			throw new ObjectGraphException(message, e, bindContext);
+		}
 	}
 
 	@Nullable
-	@SuppressWarnings("PMD.PreserveStackTrace")
-	Object[] collectParameters(ObjectGraphImpl objectGraph) {
+	Object[] collectParameters(ObjectGraphImpl objectGraph) throws ObjectGraphException {
 		try {
 			return objectGraph.getInjectableMethodParameters(method);
 		} catch (ObjectGraphException e) {
-			String message = "failed to call " + method.getDeclaringClass().getName() + "." + method.getName() + "(): " + e.getMessage();
-			throw bindFailedBuilder(Inject.class, message)
-					.cause(e)
-					.from(method)
-					.into(injectSignature.toString())
+			BindContext bindContext = new BindContextBuilder(Inject.class)
+					.bindingFrom(method)
+					.bindingInto(injectSignature.toString())
 					.build();
+
+			String message = "failed to invoke " + method.getDeclaringClass().getName() + "." + method.getName() + "(): " + e.getMessage();
+
+			throw new ObjectGraphException(message, e, bindContext);
 		}
 	}
 }

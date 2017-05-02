@@ -30,7 +30,7 @@ public class CompoundViewResolver implements ViewResolver {
 
 	@Override
 	@Nullable
-	public View resolveView(Object object) {
+	public View resolveView(Object object) throws Exception {
 		for (ViewResolver viewResolver : viewResolvers) {
 			View view = viewResolver.resolveView(object);
 

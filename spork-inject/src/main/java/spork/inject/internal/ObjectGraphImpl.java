@@ -11,11 +11,11 @@ import javax.inject.Provider;
 
 import spork.Spork;
 import spork.SporkInstance;
+import spork.exceptions.BindContext;
+import spork.exceptions.BindContextBuilder;
 import spork.inject.ObjectGraph;
 import spork.inject.internal.providers.CachedNodeProvider;
 import spork.inject.internal.providers.NodeProvider;
-
-import static spork.internal.BindFailedBuilder.bindFailedBuilder;
 
 public final class ObjectGraphImpl implements ObjectGraph {
 	@Nullable
@@ -34,7 +34,7 @@ public final class ObjectGraphImpl implements ObjectGraph {
 
 	@Nullable
 	@SuppressWarnings("unchecked")
-	Provider<?> findProvider(InjectSignature injectSignature) {
+	Provider<?> findProvider(InjectSignature injectSignature) throws ObjectGraphException {
 		ObjectGraphNode node = findNode(injectSignature);
 
 		if (node == null) {
@@ -56,11 +56,14 @@ public final class ObjectGraphImpl implements ObjectGraph {
 
 			// We must have an ObjectGraph with an instanceMap to target
 			if (targetGraph == null) {
-				String message = "no ObjectGraph found that defines scope " + scope.annotationType().getName();
-				throw bindFailedBuilder(Inject.class, message)
+				BindContext bindContext = new BindContextBuilder(Inject.class)
 						.suggest("When creating your ObjectGraphs, ensure that one has the required scope")
-						.into(injectSignature.toString())
+						.bindingInto(injectSignature.toString())
 						.build();
+
+				String message = "no ObjectGraph found that defines scope " + scope.annotationType().getName();
+
+				throw new ObjectGraphException(message, bindContext);
 			}
 
 			return new CachedNodeProvider(targetGraph.instanceMap, node, parameters);
@@ -111,8 +114,14 @@ public final class ObjectGraphImpl implements ObjectGraph {
 		for (int i = 0; i < parameterCount; ++i) {
 			Provider provider = findProvider(injectSignatures[i]);
 			if (provider == null) {
-				throw new ObjectGraphException("invocation argument not found: " + injectSignatures[i].toString());
+				String signatureString = injectSignatures[i].toString();
+				BindContext bindContext = new BindContextBuilder(Inject.class)
+						.bindingInto(signatureString)
+						.build();
+
+				throw new ObjectGraphException("invocation argument not found: " + signatureString, bindContext);
 			}
+
 			boolean isProviderParameter = (method.getParameterTypes()[i] == Provider.class);
 			parameterInstances[i] = isProviderParameter ? provider : provider.get();
 		}

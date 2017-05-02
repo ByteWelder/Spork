@@ -1,4 +1,4 @@
-package spork.extension;
+package spork.exceptions;
 
 import spork.SporkExtension;
 

@@ -30,7 +30,7 @@ public class CompoundContextResolver implements ContextResolver {
 
 	@Override
 	@Nullable
-	public Context resolveContext(Object object) {
+	public Context resolveContext(Object object) throws Exception {
 		for (ContextResolver contextResolver : contextResolvers) {
 			Context context = contextResolver.resolveContext(object);
 
