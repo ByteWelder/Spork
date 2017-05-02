@@ -8,7 +8,7 @@ import spork.android.support.internal.SupportViewResolver;
 
 /**
  * Extension that adds view/context/fragment resolvers to spork-android.
- * This extension is automatically resolved by the spork-android module.
+ * This class is automatically instantiated and initialized by the SporkAndroid class.
  */
 public final class SporkAndroidSupport implements SporkAndroidExtension {
 

@@ -20,7 +20,9 @@ import spork.android.internal.binders.BindViewBinder;
 
 /**
  * Extension that adds binders that provide Android-specific features.
- * This extension is automatically resolved by the spork-android module.
+ * This class is automatically instantiated and initialized by the static Spork class.
+ *
+ * If you create your own SporkInstance, you need to register an extension manually.
  */
 public final class SporkAndroid implements SporkExtension {
 	private final CompoundFragmentResolver compoundFragmentResolver = new CompoundFragmentResolver();
