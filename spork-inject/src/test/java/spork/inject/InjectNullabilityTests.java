@@ -61,7 +61,7 @@ public class InjectNullabilityTests {
 	@Test
 	public void injectNonnullWithNullableParent() {
 		expectedException.expect(SporkRuntimeException.class);
-		expectedException.expectMessage("none of the modules provides an instance for java.lang.String:NULLABLE");
+		expectedException.expectMessage("None of the modules provides an instance for java.lang.String:NULLABLE");
 
 		NullableParent parent = new NullableParent();
 
@@ -88,7 +88,7 @@ public class InjectNullabilityTests {
 	@Test
 	public void injectNullWithNonnullParent() {
 		expectedException.expect(SporkRuntimeException.class);
-		expectedException.expectMessage("none of the modules provides an instance for java.lang.String:NONNULL");
+		expectedException.expectMessage("None of the modules provides an instance for java.lang.String:NONNULL");
 
 		NonnullParent parent = new NonnullParent();
 

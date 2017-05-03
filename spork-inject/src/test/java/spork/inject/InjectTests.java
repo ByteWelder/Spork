@@ -85,7 +85,7 @@ public class InjectTests {
 	@Test
 	public void injectWithForeignArgument() {
 		expectedException.expect(SporkRuntimeException.class);
-		expectedException.expectMessage("no ObjectGraph specified in instance arguments of bind()");
+		expectedException.expectMessage("No ObjectGraph specified in instance arguments of bind()");
 
 		InjectTarget injectTarget = new InjectTarget();
 		Spork.bind(injectTarget, new StringModule());
@@ -94,7 +94,7 @@ public class InjectTests {
 	@Test
 	public void injectWithoutGraphArgument() {
 		expectedException.expect(SporkRuntimeException.class);
-		expectedException.expectMessage("no ObjectGraph specified in instance arguments of bind()");
+		expectedException.expectMessage("No ObjectGraph specified in instance arguments of bind()");
 
 		InjectTarget injectTarget = new InjectTarget();
 		Spork.bind(injectTarget);

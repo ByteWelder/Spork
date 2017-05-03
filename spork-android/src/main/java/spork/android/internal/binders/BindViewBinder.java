@@ -24,7 +24,7 @@ public class BindViewBinder implements FieldBinder<BindView> {
 	public void bind(Object object, BindView annotation, Field field, Object... parameters) throws BindFailed {
 		if (!View.class.isAssignableFrom(field.getType())) {
 			BindContext bindContext = getBindContext(field);
-			throw new BindFailed("field is not a View", bindContext);
+			throw new BindFailed("Field is not a View", bindContext);
 		}
 
 		try {
@@ -32,7 +32,7 @@ public class BindViewBinder implements FieldBinder<BindView> {
 			Reflection.setFieldValue(field, object, view);
 		} catch (Exception caught) {
 			BindContext bindContext = getBindContext(field);
-			throw new BindFailed("failed to resolve View", caught, bindContext);
+			throw new BindFailed("Failed to resolve View", caught, bindContext);
 		}
 	}
 

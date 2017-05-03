@@ -49,7 +49,7 @@ public class BindFragmentBinder implements FieldBinder<BindFragment> {
 					.bindingInto(field)
 					.build();
 
-			throw new BindFailed("failed to resolve Fragment for field", caught, bindContext);
+			throw new BindFailed("Failed to resolve Fragment for field", caught, bindContext);
 		}
 	}
 	@Override

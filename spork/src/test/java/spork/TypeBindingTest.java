@@ -38,7 +38,7 @@ public class TypeBindingTest {
 		public void bind(Object instance, BindValue annotation, Class<?> annotatedType, Object... parameters) throws BindFailed {
 			if (!IntSettable.class.isAssignableFrom(instance.getClass())) {
 				BindContext bindContext = new BindContextBuilder(BindValue.class).build();
-				throw new BindFailed("can only be used with IntSettable target", bindContext);
+				throw new BindFailed("Can only be used with IntSettable target", bindContext);
 			}
 
 			IntSettable valueHolder = (IntSettable) instance;
@@ -85,7 +85,7 @@ public class TypeBindingTest {
 	@Test
 	public void testFaultyType() {
 		expectedException.expect(SporkRuntimeException.class);
-		expectedException.expectMessage("can only be used with IntSettable target");
+		expectedException.expectMessage("Can only be used with IntSettable target");
 
 		FaultyIntegerHolder holder = new FaultyIntegerHolder();
 		spork.bind(holder);

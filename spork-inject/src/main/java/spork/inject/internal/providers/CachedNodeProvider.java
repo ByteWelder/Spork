@@ -58,7 +58,7 @@ public class CachedNodeProvider implements Provider<Object> {
 				return node.resolve(arguments);
 			}
 		} catch (ObjectGraphException caught) {
-			throw new SporkRuntimeException("failed to resolve provider", caught, caught.getBindContext());
+			throw new SporkRuntimeException("Failed to resolve provider", caught, caught.getBindContext());
 		}
 	}
 }

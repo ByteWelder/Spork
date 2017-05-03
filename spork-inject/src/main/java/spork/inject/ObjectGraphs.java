@@ -27,7 +27,7 @@ public final class ObjectGraphs {
 	 */
 	public static ObjectGraphBuilder builder(ObjectGraph parentGraph) {
 		if (!(parentGraph instanceof ObjectGraphImpl)) {
-			throw new IllegalArgumentException("provided ObjectGraph instance is not compatible");
+			throw new IllegalArgumentException("Provided ObjectGraph instance is not compatible");
 		}
 
 		return new ObjectGraphBuilderImpl((ObjectGraphImpl) parentGraph);

@@ -75,7 +75,7 @@ public class InjectMethodTests {
 	@Test
 	public void injectWithoutGraph() {
 		expectedException.expect(SporkRuntimeException.class);
-		expectedException.expectMessage("no ObjectGraph specified in instance arguments of bind()");
+		expectedException.expectMessage("No ObjectGraph specified in instance arguments of bind()");
 
 		Parent parent = new Parent();
 		Spork.bind(parent);

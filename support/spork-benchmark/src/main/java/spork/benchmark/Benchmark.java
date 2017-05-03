@@ -20,7 +20,7 @@ public abstract class Benchmark implements Runnable {
 
 	public final BenchmarkResult getBenchmarkResult() {
 		if (benchmarkResult == null) {
-			throw new IllegalStateException("results are only available after running the BenchmarkTest");
+			throw new IllegalStateException("Results are only available after running the BenchmarkTest");
 		}
 
 		return benchmarkResult;

@@ -38,7 +38,7 @@ public class ObjectGraphBuilderImpl implements ObjectGraphBuilder {
 	@Override
 	public ObjectGraphBuilder scope(Class<? extends Annotation> scope) {
 		if (this.scope != null) {
-			throw new IllegalStateException("scope was already set");
+			throw new IllegalStateException("Scope was already set");
 		}
 
 		this.scope = scope;

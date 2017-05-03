@@ -119,7 +119,7 @@ public final class ObjectGraphImpl implements ObjectGraph {
 						.bindingInto(signatureString)
 						.build();
 
-				throw new ObjectGraphException("invocation argument not found: " + signatureString, bindContext);
+				throw new ObjectGraphException("Invocation argument not found: " + signatureString, bindContext);
 			}
 
 			boolean isProviderParameter = (method.getParameterTypes()[i] == Provider.class);

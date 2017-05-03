@@ -28,7 +28,7 @@ public class InjectMethodBinder implements MethodBinder<Inject> {
 					.bindingInto(method)
 					.build();
 
-			throw new BindFailed("no ObjectGraph specified in instance arguments of bind()", bindContext);
+			throw new BindFailed("No ObjectGraph specified in instance arguments of bind()", bindContext);
 		}
 
 		try {
@@ -38,12 +38,12 @@ public class InjectMethodBinder implements MethodBinder<Inject> {
 			BindContext bindContext = new BindContextBuilder(Inject.class)
 					.bindingInto(method)
 					.build();
-			throw new BindFailed("failed to resolve object in ObjectGraph: " + caught.getMessage(), caught, bindContext);
+			throw new BindFailed("Failed to resolve object in ObjectGraph: " + caught.getMessage(), caught, bindContext);
 		} catch (InvocationTargetException caught) {
 			BindContext bindContext = new BindContextBuilder(Inject.class)
 					.bindingInto(method)
 					.build();
-			throw new BindFailed("failed to invoke injection method", caught, bindContext);
+			throw new BindFailed("Failed to invoke injection method", caught, bindContext);
 		}
 	}
 }

@@ -66,7 +66,7 @@ public class SporkInstance {
 	 */
 	public void register(FieldBinder<?> fieldBinder) {
 		if (binder != null) {
-			throw new IllegalStateException("binders must be registered before the first bind() is called");
+			throw new IllegalStateException("Binders must be registered before the first bind() is called");
 		}
 
 		catalog.add(fieldBinder);
@@ -78,7 +78,7 @@ public class SporkInstance {
 	 */
 	public void register(MethodBinder<?> methodBinder) {
 		if (binder != null) {
-			throw new IllegalStateException("binders must be registered before the first bind() is called");
+			throw new IllegalStateException("Binders must be registered before the first bind() is called");
 		}
 
 		catalog.add(methodBinder);
@@ -90,7 +90,7 @@ public class SporkInstance {
 	 */
 	public void register(TypeBinder<?> typeBinder) {
 		if (binder != null) {
-			throw new IllegalStateException("binders must be registered before the first bind() is called");
+			throw new IllegalStateException("Binders must be registered before the first bind() is called");
 		}
 
 		catalog.add(typeBinder);

@@ -36,7 +36,7 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 					.bindingInto(field)
 					.build();
 
-			throw new BindFailed("failed to resolve resource for field", caught, bindContext);
+			throw new BindFailed("Failed to resolve resource for field", caught, bindContext);
 		}
 
 		if (context == null) {
@@ -46,7 +46,7 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 					.bindingInto(field)
 					.build();
 
-			throw new BindFailed("failed to retrieve Context from target object", bindContext);
+			throw new BindFailed("Failed to retrieve Context from target object", bindContext);
 		}
 
 		Object resource = getResource(context, annotation, field);
@@ -56,7 +56,7 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 					.bindingInto(field)
 					.build();
 
-			throw new BindFailed("resource not found", bindContext);
+			throw new BindFailed("Resource not found", bindContext);
 		}
 
 		Reflection.setFieldValue(field, object, resource);
@@ -88,7 +88,7 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 					.bindingInto(field)
 					.build();
 
-			throw new BindFailed("unsupported field type", bindContext);
+			throw new BindFailed("Unsupported field type: " + field.getType().getName(), bindContext);
 		}
 	}
 

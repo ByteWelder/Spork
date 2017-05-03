@@ -39,7 +39,7 @@ public class SessionService {
 
 			@Override
 			public void onFailure(Exception caught) {
-				sessionCallback.onFailure(new Exception("failed to start new session", caught));
+				sessionCallback.onFailure(new Exception("Failed to start new session", caught));
 			}
 		});
 	}

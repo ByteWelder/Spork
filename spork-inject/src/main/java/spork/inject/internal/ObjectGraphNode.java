@@ -47,7 +47,7 @@ public final class ObjectGraphNode {
 					.bindingInto(injectSignature.toString())
 					.build();
 
-			String message = "failed to invoke " + method.getDeclaringClass().getName() + "." + method.getName() + "(): " + e.getMessage();
+			String message = "Failed to invoke " + method.getDeclaringClass().getName() + "." + method.getName() + "(): " + e.getMessage();
 
 			throw new ObjectGraphException(message, e, bindContext);
 		}
@@ -63,7 +63,7 @@ public final class ObjectGraphNode {
 					.bindingInto(injectSignature.toString())
 					.build();
 
-			String message = "failed to invoke " + method.getDeclaringClass().getName() + "." + method.getName() + "(): " + e.getMessage();
+			String message = "Failed to invoke " + method.getDeclaringClass().getName() + "." + method.getName() + "(): " + e.getMessage();
 
 			throw new ObjectGraphException(message, e, bindContext);
 		}

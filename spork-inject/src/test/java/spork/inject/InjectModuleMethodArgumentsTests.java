@@ -64,7 +64,7 @@ public class InjectModuleMethodArgumentsTests {
 	@Test
 	public void missingArgumentForProvidesMethod() {
 		expectedException.expect(SporkRuntimeException.class);
-		expectedException.expectMessage("failed to resolve provider for java.lang.StringBuilder:NONNULL");
+		expectedException.expectMessage("Failed to resolve provider for java.lang.StringBuilder:NONNULL");
 
 		Parent parent = new Parent();
 

@@ -34,7 +34,7 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 					.bindingInto(field)
 					.build();
 
-			throw new BindFailed("no ObjectGraph specified in instance arguments of bind()", bindContext);
+			throw new BindFailed("No ObjectGraph specified in instance arguments of bind()", bindContext);
 		}
 
 		Class<?> fieldType = field.getType();
@@ -56,7 +56,7 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 					.bindingInto(field)
 					.build();
 
-			throw new BindFailed("failed to resolve provider for " + injectSignature.toString(), caught, bindContext);
+			throw new BindFailed("Failed to resolve provider for " + injectSignature.toString(), caught, bindContext);
 		}
 
 		if (provider == null) {
@@ -64,7 +64,7 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 					.bindingInto(field)
 					.build();
 
-			throw new BindFailed("none of the modules provides an instance for " + injectSignature.toString(), bindContext);
+			throw new BindFailed("None of the modules provides an instance for " + injectSignature.toString(), bindContext);
 		}
 
 		// Either set the provider instance or the real instance

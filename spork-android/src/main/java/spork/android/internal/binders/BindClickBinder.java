@@ -48,14 +48,14 @@ public class BindClickBinder implements MethodBinder<BindClick> {
 					Reflection.invokeMethod(method, object);
 				} catch (InvocationTargetException e) {
 					BindContext context = getBindContextBuilder(v).build();
-					throw new SporkRuntimeException("failed to invoke click method", context);
+					throw new SporkRuntimeException("Failed to invoke click method", context);
 				}
 			} else if (parameterTypes.length == 1 && View.class.isAssignableFrom(parameterTypes[0])) {
 				try {
 					Reflection.invokeMethod(method, object, v);
 				} catch (InvocationTargetException e) {
 					BindContext context = getBindContextBuilder(v).build();
-					throw new SporkRuntimeException("failed to invoke click method", context);
+					throw new SporkRuntimeException("Failed to invoke click method", context);
 				}
 			} else {
 				BindContext context = getBindContextBuilder(v)
@@ -80,7 +80,7 @@ public class BindClickBinder implements MethodBinder<BindClick> {
 					.bindingInto(method)
 					.build();
 
-			throw new BindFailed("failed to resolve View for method", caught, bindContext);
+			throw new BindFailed("Failed to resolve View for method", caught, bindContext);
 		}
 	}
 

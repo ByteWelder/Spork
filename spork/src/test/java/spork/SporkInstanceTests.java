@@ -55,7 +55,7 @@ public class SporkInstanceTests {
 	@Test
 	public void registerFieldBinderAfterBind() {
 		expectedException.expect(IllegalStateException.class);
-		expectedException.expectMessage("binders must be registered before the first bind() is called");
+		expectedException.expectMessage("Binders must be registered before the first bind() is called");
 
 		SporkInstance spork = new SporkInstance();
 
@@ -66,7 +66,7 @@ public class SporkInstanceTests {
 	@Test
 	public void registerMethodBinderAfterBind() {
 		expectedException.expect(IllegalStateException.class);
-		expectedException.expectMessage("binders must be registered before the first bind() is called");
+		expectedException.expectMessage("Binders must be registered before the first bind() is called");
 
 		SporkInstance spork = new SporkInstance();
 
@@ -77,7 +77,7 @@ public class SporkInstanceTests {
 	@Test
 	public void registerTypeBinderAfterBind() {
 		expectedException.expect(IllegalStateException.class);
-		expectedException.expectMessage("binders must be registered before the first bind() is called");
+		expectedException.expectMessage("Binders must be registered before the first bind() is called");
 
 		SporkInstance spork = new SporkInstance();
 
