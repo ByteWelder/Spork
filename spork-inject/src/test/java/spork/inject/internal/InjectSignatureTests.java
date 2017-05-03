@@ -15,7 +15,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 
 public class InjectSignatureTests {
-	private final InjectSignatureCache injectSignatureCache = new InjectSignatureCache();
+	private final spork.inject.internal.reflection.QualifierCache qualifierCache = new spork.inject.internal.reflection.QualifierCache();
+//	private final InjectSignatureFieldCache fieldCache = new InjectSignatureFieldCache(qualifierCache);
+//	private final InjectSignatureMethodCache methodCache = new InjectSignatureMethodCache(qualifierCache);
+//	private final ReflectionCache reflectionCache = new ReflectionCache(qualifierCache, fieldCache, methodCache);
 
 	private static class AnnotationHolder {
 		@Named("first")
@@ -28,8 +31,8 @@ public class InjectSignatureTests {
 	@Test
 	public void testGetMethods() throws NoSuchFieldException {
 		Annotation annotation = getFirstAnnotation();
-		String qualifier = injectSignatureCache.getQualifier(annotation);
-		InjectSignature signature = new InjectSignature(String.class, Nullability.NONNULL, qualifier);
+		String qualifier = qualifierCache.getQualifier(annotation);
+		spork.inject.internal.reflection.InjectSignature signature = new spork.inject.internal.reflection.InjectSignature(String.class, Nullability.NONNULL, qualifier);
 
 		assertThat(signature.getType(), is((Object) String.class));
 		assertThat(signature.getNullability(), is(Nullability.NONNULL));
@@ -38,16 +41,16 @@ public class InjectSignatureTests {
 
 	@Test
 	public void testEqualsTypeMismatch() {
-		InjectSignature signature = new InjectSignature(String.class, Nullability.NONNULL, null);
+		spork.inject.internal.reflection.InjectSignature signature = new spork.inject.internal.reflection.InjectSignature(String.class, Nullability.NONNULL, null);
 		assertFalse(signature.equals(new Object()));
 	}
 
 	@Test
 	public void matchAllTest() throws NoSuchFieldException {
 		Annotation annotation = getFirstAnnotation();
-		String qualifier = injectSignatureCache.getQualifier(annotation);
-		InjectSignature first = new InjectSignature(String.class, Nullability.NONNULL, qualifier);
-		InjectSignature second = new InjectSignature(String.class, Nullability.NONNULL, qualifier);
+		String qualifier = qualifierCache.getQualifier(annotation);
+		spork.inject.internal.reflection.InjectSignature first = new spork.inject.internal.reflection.InjectSignature(String.class, Nullability.NONNULL, qualifier);
+		spork.inject.internal.reflection.InjectSignature second = new spork.inject.internal.reflection.InjectSignature(String.class, Nullability.NONNULL, qualifier);
 
 		assertEquals(first, second);
 		assertEquals(second, first);
@@ -58,9 +61,9 @@ public class InjectSignatureTests {
 	@Test
 	public void matchClassAndAnnotationTest() throws NoSuchFieldException {
 		Annotation annotation = getFirstAnnotation();
-		String qualifier = injectSignatureCache.getQualifier(annotation);
-		InjectSignature first = new InjectSignature(String.class, Nullability.NONNULL, qualifier);
-		InjectSignature second = new InjectSignature(String.class, Nullability.NULLABLE, qualifier);
+		String qualifier = qualifierCache.getQualifier(annotation);
+		spork.inject.internal.reflection.InjectSignature first = new spork.inject.internal.reflection.InjectSignature(String.class, Nullability.NONNULL, qualifier);
+		spork.inject.internal.reflection.InjectSignature second = new spork.inject.internal.reflection.InjectSignature(String.class, Nullability.NULLABLE, qualifier);
 
 		assertNotEquals(first, second);
 		assertNotEquals(second, first);
@@ -72,10 +75,10 @@ public class InjectSignatureTests {
 	public void matchClassAndNullabilityTest() throws NoSuchFieldException {
 		Annotation firstAnnotation = getFirstAnnotation();
 		Annotation secondAnnotation = getSecondAnnotation();
-		String firstQualifier = injectSignatureCache.getQualifier(firstAnnotation);
-		String secondQualifier = injectSignatureCache.getQualifier(secondAnnotation);
-		InjectSignature first = new InjectSignature(String.class, Nullability.NONNULL, firstQualifier);
-		InjectSignature second = new InjectSignature(String.class, Nullability.NONNULL, secondQualifier);
+		String firstQualifier = qualifierCache.getQualifier(firstAnnotation);
+		String secondQualifier = qualifierCache.getQualifier(secondAnnotation);
+		spork.inject.internal.reflection.InjectSignature first = new spork.inject.internal.reflection.InjectSignature(String.class, Nullability.NONNULL, firstQualifier);
+		spork.inject.internal.reflection.InjectSignature second = new spork.inject.internal.reflection.InjectSignature(String.class, Nullability.NONNULL, secondQualifier);
 
 		assertNotEquals(first, second);
 		assertNotEquals(second, first);
@@ -86,9 +89,9 @@ public class InjectSignatureTests {
 	@Test
 	public void matchClassAndNullabilityWithSingleNullQualifierTest() throws NoSuchFieldException {
 		Annotation firstAnnotation = getFirstAnnotation();
-		String firstQualifier = injectSignatureCache.getQualifier(firstAnnotation);
-		InjectSignature first = new InjectSignature(String.class, Nullability.NONNULL, firstQualifier);
-		InjectSignature second = new InjectSignature(String.class, Nullability.NONNULL, null);
+		String firstQualifier = qualifierCache.getQualifier(firstAnnotation);
+		spork.inject.internal.reflection.InjectSignature first = new spork.inject.internal.reflection.InjectSignature(String.class, Nullability.NONNULL, firstQualifier);
+		spork.inject.internal.reflection.InjectSignature second = new spork.inject.internal.reflection.InjectSignature(String.class, Nullability.NONNULL, null);
 
 		assertNotEquals(first, second);
 		assertNotEquals(second, first);
@@ -98,8 +101,8 @@ public class InjectSignatureTests {
 
 	@Test
 	public void matchClassAndNullabilityWithBothNullQualifiersTest() throws NoSuchFieldException {
-		InjectSignature first = new InjectSignature(String.class, Nullability.NONNULL, null);
-		InjectSignature second = new InjectSignature(String.class, Nullability.NONNULL, null);
+		spork.inject.internal.reflection.InjectSignature first = new spork.inject.internal.reflection.InjectSignature(String.class, Nullability.NONNULL, null);
+		spork.inject.internal.reflection.InjectSignature second = new spork.inject.internal.reflection.InjectSignature(String.class, Nullability.NONNULL, null);
 
 		assertEquals(first, second);
 		assertEquals(second, first);
@@ -110,9 +113,9 @@ public class InjectSignatureTests {
 	@Test
 	public void matchNullabilityAndAnnotationTest() throws NoSuchFieldException {
 		Annotation annotation = getFirstAnnotation();
-		String qualifier = injectSignatureCache.getQualifier(annotation);
-		InjectSignature first = new InjectSignature(String.class, Nullability.NONNULL, qualifier);
-		InjectSignature second = new InjectSignature(Integer.class, Nullability.NONNULL, qualifier);
+		String qualifier = qualifierCache.getQualifier(annotation);
+		spork.inject.internal.reflection.InjectSignature first = new spork.inject.internal.reflection.InjectSignature(String.class, Nullability.NONNULL, qualifier);
+		spork.inject.internal.reflection.InjectSignature second = new spork.inject.internal.reflection.InjectSignature(Integer.class, Nullability.NONNULL, qualifier);
 
 		assertNotEquals(first, second);
 		assertNotEquals(second, first);

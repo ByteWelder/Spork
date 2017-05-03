@@ -1,12 +1,11 @@
 package spork.inject.internal.providers;
 
-import java.util.Map;
-
 import javax.annotation.Nullable;
 import javax.inject.Provider;
 
 import spork.exceptions.SporkRuntimeException;
-import spork.inject.internal.InjectSignature;
+import spork.inject.internal.reflection.InjectSignature;
+import spork.inject.internal.InstanceCache;
 import spork.inject.internal.ObjectGraphException;
 import spork.inject.internal.ObjectGraphNode;
 
@@ -14,43 +13,33 @@ import spork.inject.internal.ObjectGraphNode;
  * A provider that returns an instance from a map or otherwise creates it with
  * the given ObjectGraphNode and its arguments.
  */
-public class CachedNodeProvider implements Provider<Object> {
+public class CachedNodeProvider implements Provider<Object>, InstanceCache.Factory {
 	private final ObjectGraphNode node;
 	@Nullable
 	private final Object[] arguments;
-	private final Map<InjectSignature, Object> instanceMap;
+	private final InstanceCache instanceCache;
 
 	/**
 	 * @param node the node that contains the dependency to inject
 	 * @param arguments the arguments needed to inject
-	 * @param instanceMap the instance map within the correct scope to store the instance in
+	 * @param instanceCache contains all scoped and/or qualified instanced
 	 */
 	@SuppressWarnings("PMD.UseVarargs")
-	public CachedNodeProvider(Map<InjectSignature, Object> instanceMap, ObjectGraphNode node, @Nullable Object[] arguments) {
+	public CachedNodeProvider(InstanceCache instanceCache, ObjectGraphNode node, @Nullable Object[] arguments) {
 		this.node = node;
 		this.arguments = arguments;
-		this.instanceMap = instanceMap;
+		this.instanceCache = instanceCache;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public Object get() {
-		synchronized (instanceMap) {
-			InjectSignature injectSignature = node.getInjectSignature();
-			// try to find the instance in the cache first
-			Object instance = instanceMap.get(injectSignature);
-
-			// if we don't have an instance, create it and cache it
-			if (instance == null) {
-				instance = invoke();
-				instanceMap.put(injectSignature, instance);
-			}
-
-			return instance;
-		}
+		InjectSignature injectSignature = node.getInjectSignature();
+		return instanceCache.getOrCreate(injectSignature, this);
 	}
 
-	private Object invoke() {
+	@Override
+	public Object create() {
 		try {
 			if (arguments == null) {
 				return node.resolve();
@@ -58,7 +47,7 @@ public class CachedNodeProvider implements Provider<Object> {
 				return node.resolve(arguments);
 			}
 		} catch (ObjectGraphException caught) {
-			throw new SporkRuntimeException("Failed to resolve provider", caught, caught.getBindContext());
+			throw new SporkRuntimeException("Failed to resolve provider", caught);
 		}
 	}
 }

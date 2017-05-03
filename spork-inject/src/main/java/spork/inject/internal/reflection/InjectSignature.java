@@ -1,4 +1,4 @@
-package spork.inject.internal;
+package spork.inject.internal.reflection;
 
 import javax.annotation.Nullable;
 
@@ -19,21 +19,21 @@ public final class InjectSignature {
 	 * @param nullability   .
 	 * @param qualifier     .
 	 */
-	InjectSignature(Class<?> targetType, Nullability nullability, @Nullable String qualifier) {
+	public InjectSignature(Class<?> targetType, Nullability nullability, @Nullable String qualifier) {
 		this.targetType = targetType;
 		this.nullability = nullability;
 		this.qualifier = qualifier;
 	}
 
-	Class<?> getType() {
+	public Class<?> getType() {
 		return targetType;
 	}
 
-	Nullability getNullability() {
+	public Nullability getNullability() {
 		return nullability;
 	}
 
-	boolean hasQualifier() {
+	public boolean hasQualifier() {
 		return qualifier != null;
 	}
 

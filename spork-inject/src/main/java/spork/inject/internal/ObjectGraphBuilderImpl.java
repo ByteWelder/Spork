@@ -17,6 +17,11 @@ import spork.inject.ObjectGraphBuilder;
 import spork.inject.Provides;
 import spork.inject.internal.lang.Annotations;
 import spork.inject.internal.lang.Nullability;
+import spork.inject.internal.reflection.InjectSignature;
+import spork.inject.internal.reflection.InjectSignatureFieldCache;
+import spork.inject.internal.reflection.InjectSignatureMethodCache;
+import spork.inject.internal.reflection.QualifierCache;
+import spork.inject.internal.reflection.ReflectionCache;
 
 public class ObjectGraphBuilderImpl implements ObjectGraphBuilder {
 	@Nullable
@@ -33,7 +38,7 @@ public class ObjectGraphBuilderImpl implements ObjectGraphBuilder {
 		this.parentGraph = parentGraph;
 	}
 
-	// region builder methods
+	// region Append methods
 
 	@Override
 	public ObjectGraphBuilder scope(Class<? extends Annotation> scope) {
@@ -52,28 +57,39 @@ public class ObjectGraphBuilderImpl implements ObjectGraphBuilder {
 		return this;
 	}
 
+	// endregion
+
+	// region Finalization methods
+
 	@Override
 	public ObjectGraph build() {
 		validate();
 
-		// Inherit the InjectSignatureCache to improve performance
-		InjectSignatureCache injectSignatureCache = parentGraph != null ? parentGraph.getInjectSignatureCache() : new InjectSignatureCache();
+		ReflectionCache reflectionCache = buildInjectSignatureProvider();
 
 		// collect ObjectGraphNode instances for each module (method)
-		List<ObjectGraphNode> nodes = collectObjectGraphNodes(injectSignatureCache, modules);
+		List<ObjectGraphNode> nodes = collectObjectGraphNodes(reflectionCache, modules);
 
 		// Index all ObjectGraphNode instances
 		Map<InjectSignature, ObjectGraphNode> nodeMap = createNodeMap(nodes);
 
 		// The root graph is always the Singleton-scoped one
-		Class<? extends Annotation> effectiveScope = parentGraph == null ? Singleton.class : scope;
+		Class<? extends Annotation> effectiveScope = (parentGraph == null) ? Singleton.class : scope;
 
-		return new ObjectGraphImpl(parentGraph, nodeMap, injectSignatureCache, effectiveScope);
+		return new ObjectGraphImpl(parentGraph, nodeMap, reflectionCache, effectiveScope);
 	}
 
-	// endregion
-
-	// region private methods
+	private ReflectionCache buildInjectSignatureProvider() {
+		// If possible, inherit the ReflectionCache to improve performance
+		if (parentGraph == null) {
+			QualifierCache qualifierCache = new QualifierCache();
+			InjectSignatureFieldCache fieldProvider = new InjectSignatureFieldCache(qualifierCache);
+			InjectSignatureMethodCache methodProvider = new InjectSignatureMethodCache(qualifierCache);
+			return new ReflectionCache(qualifierCache, fieldProvider, methodProvider);
+		} else {
+			return parentGraph.getReflectionCache();
+		}
+	}
 
 	private void validate() {
 		if (modules.isEmpty()) {
@@ -85,6 +101,10 @@ public class ObjectGraphBuilderImpl implements ObjectGraphBuilder {
 			throw new IllegalStateException("Scope annotation can only be used when a parent ObjectGraph is specified");
 		}
 	}
+
+	// endregion
+
+	// region Private static helper methods
 
 	/**
 	 * Index the provided ObjectGraphNode instances onto their InjectSignatures.
@@ -103,11 +123,11 @@ public class ObjectGraphBuilderImpl implements ObjectGraphBuilder {
 	/**
 	 * Collect the ObjectGraphNode instances for all specified modules
 	 */
-	private static List<ObjectGraphNode> collectObjectGraphNodes(InjectSignatureCache injectSignatureCache, List<Object> modules) {
+	private static List<ObjectGraphNode> collectObjectGraphNodes(ReflectionCache reflectionCache, List<Object> modules) {
 		List<ObjectGraphNode> nodes = new ArrayList<>();
 		for (Object module : modules) {
 			int oldSize = nodes.size();
-			collectObjectGraphNodes(injectSignatureCache, nodes, module);
+			collectObjectGraphNodes(reflectionCache, nodes, module);
 
 			if (oldSize == nodes.size()) {
 				throw new IllegalArgumentException("Module " + module.getClass().getName() + " has no public methods annotated with @Provides");
@@ -119,17 +139,17 @@ public class ObjectGraphBuilderImpl implements ObjectGraphBuilder {
 	/**
 	 * Collect the ObjectGraphNode instances for a specific module.
 	 */
-	private static void collectObjectGraphNodes(InjectSignatureCache injectSignatureCache, List<ObjectGraphNode> objectGraphNodes, Object module) {
+	private static void collectObjectGraphNodes(ReflectionCache reflectionCache, List<ObjectGraphNode> objectGraphNodes, Object module) {
 		for (Method method : module.getClass().getMethods()) {
 			// find a matching method
 			if (!method.isAnnotationPresent(Provides.class)) {
 				continue;
 			}
-			// create key
+			// getQualifier key
 			Nullability nullability = Nullability.create(method);
 			Annotation qualifierAnnotation = Annotations.findAnnotationAnnotatedWith(Qualifier.class, method);
 			String qualifier = qualifierAnnotation != null
-					? injectSignatureCache.getQualifier(qualifierAnnotation)
+					? reflectionCache.getQualifier(qualifierAnnotation)
 					: null;
 			InjectSignature injectSignature = new InjectSignature(method.getReturnType(), nullability, qualifier);
 			objectGraphNodes.add(new ObjectGraphNode(injectSignature, module, method));

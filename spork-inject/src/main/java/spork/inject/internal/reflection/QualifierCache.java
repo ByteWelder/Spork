@@ -1,4 +1,4 @@
-package spork.inject.internal;
+package spork.inject.internal.reflection;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
@@ -11,11 +11,15 @@ import javax.annotation.Nullable;
 import spork.internal.Reflection;
 import spork.exceptions.UnexpectedException;
 
-class QualifierFactory {
+public class QualifierCache {
 	@SuppressWarnings("PMD.UseConcurrentHashMap") // because we want to be able to store null
 	private final Map<Class<? extends Annotation>, Method> annotationToValueMethodMap = new HashMap<>();
 
-	String create(Annotation annotation) {
+	/**
+	 * @param annotation the Qualifier annotation
+	 * @return the String representing this annotation Qualifier
+	 */
+	public String getQualifier(Annotation annotation) {
 		Class<? extends Annotation> annotationType = annotation.annotationType();
 
 		Method method = getValueMethod(annotationType);

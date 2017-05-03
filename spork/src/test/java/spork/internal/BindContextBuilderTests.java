@@ -26,7 +26,7 @@ public class BindContextBuilderTests {
 	}
 
 	@Test
-	public void fromClassIntoClass() {
+	public void bindingFromClassIntoClass() {
 		String message = new BindContextBuilder(Rule.class)
 				.bindingFrom(String.class)
 				.bindingInto(Field.class)
@@ -39,7 +39,7 @@ public class BindContextBuilderTests {
 	}
 
 	@Test
-	public void fromMethodIntoMethod() throws NoSuchMethodException {
+	public void bindingFromMethodIntoMethod() throws NoSuchMethodException {
 		Method noArgumentsMethod = getClass().getDeclaredMethod("testMethodNoArguments");
 		Method oneArgumentMethod = getClass().getDeclaredMethod("testMethodOneArgument", int.class);
 
@@ -55,7 +55,7 @@ public class BindContextBuilderTests {
 	}
 
 	@Test
-	public void intoField() throws NoSuchFieldException {
+	public void bindingIntoField() throws NoSuchFieldException {
 		Field field = getClass().getDeclaredField("reflectionField");
 
 		String message = new BindContextBuilder(Rule.class)
@@ -65,6 +65,17 @@ public class BindContextBuilderTests {
 
 		assertThat(message, is("\n - annotation: org.junit.Rule"
 				+ "\n - binding into: spork.internal.BindContextBuilderTests.reflectionField"));
+	}
+
+	@Test
+	public void bindingIntoString() throws NoSuchFieldException {
+		String message = new BindContextBuilder(Rule.class)
+				.bindingInto("something")
+				.build()
+				.toString();
+
+		assertThat(message, is("\n - annotation: org.junit.Rule"
+				+ "\n - binding into: something"));
 	}
 
 	@Test

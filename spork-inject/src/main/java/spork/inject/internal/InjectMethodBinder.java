@@ -38,7 +38,7 @@ public class InjectMethodBinder implements MethodBinder<Inject> {
 			BindContext bindContext = new BindContextBuilder(Inject.class)
 					.bindingInto(method)
 					.build();
-			throw new BindFailed("Failed to resolve object in ObjectGraph: " + caught.getMessage(), caught, bindContext);
+			throw new BindFailed("Failed to resolve object in ObjectGraph", caught, bindContext);
 		} catch (InvocationTargetException caught) {
 			BindContext bindContext = new BindContextBuilder(Inject.class)
 					.bindingInto(method)

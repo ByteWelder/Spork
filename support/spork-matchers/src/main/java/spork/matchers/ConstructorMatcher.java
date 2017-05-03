@@ -25,9 +25,12 @@ class ConstructorMatcher extends TypeSafeMatcher<Class<?>> {
 			// invoke default constructor to improve test coverage
 			if (expectedArgumentTypes.length == 0) {
 				try {
+					constructor.setAccessible(true);
 					constructor.newInstance();
 				} catch (Exception e) {
-					// ignore
+					return false;
+				} finally {
+					constructor.setAccessible(false);
 				}
 			}
 

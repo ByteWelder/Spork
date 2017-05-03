@@ -24,7 +24,7 @@ public class NodeProvider implements Provider<Object> {
 				return node.resolve(parameters);
 			}
 		} catch (ObjectGraphException caught) {
-			throw new SporkRuntimeException("Failed to resolve provider", caught, caught.getBindContext());
+			throw new SporkRuntimeException("Failed to resolve provider", caught);
 		}
 	}
 }

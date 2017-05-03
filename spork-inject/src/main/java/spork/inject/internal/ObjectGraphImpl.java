@@ -3,7 +3,6 @@ package spork.inject.internal;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -20,21 +19,27 @@ import spork.inject.internal.providers.NodeProvider;
 public final class ObjectGraphImpl implements ObjectGraph {
 	@Nullable
 	private final ObjectGraphImpl parentGraph;
-	private final Map<InjectSignature, ObjectGraphNode> nodeMap;
-	private final Map<InjectSignature, Object> instanceMap = new ConcurrentHashMap<>();
-	private final InjectSignatureCache injectSignatureCache;
+	private final Map<spork.inject.internal.reflection.InjectSignature, ObjectGraphNode> nodeMap;
+	private final InstanceCache instanceCache;
+	private final spork.inject.internal.reflection.ReflectionCache reflectionCache;
 	private final Class<? extends Annotation> scopeAnnotationClass;
 
-	ObjectGraphImpl(@Nullable ObjectGraphImpl parentGraph, Map<InjectSignature, ObjectGraphNode> nodeMap, InjectSignatureCache injectSignatureCache, Class<? extends Annotation> scopeAnnotationClass) {
+	/**
+	 * @param parentGraph optional parent graph
+	 * @param nodeMap a non-mutable map that maps InjectSignature to ObjectGraphNode
+	 * @param reflectionCache retrieve (and cache) InjectSignature instance
+	 * @param scopeAnnotationClass optional annotation that defines the scope of this ObjectGraph
+	 */
+	ObjectGraphImpl(@Nullable ObjectGraphImpl parentGraph, Map<spork.inject.internal.reflection.InjectSignature, ObjectGraphNode> nodeMap, spork.inject.internal.reflection.ReflectionCache reflectionCache, Class<? extends Annotation> scopeAnnotationClass) {
 		this.parentGraph = parentGraph;
 		this.nodeMap = nodeMap;
-		this.injectSignatureCache = injectSignatureCache;
+		this.instanceCache = new InstanceCache();
+		this.reflectionCache = reflectionCache;
 		this.scopeAnnotationClass = scopeAnnotationClass;
 	}
 
 	@Nullable
-	@SuppressWarnings("unchecked")
-	Provider<?> findProvider(InjectSignature injectSignature) throws ObjectGraphException {
+	Provider<?> findProvider(spork.inject.internal.reflection.InjectSignature injectSignature) throws ObjectGraphException {
 		ObjectGraphNode node = findNode(injectSignature);
 
 		if (node == null) {
@@ -54,7 +59,7 @@ public final class ObjectGraphImpl implements ObjectGraph {
 					? findObjectGraph(scope.annotationType())
 					: this;
 
-			// We must have an ObjectGraph with an instanceMap to target
+			// We must have an ObjectGraph with an instance cache to target
 			if (targetGraph == null) {
 				BindContext bindContext = new BindContextBuilder(Inject.class)
 						.suggest("When creating your ObjectGraphs, ensure that one has the required scope")
@@ -66,12 +71,12 @@ public final class ObjectGraphImpl implements ObjectGraph {
 				throw new ObjectGraphException(message, bindContext);
 			}
 
-			return new CachedNodeProvider(targetGraph.instanceMap, node, parameters);
+			return new CachedNodeProvider(targetGraph.instanceCache, node, parameters);
 		}
 	}
 
 	@Nullable
-	private ObjectGraphNode findNode(InjectSignature injectSignature) {
+	private ObjectGraphNode findNode(spork.inject.internal.reflection.InjectSignature injectSignature) {
 		ObjectGraphNode node = nodeMap.get(injectSignature);
 		if (node != null) {
 			return node;
@@ -92,8 +97,8 @@ public final class ObjectGraphImpl implements ObjectGraph {
 		spork.bind(object, this);
 	}
 
-	InjectSignatureCache getInjectSignatureCache() {
-		return injectSignatureCache;
+	spork.inject.internal.reflection.ReflectionCache getReflectionCache() {
+		return reflectionCache;
 	}
 
 	@Nullable
@@ -104,7 +109,7 @@ public final class ObjectGraphImpl implements ObjectGraph {
 		}
 
 		// The following never returns null as there is guaranteed at least 1 method parameter
-		InjectSignature[] injectSignatures = getInjectSignatureCache().getInjectSignatures(method);
+		spork.inject.internal.reflection.InjectSignature[] injectSignatures = getReflectionCache().getInjectSignatures(method);
 		if (injectSignatures == null) {
 			return null;
 		}
@@ -115,11 +120,7 @@ public final class ObjectGraphImpl implements ObjectGraph {
 			Provider provider = findProvider(injectSignatures[i]);
 			if (provider == null) {
 				String signatureString = injectSignatures[i].toString();
-				BindContext bindContext = new BindContextBuilder(Inject.class)
-						.bindingInto(signatureString)
-						.build();
-
-				throw new ObjectGraphException("Invocation argument not found: " + signatureString, bindContext);
+				throw new ObjectGraphException("Invocation argument not found: " + signatureString);
 			}
 
 			boolean isProviderParameter = (method.getParameterTypes()[i] == Provider.class);

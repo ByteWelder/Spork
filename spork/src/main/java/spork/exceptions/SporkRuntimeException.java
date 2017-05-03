@@ -5,7 +5,11 @@ public class SporkRuntimeException extends RuntimeException {
 	 * Constructor to wrap a regular {@link Exception}.
 	 */
 	public SporkRuntimeException(Exception parent) {
-		super(parent);
+		super(parent.getMessage(), parent);
+	}
+
+	public SporkRuntimeException(String s, Exception parent) {
+		super(s, parent);
 	}
 
 	public SporkRuntimeException(String s, BindContext context) {

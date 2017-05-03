@@ -14,22 +14,22 @@ import spork.inject.internal.lang.Annotations;
 import spork.internal.Reflection;
 
 /**
- * A node represents an injection point (@Provides method) in a module.
+ * A node represents a provider (@Provides method) from a module.
  */
 public final class ObjectGraphNode {
-	private final InjectSignature injectSignature;
+	private final spork.inject.internal.reflection.InjectSignature injectSignature;
 	private final Object parent;
 	private final Method method;
 	@Nullable private final Annotation scopeAnnotation;
 
-	ObjectGraphNode(InjectSignature injectSignature, Object parent, Method method) {
+	ObjectGraphNode(spork.inject.internal.reflection.InjectSignature injectSignature, Object parent, Method method) {
 		this.injectSignature = injectSignature;
 		this.parent = parent;
 		this.method = method;
 		this.scopeAnnotation = Annotations.findAnnotationAnnotatedWith(Scope.class, method); // TODO: cache?
 	}
 
-	public InjectSignature getInjectSignature() {
+	public spork.inject.internal.reflection.InjectSignature getInjectSignature() {
 		return injectSignature;
 	}
 
@@ -42,12 +42,11 @@ public final class ObjectGraphNode {
 		try {
 			return Reflection.invokeMethod(method, parent, arguments);
 		} catch (InvocationTargetException e) {
+			String message = "Failed to invoke " + method.getDeclaringClass().getName() + "." + method.getName() + "()";
 			BindContext bindContext = new BindContextBuilder(Inject.class)
 					.bindingFrom(method)
 					.bindingInto(injectSignature.toString())
 					.build();
-
-			String message = "Failed to invoke " + method.getDeclaringClass().getName() + "." + method.getName() + "(): " + e.getMessage();
 
 			throw new ObjectGraphException(message, e, bindContext);
 		}
@@ -58,12 +57,11 @@ public final class ObjectGraphNode {
 		try {
 			return objectGraph.getInjectableMethodParameters(method);
 		} catch (ObjectGraphException e) {
+			String message = "Failed to invoke " + method.getDeclaringClass().getName() + "." + method.getName() + "()";
 			BindContext bindContext = new BindContextBuilder(Inject.class)
 					.bindingFrom(method)
 					.bindingInto(injectSignature.toString())
 					.build();
-
-			String message = "Failed to invoke " + method.getDeclaringClass().getName() + "." + method.getName() + "(): " + e.getMessage();
 
 			throw new ObjectGraphException(message, e, bindContext);
 		}

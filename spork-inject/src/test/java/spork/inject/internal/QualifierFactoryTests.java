@@ -33,30 +33,30 @@ public class QualifierFactoryTests {
 
 	@Test
 	public void noValueMethodQualifier() throws NoSuchMethodException {
-		QualifierFactory factory = new QualifierFactory();
+		spork.inject.internal.reflection.QualifierCache factory = new spork.inject.internal.reflection.QualifierCache();
 		Method method = getClass().getDeclaredMethod("noQualifierMethod");
 		QualifierWithoutValueMethod named = method.getAnnotation(QualifierWithoutValueMethod.class);
-		String qualifier = factory.create(named);
+		String qualifier = factory.getQualifier(named);
 
 		assertThat(qualifier, is("spork.inject.internal.QualifierFactoryTests$QualifierWithoutValueMethod"));
 	}
 
 	@Test
 	public void specifiedValueQualifier() throws NoSuchMethodException {
-		QualifierFactory factory = new QualifierFactory();
+		spork.inject.internal.reflection.QualifierCache factory = new spork.inject.internal.reflection.QualifierCache();
 		Method method = getClass().getDeclaredMethod("specifiedValueQualifierMethod");
 		Named named = method.getAnnotation(Named.class);
-		String qualifier = factory.create(named);
+		String qualifier = factory.getQualifier(named);
 
 		assertThat(qualifier, is("javax.inject.Named:something"));
 	}
 
 	@Test
 	public void defaultValueQualifier() throws NoSuchMethodException {
-		QualifierFactory factory = new QualifierFactory();
+		spork.inject.internal.reflection.QualifierCache factory = new spork.inject.internal.reflection.QualifierCache();
 		Method method = getClass().getDeclaredMethod("defaultValueQualifierMethod");
 		Named named = method.getAnnotation(Named.class);
-		String qualifier = factory.create(named);
+		String qualifier = factory.getQualifier(named);
 
 		assertThat(qualifier, is("javax.inject.Named:"));
 	}

@@ -11,8 +11,8 @@ import spork.exceptions.BindContextBuilder;
 import spork.exceptions.BindFailed;
 import spork.extension.FieldBinder;
 import spork.inject.Lazy;
-import spork.inject.internal.reflection.Classes;
 import spork.inject.internal.providers.ProviderLazy;
+import spork.inject.internal.reflection.Classes;
 import spork.internal.Reflection;
 
 /**
@@ -46,7 +46,7 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 				? (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0]
 				: fieldType;
 
-		InjectSignature injectSignature = objectGraph.getInjectSignatureCache().getInjectSignature(field, targetType);
+		spork.inject.internal.reflection.InjectSignature injectSignature = objectGraph.getReflectionCache().getInjectSignature(field, targetType);
 		Provider<?> provider;
 
 		try {

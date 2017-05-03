@@ -4,9 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import spork.exceptions.BindFailed;
 import spork.extension.FieldBinder;
@@ -20,36 +18,38 @@ import spork.extension.TypeBinder;
  */
 public class BindActionProvider {
 	@SuppressWarnings("PMD.UseConcurrentHashMap") // we need to synchronize on combined get & put
-	private final Map<Class<?>, List<BindAction>> bindActionMap = new HashMap<>();
+	private final BindActionCache bindActionCache = new BindActionCache();
 	private final Catalog catalog;
+	private final BindActionCache.Factory factory;
+
+	public BindActionProvider(Catalog catalog, BindActionCache.Factory factory) {
+		this.catalog = catalog;
+		this.factory = factory;
+	}
 
 	public BindActionProvider(Catalog catalog) {
 		this.catalog = catalog;
+		this.factory = new BindActionCache.Factory() {
+			@Override
+			public List<BindAction> create(Class<?> type) {
+				return createBindActions(type);
+			}
+		};
 	}
 
 	/**
 	 * Gets the {@link BindAction} instances for the specified type.
 	 */
 	List<BindAction> getBindActions(Class<?> type) {
-		synchronized (bindActionMap) {
-			List<BindAction> binderList = bindActionMap.get(type);
-
-			// If no cache exists, create cache
-			if (binderList == null) {
-				binderList = createBindActions(type);
-				bindActionMap.put(type, binderList);
-			}
-
-			return binderList;
-		}
+		return bindActionCache.getOrCreate(type, factory);
 	}
 
 	// region Creating BindAction instances
 
 	/**
-	 * Find all Binder instances for the given type.
+	 * Create a list of all BindAction instances for the given type.
 	 * Each Type/Field/Method annotation that is found in the type declaration
-	 * will result in a corresponding Binder instance.
+	 * will result in a corresponding BindAction instance.
 	 *
 	 * @param classObject the class to create a cache for
 	 * @return the list of cached binders
@@ -73,7 +73,6 @@ public class BindActionProvider {
 
 		return bindActions;
 	}
-
 
 	/**
 	 * Update the cache with this binder

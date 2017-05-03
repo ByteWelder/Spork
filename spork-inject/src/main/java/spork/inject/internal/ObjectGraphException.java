@@ -14,4 +14,8 @@ public class ObjectGraphException extends SporkException {
 	ObjectGraphException(String s, Exception parent, BindContext bindContext) {
 		super(s, parent, bindContext);
 	}
+
+	public ObjectGraphException(String s) {
+		super(s);
+	}
 }

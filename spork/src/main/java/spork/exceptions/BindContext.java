@@ -5,8 +5,11 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+/**
+ * Contextual object that is used when constructing exceptions.
+ */
 public class BindContext {
-	@Nullable private final Class<? extends Annotation> annotationClass;
+	private final Class<? extends Annotation> annotationClass;
 	@Nullable private final String source;
 	@Nullable private final String target;
 	private final List<String> suggestions;
@@ -20,24 +23,6 @@ public class BindContext {
 		this.source = source;
 		this.target = target;
 		this.suggestions = suggestions;
-	}
-
-	public Class<? extends Annotation> getAnnotationClass() {
-		return annotationClass;
-	}
-
-	@Nullable
-	public String getSource() {
-		return source;
-	}
-
-	@Nullable
-	public String getTarget() {
-		return target;
-	}
-
-	public List<String> getSuggestions() {
-		return suggestions;
 	}
 
 	@Override
