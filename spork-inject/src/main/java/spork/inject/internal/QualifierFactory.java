@@ -9,7 +9,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import spork.internal.Reflection;
-import spork.internal.UnexpectedException;
+import spork.exceptions.UnexpectedException;
 
 class QualifierFactory {
 	@SuppressWarnings("PMD.UseConcurrentHashMap") // because we want to be able to store null

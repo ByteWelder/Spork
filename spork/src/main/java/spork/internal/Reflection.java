@@ -6,6 +6,8 @@ import java.lang.reflect.Method;
 
 import javax.annotation.Nullable;
 
+import spork.exceptions.UnexpectedException;
+
 /**
  * Reflection utilities
  */

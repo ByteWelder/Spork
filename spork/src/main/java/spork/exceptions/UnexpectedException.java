@@ -1,4 +1,4 @@
-package spork.internal;
+package spork.exceptions;
 
 /**
  * This is thrown when a situation occurs that should never happen.
