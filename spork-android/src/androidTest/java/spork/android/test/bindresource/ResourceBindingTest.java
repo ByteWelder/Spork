@@ -40,7 +40,7 @@ public class ResourceBindingTest {
     @Test
     public void dimensionPojoFailure() {
         expectedException.expect(SporkRuntimeException.class);
-        expectedException.expectMessage("failed to retrieve Context from target object");
+        expectedException.expectMessage("Failed to retrieve Context from target object");
 
         new TestDimensionPojo();
     }
@@ -48,7 +48,7 @@ public class ResourceBindingTest {
     @Test
     public void drawablePojoFailure() {
         expectedException.expect(SporkRuntimeException.class);
-        expectedException.expectMessage("failed to retrieve Context from target object");
+        expectedException.expectMessage("Failed to retrieve Context from target object");
 
         new TestDrawablePojo();
     }
@@ -56,7 +56,7 @@ public class ResourceBindingTest {
     @Test
     public void stringPojoFailure() {
         expectedException.expect(SporkRuntimeException.class);
-        expectedException.expectMessage("failed to retrieve Context from target object");
+        expectedException.expectMessage("Failed to retrieve Context from target object");
 
         new TestStringPojo();
     }

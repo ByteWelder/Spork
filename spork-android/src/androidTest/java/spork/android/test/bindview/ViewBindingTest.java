@@ -35,7 +35,7 @@ public class ViewBindingTest {
 	@Test
 	public void bindViewPojo() {
 		expectedException.expect(SporkRuntimeException.class);
-		expectedException.expectMessage("failed to resolve View");
+		expectedException.expectMessage("Failed to resolve View");
 
 		new Pojo();
 	}
@@ -43,7 +43,7 @@ public class ViewBindingTest {
 	@Test
 	public void bindFaultyImpliedId() {
 		expectedException.expect(SporkRuntimeException.class);
-		expectedException.expectMessage("failed to resolve View");
+		expectedException.expectMessage("Failed to resolve View");
 
 		new FaultyImpliedIdView(activityRule.getActivity());
 	}
@@ -51,7 +51,7 @@ public class ViewBindingTest {
 	@Test
 	public void bindFaultySpecifiedId() {
 		expectedException.expect(SporkRuntimeException.class);
-		expectedException.expectMessage("failed to resolve View");
+		expectedException.expectMessage("Failed to resolve View");
 
 		new FaultySpecifiedIdView(activityRule.getActivity());
 	}
@@ -59,7 +59,7 @@ public class ViewBindingTest {
 	@Test
 	public void bindFaultyTargetType() {
 		expectedException.expect(SporkRuntimeException.class);
-		expectedException.expectMessage("field is not a View");
+		expectedException.expectMessage("Field is not a View");
 
 		new FaultyTargetTypeView(activityRule.getActivity());
 	}

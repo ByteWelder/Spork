@@ -49,7 +49,7 @@ public class ClickBindingTest {
     @Test
     public void testPojo() {
         expectedException.expect(SporkRuntimeException.class);
-        expectedException.expectMessage("failed to resolve View for method");
+        expectedException.expectMessage("Failed to resolve View for method");
 
         new TestPojo();
     }
@@ -57,7 +57,7 @@ public class ClickBindingTest {
     @Test
     public void testFaultyView() {
         expectedException.expect(SporkRuntimeException.class);
-        expectedException.expectMessage("failed to resolve View for method");
+        expectedException.expectMessage("Failed to resolve View for method");
 
         new TestFaultyView(activityRule.getActivity());
     }
