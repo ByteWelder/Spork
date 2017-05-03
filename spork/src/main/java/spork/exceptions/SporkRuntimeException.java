@@ -1,9 +1,7 @@
 package spork.exceptions;
 
 public class SporkRuntimeException extends RuntimeException {
-	/**
-	 * Constructor to wrap a regular {@link Exception}.
-	 */
+	
 	public SporkRuntimeException(Exception parent) {
 		super(parent.getMessage(), parent);
 	}
