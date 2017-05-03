@@ -12,7 +12,7 @@ public class BindContext {
 	private final List<String> suggestions;
 
 	BindContext(
-			@Nullable Class<? extends Annotation> annotationClass,
+			Class<? extends Annotation> annotationClass,
 			@Nullable String source,
 			@Nullable String target,
 			List<String> suggestions) {
@@ -22,7 +22,6 @@ public class BindContext {
 		this.suggestions = suggestions;
 	}
 
-	@Nullable
 	public Class<? extends Annotation> getAnnotationClass() {
 		return annotationClass;
 	}
@@ -51,10 +50,8 @@ public class BindContext {
 			}
 		}
 
-		if (annotationClass != null) {
-			builder.append("\n - annotation: ")
-					.append(annotationClass.getName());
-		}
+		builder.append("\n - annotation: ")
+				.append(annotationClass.getName());
 
 		if (source != null) {
 			builder.append("\n - binding from: ").append(source);
