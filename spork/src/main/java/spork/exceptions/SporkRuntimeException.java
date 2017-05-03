@@ -1,7 +1,7 @@
 package spork.exceptions;
 
 public class SporkRuntimeException extends RuntimeException {
-	
+
 	public SporkRuntimeException(Exception parent) {
 		super(parent.getMessage(), parent);
 	}
