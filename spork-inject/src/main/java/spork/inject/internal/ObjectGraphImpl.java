@@ -116,6 +116,7 @@ public final class ObjectGraphImpl implements ObjectGraph {
 
 		Object[] parameterInstances = new Object[parameterCount];
 
+		Class<?>[] parameterTypes = method.getParameterTypes();
 		for (int i = 0; i < parameterCount; ++i) {
 			Provider provider = findProvider(injectSignatures[i]);
 			if (provider == null) {
@@ -123,7 +124,7 @@ public final class ObjectGraphImpl implements ObjectGraph {
 				throw new ObjectGraphException("Invocation argument not found: " + signatureString);
 			}
 
-			boolean isProviderParameter = (method.getParameterTypes()[i] == Provider.class);
+			boolean isProviderParameter = (parameterTypes[i] == Provider.class);
 			parameterInstances[i] = isProviderParameter ? provider : provider.get();
 		}
 
