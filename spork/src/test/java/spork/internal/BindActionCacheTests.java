@@ -40,6 +40,7 @@ public class BindActionCacheTests {
 		inOrder.verify(lock).lock();
 		inOrder.verify(factory).create(String.class);
 		inOrder.verify(lock).unlock();
+		inOrder.verifyNoMoreInteractions();
 	}
 
 	@Test
