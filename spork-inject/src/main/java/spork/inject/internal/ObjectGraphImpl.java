@@ -103,8 +103,8 @@ public final class ObjectGraphImpl implements ObjectGraph {
 
 	@Nullable
 	Object[] getInjectableMethodParameters(Method method) throws ObjectGraphException {
-		int parameterCount = method.getParameterTypes().length;
-		if (parameterCount == 0) {
+		Class<?>[] parameterTypes = method.getParameterTypes();
+		if (parameterTypes.length == 0) {
 			return null;
 		}
 
@@ -114,10 +114,10 @@ public final class ObjectGraphImpl implements ObjectGraph {
 			return null;
 		}
 
-		Object[] parameterInstances = new Object[parameterCount];
+		Object[] parameterInstances = new Object[parameterTypes.length];
 
-		Class<?>[] parameterTypes = method.getParameterTypes();
-		for (int i = 0; i < parameterCount; ++i) {
+
+		for (int i = 0; i < parameterTypes.length; ++i) {
 			Provider provider = findProvider(injectSignatures[i]);
 			if (provider == null) {
 				String signatureString = injectSignatures[i].toString();
