@@ -13,7 +13,7 @@ public class InjectProviderTests {
 	/**
 	 * A module that increases a counter every time a method is called.
 	 */
-	private static class Module {
+	public static class Module {
 		private int counter = 0;
 
 		@Provides

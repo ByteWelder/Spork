@@ -2,6 +2,7 @@ package spork.inject.internal;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.annotation.Nullable;
 import javax.inject.Qualifier;
 import javax.inject.Singleton;
 
+import spork.exceptions.SporkRuntimeException;
 import spork.inject.ObjectGraph;
 import spork.inject.ObjectGraphBuilder;
 import spork.inject.Provides;
@@ -93,12 +95,12 @@ public class ObjectGraphBuilderImpl implements ObjectGraphBuilder {
 
 	private void validate() {
 		if (modules.isEmpty()) {
-			throw new IllegalStateException("No modules specified in ObjectGraphBuilder");
+			throw new SporkRuntimeException("No modules specified in ObjectGraphBuilder");
 		}
 
 		if (scope != null && parentGraph == null) {
 			// The root ObjectGraph is always the Singleton-scoped one
-			throw new IllegalStateException("Scope annotation can only be used when a parent ObjectGraph is specified");
+			throw new SporkRuntimeException("Scope annotation can only be used when a parent ObjectGraph is specified");
 		}
 	}
 
@@ -127,10 +129,15 @@ public class ObjectGraphBuilderImpl implements ObjectGraphBuilder {
 		List<ObjectGraphNode> nodes = new ArrayList<>();
 		for (Object module : modules) {
 			int oldSize = nodes.size();
+
+			if (!Modifier.isPublic(module.getClass().getModifiers())) {
+				throw new SporkRuntimeException("Module class isn't a public class: " + module.getClass().getName());
+			}
+
 			collectObjectGraphNodes(reflectionCache, nodes, module);
 
 			if (oldSize == nodes.size()) {
-				throw new IllegalArgumentException("Module " + module.getClass().getName() + " has no public methods annotated with @Provides");
+				throw new SporkRuntimeException("No methods found annotated with @Provides for " + module.getClass().getName());
 			}
 		}
 		return nodes;
@@ -140,11 +147,16 @@ public class ObjectGraphBuilderImpl implements ObjectGraphBuilder {
 	 * Collect the ObjectGraphNode instances for a specific module.
 	 */
 	private static void collectObjectGraphNodes(ReflectionCache reflectionCache, List<ObjectGraphNode> objectGraphNodes, Object module) {
-		for (Method method : module.getClass().getMethods()) {
+		for (Method method : module.getClass().getDeclaredMethods()) {
 			// find a matching method
 			if (!method.isAnnotationPresent(Provides.class)) {
 				continue;
 			}
+
+			if (!Modifier.isPublic(method.getModifiers())) {
+				throw new SporkRuntimeException("Module method is not public: " + method.toString());
+			}
+
 			// getQualifier key
 			Nullability nullability = Nullability.create(method);
 			Annotation qualifierAnnotation = Annotations.findAnnotationAnnotatedWith(Qualifier.class, method);

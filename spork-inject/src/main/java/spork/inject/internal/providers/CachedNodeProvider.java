@@ -4,10 +4,10 @@ import javax.annotation.Nullable;
 import javax.inject.Provider;
 
 import spork.exceptions.SporkRuntimeException;
-import spork.inject.internal.reflection.InjectSignature;
 import spork.inject.internal.InstanceCache;
 import spork.inject.internal.ObjectGraphException;
 import spork.inject.internal.ObjectGraphNode;
+import spork.inject.internal.reflection.InjectSignature;
 
 /**
  * A provider that returns an instance from a map or otherwise creates it with
@@ -34,20 +34,20 @@ public class CachedNodeProvider implements Provider<Object>, InstanceCache.Facto
 	@SuppressWarnings("unchecked")
 	@Override
 	public Object get() {
-		InjectSignature injectSignature = node.getInjectSignature();
-		return instanceCache.getOrCreate(injectSignature, this);
+		try {
+			InjectSignature injectSignature = node.getInjectSignature();
+			return instanceCache.getOrCreate(injectSignature, this);
+		} catch (ObjectGraphException caught) {
+			throw new SporkRuntimeException("Failed to resolve dependency", caught);
+		}
 	}
 
 	@Override
-	public Object create() {
-		try {
-			if (arguments == null) {
-				return node.resolve();
-			} else {
-				return node.resolve(arguments);
-			}
-		} catch (ObjectGraphException caught) {
-			throw new SporkRuntimeException("Failed to resolve provider", caught);
+	public Object create() throws ObjectGraphException {
+		if (arguments == null) {
+			return node.resolve();
+		} else {
+			return node.resolve(arguments);
 		}
 	}
 }

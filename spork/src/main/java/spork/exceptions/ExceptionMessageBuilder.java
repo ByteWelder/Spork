@@ -28,7 +28,7 @@ public class ExceptionMessageBuilder {
 	 * Defines the source of the Exception (e.g. the Method that provides data to be bound to a target object)
 	 */
 	public ExceptionMessageBuilder bindingFrom(Method method) {
-		return bindingFrom(getMethodSignature(method));
+		return bindingFrom(method.toString());
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class ExceptionMessageBuilder {
 	 * Defines the target Field to inject to.
 	 */
 	public ExceptionMessageBuilder bindingInto(Field field) {
-		return bindingInto(getFieldSignature(field));
+		return bindingInto(field.toString());
 	}
 
 	private ExceptionMessageBuilder bindingFrom(String from) {
@@ -62,7 +62,7 @@ public class ExceptionMessageBuilder {
 	 * Defines the target Method to inject to.
 	 */
 	public ExceptionMessageBuilder bindingInto(Method method) {
-		return bindingInto(getMethodSignature(method));
+		return bindingInto(method.toString());
 	}
 
 	/**
@@ -78,17 +78,4 @@ public class ExceptionMessageBuilder {
 	public String build() {
 		return builder.toString();
 	}
-
-	// region Reflection signature methods
-
-	private static String getMethodSignature(Method method) {
-		String parameters = method.getParameterTypes().length == 0 ? "" : "...";
-		return method.getDeclaringClass().getName() + "." + method.getName() + "(" + parameters + ")";
-	}
-
-	private static String getFieldSignature(Field field) {
-		return field.getDeclaringClass().getName() + "." + field.getName();
-	}
-
-	// endregion
 }

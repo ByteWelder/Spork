@@ -13,6 +13,7 @@ public final class InjectSignature {
 	private final Nullability nullability;
 	@Nullable
 	private final String qualifier;
+	private final int hashCode;
 
 	/**
 	 * @param targetType    the real target type (not a Provider)
@@ -23,6 +24,7 @@ public final class InjectSignature {
 		this.targetType = targetType;
 		this.nullability = nullability;
 		this.qualifier = qualifier;
+		this.hashCode = createHashCode();
 	}
 
 	public Class<?> getType() {
@@ -39,11 +41,8 @@ public final class InjectSignature {
 
 	@Override
 	public int hashCode() {
-		int result = 17;
-		result = 31 * result + targetType.hashCode();
-		result = 31 * result + nullability.hashCode();
-		result = 31 * result + (qualifier != null ? qualifier.hashCode() : 0);
-		return result;
+		// This is called for each HashMap lookup, so we cache it
+		return hashCode;
 	}
 
 	@Override
@@ -58,7 +57,6 @@ public final class InjectSignature {
 				&& this.targetType.equals(other.targetType)
 				&& this.nullability.equals(other.nullability)
 				&& (this.qualifier == null || this.qualifier.equals(other.qualifier));
-
 	}
 
 	@Override
@@ -71,5 +69,13 @@ public final class InjectSignature {
 					+ SEPARATOR + nullability
 					+ SEPARATOR + qualifier;
 		}
+	}
+
+	private int createHashCode() {
+		int result = 17;
+		result = 31 * result + targetType.hashCode();
+		result = 31 * result + nullability.hashCode();
+		result = 31 * result + (qualifier != null ? qualifier.hashCode() : 0);
+		return result;
 	}
 }

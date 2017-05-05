@@ -9,7 +9,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class InjectNamedTests {
-	private static class Module {
+	public static class Module {
 
 		@Provides @Named("one")
 		public int one() {
@@ -27,7 +27,7 @@ public class InjectNamedTests {
 		}
 	}
 
-	private static class Parent {
+	public static class Parent {
 		@Inject @Named("one")
 		int one;
 

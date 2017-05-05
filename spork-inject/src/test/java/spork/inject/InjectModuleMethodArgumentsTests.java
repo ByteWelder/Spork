@@ -16,7 +16,7 @@ public class InjectModuleMethodArgumentsTests {
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
 
-	private static class Module {
+	public static class Module {
 
 		@Provides
 		public Integer one() {
@@ -36,7 +36,7 @@ public class InjectModuleMethodArgumentsTests {
 		}
 	}
 
-	private static class MissingDependencyModule {
+	public static class MissingDependencyModule {
 
 		@Provides
 		public StringBuilder provideStringBuilder(Integer first) {

@@ -39,7 +39,7 @@ class ComplexInjectBenchmark extends Benchmark {
 	private static final class Service {
 	}
 
-	private static final class RootModule {
+	public static final class RootModule {
 		@Provides
 		@Named("root")
 		public String provideString() {
@@ -53,7 +53,7 @@ class ComplexInjectBenchmark extends Benchmark {
 		}
 	}
 
-	private static final class ChildModule {
+	public static final class ChildModule {
 		@Provides
 		@Named("child")
 		public String provideString() {

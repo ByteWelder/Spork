@@ -12,14 +12,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class InjectFieldTests {
 
-	private static class Module {
+	public static class Module {
 		@Provides
 		public Integer integerValue() {
 			return 1;
 		}
 	}
 
-	private static class Parent {
+	public static class Parent {
 		@Inject
 		static Integer staticValue = 0;
 

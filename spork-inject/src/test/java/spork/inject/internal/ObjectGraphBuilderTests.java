@@ -9,21 +9,26 @@ import java.lang.annotation.RetentionPolicy;
 
 import javax.inject.Scope;
 
+import spork.exceptions.SporkRuntimeException;
 import spork.inject.ObjectGraphs;
 import spork.inject.Provides;
 
 public class ObjectGraphBuilderTests {
-	private static final class ModuleWithoutProvidesMethod {
+
+	static final class NonPublicModule {
 	}
 
-	private static final class ModuleWithoutPublicProvidesMethod {
+	public static final class ModuleWithoutProvidesMethod {
+	}
+
+	public static final class ModuleWithoutPublicProvidesMethod {
 		@Provides
 		Object object() {
 			return new Object();
 		}
 	}
 
-	private static final class Module {
+	public static final class Module {
 		@Provides
 		public Object object() {
 			return new Object();
@@ -40,15 +45,24 @@ public class ObjectGraphBuilderTests {
 
 	@Test
 	public void testNoModules() {
-		expectedException.expect(IllegalStateException.class);
+		expectedException.expect(SporkRuntimeException.class);
 		expectedException.expectMessage("No modules specified in ObjectGraphBuilder");
 		ObjectGraphs.builder().build();
 	}
 
 	@Test
+	public void testNonPublicModule() {
+		expectedException.expect(SporkRuntimeException.class);
+		expectedException.expectMessage("Module class isn't a public class: spork.inject.internal.ObjectGraphBuilderTests$NonPublicModule");
+		ObjectGraphs.builder()
+				.module(new NonPublicModule())
+				.build();
+	}
+
+	@Test
 	public void testModuleWithoutProvidesMethod() {
-		expectedException.expect(IllegalArgumentException.class);
-		expectedException.expectMessage("Module spork.inject.internal.ObjectGraphBuilderTests$ModuleWithoutProvidesMethod has no public methods annotated with @Provides");
+		expectedException.expect(SporkRuntimeException.class);
+		expectedException.expectMessage("No methods found annotated with @Provides for spork.inject.internal.ObjectGraphBuilderTests$ModuleWithoutProvidesMethod");
 		ObjectGraphs.builder()
 				.module(new ModuleWithoutProvidesMethod())
 				.build();
@@ -56,8 +70,8 @@ public class ObjectGraphBuilderTests {
 
 	@Test
 	public void testModuleWithoutPublicProvidesMethod() {
-		expectedException.expect(IllegalArgumentException.class);
-		expectedException.expectMessage("Module spork.inject.internal.ObjectGraphBuilderTests$ModuleWithoutPublicProvidesMethod has no public methods annotated with @Provides");
+		expectedException.expect(SporkRuntimeException.class);
+		expectedException.expectMessage("Module method is not public: java.lang.Object spork.inject.internal.ObjectGraphBuilderTests$ModuleWithoutPublicProvidesMethod.object()");
 		ObjectGraphs.builder()
 				.module(new ModuleWithoutPublicProvidesMethod())
 				.build();
@@ -65,7 +79,7 @@ public class ObjectGraphBuilderTests {
 
 	@Test
 	public void testScopedRootGraph() {
-		expectedException.expect(IllegalStateException.class);
+		expectedException.expect(SporkRuntimeException.class);
 		expectedException.expectMessage("Scope annotation can only be used when a parent ObjectGraph is specified");
 		ObjectGraphs.builder()
 				.scope(TestScope.class)

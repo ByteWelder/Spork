@@ -10,7 +10,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class InjectSingletonTests {
 
-	private static class Module {
+	public static class Module {
 		private Integer counter = 1;
 
 		@Provides

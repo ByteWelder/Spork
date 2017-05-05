@@ -16,7 +16,7 @@ public class InjectMethodTests {
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
 
-	private static class Module {
+	public static class Module {
 		@Provides
 		public Integer integerValue() {
 			return 1;

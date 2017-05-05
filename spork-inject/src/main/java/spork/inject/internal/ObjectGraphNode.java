@@ -11,7 +11,6 @@ import javax.inject.Scope;
 import spork.exceptions.ExceptionMessageBuilder;
 import spork.inject.internal.lang.Annotations;
 import spork.inject.internal.reflection.InjectSignature;
-import spork.internal.Reflection;
 
 /**
  * A node represents a provider (@Provides method) from a module.
@@ -40,15 +39,14 @@ public final class ObjectGraphNode {
 
 	public Object resolve(Object... arguments) throws ObjectGraphException {
 		try {
-			return Reflection.invokeMethod(method, parent, arguments);
-		} catch (InvocationTargetException e) {
-			String baseMessage = "Failed to invoke " + method.getDeclaringClass().getName() + "." + method.getName() + "()";
-			String message = new ExceptionMessageBuilder(baseMessage)
-					.annotation(Inject.class)
-					.bindingFrom(method)
-					.bindingInto(injectSignature.toString())
+			return method.invoke(parent, arguments);
+		} catch (IllegalAccessException e) {
+			String message = getErrorMessage("Not allowed to invoke " + method.toString())
+					.suggest("Ensure the class and method are both accessible (e.g. public)")
 					.build();
-
+			throw new ObjectGraphException(message, e);
+		} catch (InvocationTargetException e) {
+			String message = getErrorMessage("Failed to invoke " + method.toString()).build();
 			throw new ObjectGraphException(message, e);
 		}
 	}
@@ -58,14 +56,15 @@ public final class ObjectGraphNode {
 		try {
 			return objectGraph.getInjectableMethodParameters(method);
 		} catch (ObjectGraphException e) {
-			String baseMessage = "Failed to invoke " + method.getDeclaringClass().getName() + "." + method.getName() + "()";
-			String message = new ExceptionMessageBuilder(baseMessage)
-					.annotation(Inject.class)
-					.bindingFrom(method)
-					.bindingInto(injectSignature.toString())
-					.build();
-
+			String message = getErrorMessage("Failed to invoke " + method.toString()).build();
 			throw new ObjectGraphException(message, e);
 		}
+	}
+
+	private ExceptionMessageBuilder getErrorMessage(String message) {
+		return new ExceptionMessageBuilder(message)
+				.annotation(Inject.class)
+				.bindingFrom(method)
+				.bindingInto(injectSignature.toString());
 	}
 }

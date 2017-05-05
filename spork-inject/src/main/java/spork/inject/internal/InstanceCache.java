@@ -20,7 +20,7 @@ public class InstanceCache {
 		this(new ReentrantLock());
 	}
 
-	public Object getOrCreate(InjectSignature signature, Factory factory) {
+	public Object getOrCreate(InjectSignature signature, Factory factory) throws ObjectGraphException {
 		lock.lock();
 
 		try {
@@ -37,6 +37,6 @@ public class InstanceCache {
 	}
 
 	public interface Factory {
-		Object create();
+		Object create() throws ObjectGraphException;
 	}
 }

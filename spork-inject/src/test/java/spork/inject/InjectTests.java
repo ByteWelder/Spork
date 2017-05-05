@@ -18,14 +18,14 @@ public class InjectTests {
 	public ExpectedException expectedException = ExpectedException.none();
 	private ObjectGraph graph;
 
-	private static class StringModule {
+	public static class StringModule {
 		@Provides
 		public String stringValue() {
 			return "test";
 		}
 	}
 
-	private static class IntegerModule {
+	public static class IntegerModule {
 		@Provides
 		public Integer integerValue() {
 			return 1;

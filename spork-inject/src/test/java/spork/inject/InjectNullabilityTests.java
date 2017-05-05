@@ -18,7 +18,7 @@ public class InjectNullabilityTests {
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
 
-	private static class StringNullableModule {
+	public static class StringNullableModule {
 		@Provides
 		@Nullable
 		public String provideStringValue() {
@@ -26,7 +26,7 @@ public class InjectNullabilityTests {
 		}
 	}
 
-	private static class StringNonnullModule {
+	public static class StringNonnullModule {
 		@Provides
 		@Nonnull
 		public String provideStringValue() {

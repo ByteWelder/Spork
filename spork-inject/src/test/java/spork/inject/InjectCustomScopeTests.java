@@ -19,14 +19,14 @@ public class InjectCustomScopeTests {
 	private @interface SessionScope {
 	}
 
-	private static final class ApplicationModule {
+	public static final class ApplicationModule {
 		@Provides
 		public String provideName() {
 			return "My Application";
 		}
 	}
 
-	private static final class SessionModule {
+	public static final class SessionModule {
 		private static final AtomicInteger counter = new AtomicInteger();
 
 		@Provides
@@ -36,24 +36,24 @@ public class InjectCustomScopeTests {
 		}
 	}
 
-	private static final class ScreenModule {
+	public static final class ScreenModule {
 		@Provides
 		public String provideTitle() {
 			return "Login";
 		}
 	}
 
-	private static class Application {
+	public static class Application {
 		@Inject
 		public String name;
 	}
 
-	private static class Session {
+	public static class Session {
 		@Inject
 		public Integer sessionId;
 	}
 
-	private static class Screen {
+	public static class Screen {
 		@Inject
 		public Integer sessionId;
 

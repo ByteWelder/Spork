@@ -11,7 +11,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 public class ObjectGraphTests {
-	private static class Module {
+	public static class Module {
 		@Provides
 		public Object object() {
 			return new Object();

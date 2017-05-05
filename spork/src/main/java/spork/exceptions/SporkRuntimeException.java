@@ -10,7 +10,7 @@ public class SporkRuntimeException extends RuntimeException {
 		super(parent.getMessage(), parent);
 	}
 
-	public SporkRuntimeException(String s, Exception parent) {
-		super(s, parent);
+	public SporkRuntimeException(String message, Exception parent) {
+		super(message, parent);
 	}
 }
