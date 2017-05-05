@@ -8,20 +8,20 @@ import java.util.concurrent.locks.ReentrantLock;
 import spork.inject.internal.reflection.InjectSignature;
 
 public class InstanceCache {
-	private final Lock lock;
-	@SuppressWarnings("PMD.UseConcurrentHashMap")
-	private final Map<InjectSignature, Object> map = new HashMap<>();
+	private final Lock mapLock;
+	private final Map<InjectSignature, Object> map;
 
-	InstanceCache(Lock lock) {
-		this.lock = lock;
+	InstanceCache(Map<InjectSignature, Object> map, Lock mapLock) {
+		this.map = map;
+		this.mapLock = mapLock;
 	}
 
 	InstanceCache() {
-		this(new ReentrantLock());
+		this(new HashMap<InjectSignature, Object>(), new ReentrantLock());
 	}
 
 	public Object getOrCreate(InjectSignature signature, Factory factory) throws ObjectGraphException {
-		lock.lock();
+		mapLock.lock();
 
 		try {
 			if (map.containsKey(signature)) {
@@ -32,7 +32,7 @@ public class InstanceCache {
 				return instance;
 			}
 		} finally {
-			lock.unlock();
+			mapLock.unlock();
 		}
 	}
 

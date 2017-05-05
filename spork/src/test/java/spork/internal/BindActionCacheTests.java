@@ -44,6 +44,23 @@ public class BindActionCacheTests {
 	}
 
 	@Test
+	public void lockWithException() {
+		BindActionCache.Factory factory = mock(BindActionCache.Factory.class);
+		when(factory.create(String.class)).thenThrow(new RuntimeException());
+
+		try {
+			cache.getOrCreate(String.class, factory);
+		} catch (RuntimeException caught) {
+			// Ignore
+		}
+
+		InOrder inOrder = inOrder(lock);
+		inOrder.verify(lock).lock();
+		inOrder.verify(lock).unlock();
+		inOrder.verifyNoMoreInteractions();
+	}
+
+	@Test
 	public void factoryCreationCalled() {
 		List<BindAction> bindActions = new ArrayList<>();
 		BindActionCache.Factory factory = mock(BindActionCache.Factory.class);
