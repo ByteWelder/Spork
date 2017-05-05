@@ -10,25 +10,26 @@ import javax.inject.Scope;
 
 import spork.exceptions.ExceptionMessageBuilder;
 import spork.inject.internal.lang.Annotations;
+import spork.inject.internal.reflection.InjectSignature;
 import spork.internal.Reflection;
 
 /**
  * A node represents a provider (@Provides method) from a module.
  */
 public final class ObjectGraphNode {
-	private final spork.inject.internal.reflection.InjectSignature injectSignature;
+	private final InjectSignature injectSignature;
 	private final Object parent;
 	private final Method method;
 	@Nullable private final Annotation scopeAnnotation;
 
-	ObjectGraphNode(spork.inject.internal.reflection.InjectSignature injectSignature, Object parent, Method method) {
+	ObjectGraphNode(InjectSignature injectSignature, Object parent, Method method) {
 		this.injectSignature = injectSignature;
 		this.parent = parent;
 		this.method = method;
 		this.scopeAnnotation = Annotations.findAnnotationAnnotatedWith(Scope.class, method); // TODO: cache?
 	}
 
-	public spork.inject.internal.reflection.InjectSignature getInjectSignature() {
+	public InjectSignature getInjectSignature() {
 		return injectSignature;
 	}
 

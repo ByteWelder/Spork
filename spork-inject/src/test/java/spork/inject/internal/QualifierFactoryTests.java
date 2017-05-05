@@ -8,6 +8,8 @@ import java.lang.reflect.Method;
 import javax.inject.Named;
 import javax.inject.Qualifier;
 
+import spork.inject.internal.reflection.QualifierCache;
+
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -33,7 +35,7 @@ public class QualifierFactoryTests {
 
 	@Test
 	public void noValueMethodQualifier() throws NoSuchMethodException {
-		spork.inject.internal.reflection.QualifierCache factory = new spork.inject.internal.reflection.QualifierCache();
+		QualifierCache factory = new QualifierCache();
 		Method method = getClass().getDeclaredMethod("noQualifierMethod");
 		QualifierWithoutValueMethod named = method.getAnnotation(QualifierWithoutValueMethod.class);
 		String qualifier = factory.getQualifier(named);
@@ -43,7 +45,7 @@ public class QualifierFactoryTests {
 
 	@Test
 	public void specifiedValueQualifier() throws NoSuchMethodException {
-		spork.inject.internal.reflection.QualifierCache factory = new spork.inject.internal.reflection.QualifierCache();
+		QualifierCache factory = new QualifierCache();
 		Method method = getClass().getDeclaredMethod("specifiedValueQualifierMethod");
 		Named named = method.getAnnotation(Named.class);
 		String qualifier = factory.getQualifier(named);
@@ -53,7 +55,7 @@ public class QualifierFactoryTests {
 
 	@Test
 	public void defaultValueQualifier() throws NoSuchMethodException {
-		spork.inject.internal.reflection.QualifierCache factory = new spork.inject.internal.reflection.QualifierCache();
+		QualifierCache factory = new QualifierCache();
 		Method method = getClass().getDeclaredMethod("defaultValueQualifierMethod");
 		Named named = method.getAnnotation(Named.class);
 		String qualifier = factory.getQualifier(named);

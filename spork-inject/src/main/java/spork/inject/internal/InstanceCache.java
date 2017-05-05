@@ -5,10 +5,12 @@ import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import spork.inject.internal.reflection.InjectSignature;
+
 public class InstanceCache {
 	private final Lock lock;
 	@SuppressWarnings("PMD.UseConcurrentHashMap")
-	private final Map<spork.inject.internal.reflection.InjectSignature, Object> map = new HashMap<>();
+	private final Map<InjectSignature, Object> map = new HashMap<>();
 
 	InstanceCache(Lock lock) {
 		this.lock = lock;
@@ -18,7 +20,7 @@ public class InstanceCache {
 		this(new ReentrantLock());
 	}
 
-	public Object getOrCreate(spork.inject.internal.reflection.InjectSignature signature, Factory factory) {
+	public Object getOrCreate(InjectSignature signature, Factory factory) {
 		lock.lock();
 
 		try {

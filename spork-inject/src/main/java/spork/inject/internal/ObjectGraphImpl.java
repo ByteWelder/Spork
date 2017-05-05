@@ -14,13 +14,15 @@ import spork.exceptions.ExceptionMessageBuilder;
 import spork.inject.ObjectGraph;
 import spork.inject.internal.providers.CachedNodeProvider;
 import spork.inject.internal.providers.NodeProvider;
+import spork.inject.internal.reflection.InjectSignature;
+import spork.inject.internal.reflection.ReflectionCache;
 
 public final class ObjectGraphImpl implements ObjectGraph {
 	@Nullable
 	private final ObjectGraphImpl parentGraph;
-	private final Map<spork.inject.internal.reflection.InjectSignature, ObjectGraphNode> nodeMap;
+	private final Map<InjectSignature, ObjectGraphNode> nodeMap;
 	private final InstanceCache instanceCache;
-	private final spork.inject.internal.reflection.ReflectionCache reflectionCache;
+	private final ReflectionCache reflectionCache;
 	private final Class<? extends Annotation> scopeAnnotationClass;
 
 	/**
@@ -29,7 +31,7 @@ public final class ObjectGraphImpl implements ObjectGraph {
 	 * @param reflectionCache retrieve (and cache) InjectSignature instance
 	 * @param scopeAnnotationClass optional annotation that defines the scope of this ObjectGraph
 	 */
-	ObjectGraphImpl(@Nullable ObjectGraphImpl parentGraph, Map<spork.inject.internal.reflection.InjectSignature, ObjectGraphNode> nodeMap, spork.inject.internal.reflection.ReflectionCache reflectionCache, Class<? extends Annotation> scopeAnnotationClass) {
+	ObjectGraphImpl(@Nullable ObjectGraphImpl parentGraph, Map<InjectSignature, ObjectGraphNode> nodeMap, ReflectionCache reflectionCache, Class<? extends Annotation> scopeAnnotationClass) {
 		this.parentGraph = parentGraph;
 		this.nodeMap = nodeMap;
 		this.instanceCache = new InstanceCache();
@@ -38,7 +40,7 @@ public final class ObjectGraphImpl implements ObjectGraph {
 	}
 
 	@Nullable
-	Provider<?> findProvider(spork.inject.internal.reflection.InjectSignature injectSignature) throws ObjectGraphException {
+	Provider<?> findProvider(InjectSignature injectSignature) throws ObjectGraphException {
 		ObjectGraphNode node = findNode(injectSignature);
 
 		if (node == null) {
@@ -74,7 +76,7 @@ public final class ObjectGraphImpl implements ObjectGraph {
 	}
 
 	@Nullable
-	private ObjectGraphNode findNode(spork.inject.internal.reflection.InjectSignature injectSignature) {
+	private ObjectGraphNode findNode(InjectSignature injectSignature) {
 		ObjectGraphNode node = nodeMap.get(injectSignature);
 		if (node != null) {
 			return node;
@@ -95,7 +97,7 @@ public final class ObjectGraphImpl implements ObjectGraph {
 		spork.bind(object, this);
 	}
 
-	spork.inject.internal.reflection.ReflectionCache getReflectionCache() {
+	ReflectionCache getReflectionCache() {
 		return reflectionCache;
 	}
 
@@ -107,7 +109,7 @@ public final class ObjectGraphImpl implements ObjectGraph {
 		}
 
 		// The following never returns null as there is guaranteed at least 1 method parameter
-		spork.inject.internal.reflection.InjectSignature[] injectSignatures = getReflectionCache().getInjectSignatures(method);
+		InjectSignature[] injectSignatures = getReflectionCache().getInjectSignatures(method);
 		if (injectSignatures == null) {
 			return null;
 		}

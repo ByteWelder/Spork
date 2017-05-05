@@ -6,12 +6,13 @@ import java.lang.reflect.ParameterizedType;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-import spork.exceptions.ExceptionMessageBuilder;
 import spork.exceptions.BindFailed;
+import spork.exceptions.ExceptionMessageBuilder;
 import spork.extension.FieldBinder;
 import spork.inject.Lazy;
 import spork.inject.internal.providers.ProviderLazy;
 import spork.inject.internal.reflection.Classes;
+import spork.inject.internal.reflection.InjectSignature;
 import spork.internal.Reflection;
 
 /**
@@ -46,7 +47,7 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 				? (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0]
 				: fieldType;
 
-		spork.inject.internal.reflection.InjectSignature injectSignature = objectGraph.getReflectionCache().getInjectSignature(field, targetType);
+		InjectSignature injectSignature = objectGraph.getReflectionCache().getInjectSignature(field, targetType);
 		Provider<?> provider;
 
 		try {
