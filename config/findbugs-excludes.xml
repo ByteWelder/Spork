@@ -16,7 +16,7 @@
         <Bug code="EI" />
     </Match>
     <Match>
-        <Class name="spork.internal.BindContextBuilderTests" />
+        <Class name="spork.internal.ExceptionMessageBuilderTests" />
         <Field name="reflectionField" />
         <Bug code="UrF" />
     </Match>

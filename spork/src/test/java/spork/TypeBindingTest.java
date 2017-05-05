@@ -10,8 +10,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import spork.exceptions.BindContext;
-import spork.exceptions.BindContextBuilder;
+import spork.exceptions.ExceptionMessageBuilder;
 import spork.exceptions.BindFailed;
 import spork.exceptions.SporkRuntimeException;
 
@@ -37,8 +36,10 @@ public class TypeBindingTest {
 		@Override
 		public void bind(Object instance, BindValue annotation, Class<?> annotatedType, Object... parameters) throws BindFailed {
 			if (!IntSettable.class.isAssignableFrom(instance.getClass())) {
-				BindContext bindContext = new BindContextBuilder(BindValue.class).build();
-				throw new BindFailed("Can only be used with IntSettable target", bindContext);
+				String message = new ExceptionMessageBuilder("Can only be used with IntSettable target")
+						.annotation(BindValue.class)
+						.build();
+				throw new BindFailed(message);
 			}
 
 			IntSettable valueHolder = (IntSettable) instance;

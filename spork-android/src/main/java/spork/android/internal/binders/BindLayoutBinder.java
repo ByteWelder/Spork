@@ -5,8 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import spork.android.BindLayout;
-import spork.exceptions.BindContext;
-import spork.exceptions.BindContextBuilder;
+import spork.exceptions.ExceptionMessageBuilder;
 import spork.exceptions.BindFailed;
 import spork.extension.TypeBinder;
 
@@ -22,12 +21,14 @@ public class BindLayoutBinder implements TypeBinder<BindLayout> {
 			ViewGroup viewGroup = (ViewGroup) object;
 			LayoutInflater.from(viewGroup.getContext()).inflate(layoutResourceId, viewGroup);
 		} else {
-			BindContext bindContext = new BindContextBuilder(BindLayout.class)
+			String baseMessage = "BindLayout is not compatible with " + object.getClass().getName();
+			String message = new ExceptionMessageBuilder(baseMessage)
+					.annotation(BindLayout.class)
 					.suggest("BindLayout only works with Activity or ViewGroup")
 					.bindingInto(object.getClass())
 					.build();
 
-			throw new BindFailed("BindLayout is not compatible with " + object.getClass().getName(), bindContext);
+			throw new BindFailed(message);
 		}
 	}
 

@@ -10,8 +10,7 @@ import javax.inject.Provider;
 
 import spork.Spork;
 import spork.SporkInstance;
-import spork.exceptions.BindContext;
-import spork.exceptions.BindContextBuilder;
+import spork.exceptions.ExceptionMessageBuilder;
 import spork.inject.ObjectGraph;
 import spork.inject.internal.providers.CachedNodeProvider;
 import spork.inject.internal.providers.NodeProvider;
@@ -61,14 +60,13 @@ public final class ObjectGraphImpl implements ObjectGraph {
 
 			// We must have an ObjectGraph with an instance cache to target
 			if (targetGraph == null) {
-				BindContext bindContext = new BindContextBuilder(Inject.class)
+				String message = new ExceptionMessageBuilder("no ObjectGraph found that defines scope " + scope.annotationType().getName())
+						.annotation(Inject.class)
 						.suggest("When creating your ObjectGraphs, ensure that one has the required scope")
 						.bindingInto(injectSignature.toString())
 						.build();
 
-				String message = "no ObjectGraph found that defines scope " + scope.annotationType().getName();
-
-				throw new ObjectGraphException(message, bindContext);
+				throw new ObjectGraphException(message);
 			}
 
 			return new CachedNodeProvider(targetGraph.instanceCache, node, parameters);

@@ -6,8 +6,7 @@ import java.lang.reflect.ParameterizedType;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-import spork.exceptions.BindContext;
-import spork.exceptions.BindContextBuilder;
+import spork.exceptions.ExceptionMessageBuilder;
 import spork.exceptions.BindFailed;
 import spork.extension.FieldBinder;
 import spork.inject.Lazy;
@@ -29,12 +28,13 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 	public void bind(Object instance, Inject annotation, Field field, Object... parameters) throws BindFailed {
 		ObjectGraphImpl objectGraph = Classes.findFirstInstanceOfType(ObjectGraphImpl.class, parameters);
 		if (objectGraph == null) {
-			BindContext bindContext = new BindContextBuilder(Inject.class)
+			String message = new ExceptionMessageBuilder("No ObjectGraph specified in instance arguments of bind()")
+					.annotation(Inject.class)
 					.suggest("call Spork.bind(target, objectGraph")
 					.bindingInto(field)
 					.build();
 
-			throw new BindFailed("No ObjectGraph specified in instance arguments of bind()", bindContext);
+			throw new BindFailed(message);
 		}
 
 		Class<?> fieldType = field.getType();
@@ -52,19 +52,21 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 		try {
 			provider = objectGraph.findProvider(injectSignature);
 		} catch (ObjectGraphException caught) {
-			BindContext bindContext = new BindContextBuilder(Inject.class)
+			String message = new ExceptionMessageBuilder("Failed to resolve provider for " + injectSignature.toString())
+					.annotation(Inject.class)
 					.bindingInto(field)
 					.build();
 
-			throw new BindFailed("Failed to resolve provider for " + injectSignature.toString(), caught, bindContext);
+			throw new BindFailed(message, caught);
 		}
 
 		if (provider == null) {
-			BindContext bindContext = new BindContextBuilder(Inject.class)
+			String message = new ExceptionMessageBuilder("None of the modules provides an instance for " + injectSignature.toString())
+					.annotation(Inject.class)
 					.bindingInto(field)
 					.build();
 
-			throw new BindFailed("None of the modules provides an instance for " + injectSignature.toString(), bindContext);
+			throw new BindFailed(message);
 		}
 
 		// Either set the provider instance or the real instance

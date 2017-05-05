@@ -5,8 +5,7 @@ import java.lang.reflect.Method;
 
 import javax.inject.Inject;
 
-import spork.exceptions.BindContext;
-import spork.exceptions.BindContextBuilder;
+import spork.exceptions.ExceptionMessageBuilder;
 import spork.exceptions.BindFailed;
 import spork.extension.MethodBinder;
 import spork.inject.internal.reflection.Classes;
@@ -23,27 +22,32 @@ public class InjectMethodBinder implements MethodBinder<Inject> {
 	public void bind(Object object, Inject annotation, Method method, Object... parameters) throws BindFailed {
 		ObjectGraphImpl objectGraph = Classes.findFirstInstanceOfType(ObjectGraphImpl.class, parameters);
 		if (objectGraph == null) {
-			BindContext bindContext = new BindContextBuilder(Inject.class)
+			String message = new ExceptionMessageBuilder("No ObjectGraph specified in instance arguments of bind()")
+					.annotation(Inject.class)
 					.suggest("call Spork.bind(target, objectGraph")
 					.bindingInto(method)
 					.build();
 
-			throw new BindFailed("No ObjectGraph specified in instance arguments of bind()", bindContext);
+			throw new BindFailed(message);
 		}
 
 		try {
 			Object[] invocationParameters = objectGraph.getInjectableMethodParameters(method);
 			Reflection.invokeMethod(method, object, invocationParameters);
 		} catch (ObjectGraphException caught) {
-			BindContext bindContext = new BindContextBuilder(Inject.class)
+			String message = new ExceptionMessageBuilder("Failed to resolve object in ObjectGraph")
+					.annotation(Inject.class)
 					.bindingInto(method)
 					.build();
-			throw new BindFailed("Failed to resolve object in ObjectGraph", caught, bindContext);
+
+			throw new BindFailed(message, caught);
 		} catch (InvocationTargetException caught) {
-			BindContext bindContext = new BindContextBuilder(Inject.class)
+			String message = new ExceptionMessageBuilder("Failed to invoke injection method")
+					.annotation(Inject.class)
 					.bindingInto(method)
 					.build();
-			throw new BindFailed("Failed to invoke injection method", caught, bindContext);
+
+			throw new BindFailed(message, caught);
 		}
 	}
 }

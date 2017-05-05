@@ -8,8 +8,7 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Scope;
 
-import spork.exceptions.BindContext;
-import spork.exceptions.BindContextBuilder;
+import spork.exceptions.ExceptionMessageBuilder;
 import spork.inject.internal.lang.Annotations;
 import spork.internal.Reflection;
 
@@ -42,13 +41,14 @@ public final class ObjectGraphNode {
 		try {
 			return Reflection.invokeMethod(method, parent, arguments);
 		} catch (InvocationTargetException e) {
-			String message = "Failed to invoke " + method.getDeclaringClass().getName() + "." + method.getName() + "()";
-			BindContext bindContext = new BindContextBuilder(Inject.class)
+			String baseMessage = "Failed to invoke " + method.getDeclaringClass().getName() + "." + method.getName() + "()";
+			String message = new ExceptionMessageBuilder(baseMessage)
+					.annotation(Inject.class)
 					.bindingFrom(method)
 					.bindingInto(injectSignature.toString())
 					.build();
 
-			throw new ObjectGraphException(message, e, bindContext);
+			throw new ObjectGraphException(message, e);
 		}
 	}
 
@@ -57,13 +57,14 @@ public final class ObjectGraphNode {
 		try {
 			return objectGraph.getInjectableMethodParameters(method);
 		} catch (ObjectGraphException e) {
-			String message = "Failed to invoke " + method.getDeclaringClass().getName() + "." + method.getName() + "()";
-			BindContext bindContext = new BindContextBuilder(Inject.class)
+			String baseMessage = "Failed to invoke " + method.getDeclaringClass().getName() + "." + method.getName() + "()";
+			String message = new ExceptionMessageBuilder(baseMessage)
+					.annotation(Inject.class)
 					.bindingFrom(method)
 					.bindingInto(injectSignature.toString())
 					.build();
 
-			throw new ObjectGraphException(message, e, bindContext);
+			throw new ObjectGraphException(message, e);
 		}
 	}
 }

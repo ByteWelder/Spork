@@ -5,8 +5,7 @@ import java.lang.reflect.Field;
 import javax.annotation.Nullable;
 
 import spork.exceptions.BindFailed;
-import spork.exceptions.BindContext;
-import spork.exceptions.BindContextBuilder;
+import spork.exceptions.ExceptionMessageBuilder;
 import spork.extension.FieldBinder;
 import spork.android.BindFragment;
 import spork.android.extension.FragmentResolver;
@@ -26,11 +25,12 @@ public class BindFragmentBinder implements FieldBinder<BindFragment> {
 		@Nullable Object fragmentObject = resolveFragment(id, object, field);
 
 		if (fragmentObject == null) {
-			BindContext context = new BindContextBuilder(BindFragment.class)
+			String message = new ExceptionMessageBuilder("Fragment not found")
+					.annotation(BindFragment.class)
 					.bindingInto(field)
 					.build();
 
-			throw new BindFailed("Fragment not found", context);
+			throw new BindFailed(message);
 		}
 
 		Reflection.setFieldValue(field, object, fragmentObject);
@@ -45,11 +45,12 @@ public class BindFragmentBinder implements FieldBinder<BindFragment> {
 				return fragmentResolver.resolveFragment(object, id);
 			}
 		} catch (Exception caught) {
-			BindContext bindContext = new BindContextBuilder(BindFragment.class)
+			String message = new ExceptionMessageBuilder("Failed to resolve Fragment for field")
+					.annotation(BindFragment.class)
 					.bindingInto(field)
 					.build();
 
-			throw new BindFailed("Failed to resolve Fragment for field", caught, bindContext);
+			throw new BindFailed(message, caught);
 		}
 	}
 	@Override

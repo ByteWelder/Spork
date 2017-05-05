@@ -6,11 +6,7 @@ public class SporkException extends Exception {
 		super(s);
 	}
 
-	public SporkException(String s, BindContext context) {
-		super(s + context.toString());
-	}
-
-	public SporkException(String s, Throwable throwable, BindContext context) {
-		super(s + context.toString(), throwable);
+	public SporkException(String s, Throwable throwable) {
+		super(s, throwable);
 	}
 }

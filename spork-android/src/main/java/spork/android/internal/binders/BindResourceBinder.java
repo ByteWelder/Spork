@@ -12,8 +12,7 @@ import spork.android.BindResource;
 import spork.android.ContextProvider;
 import spork.android.extension.ContextResolver;
 import spork.android.internal.utils.ResourceId;
-import spork.exceptions.BindContext;
-import spork.exceptions.BindContextBuilder;
+import spork.exceptions.ExceptionMessageBuilder;
 import spork.exceptions.BindFailed;
 import spork.extension.FieldBinder;
 import spork.internal.Reflection;
@@ -32,31 +31,34 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 		try {
 			context = contextResolver.resolveContext(object);
 		} catch (Exception caught) {
-			BindContext bindContext = new BindContextBuilder(BindResource.class)
+			String message = new ExceptionMessageBuilder("Failed to resolve resource for field")
+					.annotation(BindResource.class)
 					.bindingInto(field)
 					.build();
 
-			throw new BindFailed("Failed to resolve resource for field", caught, bindContext);
+			throw new BindFailed(message, caught);
 		}
 
 		if (context == null) {
-			BindContext bindContext = new BindContextBuilder(BindResource.class)
+			String message = new ExceptionMessageBuilder("Failed to retrieve Context from target object")
+					.annotation(BindResource.class)
 					.suggest("make sure you're binding a supported Android object or that it implements " + ContextProvider.class.getName())
 					.suggest("if you're binding a support library class, ensure you added the 'android-support' dependency")
 					.bindingInto(field)
 					.build();
 
-			throw new BindFailed("Failed to retrieve Context from target object", bindContext);
+			throw new BindFailed(message);
 		}
 
 		Object resource = getResource(context, annotation, field);
 
 		if (resource == null) {
-			BindContext bindContext = new BindContextBuilder(BindResource.class)
+			String message = new ExceptionMessageBuilder("Resource not found")
+					.annotation(BindResource.class)
 					.bindingInto(field)
 					.build();
 
-			throw new BindFailed("Resource not found", bindContext);
+			throw new BindFailed(message);
 		}
 
 		Reflection.setFieldValue(field, object, resource);
@@ -84,11 +86,12 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 		} else if (fieldClass == Boolean.class || fieldClass == boolean.class) {
 			return getBoolean(context, annotation, field);
 		} else {
-			BindContext bindContext = new BindContextBuilder(BindResource.class)
+			String message = new ExceptionMessageBuilder("Unsupported field type: " + field.getType().getName())
+					.annotation(BindResource.class)
 					.bindingInto(field)
 					.build();
 
-			throw new BindFailed("Unsupported field type: " + field.getType().getName(), bindContext);
+			throw new BindFailed(message);
 		}
 	}
 

@@ -8,8 +8,7 @@ import java.lang.reflect.Method;
 import spork.android.BindClick;
 import spork.android.extension.ViewResolver;
 import spork.android.internal.utils.Views;
-import spork.exceptions.BindContext;
-import spork.exceptions.BindContextBuilder;
+import spork.exceptions.ExceptionMessageBuilder;
 import spork.exceptions.BindFailed;
 import spork.exceptions.SporkRuntimeException;
 import spork.extension.MethodBinder;
@@ -33,8 +32,9 @@ public class BindClickBinder implements MethodBinder<BindClick> {
 			this.object = object;
 		}
 
-		private BindContextBuilder getBindContextBuilder(View view) {
-			return new BindContextBuilder(BindClick.class)
+		private ExceptionMessageBuilder getExceptionMessageBuilder(String baseMessage, View view) {
+			return new ExceptionMessageBuilder(baseMessage)
+					.annotation(BindClick.class)
 					.bindingFrom(view.getClass())
 					.bindingInto(method);
 		}
@@ -47,21 +47,21 @@ public class BindClickBinder implements MethodBinder<BindClick> {
 				try {
 					Reflection.invokeMethod(method, object);
 				} catch (InvocationTargetException e) {
-					BindContext context = getBindContextBuilder(v).build();
-					throw new SporkRuntimeException("Failed to invoke click method", context);
+					String message = getExceptionMessageBuilder("Failed to invoke click method", v).build();
+					throw new SporkRuntimeException(message);
 				}
 			} else if (parameterTypes.length == 1 && View.class.isAssignableFrom(parameterTypes[0])) {
 				try {
 					Reflection.invokeMethod(method, object, v);
 				} catch (InvocationTargetException e) {
-					BindContext context = getBindContextBuilder(v).build();
-					throw new SporkRuntimeException("Failed to invoke click method", context);
+					String message = getExceptionMessageBuilder("Failed to invoke click method", v).build();
+					throw new SporkRuntimeException(message);
 				}
 			} else {
-				BindContext context = getBindContextBuilder(v)
+				String message = getExceptionMessageBuilder("onClick() failed because the method arguments are invalid", v)
 						.suggest("method arguments must be a View type (e.g. View, Button, etc.)")
 						.build();
-				throw new SporkRuntimeException("onClick() failed because the method arguments are invalid", context);
+				throw new SporkRuntimeException(message);
 			}
 		}
 	}
@@ -76,11 +76,11 @@ public class BindClickBinder implements MethodBinder<BindClick> {
 		try {
 			return Views.getView(viewResolver, annotation.value(), method.getName(), object);
 		} catch (Exception caught) {
-			BindContext bindContext = new BindContextBuilder(BindClick.class)
+			String message = new ExceptionMessageBuilder("Failed to resolve View for method")
+					.annotation(BindClick.class)
 					.bindingInto(method)
 					.build();
-
-			throw new BindFailed("Failed to resolve View for method", caught, bindContext);
+			throw new BindFailed(message, caught);
 		}
 	}
 
