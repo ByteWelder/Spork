@@ -1,7 +1,13 @@
 apply plugin: 'com.android.application'
 
 dependencies {
+    compile project(':spork-android-support')
     compile project(':support:spork-benchmark')
+
+	compile 'com.android.support.constraint:constraint-layout:1.0.2'
+	compile "com.android.support:appcompat-v7:$androidSupportLibraryVersion"
+	compile "com.android.support:support-compat:$androidSupportLibraryVersion"
+	compile "com.android.support:support-v4:$androidSupportLibraryVersion"
 }
 
 android {
