@@ -12,10 +12,9 @@ import spork.android.BindResource;
 import spork.android.ContextProvider;
 import spork.android.extension.ContextResolver;
 import spork.android.internal.utils.ResourceId;
-import spork.exceptions.ExceptionMessageBuilder;
 import spork.exceptions.BindFailed;
+import spork.exceptions.ExceptionMessageBuilder;
 import spork.extension.FieldBinder;
-import spork.internal.Reflection;
 
 public class BindResourceBinder implements FieldBinder<BindResource> {
 	private final ContextResolver contextResolver;
@@ -61,7 +60,20 @@ public class BindResourceBinder implements FieldBinder<BindResource> {
 			throw new BindFailed(message);
 		}
 
-		Reflection.setFieldValue(field, object, resource);
+		try {
+			field.setAccessible(true);
+			field.set(object, resource);
+		} catch (IllegalAccessException caught) {
+			String message = new ExceptionMessageBuilder("Failed to access " + field.toString())
+					.suggest("There might be a concurrency problem or you are trying to access a final static Field.")
+					.annotation(BindResource.class)
+					.bindingInto(field)
+					.build();
+
+			throw new BindFailed(message, caught);
+		} finally {
+			field.setAccessible(false);
+		}
 	}
 
 	@Override

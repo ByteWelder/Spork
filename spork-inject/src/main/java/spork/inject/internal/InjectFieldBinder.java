@@ -13,7 +13,6 @@ import spork.inject.Lazy;
 import spork.inject.internal.providers.ProviderLazy;
 import spork.inject.internal.reflection.Classes;
 import spork.inject.internal.reflection.InjectSignature;
-import spork.internal.Reflection;
 
 /**
  * The default FieldBinder that binds field annotated with the Inject annotation.
@@ -70,14 +69,31 @@ public class InjectFieldBinder implements FieldBinder<Inject> {
 			throw new BindFailed(message);
 		}
 
-		// Either set the provider instance or the real instance
+		// Set the right instance on the field
 		if (fieldIsProvider) {
-			Reflection.setFieldValue(field, instance, provider);
+			setFieldValue(field, instance, provider);
 		} else if (fieldIsLazy) {
-			Reflection.setFieldValue(field, instance, new ProviderLazy<>(provider));
+			ProviderLazy<?> lazyWrapper = new ProviderLazy<>(provider);
+			setFieldValue(field, instance, lazyWrapper);
 		} else {
-			Object bindInstance = provider.get();
-			Reflection.setFieldValue(field, instance, bindInstance);
+			setFieldValue(field, instance, provider.get());
+		}
+	}
+
+	private void setFieldValue(Field field, Object instance, Object fieldValue) throws BindFailed {
+		try {
+			field.setAccessible(true);
+			field.set(instance, fieldValue);
+		} catch (IllegalAccessException caught) {
+			String message = new ExceptionMessageBuilder("Failed to access " + field.toString())
+					.suggest("There might be a concurrency problem or you are trying to access a final static Field.")
+					.annotation(Inject.class)
+					.bindingInto(field)
+					.build();
+
+			throw new BindFailed(message, caught);
+		} finally {
+			field.setAccessible(false);
 		}
 	}
 }

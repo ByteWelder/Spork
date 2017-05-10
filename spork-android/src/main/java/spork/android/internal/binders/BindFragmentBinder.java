@@ -4,13 +4,12 @@ import java.lang.reflect.Field;
 
 import javax.annotation.Nullable;
 
-import spork.exceptions.BindFailed;
-import spork.exceptions.ExceptionMessageBuilder;
-import spork.extension.FieldBinder;
 import spork.android.BindFragment;
 import spork.android.extension.FragmentResolver;
 import spork.android.internal.utils.ResourceId;
-import spork.internal.Reflection;
+import spork.exceptions.BindFailed;
+import spork.exceptions.ExceptionMessageBuilder;
+import spork.extension.FieldBinder;
 
 public class BindFragmentBinder implements FieldBinder<BindFragment> {
 	private final FragmentResolver fragmentResolver;
@@ -33,7 +32,20 @@ public class BindFragmentBinder implements FieldBinder<BindFragment> {
 			throw new BindFailed(message);
 		}
 
-		Reflection.setFieldValue(field, object, fragmentObject);
+		try {
+			field.setAccessible(true);
+			field.set(object, fragmentObject);
+		} catch (IllegalAccessException caught) {
+			String message = new ExceptionMessageBuilder("Failed to access " + field.toString())
+					.suggest("There might be a concurrency problem or you are trying to access a final static Field.")
+					.annotation(BindFragment.class)
+					.bindingInto(field)
+					.build();
+
+			throw new BindFailed(message, caught);
+		} finally {
+			field.setAccessible(false);
+		}
 	}
 
 	@Nullable

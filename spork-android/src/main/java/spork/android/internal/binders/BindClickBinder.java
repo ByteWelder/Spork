@@ -8,11 +8,11 @@ import java.lang.reflect.Method;
 import spork.android.BindClick;
 import spork.android.extension.ViewResolver;
 import spork.android.internal.utils.Views;
-import spork.exceptions.ExceptionMessageBuilder;
 import spork.exceptions.BindFailed;
+import spork.exceptions.ExceptionMessageBuilder;
 import spork.exceptions.SporkRuntimeException;
+import spork.exceptions.UnexpectedException;
 import spork.extension.MethodBinder;
-import spork.internal.Reflection;
 
 public class BindClickBinder implements MethodBinder<BindClick> {
 	private final ViewResolver viewResolver;
@@ -40,28 +40,29 @@ public class BindClickBinder implements MethodBinder<BindClick> {
 		}
 
 		@Override
-		public void onClick(View v) {
+		public void onClick(View view) {
 			Class<?>[] parameterTypes = method.getParameterTypes();
 
-			if (parameterTypes.length == 0) {
-				try {
-					Reflection.invokeMethod(method, object);
-				} catch (InvocationTargetException e) {
-					String message = getExceptionMessageBuilder("Failed to invoke click method", v).build();
+			try {
+				method.setAccessible(true);
+
+				if (parameterTypes.length == 0) {
+					method.invoke(object);
+				} else if (parameterTypes.length == 1 && View.class.isAssignableFrom(parameterTypes[0])) {
+					method.invoke(object, view);
+				} else {
+					String message = getExceptionMessageBuilder("onClick() failed because the method arguments are invalid", view)
+							.suggest("method arguments must be a View type (e.g. View, Button, etc.)")
+							.build();
 					throw new SporkRuntimeException(message);
 				}
-			} else if (parameterTypes.length == 1 && View.class.isAssignableFrom(parameterTypes[0])) {
-				try {
-					Reflection.invokeMethod(method, object, v);
-				} catch (InvocationTargetException e) {
-					String message = getExceptionMessageBuilder("Failed to invoke click method", v).build();
-					throw new SporkRuntimeException(message);
-				}
-			} else {
-				String message = getExceptionMessageBuilder("onClick() failed because the method arguments are invalid", v)
-						.suggest("method arguments must be a View type (e.g. View, Button, etc.)")
-						.build();
+			} catch (IllegalAccessException e) {
+				throw new UnexpectedException("Failed to access a Method that was previously made accessible. Maybe there is a concurrency problem?", e);
+			} catch (InvocationTargetException e) {
+				String message = getExceptionMessageBuilder("Failed to invoke click method", view).build();
 				throw new SporkRuntimeException(message);
+			} finally {
+				method.setAccessible(false);
 			}
 		}
 	}

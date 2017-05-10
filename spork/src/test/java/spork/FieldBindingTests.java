@@ -9,7 +9,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 
-import spork.internal.Reflection;
+import spork.exceptions.BindFailed;
+import spork.extension.FieldBinder;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
@@ -40,13 +41,24 @@ public class FieldBindingTests {
 	@interface BindField {
 	}
 
-	private class StringFieldBinder implements spork.extension.FieldBinder<BindField> {
+	private class StringFieldBinder implements FieldBinder<BindField> {
 		@Override
-		public void bind(Object object, BindField annotation, Field field, Object... parameters) {
+		public void bind(Object object, BindField annotation, Field field, Object... parameters) throws BindFailed {
 			if ("instanceField".equals(field.getName())) {
-				Reflection.setFieldValue(field, object, "1");
+				setFieldValue(field, object, "1");
 			} else if ("staticField".equals(field.getName())) {
-				Reflection.setFieldValue(field, object, "2");
+				setFieldValue(field, object, "2");
+			}
+		}
+
+		private void setFieldValue(Field field, Object parent, String value) throws BindFailed {
+			try {
+				field.setAccessible(true);
+				field.set(parent, value);
+			} catch (IllegalAccessException caught) {
+				throw new BindFailed("Failed to set field value", caught);
+			} finally {
+				field.setAccessible(false);
 			}
 		}
 
@@ -57,7 +69,7 @@ public class FieldBindingTests {
 	}
 
 	@Test
-	public void testMethodCalls() throws NoSuchFieldException, NoSuchMethodException {
+	public void testMethodCalls() throws NoSuchFieldException, NoSuchMethodException, BindFailed {
 		SporkInstance spork = new SporkInstance();
 		StringFieldBinder binder = Mockito.mock(StringFieldBinder.class);
 		spork.register(binder);
@@ -71,11 +83,11 @@ public class FieldBindingTests {
 
 		Field instanceField = Parent.class.getDeclaredField("instanceField");
 		BindField instanceAnnotation = instanceField.getAnnotation(BindField.class);
-		verify(binder, times(1)).bind(parent, instanceAnnotation, instanceField, new Object[] {});
+		verify(binder, times(1)).bind(parent, instanceAnnotation, instanceField);
 
 		Field staticField = Parent.class.getDeclaredField("staticField");
 		BindField staticAnnotation = staticField.getAnnotation(BindField.class);
-		verify(binder, times(1)).bind(parent, staticAnnotation, staticField, new Object[] {});
+		verify(binder, times(1)).bind(parent, staticAnnotation, staticField);
 	}
 
 	@Test

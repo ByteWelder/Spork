@@ -5,11 +5,11 @@ import java.lang.reflect.Method;
 
 import javax.inject.Inject;
 
-import spork.exceptions.ExceptionMessageBuilder;
 import spork.exceptions.BindFailed;
+import spork.exceptions.ExceptionMessageBuilder;
+import spork.exceptions.UnexpectedException;
 import spork.extension.MethodBinder;
 import spork.inject.internal.reflection.Classes;
-import spork.internal.Reflection;
 
 public class InjectMethodBinder implements MethodBinder<Inject> {
 
@@ -32,22 +32,30 @@ public class InjectMethodBinder implements MethodBinder<Inject> {
 		}
 
 		try {
+			method.setAccessible(true);
 			Object[] invocationParameters = objectGraph.getInjectableMethodParameters(method);
-			Reflection.invokeMethod(method, object, invocationParameters);
+			method.invoke(object, invocationParameters);
+		} catch (IllegalAccessException caught) {
+			String message = new ExceptionMessageBuilder("Failed to access a Method that was previously made accessible. ")
+					.suggest("There might be a concurrency issue.")
+					.annotation(Inject.class)
+					.bindingInto(method)
+					.build();
+			throw new UnexpectedException(message, caught);
 		} catch (ObjectGraphException caught) {
 			String message = new ExceptionMessageBuilder("Failed to resolve object in ObjectGraph")
 					.annotation(Inject.class)
 					.bindingInto(method)
 					.build();
-
 			throw new BindFailed(message, caught);
 		} catch (InvocationTargetException caught) {
 			String message = new ExceptionMessageBuilder("Failed to invoke injection method")
 					.annotation(Inject.class)
 					.bindingInto(method)
 					.build();
-
 			throw new BindFailed(message, caught);
+		} finally {
+			method.setAccessible(false);
 		}
 	}
 }

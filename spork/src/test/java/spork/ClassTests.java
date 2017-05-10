@@ -2,7 +2,6 @@ package spork;
 
 import org.junit.Test;
 
-import spork.internal.Reflection;
 import spork.internal.SporkExtensionLoader;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -17,7 +16,6 @@ public class ClassTests {
 	@Test
 	public void test() throws Exception {
 		assertThat(Spork.class, is(utilityClass()));
-		assertThat(Reflection.class, is(utilityClass()));
 		assertThat(SporkExtensionLoader.class, is(utilityClass()));
 	}
 }

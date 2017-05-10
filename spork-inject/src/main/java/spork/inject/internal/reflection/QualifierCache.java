@@ -11,7 +11,6 @@ import java.util.concurrent.locks.ReentrantLock;
 import javax.annotation.Nullable;
 
 import spork.exceptions.UnexpectedException;
-import spork.internal.Reflection;
 
 public class QualifierCache {
 	private final Map<Class<? extends Annotation>, Method> map;
@@ -53,12 +52,17 @@ public class QualifierCache {
 	 */
 	String getQualifier(Method valueMethod, Annotation annotation) {
 		try {
-			Object value = Reflection.invokeMethod(valueMethod, annotation);
+			valueMethod.setAccessible(true);
+			Object value = valueMethod.invoke(annotation);
 			return annotation.annotationType().getName() + ":" + value;
+		} catch (IllegalAccessException e) {
+			throw new UnexpectedException("Failed to access a Method that was previously made accessible. Maybe there is a concurrency problem?", e);
 		} catch (InvocationTargetException e) {
 			throw new UnexpectedException("The value method of "
 					+ annotation.annotationType().getName()
 					+ " threw an exception", e);
+		} finally {
+			valueMethod.setAccessible(false);
 		}
 	}
 

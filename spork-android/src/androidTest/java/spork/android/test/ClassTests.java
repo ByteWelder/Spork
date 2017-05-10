@@ -3,16 +3,15 @@ package spork.android.test;
 import org.junit.Test;
 
 import spork.android.internal.utils.Views;
-import spork.internal.Reflection;
 
-import static spork.android.test.ClassAsserts.assertUtilityClassWellDefined;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static spork.matchers.Matchers.utilityClass;
 
 public class ClassTests {
 
     @Test
     public void test() throws Exception {
         // .utils
-        assertUtilityClassWellDefined(Views.class);
-        assertUtilityClassWellDefined(Reflection.class);
+        assertThat(Views.class, utilityClass());
     }
 }
