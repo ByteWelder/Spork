@@ -20,7 +20,11 @@
         <Field name="reflectionField" />
         <Bug code="UrF" />
     </Match>
-
+    <Match>
+        <Class name="spork.inject.internal.InstanceCacheTests" />
+        <Method name="locking" />
+        <Bug code="RV" />
+    </Match>
     <!-- Android -->
     <Match>
         <Class name="~.*R\$.*"/>

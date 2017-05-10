@@ -15,6 +15,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 public class InstanceCacheTests {
@@ -43,6 +45,11 @@ public class InstanceCacheTests {
 		instanceCache.getOrCreate(injectSignature, factory);
 		instanceCache.getOrCreate(injectSignature, factory);
 
+		// Check that factory was called only once
+		verify(factory).create();
+		verifyNoMoreInteractions(factory);
+
+		// Check that result was stored only once
 		assertThat(map.size(), is(1));
 	}
 
@@ -54,8 +61,10 @@ public class InstanceCacheTests {
 
 		InOrder inOrder = inOrder(map, mapLock);
 		inOrder.verify(mapLock).lock();
+		inOrder.verify(map).containsKey(injectSignature);
 		inOrder.verify(map).put(injectSignature, null);
 		inOrder.verify(mapLock).unlock();
+		inOrder.verifyNoMoreInteractions();
 	}
 
 	@Test
