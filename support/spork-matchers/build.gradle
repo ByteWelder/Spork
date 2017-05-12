@@ -2,5 +2,4 @@ apply plugin: 'java'
 
 dependencies {
 	compile "junit:junit:$junitVersion"
-	compile "org.hamcrest:hamcrest-core:1.3"
 }

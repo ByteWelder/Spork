@@ -39,6 +39,7 @@ dependencies {
 	testCompile "junit:junit:$junitVersion"
 	testCompile "org.mockito:mockito-core:$mockitoVersion"
 
+	androidTestCompile project(':support:spork-matchers')
 	androidTestCompile "com.android.support.test:runner:$androidSupportTestRunnerVersion"
 	androidTestCompile "com.android.support.test.espresso:espresso-core:$androidSupportEspressoVersion"
 	androidTestCompile "com.android.support.test.espresso:espresso-contrib:$androidSupportEspressoVersion"
