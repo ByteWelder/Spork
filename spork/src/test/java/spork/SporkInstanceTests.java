@@ -88,7 +88,8 @@ public class SporkInstanceTests {
 	@Test
 	public void bind() throws BindFailed {
 		Binder binder = mock(Binder.class);
-		SporkInstance spork = spy(new SporkInstance(binder, null));
+		Catalog catalog = mock(Catalog.class);
+		SporkInstance spork = spy(new SporkInstance(binder, catalog));
 		Object target = new Object();
 
 		spork.bind(target);

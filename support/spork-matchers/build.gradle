@@ -2,4 +2,5 @@ apply plugin: 'java'
 
 dependencies {
 	compile "junit:junit:$junitVersion"
+	compile "com.google.code.findbugs:jsr305:$findBugsVersion"
 }

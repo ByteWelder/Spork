@@ -5,7 +5,7 @@ apply plugin: 'bintray-release'
 apply from: rootProject.file('gradle/pmd-java.gradle')
 
 dependencies {
-	compile "com.google.code.findbugs:jsr305:$findBugsVersion" // for Nullable/NonNull
+	compile "com.google.code.findbugs:jsr305:$findBugsVersion"
 
 	testCompile project(':support:spork-matchers')
 	testCompile "org.mockito:mockito-core:$mockitoVersion"
