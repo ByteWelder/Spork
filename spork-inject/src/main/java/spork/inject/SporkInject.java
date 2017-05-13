@@ -10,7 +10,7 @@ import spork.SporkExtension;
  *
  * If you create your own SporkInstance, you need to register an extension manually.
  */
-public class SporkInject implements SporkExtension {
+public final class SporkInject implements SporkExtension {
 
 	@Override
 	public void initialize(SporkInstance spork) {

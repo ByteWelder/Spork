@@ -3,10 +3,10 @@ package spork.benchmark.core;
 import spork.SporkInstance;
 import spork.benchmark.Benchmark;
 
-public class FiveFieldSharedSporkBenchmark extends Benchmark {
+final class FiveFieldSharedSporkBenchmark extends Benchmark {
 	private final TestObject[] testObjects;
 
-	public FiveFieldSharedSporkBenchmark(int iterationCount) {
+	FiveFieldSharedSporkBenchmark(int iterationCount) {
 		SporkInstance spork = new SporkInstance();
 		spork.register(new TestBinder());
 

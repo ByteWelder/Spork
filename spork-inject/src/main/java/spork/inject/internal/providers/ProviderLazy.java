@@ -11,7 +11,7 @@ import spork.inject.Lazy;
  *
  * @param <T> the lazily computed type
  */
-public class ProviderLazy<T> implements Lazy<T> {
+public final class ProviderLazy<T> implements Lazy<T> {
 	@Nullable
 	private Provider<T> provider;
 	private T cachedInstance;

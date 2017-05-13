@@ -17,6 +17,8 @@ import spork.exceptions.SporkRuntimeException;
 import static org.junit.Assert.assertEquals;
 
 public class TypeBindingTest {
+	private static final int BIND_VALUE = 123;
+
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
 	private final SporkInstance spork = new SporkInstance();
@@ -53,7 +55,7 @@ public class TypeBindingTest {
 		}
 	}
 
-	@BindValue(123)
+	@BindValue(BIND_VALUE)
 	private static final class IntegerHolder implements IntSettable {
 		private int value = 100;
 
@@ -67,7 +69,7 @@ public class TypeBindingTest {
 		}
 	}
 
-	@BindValue(123)
+	@BindValue(BIND_VALUE)
 	private static final class FaultyIntegerHolder {
 	}
 
@@ -80,7 +82,7 @@ public class TypeBindingTest {
 	public void test() {
 		IntegerHolder holder = new IntegerHolder();
 		spork.bind(holder);
-		assertEquals(123, holder.getValue());
+		assertEquals(BIND_VALUE, holder.getValue());
 	}
 
 	@Test

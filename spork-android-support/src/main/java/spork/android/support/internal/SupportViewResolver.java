@@ -10,7 +10,7 @@ import spork.android.extension.ViewResolver;
 /**
  * Resolves View instances from v4 support library types.
  */
-public class SupportViewResolver implements ViewResolver {
+public final class SupportViewResolver implements ViewResolver {
 	@Override
 	@Nullable
 	public View resolveView(Object object) {

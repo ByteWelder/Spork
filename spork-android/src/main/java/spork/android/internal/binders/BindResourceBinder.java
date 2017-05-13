@@ -16,7 +16,7 @@ import spork.exceptions.BindFailed;
 import spork.exceptions.ExceptionMessageBuilder;
 import spork.extension.FieldBinder;
 
-public class BindResourceBinder implements FieldBinder<BindResource> {
+public final class BindResourceBinder implements FieldBinder<BindResource> {
 	private final ContextResolver contextResolver;
 
 	public BindResourceBinder(ContextResolver contextResolver) {

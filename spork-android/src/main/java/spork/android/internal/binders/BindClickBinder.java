@@ -14,7 +14,7 @@ import spork.exceptions.SporkRuntimeException;
 import spork.exceptions.UnexpectedException;
 import spork.extension.MethodBinder;
 
-public class BindClickBinder implements MethodBinder<BindClick> {
+public final class BindClickBinder implements MethodBinder<BindClick> {
 	private final ViewResolver viewResolver;
 
 	public BindClickBinder(ViewResolver viewResolver) {

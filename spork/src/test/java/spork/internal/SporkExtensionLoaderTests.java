@@ -17,7 +17,7 @@ public class SporkExtensionLoaderTests {
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
 
-	final static class Extension implements SporkExtension {
+	static final class Extension implements SporkExtension {
 		static int initializeCallCount = 0;
 
 		@Override
@@ -26,7 +26,7 @@ public class SporkExtensionLoaderTests {
 		}
 	}
 
-	final static class InstantiationExceptionExtension implements SporkExtension {
+	static final class InstantiationExceptionExtension implements SporkExtension {
 
 		public InstantiationExceptionExtension() throws InstantiationException {
 			throw new InstantiationException();
@@ -37,7 +37,7 @@ public class SporkExtensionLoaderTests {
 		}
 	}
 
-	final static class PrivateConstructorExtension implements SporkExtension {
+	static final class PrivateConstructorExtension implements SporkExtension {
 
 		private PrivateConstructorExtension() {
 			// nothing
@@ -64,8 +64,10 @@ public class SporkExtensionLoaderTests {
 
 	@Test
 	public void extensionIsWrongType() {
+		String message = "Extension " + getClass().getName()
+				+ " does not implement interface " + SporkExtension.class.getName();
+		expectedException.expectMessage(message);
 		expectedException.expect(ExtensionLoadingFailed.class);
-		expectedException.expectMessage("Extension " + getClass().getName() + " does not implement interface " + SporkExtension.class.getName());
 
 		SporkInstance spork = new SporkInstance();
 		SporkExtensionLoader.load(spork, getClass().getName());
@@ -73,8 +75,9 @@ public class SporkExtensionLoaderTests {
 
 	@Test
 	public void extensionConstructorThrowsException() {
+		String message = "Failed to create an instance of " + InstantiationExceptionExtension.class.getName();
+		expectedException.expectMessage(message);
 		expectedException.expect(ExtensionLoadingFailed.class);
-		expectedException.expectMessage("Failed to create an instance of " + InstantiationExceptionExtension.class.getName());
 		expectedException.expectCause(any(InstantiationException.class));
 
 		SporkInstance spork = new SporkInstance();
@@ -83,8 +86,10 @@ public class SporkExtensionLoaderTests {
 
 	@Test
 	public void extensionConstructorPrivate() {
+		String message = "Failed to initialize " + PrivateConstructorExtension.class.getName()
+				+ " because of an IllegalAccessException";
 		expectedException.expect(ExtensionLoadingFailed.class);
-		expectedException.expectMessage("Failed to initialize " + PrivateConstructorExtension.class.getName() + " because of an IllegalAccessException");
+		expectedException.expectMessage(message);
 		expectedException.expectCause(any(IllegalAccessException.class));
 
 		SporkInstance spork = new SporkInstance();

@@ -11,7 +11,7 @@ import spork.exceptions.UnexpectedException;
 import spork.extension.MethodBinder;
 import spork.inject.internal.reflection.Classes;
 
-public class InjectMethodBinder implements MethodBinder<Inject> {
+public final class InjectMethodBinder implements MethodBinder<Inject> {
 
 	@Override
 	public Class<Inject> getAnnotationClass() {

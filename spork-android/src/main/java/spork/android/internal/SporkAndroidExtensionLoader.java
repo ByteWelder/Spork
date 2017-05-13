@@ -3,7 +3,11 @@ package spork.android.internal;
 import spork.android.SporkAndroid;
 import spork.android.SporkAndroidExtension;
 
-public class SporkAndroidExtensionLoader {
+public final class SporkAndroidExtensionLoader {
+
+	private SporkAndroidExtensionLoader() {
+	}
+
 	/**
 	 * Try to load a SporkAndroidExtension.
 	 * Fails without throwing an exception if the extension is not present.

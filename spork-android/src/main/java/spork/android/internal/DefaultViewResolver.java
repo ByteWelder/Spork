@@ -13,7 +13,7 @@ import spork.android.extension.ViewResolver;
  * Default {@link ViewResolver} implementation for all regular Android classes that
  * could provide a {@link View} instance.
  */
-public class DefaultViewResolver implements ViewResolver {
+public final class DefaultViewResolver implements ViewResolver {
 	@Override
 	@Nullable
 	public View resolveView(Object object) throws Exception {

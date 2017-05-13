@@ -16,7 +16,7 @@ import spork.extension.TypeBinder;
  *
  * Calling the register() methods updates the cache.
  */
-public class BindActionProvider {
+public final class BindActionProvider {
 	@SuppressWarnings("PMD.UseConcurrentHashMap") // we need to synchronize on combined get & put
 	private final BindActionCache bindActionCache = new BindActionCache();
 	private final Catalog catalog;
@@ -82,7 +82,11 @@ public class BindActionProvider {
 	 * @param bindActions          the list of cached Binders to add new cached Binders to
 	 * @param <AnnotationType> the annotation to search for in the annotated type
 	 */
-	private <AnnotationType extends Annotation> void createBindActions(Class<?> annotatedType, final FieldBinder<AnnotationType> fieldBinder, List<BindAction> bindActions) {
+	private <AnnotationType extends Annotation> void createBindActions(
+			Class<?> annotatedType,
+			final FieldBinder<AnnotationType> fieldBinder,
+			List<BindAction> bindActions) {
+
 		for (final Field field : annotatedType.getDeclaredFields()) {
 			final AnnotationType annotation = field.getAnnotation(fieldBinder.getAnnotationClass());
 
@@ -107,7 +111,11 @@ public class BindActionProvider {
 	 * @param bindActions          the list of cached Binders to add new cached Binders to
 	 * @param <AnnotationType> the annotation to search for in the annotated type
 	 */
-	private <AnnotationType extends Annotation> void createBindActions(Class<?> annotatedType, final MethodBinder<AnnotationType> methodBinder, List<BindAction> bindActions) {
+	private <AnnotationType extends Annotation> void createBindActions(
+			Class<?> annotatedType,
+			final MethodBinder<AnnotationType> methodBinder,
+			List<BindAction> bindActions) {
+
 		for (final Method method : annotatedType.getDeclaredMethods()) {
 			final AnnotationType annotation = method.getAnnotation(methodBinder.getAnnotationClass());
 
@@ -132,7 +140,11 @@ public class BindActionProvider {
 	 * @param bindActions          the list of cached Binders to add new cached Binders to
 	 * @param <AnnotationType> the annotation to search for in the annotated type
 	 */
-	private <AnnotationType extends Annotation> void createBindActions(final Class<?> annotatedType, final TypeBinder<AnnotationType> typeBinder, List<BindAction> bindActions) {
+	private <AnnotationType extends Annotation> void createBindActions(
+			final Class<?> annotatedType,
+			final TypeBinder<AnnotationType> typeBinder,
+			List<BindAction> bindActions) {
+
 		final AnnotationType annotation = annotatedType.getAnnotation(typeBinder.getAnnotationClass());
 
 		if (annotation != null) {

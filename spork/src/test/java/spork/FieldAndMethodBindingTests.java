@@ -44,7 +44,9 @@ public class FieldAndMethodBindingTests {
 	@interface BindFieldOrMethod {
 	}
 
-	interface BindFieldAndMethodBinder extends spork.extension.FieldBinder<BindFieldOrMethod>, spork.extension.MethodBinder<BindFieldOrMethod> {
+	interface BindFieldAndMethodBinder extends
+			spork.extension.FieldBinder<BindFieldOrMethod>,
+			spork.extension.MethodBinder<BindFieldOrMethod> {
 	}
 
 	private static BindFieldAndMethodBinder createBinder(SporkInstance spork) {

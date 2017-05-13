@@ -13,7 +13,7 @@ import spork.internal.Catalog;
 /**
  * Main Spork class that is used to bind objects and register new binders.
  */
-public class SporkInstance {
+public final class SporkInstance {
 	private final Catalog catalog;
 	@Nullable private Binder binder;
 

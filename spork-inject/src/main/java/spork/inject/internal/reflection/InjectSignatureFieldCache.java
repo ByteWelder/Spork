@@ -11,7 +11,7 @@ import javax.inject.Qualifier;
 import spork.inject.internal.lang.Annotations;
 import spork.inject.internal.lang.Nullability;
 
-public class InjectSignatureFieldCache {
+public final class InjectSignatureFieldCache {
 	private final QualifierCache qualifierCache;
 	private final Map<Field, InjectSignature> fieldInjectSignatureMap;
 

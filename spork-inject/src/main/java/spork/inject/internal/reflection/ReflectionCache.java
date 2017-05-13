@@ -7,7 +7,7 @@ import java.lang.reflect.Method;
 import javax.annotation.Nullable;
 import javax.inject.Provider;
 
-public class ReflectionCache {
+public final class ReflectionCache {
 	private final QualifierCache qualifierCache;
 	private final InjectSignatureFieldCache fieldProvider;
 	private final InjectSignatureMethodCache methodProvider;

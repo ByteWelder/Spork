@@ -9,7 +9,7 @@ import spork.exceptions.ExceptionMessageBuilder;
 import spork.exceptions.BindFailed;
 import spork.extension.TypeBinder;
 
-public class BindLayoutBinder implements TypeBinder<BindLayout> {
+public final class BindLayoutBinder implements TypeBinder<BindLayout> {
 
 	@Override
 	public void bind(Object object, BindLayout annotation, Class<?> annotatedType, Object... parameters) throws BindFailed{

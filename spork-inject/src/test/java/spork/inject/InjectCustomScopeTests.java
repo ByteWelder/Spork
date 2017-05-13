@@ -27,12 +27,12 @@ public class InjectCustomScopeTests {
 	}
 
 	public static final class SessionModule {
-		private static final AtomicInteger counter = new AtomicInteger();
+		private static final AtomicInteger COUNTER = new AtomicInteger();
 
 		@Provides
 		@SessionScope
 		public Integer provideSessionId() {
-			return counter.incrementAndGet();
+			return COUNTER.incrementAndGet();
 		}
 	}
 

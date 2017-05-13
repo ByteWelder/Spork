@@ -9,7 +9,7 @@ import spork.android.extension.ContextResolver;
 /**
  * Resolves Context from v4 support library types.
  */
-public class SupportContextResolver implements ContextResolver {
+public final class SupportContextResolver implements ContextResolver {
 
 	@Override
 	public @Nullable Context resolveContext(Object object) {

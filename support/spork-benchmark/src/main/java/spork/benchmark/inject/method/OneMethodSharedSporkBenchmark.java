@@ -9,7 +9,7 @@ import spork.inject.ObjectGraphs;
 import spork.inject.Provides;
 import spork.inject.internal.InjectMethodBinder;
 
-class OneMethodSharedSporkBenchmark extends Benchmark {
+final class OneMethodSharedSporkBenchmark extends Benchmark {
 	private final TestObject[] testObjects;
 
 	OneMethodSharedSporkBenchmark(int iterationCount) {

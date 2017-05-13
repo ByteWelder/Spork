@@ -7,7 +7,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import spork.inject.internal.reflection.InjectSignature;
 
-public class InstanceCache {
+public final class InstanceCache {
 	private final Lock mapLock;
 	private final Map<InjectSignature, Object> map;
 

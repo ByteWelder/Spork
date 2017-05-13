@@ -13,7 +13,7 @@ import javax.inject.Qualifier;
 import spork.inject.internal.lang.Annotations;
 import spork.inject.internal.lang.Nullability;
 
-public class InjectSignatureMethodCache {
+public final class InjectSignatureMethodCache {
 	private final QualifierCache qualifierCache;
 	private final Map<Method, InjectSignature[]> methodInjectSignatureMap;
 

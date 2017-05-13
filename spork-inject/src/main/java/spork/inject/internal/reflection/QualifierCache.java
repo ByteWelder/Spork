@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 
 import spork.exceptions.UnexpectedException;
 
-public class QualifierCache {
+public final class QualifierCache {
 	private final Map<Class<? extends Annotation>, Method> map;
 	private final Lock mapLock;
 

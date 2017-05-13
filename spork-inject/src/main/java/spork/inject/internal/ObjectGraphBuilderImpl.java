@@ -25,7 +25,7 @@ import spork.inject.internal.reflection.InjectSignatureMethodCache;
 import spork.inject.internal.reflection.QualifierCache;
 import spork.inject.internal.reflection.ReflectionCache;
 
-public class ObjectGraphBuilderImpl implements ObjectGraphBuilder {
+public final class ObjectGraphBuilderImpl implements ObjectGraphBuilder {
 	@Nullable
 	private final ObjectGraphImpl parentGraph;
 	@Nullable

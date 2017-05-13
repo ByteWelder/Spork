@@ -12,7 +12,7 @@ import spork.android.extension.FragmentResolver;
  * and use them one by one to resolve a Fragment.
  * It resolves to {@link Object} because the Fragment might be a regular Android one or a support library one.
  */
-public class CompoundFragmentResolver implements FragmentResolver {
+public final class CompoundFragmentResolver implements FragmentResolver {
 	private final List<FragmentResolver> fragmentResolvers;
 
 	public CompoundFragmentResolver(List<FragmentResolver> fragmentResolvers) {

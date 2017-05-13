@@ -52,8 +52,9 @@ public class ObjectGraphBuilderTests {
 
 	@Test
 	public void testNonPublicModule() {
+		String message = "Module class isn't a public class: " + NonPublicModule.class.getName();
+		expectedException.expectMessage(message);
 		expectedException.expect(SporkRuntimeException.class);
-		expectedException.expectMessage("Module class isn't a public class: spork.inject.internal.ObjectGraphBuilderTests$NonPublicModule");
 		ObjectGraphs.builder()
 				.module(new NonPublicModule())
 				.build();
@@ -61,8 +62,9 @@ public class ObjectGraphBuilderTests {
 
 	@Test
 	public void testModuleWithoutProvidesMethod() {
+		String message = "No methods found annotated with @Provides for " + ModuleWithoutProvidesMethod.class.getName();
+		expectedException.expectMessage(message);
 		expectedException.expect(SporkRuntimeException.class);
-		expectedException.expectMessage("No methods found annotated with @Provides for spork.inject.internal.ObjectGraphBuilderTests$ModuleWithoutProvidesMethod");
 		ObjectGraphs.builder()
 				.module(new ModuleWithoutProvidesMethod())
 				.build();
@@ -70,8 +72,10 @@ public class ObjectGraphBuilderTests {
 
 	@Test
 	public void testModuleWithoutPublicProvidesMethod() {
+		String message = "Module method is not public: java.lang.Object "
+				+ ModuleWithoutPublicProvidesMethod.class.getName() + ".object()";
+		expectedException.expectMessage(message);
 		expectedException.expect(SporkRuntimeException.class);
-		expectedException.expectMessage("Module method is not public: java.lang.Object spork.inject.internal.ObjectGraphBuilderTests$ModuleWithoutPublicProvidesMethod.object()");
 		ObjectGraphs.builder()
 				.module(new ModuleWithoutPublicProvidesMethod())
 				.build();
@@ -79,8 +83,9 @@ public class ObjectGraphBuilderTests {
 
 	@Test
 	public void testScopedRootGraph() {
+		String message = "Scope annotation can only be used when a parent ObjectGraph is specified";
+		expectedException.expectMessage(message);
 		expectedException.expect(SporkRuntimeException.class);
-		expectedException.expectMessage("Scope annotation can only be used when a parent ObjectGraph is specified");
 		ObjectGraphs.builder()
 				.scope(TestScope.class)
 				.module(new Module())

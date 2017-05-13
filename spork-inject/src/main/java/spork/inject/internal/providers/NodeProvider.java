@@ -6,7 +6,7 @@ import spork.exceptions.SporkRuntimeException;
 import spork.inject.internal.ObjectGraphException;
 import spork.inject.internal.ObjectGraphNode;
 
-public class NodeProvider implements Provider<Object> {
+public final class NodeProvider implements Provider<Object> {
 	private final ObjectGraphNode node;
 	private final Object[] parameters;
 

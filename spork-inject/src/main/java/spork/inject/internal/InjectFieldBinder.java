@@ -17,7 +17,7 @@ import spork.inject.internal.reflection.InjectSignature;
 /**
  * The default FieldBinder that binds field annotated with the Inject annotation.
  */
-public class InjectFieldBinder implements FieldBinder<Inject> {
+public final class InjectFieldBinder implements FieldBinder<Inject> {
 
 	@Override
 	public Class<Inject> getAnnotationClass() {

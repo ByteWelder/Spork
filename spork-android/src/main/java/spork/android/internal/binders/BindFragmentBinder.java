@@ -11,7 +11,7 @@ import spork.exceptions.BindFailed;
 import spork.exceptions.ExceptionMessageBuilder;
 import spork.extension.FieldBinder;
 
-public class BindFragmentBinder implements FieldBinder<BindFragment> {
+public final class BindFragmentBinder implements FieldBinder<BindFragment> {
 	private final FragmentResolver fragmentResolver;
 
 	public BindFragmentBinder(FragmentResolver fragmentResolver) {

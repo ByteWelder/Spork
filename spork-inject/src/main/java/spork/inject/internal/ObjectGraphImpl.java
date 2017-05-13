@@ -31,7 +31,11 @@ public final class ObjectGraphImpl implements ObjectGraph {
 	 * @param reflectionCache retrieve (and cache) InjectSignature instance
 	 * @param scopeAnnotationClass optional annotation that defines the scope of this ObjectGraph
 	 */
-	ObjectGraphImpl(@Nullable ObjectGraphImpl parentGraph, Map<InjectSignature, ObjectGraphNode> nodeMap, ReflectionCache reflectionCache, Class<? extends Annotation> scopeAnnotationClass) {
+	ObjectGraphImpl(
+			@Nullable ObjectGraphImpl parentGraph,
+			Map<InjectSignature, ObjectGraphNode> nodeMap,
+			ReflectionCache reflectionCache,
+			Class<? extends Annotation> scopeAnnotationClass) {
 		this.parentGraph = parentGraph;
 		this.nodeMap = nodeMap;
 		this.instanceCache = new InstanceCache();

@@ -3,10 +3,10 @@ package spork.benchmark.core;
 import spork.SporkInstance;
 import spork.benchmark.Benchmark;
 
-public class OneFieldNewSporkBenchmark extends Benchmark {
+final class OneFieldNewSporkBenchmark extends Benchmark {
 	private final TestObject testObject;
 
-	public OneFieldNewSporkBenchmark() {
+	OneFieldNewSporkBenchmark() {
 		testObject = new TestObject();
 	}
 

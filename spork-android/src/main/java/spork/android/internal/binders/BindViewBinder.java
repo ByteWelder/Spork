@@ -11,7 +11,7 @@ import spork.exceptions.BindFailed;
 import spork.exceptions.ExceptionMessageBuilder;
 import spork.extension.FieldBinder;
 
-public class BindViewBinder implements FieldBinder<BindView> {
+public final class BindViewBinder implements FieldBinder<BindView> {
 	private final ViewResolver viewResolver;
 
 	public BindViewBinder(ViewResolver viewResolver) {

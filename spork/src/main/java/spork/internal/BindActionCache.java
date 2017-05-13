@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class BindActionCache {
+public final class BindActionCache {
 	private final Map<Class<?>, List<BindAction>> map;
 	private final Lock mapLock;
 

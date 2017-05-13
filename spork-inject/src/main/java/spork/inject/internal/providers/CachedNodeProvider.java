@@ -13,7 +13,7 @@ import spork.inject.internal.reflection.InjectSignature;
  * A provider that returns an instance from a map or otherwise creates it with
  * the given ObjectGraphNode and its arguments.
  */
-public class CachedNodeProvider implements Provider<Object>, InstanceCache.Factory {
+public final class CachedNodeProvider implements Provider<Object>, InstanceCache.Factory {
 	private final ObjectGraphNode node;
 	@Nullable
 	private final Object[] arguments;

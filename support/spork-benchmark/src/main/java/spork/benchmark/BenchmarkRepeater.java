@@ -2,7 +2,7 @@ package spork.benchmark;
 
 import java.util.Locale;
 
-public class BenchmarkRepeater implements Runnable {
+public final class BenchmarkRepeater implements Runnable {
 	private final BenchmarkFactory benchmarkFactory;
 	private final BenchmarkResult[] benchmarkResults;
 

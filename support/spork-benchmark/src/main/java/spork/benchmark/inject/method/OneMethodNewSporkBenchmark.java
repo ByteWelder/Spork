@@ -9,7 +9,7 @@ import spork.inject.ObjectGraphs;
 import spork.inject.Provides;
 import spork.inject.internal.InjectMethodBinder;
 
-class OneMethodNewSporkBenchmark extends Benchmark {
+final class OneMethodNewSporkBenchmark extends Benchmark {
 	private final TestObject testObject;
 
 	OneMethodNewSporkBenchmark() {

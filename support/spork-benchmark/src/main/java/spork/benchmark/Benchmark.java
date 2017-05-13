@@ -8,7 +8,7 @@ public abstract class Benchmark implements Runnable {
 	private BenchmarkResult benchmarkResult;
 
 	@Override
-	public void run() {
+	public final void run() {
 		long startTime = System.nanoTime();
 		long workCount = doWork();
 		long endTime = System.nanoTime();

@@ -3,7 +3,7 @@ package spork.benchmark.core;
 import spork.SporkInstance;
 import spork.benchmark.Benchmark;
 
-class OneFieldSharedSporkInstance extends Benchmark {
+final  class OneFieldSharedSporkInstance extends Benchmark {
 	private final TestObject[] testObjects;
 
 	OneFieldSharedSporkInstance(int iterationCount) {

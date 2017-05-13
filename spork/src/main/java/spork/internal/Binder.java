@@ -9,7 +9,7 @@ import spork.exceptions.BindFailed;
  *
  * It uses a {@link BindActionProvider} to bind objects.
  */
-public class Binder {
+public final class Binder {
 	private final BindActionProvider bindActionProvider;
 
 	public Binder(BindActionProvider bindActionProvider) {

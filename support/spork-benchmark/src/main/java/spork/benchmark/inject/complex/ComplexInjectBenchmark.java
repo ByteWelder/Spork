@@ -12,7 +12,7 @@ import spork.inject.Provides;
 import spork.inject.internal.InjectFieldBinder;
 import spork.inject.internal.InjectMethodBinder;
 
-class ComplexInjectBenchmark extends Benchmark {
+final class ComplexInjectBenchmark extends Benchmark {
 	private final TestObject[] testObjects;
 
 	ComplexInjectBenchmark(int iterationCount) {

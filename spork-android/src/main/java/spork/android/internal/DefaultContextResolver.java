@@ -15,7 +15,7 @@ import spork.android.ViewProvider;
  * Default {@link ContextResolver} implementation for all regular Android classes that
  * could provide a {@link Context} instance.
  */
-public class DefaultContextResolver implements ContextResolver {
+public final class DefaultContextResolver implements ContextResolver {
 	@Override
 	@Nullable
 	public Context resolveContext(Object object) throws Exception {

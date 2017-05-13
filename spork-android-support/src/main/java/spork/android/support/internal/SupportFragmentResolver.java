@@ -9,7 +9,7 @@ import spork.android.extension.FragmentResolver;
 /**
  * Resolves Fragment instances from v4 support library types.
  */
-public class SupportFragmentResolver implements FragmentResolver {
+public final class SupportFragmentResolver implements FragmentResolver {
 
 	@Override
 	public @Nullable Object resolveFragment(Object object, int id) {

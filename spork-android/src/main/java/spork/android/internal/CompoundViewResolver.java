@@ -13,7 +13,7 @@ import spork.android.extension.ViewResolver;
  * A {@link ViewResolver} implementation that can hold multiple child {@link ViewResolver} instances
  * and use them one by one to resolve a {@link View}.
  */
-public class CompoundViewResolver implements ViewResolver {
+public final class CompoundViewResolver implements ViewResolver {
 	private final List<ViewResolver> viewResolvers;
 
 	public CompoundViewResolver(List<ViewResolver> contextResolvers) {

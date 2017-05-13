@@ -13,7 +13,7 @@ import spork.android.extension.FragmentResolver;
  * could provide a Fragment instance.
  * It resolves to {@link Object} because the Fragment might be a regular Android one or a support library one.
  */
-public class DefaultFragmentResolver implements FragmentResolver {
+public final class DefaultFragmentResolver implements FragmentResolver {
 
 	@Override
 	@Nullable

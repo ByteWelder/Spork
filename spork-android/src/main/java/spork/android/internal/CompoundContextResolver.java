@@ -13,7 +13,7 @@ import spork.android.extension.ContextResolver;
  * A {@link ContextResolver} implementation that can hold multiple {@link ContextResolver} instances
  * and use them one by one to resolve a {@link Context}.
  */
-public class CompoundContextResolver implements ContextResolver {
+public final class CompoundContextResolver implements ContextResolver {
 	private final List<ContextResolver> contextResolvers;
 
 	public CompoundContextResolver(List<ContextResolver> contextResolvers) {

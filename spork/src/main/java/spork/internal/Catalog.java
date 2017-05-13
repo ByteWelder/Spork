@@ -11,7 +11,7 @@ import spork.extension.TypeBinder;
 /**
  * The Catalog holds a reference to all known field/method/type binder instances.
  */
-public class Catalog {
+public final class Catalog {
 	private final List<FieldBinder> fieldBinders = new ArrayList<>();
 	private final List<MethodBinder> methodBinders = new ArrayList<>();
 	private final List<TypeBinder> typeBinders = new ArrayList<>();
