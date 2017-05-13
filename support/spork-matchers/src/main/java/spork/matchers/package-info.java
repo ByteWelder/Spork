@@ -1,4 +1,0 @@
-@ParametersAreNonnullByDefault
-package spork.matchers;
-
-import javax.annotation.ParametersAreNonnullByDefault;

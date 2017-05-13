@@ -1,4 +1,0 @@
-@ParametersAreNonnullByDefault
-package spork.benchmark;
-
-import javax.annotation.ParametersAreNonnullByDefault;
