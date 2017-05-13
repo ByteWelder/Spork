@@ -1,11 +1,10 @@
-rootProject.name = 'project'
+rootProject.name = 'Spork Root'
 
 include ':spork'
 include ':spork-inject'
 include ':spork-android'
 include ':spork-android-support'
-include ':support:spork-android-example'
 include ':support:spork-benchmark'
 include ':support:spork-benchmark-android'
-include ':support:spork-proguard'
+include ':support:spork-example-android'
 include ':support:spork-matchers'

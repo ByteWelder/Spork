@@ -1,0 +1,70 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion androidCompileSdkVersion
+    buildToolsVersion androidBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion androidMinSdkVersion
+        targetSdkVersion androidTargetSdkVersion
+        versionCode 1
+        versionName '1.0.0'
+        testInstrumentationRunner 'spork.example.test.TestRunner'
+        testHandleProfiling true
+        testFunctionalTest true
+    }
+
+	signingConfigs {
+		example {
+			storeFile file('./keystore.jks')
+			storePassword 'whatever'
+			keyAlias 'example'
+			keyPassword 'whatever'
+		}
+	}
+
+    buildTypes {
+        release {
+	        signingConfig signingConfigs.example
+            testCoverageEnabled true
+	        minifyEnabled true
+	        shrinkResources true
+	        proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+	        signingConfig signingConfigs.example
+	        testCoverageEnabled true
+	        debuggable true
+	        jniDebuggable true
+        }
+    }
+}
+
+dependencies {
+    compile project(':spork-inject')
+    compile project(':spork-android-support')
+
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile "com.android.support:appcompat-v7:$androidSupportLibraryVersion"
+    compile "com.android.support:support-compat:$androidSupportLibraryVersion"
+    compile "com.android.support:support-v4:$androidSupportLibraryVersion"
+
+	androidTestCompile ("com.android.support.test:runner:$androidSupportTestRunnerVersion") {
+        exclude group: 'com.android.support'
+    }
+	androidTestCompile ("com.android.support.test.espresso:espresso-core:$androidSupportEspressoVersion") {
+		exclude group: 'com.android.support'
+        exclude module: 'jsr305'
+    }
+	androidTestCompile ("com.android.support.test.espresso:espresso-contrib:$androidSupportEspressoVersion") {
+		exclude group: 'com.android.support'
+		exclude module: 'jsr305'
+	}
+    androidTestCompile("com.android.support.test.espresso:espresso-intents:$androidSupportEspressoVersion") {
+        exclude group: 'com.android.support'
+	    exclude module: 'jsr305'
+    }
+}
+
+apply from: rootProject.file('gradle/findbugs-android.gradle')
+apply from: rootProject.file('gradle/pmd-android.gradle')

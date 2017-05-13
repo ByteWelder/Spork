@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Spork Example</string>
+
+    <string name="title_login">Please login</string>
+    <string name="welcome_before_login">Welcome!</string>
+    <string name="login_progress">Logging in</string>
+
+    <string name="welcome_after_login">Welcome! You are logged in.</string>
+    <string name="session_id">Session ID: %1$s</string>
+    <string name="logout_button">Logout</string>
+</resources>

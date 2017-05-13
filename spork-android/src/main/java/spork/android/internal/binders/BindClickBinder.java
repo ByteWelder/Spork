@@ -56,11 +56,11 @@ public class BindClickBinder implements MethodBinder<BindClick> {
 							.build();
 					throw new SporkRuntimeException(message);
 				}
-			} catch (IllegalAccessException e) {
-				throw new UnexpectedException("Failed to access a Method that was previously made accessible. Maybe there is a concurrency problem?", e);
-			} catch (InvocationTargetException e) {
+			} catch (IllegalAccessException caught) {
+				throw new UnexpectedException("Failed to access a Method that was previously made accessible. Maybe there is a concurrency problem?", caught);
+			} catch (InvocationTargetException caught) {
 				String message = getExceptionMessageBuilder("Failed to invoke click method", view).build();
-				throw new SporkRuntimeException(message);
+				throw new SporkRuntimeException(message, caught);
 			} finally {
 				method.setAccessible(false);
 			}

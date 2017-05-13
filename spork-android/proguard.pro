@@ -3,9 +3,17 @@
 -keep enum spork.** { *; }
 
 -keepclasseswithmembernames class * {
-    @spork.* <fields>;
+    @spork.** *;
+}
+
+-keepclassmembers class ** {
+    @spork.** *;
 }
 
 -keepclasseswithmembernames class * {
-    @spork.* <methods>;
+    @javax.inject.* *;
+}
+
+-keepclassmembers class ** {
+    @javax.inject.* *;
 }

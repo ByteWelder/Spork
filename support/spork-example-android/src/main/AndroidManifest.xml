@@ -1,0 +1,24 @@
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="example.spork">
+
+    <application android:label="@string/app_name"
+                 android:name="example.spork.ExampleApplication"
+                 android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+                 android:allowBackup="false">
+        <activity android:name="example.spork.activities.LaunchActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="example.spork.activities.WelcomeActivity"
+            android:label="@string/welcome_before_login"/>
+
+        <activity android:name="example.spork.activities.LoginActivity"
+            android:label="@string/title_login"/>
+
+    </application>
+
+</manifest>

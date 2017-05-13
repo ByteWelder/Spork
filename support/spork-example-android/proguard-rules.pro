@@ -1,0 +1,4 @@
+-optimizationpasses 5
+-optimizations !code/simplification/arithmetic,!field
+-overloadaggressively
+-allowaccessmodification
