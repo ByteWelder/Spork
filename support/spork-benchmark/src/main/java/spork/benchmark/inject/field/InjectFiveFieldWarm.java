@@ -1,20 +1,20 @@
-package spork.benchmark.inject.method;
+package spork.benchmark.inject.field;
 
 import javax.inject.Inject;
 
 import spork.SporkInstance;
 import spork.benchmark.Benchmark;
-import spork.inject.ObjectGraph;
 import spork.inject.ObjectGraphs;
 import spork.inject.Provides;
-import spork.inject.internal.InjectMethodBinder;
+import spork.inject.internal.InjectFieldBinder;
+import spork.inject.ObjectGraph;
 
-final class OneMethodSharedSporkBenchmark extends Benchmark {
+public final class InjectFiveFieldWarm extends Benchmark {
 	private final TestObject[] testObjects;
 
-	OneMethodSharedSporkBenchmark(int iterationCount) {
+	public InjectFiveFieldWarm(int iterationCount) {
 		SporkInstance spork = new SporkInstance();
-		spork.register(new InjectMethodBinder());
+		spork.register(new InjectFieldBinder());
 
 		ObjectGraph graph = ObjectGraphs.builder()
 				.module(new Module())
@@ -31,10 +31,9 @@ final class OneMethodSharedSporkBenchmark extends Benchmark {
 	}
 
 	public static final class Module {
-
 		@Provides
 		public Object provideObject() {
-			return "test";
+			return "Test";
 		}
 	}
 
@@ -48,8 +47,19 @@ final class OneMethodSharedSporkBenchmark extends Benchmark {
 		}
 
 		@Inject
-		private void onInject(Object input) {
-		}
+		Object a;
+
+		@Inject
+		Object b;
+
+		@Inject
+		Object c;
+
+		@Inject
+		Object d;
+
+		@Inject
+		Object e;
 
 		public void inject() {
 			objectGraph.inject(this, spork);

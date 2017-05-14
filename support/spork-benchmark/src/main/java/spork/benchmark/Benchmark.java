@@ -1,28 +1,18 @@
 package spork.benchmark;
 
-import javax.annotation.Nullable;
+public abstract class Benchmark {
 
-public abstract class Benchmark implements Runnable {
+	public final BenchmarkResult run() {
+		// Invoke garbage collection to clean up any memory before running a test.
+		// This should reduce the chances of GC happening during our test.
+		System.gc();
 
-	@Nullable
-	private BenchmarkResult benchmarkResult;
-
-	@Override
-	public final void run() {
 		long startTime = System.nanoTime();
 		long workCount = doWork();
 		long endTime = System.nanoTime();
 
-		benchmarkResult = new BenchmarkResult(getClass(), endTime - startTime, workCount);
+		return new BenchmarkResult(getClass(), endTime - startTime, workCount);
 	}
 
 	protected abstract long doWork();
-
-	public final BenchmarkResult getBenchmarkResult() {
-		if (benchmarkResult == null) {
-			throw new IllegalStateException("Results are only available after running the BenchmarkTest");
-		}
-
-		return benchmarkResult;
-	}
 }

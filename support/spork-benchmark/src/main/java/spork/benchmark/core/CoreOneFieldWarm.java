@@ -3,10 +3,10 @@ package spork.benchmark.core;
 import spork.SporkInstance;
 import spork.benchmark.Benchmark;
 
-final  class OneFieldSharedSporkInstance extends Benchmark {
+public final class CoreOneFieldWarm extends Benchmark {
 	private final TestObject[] testObjects;
 
-	OneFieldSharedSporkInstance(int iterationCount) {
+	public CoreOneFieldWarm(int iterationCount) {
 		SporkInstance spork = new SporkInstance();
 		spork.register(new TestBinder());
 

@@ -9,10 +9,10 @@ import spork.inject.ObjectGraphs;
 import spork.inject.Provides;
 import spork.inject.internal.InjectMethodBinder;
 
-final class FiveMethodSharedSporkBenchmark extends Benchmark {
+public final class InjectFiveMethodWarm extends Benchmark {
 	private final TestObject[] testObjects;
 
-	FiveMethodSharedSporkBenchmark(int iterationCount) {
+	public InjectFiveMethodWarm(int iterationCount) {
 		SporkInstance spork = new SporkInstance();
 		spork.register(new InjectMethodBinder());
 
