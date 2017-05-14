@@ -30,6 +30,10 @@ final class ComplexInjectBenchmark extends Benchmark {
 				.module(new ChildModule())
 				.build();
 
+		// Warm up the cache
+		TestObject warmUpObject = new TestObject(spork, childGraph);
+		warmUpObject.inject();
+
 		testObjects = new TestObject[iterationCount];
 		for (int i = 0; i < testObjects.length; ++i) {
 			testObjects[i] = new TestObject(spork, childGraph);

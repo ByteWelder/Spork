@@ -20,6 +20,10 @@ final class FiveMethodSharedSporkBenchmark extends Benchmark {
 				.module(new Module())
 				.build();
 
+		// Warm up the cache
+		TestObject warmUpObject = new TestObject(spork, graph);
+		warmUpObject.inject();
+
 		testObjects = new TestObject[iterationCount];
 		for (int i = 0; i < testObjects.length; ++i) {
 			testObjects[i] = new TestObject(spork, graph);

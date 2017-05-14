@@ -20,6 +20,10 @@ final class OneFieldSharedSporkBenchmark extends Benchmark {
 		SporkInstance spork = new SporkInstance();
 		spork.register(new InjectFieldBinder());
 
+		// Warm up the cache
+		TestObject warmUpObject = new TestObject(spork, graph);
+		warmUpObject.inject();
+
 		testObjects = new TestObject[iterationCount];
 		for (int i = 0; i < testObjects.length; ++i) {
 			testObjects[i] = new TestObject(spork, graph);
