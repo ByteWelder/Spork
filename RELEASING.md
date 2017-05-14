@@ -6,6 +6,7 @@
 2. run all tests: `./gradlew clean check`
 3. check code coverage: `./gradlew jacocoTestReport`
 4. check if the root `build.gradle` has `sporkVersion` set correctly
+4. check if the root `build.gradle` has `sporkReleasing` set to `true`
 
 ## Upload
 
