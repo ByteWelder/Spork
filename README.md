@@ -1,4 +1,8 @@
-# Spork
+# ARCHIVED
+
+This project is no longer being worked on.
+
+## Spork
 
 [![travis][travis-logo]][travis-link]
 
@@ -11,7 +15,7 @@ Spork contains the following libraries:
 
 Documentation is available on the [website](http://spork.bytewelder.com)
 
-## License
+### License
 
 Spork is available through the [Apache License Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
